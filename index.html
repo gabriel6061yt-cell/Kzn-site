@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>KZN MENU GS2 - GUIA PARA INICIANTES</title>
+    <title>KZN MENU STORE - Mod Menu para Graal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         /* ============================================================
@@ -24,21 +24,18 @@
             --dark-border: #1f1f1f;
             --text: #f1f5f9;
             --text-muted: #94a3b8;
+            --success: #22c55e;
             --glass: rgba(255, 255, 255, 0.05);
-            --glass-light: rgba(255, 255, 255, 0.08);
             --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-            --shadow-glow: 0 0 60px rgba(220, 38, 38, 0.15);
             --radius: 16px;
-            --radius-lg: 24px;
         }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
             background: var(--dark);
             color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
-            min-height: 100vh;
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark); }
@@ -48,38 +45,20 @@
         }
 
         /* ============================================================
-           GLASS MORPHISM
-           ============================================================ */
-        .glass {
-            background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .glass-light {
-            background: var(--glass-light);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        /* ============================================================
            NAVBAR
            ============================================================ */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--dark-border);
             z-index: 1000;
             padding: 0 2rem;
-            transition: all 0.4s ease;
+            transition: 0.3s;
         }
         .navbar.scrolled {
-            background: rgba(10, 10, 10, 0.96);
             border-bottom-color: var(--primary);
             box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
         }
@@ -89,30 +68,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 72px;
+            height: 70px;
         }
         .nav-logo {
             display: flex;
             align-items: center;
-            gap: 14px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
+            gap: 12px;
             text-decoration: none;
-            letter-spacing: -0.5px;
         }
         .nav-logo img {
-            width: 48px;
-            height: 48px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             border: 2px solid var(--primary);
             object-fit: cover;
-            transition: 0.3s;
-        }
-        .nav-logo img:hover {
-            transform: scale(1.08);
-            border-color: var(--secondary);
-            box-shadow: 0 0 40px rgba(220, 38, 38, 0.3);
         }
         .nav-logo .logo-text {
             display: flex;
@@ -120,225 +89,133 @@
             line-height: 1.1;
         }
         .nav-logo .logo-text span {
+            font-size: 1.3rem;
+            font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 1.4rem;
         }
         .nav-logo .logo-text small {
-            font-size: 0.55rem;
-            font-weight: 400;
+            font-size: 0.5rem;
             color: var(--text-muted);
-            -webkit-text-fill-color: var(--text-muted);
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
         }
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 0.3rem;
-            flex-wrap: wrap;
+            gap: 0.5rem;
         }
         .nav-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            padding: 0.5rem 1.1rem;
-            border-radius: 10px;
-            transition: all 0.3s;
-            font-size: 0.78rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 0.8rem;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid transparent;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
         }
         .nav-menu a:hover,
         .nav-menu a.active {
             color: #fff;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: var(--primary);
             border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.25);
-            transform: translateY(-1px);
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.3);
         }
-
-        /* ===== MENU MOBILE ===== */
         .nav-toggle {
             display: none;
             color: #fff;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.5rem 0.8rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            background: var(--glass);
-            border: 1px solid transparent;
-            line-height: 1;
-        }
-        .nav-toggle:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
-        }
-        .nav-toggle.active {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-        .nav-toggle i { transition: transform 0.3s ease; }
-        .nav-toggle.active i { transform: rotate(90deg); }
-
-        .nav-menu.open {
-            display: flex !important;
-            animation: slideDown 0.3s ease forwards;
-        }
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ============================================================
-           HERO SECTION
+           HERO
            ============================================================ */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem 2rem 4rem;
-            background: 
-                radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.2), transparent 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15), transparent 60%),
-                var(--dark);
+            padding: 7rem 2rem 4rem;
+            background: radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.15), transparent 60%),
+                        radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.10), transparent 60%),
+                        var(--dark);
             position: relative;
             overflow: hidden;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255, 255, 255, 0.015) 2px,
-                    rgba(255, 255, 255, 0.015) 4px);
-            pointer-events: none;
-            animation: scanlines 20s linear infinite;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(220, 38, 38, 0.03), transparent 70%);
-            pointer-events: none;
-            animation: rotateGlow 30s linear infinite;
-        }
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes scanlines {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(4px); }
-        }
-
         .hero-content {
             flex: 1;
-            max-width: 750px;
+            max-width: 650px;
             position: relative;
             z-index: 1;
         }
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: inline-block;
+            background: var(--primary);
             color: #fff;
-            padding: 0.3rem 1.4rem;
+            padding: 0.2rem 1.2rem;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.3);
+            margin-bottom: 1rem;
         }
         .hero h1 {
-            font-size: 4.2rem;
+            font-size: 4rem;
             font-weight: 900;
             line-height: 1.05;
-            margin-bottom: 1.2rem;
-        }
-        .hero h1 .highlight-red {
-            color: var(--primary);
-            -webkit-text-fill-color: var(--primary);
-            text-shadow: 0 0 40px rgba(220, 38, 38, 0.3);
+            margin-bottom: 1rem;
         }
         .hero h1 .highlight {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: none;
         }
-        .hero h1 .highlight-blue {
-            color: var(--secondary-light);
-            -webkit-text-fill-color: var(--secondary-light);
+        .hero h1 .highlight-red {
+            color: var(--primary);
+            -webkit-text-fill-color: var(--primary);
         }
         .hero-subtitle {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text-muted);
             margin-bottom: 2rem;
-            max-width: 550px;
-            line-height: 1.6;
-        }
-        .hero-subtitle strong {
-            color: var(--text);
-            font-weight: 600;
+            max-width: 500px;
         }
         .hero-buttons {
             display: flex;
-            gap: 1.2rem;
+            gap: 1rem;
             flex-wrap: wrap;
-            margin-bottom: 3.5rem;
+            margin-bottom: 3rem;
         }
         .btn {
-            padding: 0.9rem 2.4rem;
-            border-radius: 14px;
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            position: relative;
-            overflow: hidden;
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
-            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.4);
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 50px rgba(220, 38, 38, 0.6);
-        }
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
-            pointer-events: none;
+            box-shadow: 0 8px 40px rgba(220, 38, 38, 0.6);
         }
         .btn-secondary {
-            background: var(--glass-light);
+            background: var(--glass);
             color: #fff;
             border: 1px solid var(--dark-border);
             backdrop-filter: blur(8px);
@@ -347,27 +224,17 @@
             border-color: var(--primary);
             background: rgba(220, 38, 38, 0.15);
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15);
         }
-        .hero-stats {
-            display: flex;
-            gap: 4rem;
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
+            margin-left: 2rem;
         }
-        .stat { text-align: center; }
-        .stat-number {
-            display: block;
-            font-size: 2.4rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+        .hero-image img {
+            width: 100%;
+            border-radius: var(--radius);
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         /* ============================================================
@@ -375,20 +242,9 @@
            ============================================================ */
         .section {
             padding: 5rem 2rem;
-            position: relative;
         }
         .section.dark {
             background: #050505;
-        }
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0.3;
         }
         .container {
             max-width: 1400px;
@@ -405,129 +261,188 @@
             align-items: center;
             justify-content: center;
             gap: 14px;
-            flex-wrap: wrap;
         }
         .section-header h2 i {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
         }
         .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-top: 0.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /* ============================================================
-           TUTORIAL CARDS
+           PLANOS
            ============================================================ */
-        .tutorial-grid {
+        .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .tutorial-card {
+        .plan-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            transition: all 0.4s ease;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
-        .tutorial-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            opacity: 0;
-            transition: 0.4s;
-        }
-        .tutorial-card:hover::before {
-            opacity: 1;
-        }
-        .tutorial-card:hover {
+        .plan-card:hover {
             transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: var(--shadow-glow);
+            box-shadow: 0 0 60px rgba(220, 38, 38, 0.1);
         }
-        .card-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        .plan-card.popular {
+            border-color: var(--secondary);
+            box-shadow: 0 0 60px rgba(124, 58, 237, 0.15);
+        }
+        .plan-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
             color: #fff;
-            padding: 0.1rem 0.9rem;
+            padding: 0.1rem 1rem;
             border-radius: 20px;
             font-size: 0.6rem;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 0.8rem;
         }
-        .card-badge.purple { background: linear-gradient(135deg, var(--secondary), #6d28d9); }
-        .card-badge.green { background: linear-gradient(135deg, #22c55e, #16a34a); }
-        .card-badge.orange { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .card-badge.hack { background: linear-gradient(135deg, #dc2626, #991b1b); }
-
-        .tutorial-card h3 {
-            font-size: 1.25rem;
+        .plan-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .plan-card h3 {
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
+        }
+        .plan-card .price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        .plan-card .price small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .plan-card .features {
+            list-style: none;
+            text-align: left;
+            margin: 1.5rem 0;
+        }
+        .plan-card .features li {
+            padding: 0.4rem 0;
             display: flex;
             align-items: center;
-            gap: 8px;
-        }
-        .tutorial-card p {
+            gap: 10px;
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 1.2rem;
         }
-        .tutorial-card code {
-            background: #1a1a1a;
-            padding: 0.1rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            color: var(--secondary-light);
-            border: 1px solid var(--dark-border);
+        .plan-card .features li i {
+            color: var(--success);
+            width: 20px;
         }
-        .btn-show {
+        .btn-buy {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
-            padding: 0.5rem 1.4rem;
+            padding: 0.9rem 2rem;
             border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.3s;
+            transition: 0.3s;
+            width: 100%;
+            font-size: 1.1rem;
         }
-        .btn-show:hover {
-            transform: scale(1.04);
-            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.3);
+        .btn-buy:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.4);
         }
-        .code-hidden {
-            display: none;
-            margin-top: 1rem;
-            background: #0d0d0d;
-            border-radius: 12px;
-            overflow: hidden;
+
+        /* ============================================================
+           COMO COMPRAR
+           ============================================================ */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .step-card {
+            background: var(--dark-card);
             border: 1px solid var(--dark-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
         }
-        .code-hidden.show { display: block; }
-        .code-hidden pre {
-            padding: 1.2rem;
-            margin: 0;
-            overflow-x: auto;
-            font-size: 0.75rem;
-            line-height: 1.6;
+        .step-card .step-number {
+            background: var(--primary);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: 700;
         }
-        .code-hidden code {
-            font-family: 'Fira Code', 'Consolas', monospace;
-            color: #e6edf3;
+        .step-card h4 {
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+        .step-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ============================================================
+           FAQ
+           ============================================================ */
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+        .faq-item .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #fff;
+        }
+        .faq-item .answer {
+            display: none;
+            margin-top: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .faq-item.open .answer {
+            display: block;
+        }
+        .faq-item .faq-icon {
+            transition: 0.3s;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
         }
 
         /* ============================================================
@@ -537,17 +452,6 @@
             background: #050505;
             border-top: 1px solid var(--dark-border);
             padding: 3rem 2rem 1.5rem;
-            position: relative;
-        }
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0.3;
         }
         .footer-content {
             max-width: 1400px;
@@ -558,13 +462,13 @@
             gap: 2rem;
         }
         .footer-brand i {
-            font-size: 2.2rem;
+            font-size: 2rem;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .footer-brand span {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -573,20 +477,7 @@
         .footer-brand p {
             color: var(--text-muted);
             font-size: 0.9rem;
-            margin-top: 0.3rem;
         }
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.9rem;
-        }
-        .footer-links a:hover { color: var(--primary); }
         .footer-social {
             display: flex;
             gap: 1rem;
@@ -595,8 +486,8 @@
         .footer-social a {
             color: var(--text-muted);
             font-size: 1.4rem;
-            transition: all 0.3s;
-            display: inline-flex;
+            transition: 0.3s;
+            display: flex;
             align-items: center;
             justify-content: center;
             width: 44px;
@@ -608,11 +499,19 @@
         .footer-social a:hover {
             color: #fff;
             transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.25);
         }
-        .footer-social a.youtube:hover { background: #ff0000; border-color: #ff0000; }
-        .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
-        .footer-social a.github:hover { background: #333; border-color: #333; }
+        .footer-social a.discord:hover {
+            background: #5865f2;
+            border-color: #5865f2;
+        }
+        .footer-social a.youtube:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+        }
+        .footer-social a.pix:hover {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
         .footer-bottom {
             max-width: 1400px;
             margin: 2rem auto 0;
@@ -624,69 +523,143 @@
         }
 
         /* ============================================================
+           MODAL PIX
+           ============================================================ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.open {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--dark-card);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        .modal-content .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+        .modal-content .close-modal:hover {
+            color: #fff;
+        }
+        .modal-content h2 {
+            margin-bottom: 1rem;
+        }
+        .modal-content .pix-key {
+            background: #0a0a0a;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--dark-border);
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--success);
+            word-break: break-all;
+        }
+        .modal-content .pix-qr {
+            margin: 1.5rem 0;
+        }
+        .modal-content .pix-qr img {
+            max-width: 200px;
+            border-radius: 8px;
+        }
+        .modal-content .btn-copy {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .modal-content .btn-copy:hover {
+            transform: scale(1.05);
+        }
+        .modal-content .plan-info {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* ============================================================
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1024px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 6rem;
+            }
             .hero-content { max-width: 100%; }
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
-            .hero-stats { justify-content: center; }
+            .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
         }
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 72px;
+                top: 70px;
                 left: 0;
                 width: 100%;
                 background: rgba(10, 10, 10, 0.98);
                 padding: 1.5rem;
                 border-bottom: 1px solid var(--dark-border);
-                gap: 0.5rem;
             }
             .nav-menu.open { display: flex; }
             .nav-toggle { display: block; }
-            .hero h1 { font-size: 2.6rem; }
+            .hero h1 { font-size: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
-            .tutorial-grid { grid-template-columns: 1fr; }
-            .footer-content { flex-direction: column; text-align: center; align-items: center; }
-            .footer-links { justify-content: center; }
-            .hero-stats { gap: 2rem; }
+            .plans-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
-            .hero h1 span { display: inline-block; }
-            .hero-stats .stat-number { font-size: 1.5rem; }
             .btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
-            .nav-logo .logo-text span { font-size: 1rem; }
-            .nav-logo .logo-text small { font-size: 0.45rem; }
-            .nav-logo img { width: 38px; height: 38px; }
-            .footer-social a { width: 38px; height: 38px; font-size: 1rem; }
+            .modal-content { padding: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#inicio" class="nav-logo">
-                <img src="https://yt3.googleusercontent.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
+                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Logo" />
                 <div class="logo-text">
-                    <span>KZN MENU GS2</span>
-                    <small>Guia para Iniciantes</small>
+                    <span>KZN MENU</span>
+                    <small>Premium Store</small>
                 </div>
             </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
-                <li><a href="#movimento"><i class="fas fa-person-walking"></i> Movimento</a></li>
-                <li><a href="#interface"><i class="fas fa-window-maximize"></i> Interface</a></li>
-                <li><a href="#sistemas"><i class="fas fa-cogs"></i> Sistemas</a></li>
-                <li><a href="#eventos"><i class="fas fa-calendar-days"></i> Eventos</a></li>
-                <li><a href="#ferramentas"><i class="fas fa-tools"></i> Ferramentas</a></li>
-                <li><a href="#hacks"><i class="fas fa-skull"></i> Hacks</a></li>
+                <li><a href="#planos"><i class="fas fa-crown"></i> Planos</a></li>
+                <li><a href="#como-comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
             <div class="nav-toggle" id="mobileMenu">
                 <i class="fas fa-bars"></i>
@@ -694,816 +667,210 @@
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-            <div class="hero-badge">
-                <i class="fas fa-code"></i> O MANUAL DEFINITIVO
-            </div>
+            <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
             <h1>
                 <span class="highlight-red">KZN</span>
-                <span class="highlight">MENU GS2</span>
+                <span class="highlight">MENU</span>
                 <br />
-                <span style="font-size: 2.2rem; color: var(--text-muted);">Guia para <span class="highlight-blue">Iniciantes</span></span>
+                <span style="font-size: 2.2rem; color: var(--text-muted);">O Melhor Mod Menu do Graal</span>
             </h1>
             <p class="hero-subtitle">
-                Aprenda <strong>GS2</strong> do zero com exemplos práticos e scripts prontos.
+                Domine o jogo com o Mod Menu mais completo e atualizado.
+                <br />+50 funcionalidades exclusivas!
             </p>
             <div class="hero-buttons">
-                <a href="#movimento" class="btn btn-primary">
-                    <i class="fas fa-rocket"></i> Começar
+                <a href="#planos" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Ver Planos
                 </a>
-                <a href="#hacks" class="btn btn-secondary">
-                    <i class="fas fa-skull"></i> Ver Hacks
+                <a href="#como-comprar" class="btn btn-secondary">
+                    <i class="fas fa-info-circle"></i> Como Comprar
                 </a>
             </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">50+</span>
-                    <span class="stat-label">Sistemas</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">100+</span>
-                    <span class="stat-label">Exemplos</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Mobile</span>
-                </div>
-            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Menu" />
         </div>
     </section>
 
-    <!-- ===== MOVIMENTO ===== -->
-    <section id="movimento" class="section">
+    <!-- ============================================================
+    PLANOS
+    ============================================================ -->
+    <section id="planos" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-person-walking"></i> Movimento & Física</h2>
-                <p>Sistemas de locomoção, física e interação do personagem</p>
+                <h2><i class="fas fa-crown"></i> Escolha seu Plano</h2>
+                <p>Adquira o KZN Menu e tenha acesso a todas as funcionalidades</p>
             </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge">Movimento</span>
-                    <h3>📦 Carry</h3>
-                    <p>Sistema para carregar objetos ou outros jogadores.</p>
-                    <button class="btn-show" data-target="carry">Ver Exemplo</button>
-                    <div class="code-hidden" id="carry">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.carregando = null;
-}
-
-function onPlayerTouchs() {
-    if (this.carregando == null) {
-        this.carregando = player;
-        player.attr[30] = "carry";
-        player.chat = "Carregando!";
-    } else {
-        this.carregando = null;
-        player.attr[30] = "";
-        player.chat = "Soltei!";
-    }
-}</code></pre>
-                    </div>
+            <div class="plans-grid">
+                <!-- Plano Mensal -->
+                <div class="plan-card">
+                    <div class="icon">📅</div>
+                    <h3>Plano Mensal</h3>
+                    <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Acesso completo ao KZN Menu</li>
+                        <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                        <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                        <li><i class="fas fa-check"></i> Atualizações automáticas</li>
+                        <li><i class="fas fa-check"></i> Válido por 35 dias</li>
+                    </ul>
+                    <button class="btn-buy" onclick="abrirModal('Mensal', 50)">
+                        <i class="fas fa-shopping-cart"></i> Comprar R$ 50,00
+                    </button>
                 </div>
-                <div class="tutorial-card">
-                    <span class="card-badge">Movimento</span>
-                    <h3>🎬 Cinematic</h3>
-                    <p>Cria cutscenes e cenas cinematográficas.</p>
-                    <button class="btn-show" data-target="cinematic">Ver Exemplo</button>
-                    <div class="code-hidden" id="cinematic">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.cameraX = player.x;
-    this.cameraY = player.y;
-    this.movendo = false;
-}
 
-function iniciarCutscene() {
-    this.movendo = true;
-    setTimer(0.05);
-}
-
-function onTimeout() {
-    if (!this.movendo) return;
-    // Lógica para mover a câmera
-    player.x += 0.1;
-    if (player.x > this.cameraX + 5) {
-        this.movendo = false;
-        player.chat = "Cutscene finalizada!";
-        return;
-    }
-    setTimer(0.05);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge">Movimento</span>
-                    <h3>🏃 JumpAndRun</h3>
-                    <p>Sistema de pulo e corrida estilo plataforma.</p>
-                    <button class="btn-show" data-target="jump">Ver Exemplo</button>
-                    <div class="code-hidden" id="jump">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.pulando = false;
-    this.velocidadeY = 0;
-    setTimer(0.05);
-}
-
-function onTimeout() {
-    if (keydown(0) && !this.pulando) {
-        this.pulando = true;
-        this.velocidadeY = -0.5;
-    }
-    if (this.pulando) {
-        player.y += this.velocidadeY;
-        this.velocidadeY += 0.05;
-        if (player.y >= 30) {
-            player.y = 30;
-            this.pulando = false;
-            this.velocidadeY = 0;
-        }
-    }
-    if (keydown(3)) player.x += 0.2;
-    if (keydown(1)) player.x -= 0.2;
-    setTimer(0.05);
-}</code></pre>
-                    </div>
+                <!-- Plano Permanente -->
+                <div class="plan-card popular">
+                    <span class="badge">🔥 Mais Vantagem</span>
+                    <div class="icon">♾️</div>
+                    <h3>Plano Permanente</h3>
+                    <div class="price">R$ 200,00 <small>/ vitalício</small></div>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Acesso completo ao KZN Menu</li>
+                        <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                        <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
+                        <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
+                        <li><i class="fas fa-check"></i> Sem renovação!</li>
+                    </ul>
+                    <button class="btn-buy" onclick="abrirModal('Permanente', 200)">
+                        <i class="fas fa-shopping-cart"></i> Comprar R$ 200,00
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== INTERFACE ===== -->
-    <section id="interface" class="section dark">
+    <!-- ============================================================
+    COMO COMPRAR
+    ============================================================ -->
+    <section id="como-comprar" class="section">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-window-maximize"></i> Interface & GUI</h2>
-                <p>Janelas, botões, menus e sistemas visuais</p>
+                <h2><i class="fas fa-shopping-cart"></i> Como Comprar</h2>
+                <p>Simples, rápido e seguro. Siga os passos abaixo:</p>
             </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge purple">GUI</span>
-                    <h3>🖼️ gui_builder</h3>
-                    <p>Construtor de interfaces gráficas completas.</p>
-                    <button class="btn-show" data-target="gui-builder">Ver Exemplo</button>
-                    <div class="code-hidden" id="gui-builder">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    new GuiWindowCtrl("MinhaJanela") {
-        profile = GuiBlueWindowProfile;
-        title = "Minha GUI";
-        x = 50;
-        y = 50;
-        width = 300;
-        height = 200;
-        canmove = true;
-        canclose = true;
-        
-        new GuiTextCtrl("MeuTexto") {
-            x = 10;
-            y = 30;
-            width = 280;
-            height = 30;
-            text = "Olá, mundo!";
-            profile = GuiBlueTextProfile;
-        }
-        
-        new GuiButtonCtrl("MeuBotao") {
-            x = 10;
-            y = 70;
-            width = 100;
-            height = 30;
-            text = "Clique aqui!";
-            profile = GuiBlueButtonProfile;
-        }
-    }
-}
-
-function MeuBotao.onAction() {
-    player.chat = "Botão clicado!";
-}</code></pre>
-                    </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>📋 Escolha o Plano</h4>
+                    <p>Selecione o plano que melhor atende você (Mensal ou Permanente)</p>
                 </div>
-                <div class="tutorial-card">
-                    <span class="card-badge purple">GUI</span>
-                    <h3>🎨 gui_charactercustomization</h3>
-                    <p>Personalização de personagem (roupas, cores).</p>
-                    <button class="btn-show" data-target="custom">Ver Exemplo</button>
-                    <div class="code-hidden" id="custom">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    new GuiWindowCtrl("JanelaCustom") {
-        profile = GuiBlueWindowProfile;
-        title = "Personalização";
-        x = 50;
-        y = 50;
-        width = 250;
-        height = 200;
-        canmove = true;
-        canclose = true;
-        
-        new GuiTextCtrl("LblCor") {
-            x = 10;
-            y = 30;
-            width = 100;
-            height = 20;
-            text = "Cor do Cabelo:";
-            profile = GuiBlueTextProfile;
-        }
-        
-        new GuiTextEditCtrl("CorInput") {
-            x = 120;
-            y = 28;
-            width = 100;
-            height = 24;
-            text = "1";
-            profile = GuiBlueTextEditProfile;
-        }
-        
-        new GuiButtonCtrl("BtnMudarCor") {
-            x = 10;
-            y = 70;
-            width = 220;
-            height = 30;
-            text = "Aplicar Cor";
-            profile = GuiBlueButtonProfile;
-        }
-    }
-}
-
-function BtnMudarCor.onAction() {
-    player.colors[0] = int(CorInput.text);
-    player.chat = "Cor alterada!";
-}</code></pre>
-                    </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>💳 Gere o Pagamento</h4>
+                    <p>Clique em "Comprar" e copie a chave PIX ou QR Code</p>
                 </div>
-                <div class="tutorial-card">
-                    <span class="card-badge purple">GUI</span>
-                    <h3>👥 gui_friends</h3>
-                    <p>Lista de amigos e sistema de convites.</p>
-                    <button class="btn-show" data-target="friends">Ver Exemplo</button>
-                    <div class="code-hidden" id="friends">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.amigos = {"player1", "player2"};
-    
-    new GuiWindowCtrl("JanelaAmigos") {
-        profile = GuiBlueWindowProfile;
-        title = "Lista de Amigos";
-        x = 50;
-        y = 50;
-        width = 200;
-        height = 150;
-        canmove = true;
-        canclose = true;
-        
-        new GuiTextListCtrl("ListaAmigos") {
-            x = 10;
-            y = 30;
-            width = 180;
-            height = 80;
-            profile = GuiBlueTextListProfile;
-        }
-    }
-    
-    for (temp.i = 0; temp.i < this.amigos.size(); temp.i++) {
-        ListaAmigos.addrow(temp.i, this.amigos[temp.i]);
-    }
-}</code></pre>
-                    </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>✅ Confirme o Pagamento</h4>
+                    <p>Após o pagamento, entre em contato no Discord para ativação</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>🎮 Receba seu Menu</h4>
+                    <p>Você receberá a key e instruções para ativar o Mod Menu</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== SISTEMAS ===== -->
-    <section id="sistemas" class="section">
+    <!-- ============================================================
+    FAQ
+    ============================================================ -->
+    <section id="faq" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-cogs"></i> Sistemas do Jogo</h2>
-                <p>Mecânicas principais e sistemas internos</p>
+                <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
+                <p>Dúvidas comuns sobre o KZN Menu</p>
             </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge green">Sistema</span>
-                    <h3>🛋️ furniture</h3>
-                    <p>Sistema de móveis e decoração de casa.</p>
-                    <button class="btn-show" data-target="furniture">Ver Exemplo</button>
-                    <div class="code-hidden" id="furniture">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.moveis = {};
-    new GuiWindowCtrl("JanelaMoveis") {
-        profile = GuiBlueWindowProfile;
-        title = "Móveis";
-        x = 50;
-        y = 50;
-        width = 200;
-        height = 150;
-        canmove = true;
-        canclose = true;
-        
-        new GuiButtonCtrl("BtnColocar") {
-            x = 10;
-            y = 30;
-            width = 180;
-            height = 30;
-            text = "Colocar Móvel";
-            profile = GuiBlueButtonProfile;
-        }
-    }
-}
-
-function BtnColocar.onAction() {
-    // Código para colocar um móvel na posição do jogador
-    this.moveis.add({id: "mesa", x: player.x, y: player.y});
-    player.chat = "Móvel colocado!";
-}</code></pre>
+            <div class="faq-grid">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>🔒 O KZN Menu é seguro?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
+                    <div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
                 </div>
-                <div class="tutorial-card">
-                    <span class="card-badge green">Sistema</span>
-                    <h3>💰 gralatshopitem</h3>
-                    <p>Loja de itens com gralats.</p>
-                    <button class="btn-show" data-target="shop">Ver Exemplo</button>
-                    <div class="code-hidden" id="shop">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.itens = {
-        {nome: "Espada", preco: 100},
-        {nome: "Poção", preco: 50}
-    };
-    
-    new GuiWindowCtrl("JanelaLoja") {
-        profile = GuiBlueWindowProfile;
-        title = "Loja";
-        x = 50;
-        y = 50;
-        width = 200;
-        height = 150;
-        canmove = true;
-        canclose = true;
-        
-        new GuiTextListCtrl("ListaItens") {
-            x = 10;
-            y = 30;
-            width = 180;
-            height = 80;
-            profile = GuiBlueTextListProfile;
-        }
-    }
-    
-    for (temp.i = 0; temp.i < this.itens.size(); temp.i++) {
-        ListaItens.addrow(temp.i, this.itens[temp.i].nome @ " - " @ this.itens[temp.i].preco @ "g");
-    }
-}</code></pre>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>📱 Funciona no celular?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
+                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS).</div>
                 </div>
-                <div class="tutorial-card">
-                    <span class="card-badge green">Sistema</span>
-                    <h3>🐴 Horse</h3>
-                    <p>Sistema de montarias e cavalos.</p>
-                    <button class="btn-show" data-target="horse">Ver Exemplo</button>
-                    <div class="code-hidden" id="horse">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.montado = false;
-    
-    new GuiButtonCtrl("BtnMontar") {
-        text = "🐴 Montar";
-        x = screenwidth - 100;
-        y = screenheight - 100;
-        width = 80;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnMontar.onAction() {
-    this.montado = !this.montado;
-    if (this.montado) {
-        setani("horse_ride", "");
-        player.chat = "Montado!";
-        BtnMontar.text = "🐴 Desmontar";
-    } else {
-        setani("idle", "");
-        player.chat = "Desmontado!";
-        BtnMontar.text = "🐴 Montar";
-    }
-}</code></pre>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>🔄 O que acontece após os 35 dias?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
+                    <div class="answer">Após os 35 dias do plano mensal, você precisa renovar a key. Já no plano permanente, o acesso é vitalício sem renovação.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>📧 Como recebo o menu após o pagamento?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>💳 Quais formas de pagamento?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">Atualmente, aceitamos apenas PIX (chave: <code>6c80021c-957b-49c0-9a5d-98371bf67120</code>).</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== EVENTOS ===== -->
-    <section id="eventos" class="section dark">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-calendar-days"></i> Eventos & Temporadas</h2>
-                <p>Eventos especiais, feriados e temporadas</p>
-            </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge orange">Evento</span>
-                    <h3>🥚 easter_eggspawner</h3>
-                    <p>Sistema de ovos de Páscoa.</p>
-                    <button class="btn-show" data-target="easter">Ver Exemplo</button>
-                    <div class="code-hidden" id="easter">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ovos = 0;
-    setTimer(0.1);
-}
-
-function onTimeout() {
-    for (temp.npc : npcs) {
-        if (npc.image == "egg.png") {
-            this.ovos++;
-            // Faz algo com o ovo
-        }
-    }
-    setTimer(0.1);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge orange">Evento</span>
-                    <h3>🎃 holiday_halloween</h3>
-                    <p>Evento de Halloween com decorações.</p>
-                    <button class="btn-show" data-target="halloween">Ver Exemplo</button>
-                    <div class="code-hidden" id="halloween">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    if (month == 10) {
-        player.chat = "🎃 Feliz Halloween!";
-        // Ativar decorações
-    }
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge orange">Evento</span>
-                    <h3>📜 quest_halloween23</h3>
-                    <p>Quests especiais de Halloween.</p>
-                    <button class="btn-show" data-target="quest">Ver Exemplo</button>
-                    <div class="code-hidden" id="quest">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.questAtiva = false;
-    this.itensColetados = 0;
-    
-    new GuiButtonCtrl("BtnIniciarQuest") {
-        text = "🎃 Iniciar Quest";
-        x = screenwidth - 150;
-        y = screenheight - 150;
-        width = 120;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnIniciarQuest.onAction() {
-    this.questAtiva = true;
-    player.chat = "Quest de Halloween iniciada!";
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FERRAMENTAS ===== -->
-    <section id="ferramentas" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-tools"></i> Ferramentas & Utilitários</h2>
-                <p>Ferramentas úteis para desenvolvimento</p>
-            </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge">Ferramenta</span>
-                    <h3>🔄 tween</h3>
-                    <p>Animações suaves e transições.</p>
-                    <button class="btn-show" data-target="tween">Ver Exemplo</button>
-                    <div class="code-hidden" id="tween">
-                        <pre><code>//#CLIENTSIDE
-function animar(obj, prop, final, tempo) {
-    // Esta é uma função de exemplo para animações
-    // Em GS2, você pode usar loops com setTimer para criar animações
-    player.chat = "Animação iniciada!";
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge">Ferramenta</span>
-                    <h3>💥 system_shoot</h3>
-                    <p>Sistema de tiros e projéteis.</p>
-                    <button class="btn-show" data-target="shoot">Ver Exemplo</button>
-                    <div class="code-hidden" id="shoot">
-                        <pre><code>//#CLIENTSIDE
-function atirar(x, y, ang, power) {
-    shoot(x, y, 2, ang, power, 1, 
-          "ci_thrownobject", "arrow.png");
-    player.chat = "Tiro disparado!";
-}
-
-// Exemplo de uso: atirar(player.x + 1.5, player.y + 1.5, 0, 2);</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge">Ferramenta</span>
-                    <h3>🔥 level_effect</h3>
-                    <p>Efeitos visuais no level.</p>
-                    <button class="btn-show" data-target="effect">Ver Exemplo</button>
-                    <div class="code-hidden" id="effect">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    new GuiButtonCtrl("BtnExplodir") {
-        text = "💥 Explodir!";
-        x = screenwidth - 120;
-        y = screenheight - 200;
-        width = 100;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnExplodir.onAction() {
-    putexplosion2(5, 8, player.x, player.y);
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== HACKS ===== -->
-    <section id="hacks" class="section dark">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-skull"></i> Hacks & Ferramentas Avançadas</h2>
-                <p>Scripts avançados para mod menu e detecção</p>
-            </div>
-            <div class="tutorial-grid">
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>🎭 Detector de Ganis</h3>
-                    <p>Detecta e testa ganis de NPCs e players.</p>
-                    <button class="btn-show" data-target="ganis">Ver Script</button>
-                    <div class="code-hidden" id="ganis">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ganis = {};
-    setTimer(0.5);
-}
-
-function onTimeout() {
-    for (temp.p : players) {
-        if (temp.p.ani != nil && temp.p.ani != "") {
-            if (this.ganis.index(temp.p.ani) < 0) {
-                this.ganis.add(temp.p.ani);
-                player.chat = "Gani detectado: " @ temp.p.ani;
-            }
-        }
-    }
-    setTimer(0.5);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>⚔️ Auto Atacar</h3>
-                    <p>Persegue e ataca automaticamente.</p>
-                    <button class="btn-show" data-target="auto-atk">Ver Script</button>
-                    <div class="code-hidden" id="auto-atk">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.autoAtk = false;
-    this.alvo = NULL;
-    setTimer(0.05);
-}
-
-function onTimeout() {
-    if (!this.autoAtk) return;
-    // Procura o player mais próximo
-    temp.distMin = 999;
-    for (temp.p : players) {
-        if (temp.p == player) continue;
-        temp.dist = ((temp.p.x - player.x)^2 + (temp.p.y - player.y)^2) ^ 0.5;
-        if (temp.dist < temp.distMin && temp.dist < 10) {
-            temp.distMin = temp.dist;
-            this.alvo = temp.p;
-        }
-    }
-    // Persegue o alvo
-    if (this.alvo != NULL) {
-        temp.dx = this.alvo.x - player.x;
-        temp.dy = this.alvo.y - player.y;
-        if (abs(temp.dx) > 0.3) player.x += (temp.dx > 0 ? 0.2 : -0.2);
-        if (abs(temp.dy) > 0.3) player.y += (temp.dy > 0 ? 0.2 : -0.2);
-        // Ataca se estiver perto
-        if (abs(temp.dx) < 1.5 && abs(temp.dy) < 1.5) {
-            setani("sword", "");
-            this.alvo = NULL;
-        }
-    }
-    setTimer(0.05);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>👗 Detector de Roupas</h3>
-                    <p>Detecta e copia roupas de outros jogadores.</p>
-                    <button class="btn-show" data-target="roupas">Ver Script</button>
-                    <div class="code-hidden" id="roupas">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    new GuiButtonCtrl("BtnDetectarRoupa") {
-        text = "👗 Copiar Roupa";
-        x = screenwidth - 130;
-        y = screenheight - 250;
-        width = 110;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnDetectarRoupa.onAction() {
-    // Detecta o jogador mais próximo
-    temp.alvo = NULL;
-    temp.distMin = 999;
-    for (temp.p : players) {
-        if (temp.p == player) continue;
-        temp.dist = ((temp.p.x - player.x)^2 + (temp.p.y - player.y)^2) ^ 0.5;
-        if (temp.dist < temp.distMin) {
-            temp.distMin = temp.dist;
-            temp.alvo = temp.p;
-        }
-    }
-    if (temp.alvo != NULL) {
-        player.body = temp.alvo.body;
-        player.head = temp.alvo.head;
-        player.shieldimg = temp.alvo.shieldimg;
-        player.attr[1] = temp.alvo.attr[1]; // Hat
-        player.attr[4] = temp.alvo.attr[4]; // Accessory
-        player.chat = "Roupa copiada de " @ temp.alvo.account;
-    }
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>🔫 Metralhadora</h3>
-                    <p>Spam de tiros em todos os jogadores.</p>
-                    <button class="btn-show" data-target="metralhadora">Ver Script</button>
-                    <div class="code-hidden" id="metralhadora">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ativo = false;
-    new GuiButtonCtrl("BtnMetralhadora") {
-        text = "🔫 Ativar Metralhadora";
-        x = screenwidth - 140;
-        y = screenheight - 300;
-        width = 120;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnMetralhadora.onAction() {
-    this.ativo = !this.ativo;
-    BtnMetralhadora.text = this.ativo ? "🔫 Desativar" : "🔫 Ativar Metralhadora";
-    if (this.ativo) setTimer(0.05);
-}
-
-function onTimeout() {
-    if (!this.ativo) return;
-    for (temp.p : players) {
-        if (temp.p == player) continue;
-        temp.ang = getangle(temp.p.x - player.x, temp.p.y - player.y);
-        shoot(player.x + 1.5, player.y + 1.5, 2, temp.ang, 0.5, 1, "ci_thrownobject", "arrow.png");
-    }
-    setTimer(0.05);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>⌨️ TypeWriter Chat</h3>
-                    <p>Efeito de digitação letra por letra.</p>
-                    <button class="btn-show" data-target="typewriter">Ver Script</button>
-                    <div class="code-hidden" id="typewriter">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.fraseCompleta = "";
-    this.fraseAtual = "";
-    this.indiceLetra = 0;
-    this.velocidade = 0.08;
-    this.autoAlterando = false;
-}
-
-function onPlayerChats() {
-    if (this.autoAlterando) return;
-    this.fraseCompleta = player.chat;
-    this.fraseAtual = "";
-    this.indiceLetra = 1;
-    this.autoAlterando = true;
-    this.fraseAtual = this.fraseCompleta.substring(0, this.indiceLetra);
-    player.chat = this.fraseAtual;
-    setTimer(this.velocidade);
-}
-
-function onTimeout() {
-    if (this.indiceLetra >= this.fraseCompleta.length()) {
-        this.autoAlterando = false;
-        return;
-    }
-    this.indiceLetra++;
-    this.fraseAtual = this.fraseCompleta.substring(0, this.indiceLetra);
-    player.chat = this.fraseAtual;
-    setTimer(this.velocidade);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <span class="card-badge hack">Hack</span>
-                    <h3>🌊 Arrow Spam</h3>
-                    <p>Spam de flechas em todas as direções.</p>
-                    <button class="btn-show" data-target="arrow-spam">Ver Script</button>
-                    <div class="code-hidden" id="arrow-spam">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ativo = false;
-    new GuiButtonCtrl("BtnArrowSpam") {
-        text = "🏹 Ativar Spam";
-        x = screenwidth - 150;
-        y = screenheight - 350;
-        width = 130;
-        height = 40;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnArrowSpam.onAction() {
-    this.ativo = !this.ativo;
-    BtnArrowSpam.text = this.ativo ? "🏹 Desativar Spam" : "🏹 Ativar Spam";
-    if (this.ativo) setTimer(0.05);
-}
-
-function onTimeout() {
-    if (!this.ativo) return;
-    for (temp.i = 0; temp.i < 50; temp.i++) {
-        temp.ang = random(0, 6.28);
-        temp.power = random(0.5, 3);
-        shoot(player.x + 1.5 + random(-3, 3), player.y + 1.5 + random(-3, 3), 2, temp.ang, temp.power, 1, "ci_thrownobject", "arrow.png");
-    }
-    setTimer(0.05);
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== FOOTER ===== -->
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <i class="fas fa-gamepad"></i>
-                    <span>KZN MENU GS2</span>
-                    <p>Guia para Iniciantes - O manual definitivo do Graal</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#inicio">Início</a>
-                    <a href="#movimento">Movimento</a>
-                    <a href="#interface">Interface</a>
-                    <a href="#sistemas">Sistemas</a>
-                    <a href="#eventos">Eventos</a>
-                    <a href="#ferramentas">Ferramentas</a>
-                    <a href="#hacks">Hacks</a>
+                    <span>KZN MENU</span>
+                    <p>O melhor Mod Menu para Graal Mobile</p>
                 </div>
                 <div class="footer-social">
-                    <a href="https://youtube.com/@kzn_menu?si=twaL8UfC3L-D7HZJ" target="_blank" class="youtube" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord">
+                    <a href="https://discord.gg/SEU_LINK_DISCORD" target="_blank" class="discord" title="Discord">
                         <i class="fab fa-discord"></i>
                     </a>
-                    <a href="https://github.com/gabriel6061yt-cell" target="_blank" class="github" title="GitHub">
-                        <i class="fab fa-github"></i>
+                    <a href="#" class="pix" onclick="abrirModalPix()" title="PIX">
+                        <i class="fas fa-qrcode"></i>
                     </a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 KZN MENU GS2 - Feito para a comunidade Graal</p>
+                <p>&copy; 2026 KZN MENU - Todos os direitos reservados</p>
             </div>
         </div>
     </footer>
+
+    <!-- ============================================================
+    MODAL PIX
+    ============================================================ -->
+    <div class="modal" id="modalPix">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal()">✕</span>
+            <h2>💳 Pagamento PIX</h2>
+            <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Escaneie o QR Code ou copie a chave</p>
+            <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
+            <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
+            <div class="plan-info" id="planInfo">Plano: - | Valor: -</div>
+            <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
+                <p>Após o pagamento, entre em contato no Discord:</p>
+                <a href="https://discord.gg/SEU_LINK_DISCORD" target="_blank" style="color: var(--primary);">👉 Clique aqui para ir ao Discord</a>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================================
     JAVASCRIPT
@@ -1512,23 +879,14 @@ function onTimeout() {
         // ===== MENU MOBILE =====
         const mobileMenu = document.getElementById('mobileMenu');
         const navMenu = document.getElementById('navMenu');
-        const menuIcon = mobileMenu.querySelector('i');
 
         mobileMenu.addEventListener('click', () => {
             navMenu.classList.toggle('open');
-            mobileMenu.classList.toggle('active');
-            if (navMenu.classList.contains('open')) {
-                menuIcon.className = 'fas fa-times';
-            } else {
-                menuIcon.className = 'fas fa-bars';
-            }
         });
 
         document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('open');
-                mobileMenu.classList.remove('active');
-                menuIcon.className = 'fas fa-bars';
             });
         });
 
@@ -1552,42 +910,50 @@ function onTimeout() {
             });
 
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // ===== SHOW/HIDE CODE =====
-        document.querySelectorAll('.btn-show').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = document.getElementById(btn.dataset.target);
-                if (target) {
-                    target.classList.toggle('show');
-                    btn.textContent = target.classList.contains('show') ? 'Ocultar' : 'Ver Exemplo';
-                }
-            });
-        });
+        // ===== FAQ =====
+        function toggleFaq(el) {
+            el.classList.toggle('open');
+        }
 
-        // ===== ANIMAÇÃO DE ENTRADA =====
-        const cards = document.querySelectorAll('.tutorial-card');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+        // ===== MODAL PIX =====
+        let planoSelecionado = '';
+        let valorSelecionado = 0;
 
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
+        function abrirModal(plano, valor) {
+            planoSelecionado = plano;
+            valorSelecionado = valor;
+            document.getElementById('planInfo').textContent = `Plano: ${plano} | Valor: R$ ${valor},00`;
+            document.getElementById('modalPix').classList.add('open');
+        }
+
+        function abrirModalPix() {
+            document.getElementById('planInfo').textContent = 'Clique em "Comprar" para gerar o pagamento';
+            document.getElementById('modalPix').classList.add('open');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalPix').classList.remove('open');
+        }
+
+        function copiarPix() {
+            const key = document.getElementById('pixKey').textContent;
+            navigator.clipboard.writeText(key).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX';
+                }, 2000);
+            });
+        }
+
+        // ===== FECHAR MODAL CLICANDO FORA =====
+        document.getElementById('modalPix').addEventListener('click', function(e) {
+            if (e.target === this) fecharModal();
         });
     </script>
 
 </body>
-                                                          </html>
+                    </html>
