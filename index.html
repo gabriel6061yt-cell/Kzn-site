@@ -163,7 +163,7 @@
             transform: translateY(-1px);
         }
 
-        /* ===== MENU MOBILE MELHORADO ===== */
+        /* ===== MENU MOBILE ===== */
         .nav-toggle {
             display: none;
             color: #fff;
@@ -349,22 +349,6 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 30px rgba(220, 38, 38, 0.15);
         }
-        .btn-ia {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: #fff;
-            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
-            animation: pulse-btn 2s infinite;
-        }
-        .btn-ia:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 50px rgba(124, 58, 237, 0.6);
-        }
-        @keyframes pulse-btn {
-            0% { box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4); }
-            50% { box-shadow: 0 4px 50px rgba(124, 58, 237, 0.7); }
-            100% { box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4); }
-        }
-
         .hero-stats {
             display: flex;
             gap: 4rem;
@@ -640,181 +624,6 @@
         }
 
         /* ============================================================
-           CHAT IA (SEM KEY)
-           ============================================================ */
-        #ia-chat {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 420px;
-            max-height: 580px;
-            background: #0d0d0d;
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-lg);
-            padding: 0;
-            z-index: 999;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.95);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        #ia-chat.open { 
-            display: flex;
-            animation: slideUp 0.3s ease forwards;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        #ia-chat .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            border-bottom: 1px solid var(--dark-border);
-        }
-        #ia-chat .header span i { margin-right: 10px; }
-        #ia-chat .header .close {
-            cursor: pointer;
-            color: rgba(255,255,255,0.7);
-            transition: 0.3s;
-            font-size: 1.2rem;
-            background: rgba(0,0,0,0.2);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #ia-chat .header .close:hover { 
-            color: #fff;
-            background: rgba(0,0,0,0.4);
-        }
-        #ia-chat .header .badge {
-            font-size: 0.55rem;
-            background: rgba(255,255,255,0.2);
-            padding: 0.1rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 400;
-        }
-        #ia-chat .messages {
-            flex: 1;
-            max-height: 350px;
-            overflow-y: auto;
-            padding: 16px 20px;
-            background: #0a0a0a;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        #ia-chat .messages::-webkit-scrollbar { width: 4px; }
-        #ia-chat .messages::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        #ia-chat .messages .msg-user {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #1a1a3a, #2a1a4a);
-            color: #a78bfa;
-            padding: 10px 16px;
-            border-radius: 16px 16px 4px 16px;
-            max-width: 85%;
-            font-size: 0.9rem;
-            border: 1px solid rgba(124,58,237,0.2);
-        }
-        #ia-chat .messages .msg-bot {
-            align-self: flex-start;
-            background: #111122;
-            color: #34d399;
-            padding: 10px 16px;
-            border-radius: 16px 16px 16px 4px;
-            max-width: 85%;
-            font-size: 0.9rem;
-            border: 1px solid rgba(52,211,153,0.15);
-            line-height: 1.6;
-            white-space: pre-wrap;
-        }
-        #ia-chat .messages .msg-bot code {
-            background: #0a0a1a;
-            padding: 0.1rem 0.4rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            color: #fcd34d;
-        }
-        #ia-chat .messages .loading {
-            align-self: center;
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 0.9rem;
-        }
-        #ia-chat .input-area {
-            display: flex;
-            gap: 10px;
-            padding: 12px 16px;
-            background: #0a0a0a;
-            border-top: 1px solid var(--dark-border);
-        }
-        #ia-chat input {
-            flex: 1;
-            padding: 10px 16px;
-            border-radius: 12px;
-            border: 1px solid var(--dark-border);
-            background: #1a1a1a;
-            color: #fff;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-        #ia-chat input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(220,38,38,0.15);
-        }
-        #ia-chat .btn-enviar {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        #ia-chat .btn-enviar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 25px rgba(220,38,38,0.3);
-        }
-
-        .floating-ia {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border: none;
-            color: #fff;
-            font-size: 28px;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.5);
-            transition: 0.3s;
-            animation: pulse-ia 2.5s infinite;
-        }
-        .floating-ia:hover {
-            transform: scale(1.12);
-            box-shadow: 0 8px 50px rgba(220,38,38,0.7);
-        }
-        @keyframes pulse-ia {
-            0% { box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
-            50% { box-shadow: 0 4px 50px rgba(220,38,38,0.7); }
-            100% { box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
-        }
-
-        /* ============================================================
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1024px) {
@@ -845,19 +654,6 @@
             .footer-content { flex-direction: column; text-align: center; align-items: center; }
             .footer-links { justify-content: center; }
             .hero-stats { gap: 2rem; }
-            #ia-chat {
-                width: 95%;
-                right: 2.5%;
-                bottom: 80px;
-                max-height: 480px;
-            }
-            .floating-ia {
-                width: 54px;
-                height: 54px;
-                font-size: 22px;
-                bottom: 12px;
-                right: 12px;
-            }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
@@ -868,19 +664,12 @@
             .nav-logo .logo-text small { font-size: 0.45rem; }
             .nav-logo img { width: 38px; height: 38px; }
             .footer-social a { width: 38px; height: 38px; font-size: 1rem; }
-            #ia-chat .messages .msg-user,
-            #ia-chat .messages .msg-bot {
-                font-size: 0.8rem;
-                max-width: 95%;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    NAVBAR
-    ============================================================ -->
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#inicio" class="nav-logo">
@@ -905,9 +694,7 @@
         </div>
     </nav>
 
-    <!-- ============================================================
-    HERO
-    ============================================================ -->
+    <!-- ===== HERO ===== -->
     <section id="inicio" class="hero">
         <div class="hero-content">
             <div class="hero-badge">
@@ -920,8 +707,7 @@
                 <span style="font-size: 2.2rem; color: var(--text-muted);">Guia para <span class="highlight-blue">Iniciantes</span></span>
             </h1>
             <p class="hero-subtitle">
-                Aprenda <strong>GS2</strong> do zero com exemplos práticos, 
-                <br />scripts prontos e <strong>IA integrada</strong> para tirar dúvidas!
+                Aprenda <strong>GS2</strong> do zero com exemplos práticos e scripts prontos.
             </p>
             <div class="hero-buttons">
                 <a href="#movimento" class="btn btn-primary">
@@ -930,9 +716,6 @@
                 <a href="#hacks" class="btn btn-secondary">
                     <i class="fas fa-skull"></i> Ver Hacks
                 </a>
-                <button class="btn btn-ia" onclick="toggleIA()">
-                    <i class="fas fa-robot"></i> IA Gratuita
-                </button>
             </div>
             <div class="hero-stats">
                 <div class="stat">
@@ -951,9 +734,7 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    MOVIMENTO
-    ============================================================ -->
+    <!-- ===== MOVIMENTO ===== -->
     <section id="movimento" class="section">
         <div class="container">
             <div class="section-header">
@@ -964,7 +745,7 @@
                 <div class="tutorial-card">
                     <span class="card-badge">Movimento</span>
                     <h3>📦 Carry</h3>
-                    <p>Sistema de carregar objetos e outros jogadores.</p>
+                    <p>Sistema para carregar objetos ou outros jogadores.</p>
                     <button class="btn-show" data-target="carry">Ver Exemplo</button>
                     <div class="code-hidden" id="carry">
                         <pre><code>//#CLIENTSIDE
@@ -976,6 +757,11 @@ function onPlayerTouchs() {
     if (this.carregando == null) {
         this.carregando = player;
         player.attr[30] = "carry";
+        player.chat = "Carregando!";
+    } else {
+        this.carregando = null;
+        player.attr[30] = "";
+        player.chat = "Soltei!";
     }
 }</code></pre>
                     </div>
@@ -990,9 +776,23 @@ function onPlayerTouchs() {
 function onCreated() {
     this.cameraX = player.x;
     this.cameraY = player.y;
+    this.movendo = false;
 }
 
 function iniciarCutscene() {
+    this.movendo = true;
+    setTimer(0.05);
+}
+
+function onTimeout() {
+    if (!this.movendo) return;
+    // Lógica para mover a câmera
+    player.x += 0.1;
+    if (player.x > this.cameraX + 5) {
+        this.movendo = false;
+        player.chat = "Cutscene finalizada!";
+        return;
+    }
     setTimer(0.05);
 }</code></pre>
                     </div>
@@ -1007,6 +807,7 @@ function iniciarCutscene() {
 function onCreated() {
     this.pulando = false;
     this.velocidadeY = 0;
+    setTimer(0.05);
 }
 
 function onTimeout() {
@@ -1014,6 +815,18 @@ function onTimeout() {
         this.pulando = true;
         this.velocidadeY = -0.5;
     }
+    if (this.pulando) {
+        player.y += this.velocidadeY;
+        this.velocidadeY += 0.05;
+        if (player.y >= 30) {
+            player.y = 30;
+            this.pulando = false;
+            this.velocidadeY = 0;
+        }
+    }
+    if (keydown(3)) player.x += 0.2;
+    if (keydown(1)) player.x -= 0.2;
+    setTimer(0.05);
 }</code></pre>
                     </div>
                 </div>
@@ -1021,9 +834,7 @@ function onTimeout() {
         </div>
     </section>
 
-    <!-- ============================================================
-    INTERFACE
-    ============================================================ -->
+    <!-- ===== INTERFACE ===== -->
     <section id="interface" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -1039,14 +850,38 @@ function onTimeout() {
                     <div class="code-hidden" id="gui-builder">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    new GuiWindowCtrl("Janela") {
+    new GuiWindowCtrl("MinhaJanela") {
         profile = GuiBlueWindowProfile;
         title = "Minha GUI";
-        x = 50; y = 50;
-        width = 300; height = 200;
+        x = 50;
+        y = 50;
+        width = 300;
+        height = 200;
         canmove = true;
         canclose = true;
+        
+        new GuiTextCtrl("MeuTexto") {
+            x = 10;
+            y = 30;
+            width = 280;
+            height = 30;
+            text = "Olá, mundo!";
+            profile = GuiBlueTextProfile;
+        }
+        
+        new GuiButtonCtrl("MeuBotao") {
+            x = 10;
+            y = 70;
+            width = 100;
+            height = 30;
+            text = "Clique aqui!";
+            profile = GuiBlueButtonProfile;
+        }
     }
+}
+
+function MeuBotao.onAction() {
+    player.chat = "Botão clicado!";
 }</code></pre>
                     </div>
                 </div>
@@ -1058,11 +893,48 @@ function onCreated() {
                     <div class="code-hidden" id="custom">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    this.cores = {0, 1, 2, 3, 4};
+    new GuiWindowCtrl("JanelaCustom") {
+        profile = GuiBlueWindowProfile;
+        title = "Personalização";
+        x = 50;
+        y = 50;
+        width = 250;
+        height = 200;
+        canmove = true;
+        canclose = true;
+        
+        new GuiTextCtrl("LblCor") {
+            x = 10;
+            y = 30;
+            width = 100;
+            height = 20;
+            text = "Cor do Cabelo:";
+            profile = GuiBlueTextProfile;
+        }
+        
+        new GuiTextEditCtrl("CorInput") {
+            x = 120;
+            y = 28;
+            width = 100;
+            height = 24;
+            text = "1";
+            profile = GuiBlueTextEditProfile;
+        }
+        
+        new GuiButtonCtrl("BtnMudarCor") {
+            x = 10;
+            y = 70;
+            width = 220;
+            height = 30;
+            text = "Aplicar Cor";
+            profile = GuiBlueButtonProfile;
+        }
+    }
 }
 
-function mudarCor(id, cor) {
-    player.colors[id] = cor;
+function BtnMudarCor.onAction() {
+    player.colors[0] = int(CorInput.text);
+    player.chat = "Cor alterada!";
 }</code></pre>
                     </div>
                 </div>
@@ -1075,7 +947,29 @@ function mudarCor(id, cor) {
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
     this.amigos = {"player1", "player2"};
-    criarListaAmigos();
+    
+    new GuiWindowCtrl("JanelaAmigos") {
+        profile = GuiBlueWindowProfile;
+        title = "Lista de Amigos";
+        x = 50;
+        y = 50;
+        width = 200;
+        height = 150;
+        canmove = true;
+        canclose = true;
+        
+        new GuiTextListCtrl("ListaAmigos") {
+            x = 10;
+            y = 30;
+            width = 180;
+            height = 80;
+            profile = GuiBlueTextListProfile;
+        }
+    }
+    
+    for (temp.i = 0; temp.i < this.amigos.size(); temp.i++) {
+        ListaAmigos.addrow(temp.i, this.amigos[temp.i]);
+    }
 }</code></pre>
                     </div>
                 </div>
@@ -1083,9 +977,7 @@ function onCreated() {
         </div>
     </section>
 
-    <!-- ============================================================
-    SISTEMAS
-    ============================================================ -->
+    <!-- ===== SISTEMAS ===== -->
     <section id="sistemas" class="section">
         <div class="container">
             <div class="section-header">
@@ -1102,10 +994,31 @@ function onCreated() {
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
     this.moveis = {};
+    new GuiWindowCtrl("JanelaMoveis") {
+        profile = GuiBlueWindowProfile;
+        title = "Móveis";
+        x = 50;
+        y = 50;
+        width = 200;
+        height = 150;
+        canmove = true;
+        canclose = true;
+        
+        new GuiButtonCtrl("BtnColocar") {
+            x = 10;
+            y = 30;
+            width = 180;
+            height = 30;
+            text = "Colocar Móvel";
+            profile = GuiBlueButtonProfile;
+        }
+    }
 }
 
-function colocarMovel(id, x, y) {
-    this.moveis.add({id: id, x: x, y: y});
+function BtnColocar.onAction() {
+    // Código para colocar um móvel na posição do jogador
+    this.moveis.add({id: "mesa", x: player.x, y: player.y});
+    player.chat = "Móvel colocado!";
 }</code></pre>
                     </div>
                 </div>
@@ -1121,6 +1034,29 @@ function onCreated() {
         {nome: "Espada", preco: 100},
         {nome: "Poção", preco: 50}
     };
+    
+    new GuiWindowCtrl("JanelaLoja") {
+        profile = GuiBlueWindowProfile;
+        title = "Loja";
+        x = 50;
+        y = 50;
+        width = 200;
+        height = 150;
+        canmove = true;
+        canclose = true;
+        
+        new GuiTextListCtrl("ListaItens") {
+            x = 10;
+            y = 30;
+            width = 180;
+            height = 80;
+            profile = GuiBlueTextListProfile;
+        }
+    }
+    
+    for (temp.i = 0; temp.i < this.itens.size(); temp.i++) {
+        ListaItens.addrow(temp.i, this.itens[temp.i].nome @ " - " @ this.itens[temp.i].preco @ "g");
+    }
 }</code></pre>
                     </div>
                 </div>
@@ -1133,11 +1069,28 @@ function onCreated() {
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
     this.montado = false;
+    
+    new GuiButtonCtrl("BtnMontar") {
+        text = "🐴 Montar";
+        x = screenwidth - 100;
+        y = screenheight - 100;
+        width = 80;
+        height = 40;
+        profile = GuiBlueButtonProfile;
+    }
 }
 
-function montar() {
-    this.montado = true;
-    setani("horse_ride", "");
+function BtnMontar.onAction() {
+    this.montado = !this.montado;
+    if (this.montado) {
+        setani("horse_ride", "");
+        player.chat = "Montado!";
+        BtnMontar.text = "🐴 Desmontar";
+    } else {
+        setani("idle", "");
+        player.chat = "Desmontado!";
+        BtnMontar.text = "🐴 Montar";
+    }
 }</code></pre>
                     </div>
                 </div>
@@ -1145,9 +1098,7 @@ function montar() {
         </div>
     </section>
 
-    <!-- ============================================================
-    EVENTOS
-    ============================================================ -->
+    <!-- ===== EVENTOS ===== -->
     <section id="eventos" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -1171,8 +1122,10 @@ function onTimeout() {
     for (temp.npc : npcs) {
         if (npc.image == "egg.png") {
             this.ovos++;
+            // Faz algo com o ovo
         }
     }
+    setTimer(0.1);
 }</code></pre>
                     </div>
                 </div>
@@ -1185,7 +1138,8 @@ function onTimeout() {
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
     if (month == 10) {
-        ativarHalloween();
+        player.chat = "🎃 Feliz Halloween!";
+        // Ativar decorações
     }
 }</code></pre>
                     </div>
@@ -1200,6 +1154,20 @@ function onCreated() {
 function onCreated() {
     this.questAtiva = false;
     this.itensColetados = 0;
+    
+    new GuiButtonCtrl("BtnIniciarQuest") {
+        text = "🎃 Iniciar Quest";
+        x = screenwidth - 150;
+        y = screenheight - 150;
+        width = 120;
+        height = 40;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnIniciarQuest.onAction() {
+    this.questAtiva = true;
+    player.chat = "Quest de Halloween iniciada!";
 }</code></pre>
                     </div>
                 </div>
@@ -1207,9 +1175,7 @@ function onCreated() {
         </div>
     </section>
 
-    <!-- ============================================================
-    FERRAMENTAS
-    ============================================================ -->
+    <!-- ===== FERRAMENTAS ===== -->
     <section id="ferramentas" class="section">
         <div class="container">
             <div class="section-header">
@@ -1225,7 +1191,9 @@ function onCreated() {
                     <div class="code-hidden" id="tween">
                         <pre><code>//#CLIENTSIDE
 function animar(obj, prop, final, tempo) {
-    // Anima propriedade de obj
+    // Esta é uma função de exemplo para animações
+    // Em GS2, você pode usar loops com setTimer para criar animações
+    player.chat = "Animação iniciada!";
 }</code></pre>
                     </div>
                 </div>
@@ -1239,7 +1207,10 @@ function animar(obj, prop, final, tempo) {
 function atirar(x, y, ang, power) {
     shoot(x, y, 2, ang, power, 1, 
           "ci_thrownobject", "arrow.png");
-}</code></pre>
+    player.chat = "Tiro disparado!";
+}
+
+// Exemplo de uso: atirar(player.x + 1.5, player.y + 1.5, 0, 2);</code></pre>
                     </div>
                 </div>
                 <div class="tutorial-card">
@@ -1250,6 +1221,17 @@ function atirar(x, y, ang, power) {
                     <div class="code-hidden" id="effect">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
+    new GuiButtonCtrl("BtnExplodir") {
+        text = "💥 Explodir!";
+        x = screenwidth - 120;
+        y = screenheight - 200;
+        width = 100;
+        height = 40;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnExplodir.onAction() {
     putexplosion2(5, 8, player.x, player.y);
 }</code></pre>
                     </div>
@@ -1258,9 +1240,7 @@ function onCreated() {
         </div>
     </section>
 
-    <!-- ============================================================
-    HACKS
-    ============================================================ -->
+    <!-- ===== HACKS ===== -->
     <section id="hacks" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -1276,20 +1256,20 @@ function onCreated() {
                     <div class="code-hidden" id="ganis">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    criarJanela();
-    setTimer(0.05);
+    this.ganis = {};
+    setTimer(0.5);
 }
 
-function criarJanela() {
-    new GuiWindowCtrl("Win") {
-        profile = GuiBlueWindowProfile;
-        title = "🎭 DETECTOR DE GANIS";
-        x = 20; y = 50;
-        width = 320; height = 480;
-        canmove = true;
-        canclose = true;
-        // ... lista de ganis
+function onTimeout() {
+    for (temp.p : players) {
+        if (temp.p.ani != nil && temp.p.ani != "") {
+            if (this.ganis.index(temp.p.ani) < 0) {
+                this.ganis.add(temp.p.ani);
+                player.chat = "Gani detectado: " @ temp.p.ani;
+            }
+        }
     }
+    setTimer(0.5);
 }</code></pre>
                     </div>
                 </div>
@@ -1308,7 +1288,29 @@ function onCreated() {
 
 function onTimeout() {
     if (!this.autoAtk) return;
-    // Procura e persegue alvo
+    // Procura o player mais próximo
+    temp.distMin = 999;
+    for (temp.p : players) {
+        if (temp.p == player) continue;
+        temp.dist = ((temp.p.x - player.x)^2 + (temp.p.y - player.y)^2) ^ 0.5;
+        if (temp.dist < temp.distMin && temp.dist < 10) {
+            temp.distMin = temp.dist;
+            this.alvo = temp.p;
+        }
+    }
+    // Persegue o alvo
+    if (this.alvo != NULL) {
+        temp.dx = this.alvo.x - player.x;
+        temp.dy = this.alvo.y - player.y;
+        if (abs(temp.dx) > 0.3) player.x += (temp.dx > 0 ? 0.2 : -0.2);
+        if (abs(temp.dy) > 0.3) player.y += (temp.dy > 0 ? 0.2 : -0.2);
+        // Ataca se estiver perto
+        if (abs(temp.dx) < 1.5 && abs(temp.dy) < 1.5) {
+            setani("sword", "");
+            this.alvo = NULL;
+        }
+    }
+    setTimer(0.05);
 }</code></pre>
                     </div>
                 </div>
@@ -1320,13 +1322,36 @@ function onTimeout() {
                     <div class="code-hidden" id="roupas">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    this.botaoCriado = false;
-    scheduleEvent(0.5, "criarBotao");
+    new GuiButtonCtrl("BtnDetectarRoupa") {
+        text = "👗 Copiar Roupa";
+        x = screenwidth - 130;
+        y = screenheight - 250;
+        width = 110;
+        height = 40;
+        profile = GuiBlueButtonProfile;
+    }
 }
 
-function BtnDetectar.onAction() {
-    temp.actor = Games_ProfileWindow_PictureCharacter.actor;
-    // Detecta body, head, hat, shield, accessory, cores
+function BtnDetectarRoupa.onAction() {
+    // Detecta o jogador mais próximo
+    temp.alvo = NULL;
+    temp.distMin = 999;
+    for (temp.p : players) {
+        if (temp.p == player) continue;
+        temp.dist = ((temp.p.x - player.x)^2 + (temp.p.y - player.y)^2) ^ 0.5;
+        if (temp.dist < temp.distMin) {
+            temp.distMin = temp.dist;
+            temp.alvo = temp.p;
+        }
+    }
+    if (temp.alvo != NULL) {
+        player.body = temp.alvo.body;
+        player.head = temp.alvo.head;
+        player.shieldimg = temp.alvo.shieldimg;
+        player.attr[1] = temp.alvo.attr[1]; // Hat
+        player.attr[4] = temp.alvo.attr[4]; // Accessory
+        player.chat = "Roupa copiada de " @ temp.alvo.account;
+    }
 }</code></pre>
                     </div>
                 </div>
@@ -1339,16 +1364,30 @@ function BtnDetectar.onAction() {
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
     this.ativo = false;
-    criarJanela();
-    setTimer(0.05);
+    new GuiButtonCtrl("BtnMetralhadora") {
+        text = "🔫 Ativar Metralhadora";
+        x = screenwidth - 140;
+        y = screenheight - 300;
+        width = 120;
+        height = 40;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnMetralhadora.onAction() {
+    this.ativo = !this.ativo;
+    BtnMetralhadora.text = this.ativo ? "🔫 Desativar" : "🔫 Ativar Metralhadora";
+    if (this.ativo) setTimer(0.05);
 }
 
 function onTimeout() {
     if (!this.ativo) return;
     for (temp.p : players) {
         if (temp.p == player) continue;
-        // Atira em todos os jogadores
+        temp.ang = getangle(temp.p.x - player.x, temp.p.y - player.y);
+        shoot(player.x + 1.5, player.y + 1.5, 2, temp.ang, 0.5, 1, "ci_thrownobject", "arrow.png");
     }
+    setTimer(0.05);
 }</code></pre>
                     </div>
                 </div>
@@ -1359,12 +1398,23 @@ function onTimeout() {
                     <button class="btn-show" data-target="typewriter">Ver Script</button>
                     <div class="code-hidden" id="typewriter">
                         <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.fraseCompleta = "";
+    this.fraseAtual = "";
+    this.indiceLetra = 0;
+    this.velocidade = 0.08;
+    this.autoAlterando = false;
+}
+
 function onPlayerChats() {
+    if (this.autoAlterando) return;
     this.fraseCompleta = player.chat;
     this.fraseAtual = "";
     this.indiceLetra = 1;
     this.autoAlterando = true;
-    setTimer(0.08);
+    this.fraseAtual = this.fraseCompleta.substring(0, this.indiceLetra);
+    player.chat = this.fraseAtual;
+    setTimer(this.velocidade);
 }
 
 function onTimeout() {
@@ -1375,7 +1425,7 @@ function onTimeout() {
     this.indiceLetra++;
     this.fraseAtual = this.fraseCompleta.substring(0, this.indiceLetra);
     player.chat = this.fraseAtual;
-    setTimer(0.08);
+    setTimer(this.velocidade);
 }</code></pre>
                     </div>
                 </div>
@@ -1386,13 +1436,32 @@ function onTimeout() {
                     <button class="btn-show" data-target="arrow-spam">Ver Script</button>
                     <div class="code-hidden" id="arrow-spam">
                         <pre><code>//#CLIENTSIDE
-function onActionHook(a1, a2, a3, a4, a5, a6, a7) {
-    for (temp.i = 0; temp.i < 1000; temp.i++) {
-        temp.ang = random(0, 6.28);
-        temp.x = a1 + random(-8, 8);
-        temp.y = a2 + random(-8, 8);
-        shoot(temp.x, temp.y, a3, temp.ang, a5, random(0.5, 5), a7);
+function onCreated() {
+    this.ativo = false;
+    new GuiButtonCtrl("BtnArrowSpam") {
+        text = "🏹 Ativar Spam";
+        x = screenwidth - 150;
+        y = screenheight - 350;
+        width = 130;
+        height = 40;
+        profile = GuiBlueButtonProfile;
     }
+}
+
+function BtnArrowSpam.onAction() {
+    this.ativo = !this.ativo;
+    BtnArrowSpam.text = this.ativo ? "🏹 Desativar Spam" : "🏹 Ativar Spam";
+    if (this.ativo) setTimer(0.05);
+}
+
+function onTimeout() {
+    if (!this.ativo) return;
+    for (temp.i = 0; temp.i < 50; temp.i++) {
+        temp.ang = random(0, 6.28);
+        temp.power = random(0.5, 3);
+        shoot(player.x + 1.5 + random(-3, 3), player.y + 1.5 + random(-3, 3), 2, temp.ang, temp.power, 1, "ci_thrownobject", "arrow.png");
+    }
+    setTimer(0.05);
 }</code></pre>
                     </div>
                 </div>
@@ -1400,9 +1469,7 @@ function onActionHook(a1, a2, a3, a4, a5, a6, a7) {
         </div>
     </section>
 
-    <!-- ============================================================
-    FOOTER
-    ============================================================ -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -1437,37 +1504,6 @@ function onActionHook(a1, a2, a3, a4, a5, a6, a7) {
             </div>
         </div>
     </footer>
-
-    <!-- ============================================================
-    IA CHAT (SEM KEY)
-    ============================================================ -->
-    <button class="floating-ia" onclick="toggleIA()" title="Pergunte para a IA Gratuita">
-        <i class="fas fa-robot"></i>
-    </button>
-
-    <div id="ia-chat">
-        <div class="header">
-            <span>
-                <i class="fas fa-brain"></i> 
-                KZN IA
-                <span class="badge">GRÁTIS</span>
-            </span>
-            <span class="close" onclick="toggleIA()">✕</span>
-        </div>
-        <div class="messages" id="ia-messages">
-            <div class="msg-bot">
-                🤖 Olá! Sou a <strong>IA do KZN</strong> (sem chave)!<br />
-                Posso te ajudar com scripts GS2, sistemas e hacks.<br />
-                <span style="color: var(--text-muted); font-size: 0.85rem;">Ex: "Cria um script de ESP de NPC"</span>
-            </div>
-        </div>
-        <div class="input-area">
-            <input type="text" id="ia-input" placeholder="Digite sua pergunta sobre GS2..." onkeypress="if(event.key==='Enter') enviarIA()">
-            <button class="btn-enviar" onclick="enviarIA()">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
 
     <!-- ============================================================
     JAVASCRIPT
@@ -1551,72 +1587,7 @@ function onActionHook(a1, a2, a3, a4, a5, a6, a7) {
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
-
-        // ============================================================
-        // IA SEM KEY - HUGGING FACE
-        // ============================================================
-        function toggleIA() {
-            document.getElementById('ia-chat').classList.toggle('open');
-        }
-
-        async function enviarIA() {
-            const input = document.getElementById('ia-input');
-            const msg = input.value.trim();
-            if (!msg) return;
-
-            const messages = document.getElementById('ia-messages');
-            messages.innerHTML += `<div class="msg-user">${msg}</div>`;
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
-
-            const loadingId = 'loading-' + Date.now();
-            messages.innerHTML += `<div class="loading" id="${loadingId}">⏳ Pensando...</div>`;
-            messages.scrollTop = messages.scrollHeight;
-
-            try {
-                // ===== HUGGING FACE API (SEM KEY) =====
-                const response = await fetch(
-                    'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1',
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            inputs: `Você é um especialista em GS2 para Graal Mobile. 
-                            Responda de forma clara, com exemplos de código quando possível. 
-                            Use emojis para tornar a resposta mais amigável.
-                            
-                            Pergunta: ${msg}`
-                        })
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status} - Limite de requisições atingido`);
-                }
-
-                const data = await response.json();
-                
-                // Verifica se a resposta é válida
-                if (!data || !data[0] || !data[0].generated_text) {
-                    throw new Error('Resposta da API em formato inesperado');
-                }
-
-                let resposta = data[0].generated_text;
-                // Remove a pergunta da resposta
-                resposta = resposta.replace(`Pergunta: ${msg}`, '').trim();
-                
-                document.getElementById(loadingId).remove();
-                messages.innerHTML += `<div class="msg-bot">${resposta}</div>`;
-
-            } catch (erro) {
-                document.getElementById(loadingId).remove();
-                messages.innerHTML += `<div class="msg-bot">⚠️ Erro: ${erro.message}</div>`;
-                console.error('Erro detalhado:', erro);
-            }
-
-            messages.scrollTop = messages.scrollHeight;
-        }
     </script>
 
 </body>
-    </html>
+                                                          </html>
