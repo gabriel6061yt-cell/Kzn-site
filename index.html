@@ -141,11 +141,28 @@
             align-items: center;
             justify-content: center;
             padding: 7rem 2rem 4rem;
-            background: radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.15), transparent 60%),
-                        radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.10), transparent 60%),
-                        var(--dark);
+            background: 
+                radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.2), transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15), transparent 60%),
+                var(--dark);
             position: relative;
             overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.015) 2px,
+                    rgba(255, 255, 255, 0.015) 4px);
+            pointer-events: none;
+            animation: scanlines 20s linear infinite;
+        }
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
         }
         .hero-content {
             flex: 1;
@@ -155,18 +172,19 @@
         }
         .hero-badge {
             display: inline-block;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #fff;
-            padding: 0.2rem 1.2rem;
+            padding: 0.3rem 1.4rem;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 1rem;
+            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.3);
         }
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.2rem;
             font-weight: 900;
             line-height: 1.05;
             margin-bottom: 1rem;
@@ -193,8 +211,8 @@
             margin-bottom: 3rem;
         }
         .btn {
-            padding: 0.9rem 2.2rem;
-            border-radius: 12px;
+            padding: 0.9rem 2.4rem;
+            border-radius: 14px;
             text-decoration: none;
             font-weight: 700;
             display: inline-flex;
@@ -208,11 +226,11 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
-            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.4);
         }
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 40px rgba(220, 38, 38, 0.6);
+            box-shadow: 0 8px 50px rgba(220, 38, 38, 0.6);
         }
         .btn-secondary {
             background: var(--glass);
@@ -229,12 +247,32 @@
             flex: 1;
             max-width: 500px;
             margin-left: 2rem;
+            position: relative;
+            z-index: 1;
         }
         .hero-image img {
             width: 100%;
             border-radius: var(--radius);
             border: 2px solid var(--primary);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+        .hero-image img:hover {
+            transform: scale(1.02);
+            border-color: var(--secondary);
+            box-shadow: 0 10px 60px rgba(124, 58, 237, 0.2);
+        }
+        .hero-image .badge-img {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         /* ============================================================
@@ -242,9 +280,20 @@
            ============================================================ */
         .section {
             padding: 5rem 2rem;
+            position: relative;
         }
         .section.dark {
             background: #050505;
+        }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
         }
         .container {
             max-width: 1400px;
@@ -287,18 +336,27 @@
             border-radius: var(--radius);
             padding: 2.5rem 2rem;
             text-align: center;
-            transition: 0.3s;
+            transition: 0.4s;
             position: relative;
             overflow: hidden;
         }
         .plan-card:hover {
             transform: translateY(-8px);
             border-color: var(--primary);
-            box-shadow: 0 0 60px rgba(220, 38, 38, 0.1);
+            box-shadow: 0 0 60px rgba(220, 38, 38, 0.15);
         }
         .plan-card.popular {
             border-color: var(--secondary);
             box-shadow: 0 0 60px rgba(124, 58, 237, 0.15);
+        }
+        .plan-card.popular::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
         }
         .plan-card .badge {
             position: absolute;
@@ -381,9 +439,14 @@
             border-radius: var(--radius);
             padding: 2rem;
             text-align: center;
+            transition: 0.3s;
+        }
+        .step-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
         }
         .step-card .step-number {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #fff;
             width: 40px;
             height: 40px;
@@ -401,6 +464,95 @@
         .step-card p {
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        /* ============================================================
+           FORMULÁRIO DE CONTATO
+           ============================================================ */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+        }
+        .form-container .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-container label {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #0a0a0a;
+            border: 1px solid var(--dark-border);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+        .form-container input:focus,
+        .form-container select:focus,
+        .form-container textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
+        }
+        .form-container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-container .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-container .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(220, 38, 38, 0.4);
+        }
+        .form-container .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .form-status {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+        }
+        .form-status.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .form-status.error {
+            display: block;
+            background: rgba(220, 38, 38, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
         }
 
         /* ============================================================
@@ -490,8 +642,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
@@ -532,7 +684,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -549,6 +702,11 @@
             width: 90%;
             text-align: center;
             position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-content .close-modal {
             position: absolute;
@@ -576,13 +734,6 @@
             color: var(--success);
             word-break: break-all;
         }
-        .modal-content .pix-qr {
-            margin: 1.5rem 0;
-        }
-        .modal-content .pix-qr img {
-            max-width: 200px;
-            border-radius: 8px;
-        }
         .modal-content .btn-copy {
             background: var(--secondary);
             color: #fff;
@@ -600,6 +751,21 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             margin-top: 1rem;
+        }
+        .modal-content .discord-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.7rem 1.5rem;
+            background: #5865f2;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .modal-content .discord-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 30px rgba(88, 101, 242, 0.4);
         }
 
         /* ============================================================
@@ -633,6 +799,7 @@
             .hero h1 { font-size: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
             .plans-grid { grid-template-columns: 1fr; }
+            .form-container { padding: 1.5rem; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
@@ -649,7 +816,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#inicio" class="nav-logo">
-                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Logo" />
+                <img src="https://yt3.ggpht.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
                 <div class="logo-text">
                     <span>KZN MENU</span>
                     <small>Premium Store</small>
@@ -659,6 +826,7 @@
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#planos"><i class="fas fa-crown"></i> Planos</a></li>
                 <li><a href="#como-comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
             <div class="nav-toggle" id="mobileMenu">
@@ -681,7 +849,7 @@
             </h1>
             <p class="hero-subtitle">
                 Domine o jogo com o Mod Menu mais completo e atualizado.
-                <br />+50 funcionalidades exclusivas!
+                <br /><strong style="color: var(--primary);">+50 funcionalidades</strong> exclusivas!
             </p>
             <div class="hero-buttons">
                 <a href="#planos" class="btn btn-primary">
@@ -694,6 +862,7 @@
         </div>
         <div class="hero-image">
             <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Menu" />
+            <span class="badge-img"><i class="fas fa-star"></i> +50 Funcionalidades</span>
         </div>
     </section>
 
@@ -780,9 +949,64 @@
     </section>
 
     <!-- ============================================================
+    CONTATO / FORMULÁRIO
+    ============================================================ -->
+    <section id="contato" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope"></i> Entre em Contato</h2>
+                <p>Preencha o formulário e receba seu Mod Menu</p>
+            </div>
+            <div class="form-container">
+                <form id="formContato" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST">
+                    <!-- Proteção anti-spam -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Seu Nome</label>
+                        <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Seu E-mail</label>
+                        <input type="email" name="E-mail" placeholder="Digite seu e-mail..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fab fa-whatsapp"></i> WhatsApp</label>
+                        <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-crown"></i> Plano Escolhido</label>
+                        <select name="Plano" required>
+                            <option value="">Selecione um plano...</option>
+                            <option value="Mensal - R$ 50,00 (35 dias)">📅 Mensal - R$ 50,00 (35 dias)</option>
+                            <option value="Permanente - R$ 200,00 (vitalício)">♾️ Permanente - R$ 200,00 (vitalício)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
+                        <textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                    </button>
+
+                    <div class="form-status" id="formStatus"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
     FAQ
     ============================================================ -->
-    <section id="faq" class="section dark">
+    <section id="faq" class="section">
         <div class="container">
             <div class="section-header">
                 <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
@@ -822,7 +1046,7 @@
                         <span>💳 Quais formas de pagamento?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer">Atualmente, aceitamos apenas PIX (chave: <code>6c80021c-957b-49c0-9a5d-98371bf67120</code>).</div>
+                    <div class="answer">Atualmente, aceitamos apenas PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>).</div>
                 </div>
             </div>
         </div>
@@ -840,7 +1064,7 @@
                     <p>O melhor Mod Menu para Graal Mobile</p>
                 </div>
                 <div class="footer-social">
-                    <a href="https://discord.gg/SEU_LINK_DISCORD" target="_blank" class="discord" title="Discord">
+                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord">
                         <i class="fab fa-discord"></i>
                     </a>
                     <a href="#" class="pix" onclick="abrirModalPix()" title="PIX">
@@ -861,13 +1085,17 @@
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModal()">✕</span>
             <h2>💳 Pagamento PIX</h2>
-            <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Escaneie o QR Code ou copie a chave</p>
+            <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Copie a chave abaixo e realize o pagamento</p>
             <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
             <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
             <div class="plan-info" id="planInfo">Plano: - | Valor: -</div>
-            <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted);">
-                <p>Após o pagamento, entre em contato no Discord:</p>
-                <a href="https://discord.gg/SEU_LINK_DISCORD" target="_blank" style="color: var(--primary);">👉 Clique aqui para ir ao Discord</a>
+            <div style="margin-top: 1rem;">
+                <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link">
+                    <i class="fab fa-discord"></i> Entrar em contato no Discord
+                </a>
+            </div>
+            <div style="margin-top: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
+                <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
             </div>
         </div>
     </div>
@@ -953,7 +1181,34 @@
         document.getElementById('modalPix').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
+
+        // ===== FORMULÁRIO =====
+        document.getElementById('formContato').addEventListener('submit', function(e) {
+            const status = document.getElementById('formStatus');
+            status.className = 'form-status';
+            status.style.display = 'none';
+
+            // Mostra loading
+            const btn = this.querySelector('.btn-submit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            // O formulário é enviado pelo FormSubmit
+            // O status é atualizado após o envio (a página recarrega)
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
+            }, 5000);
+        });
+
+        // Verifica se veio com sucesso do FormSubmit
+        if (window.location.search.includes('success')) {
+            const status = document.getElementById('formStatus');
+            status.className = 'form-status success';
+            status.style.display = 'block';
+            status.textContent = '✅ Mensagem enviada com sucesso! Em breve entrarei em contato.';
+        }
     </script>
 
 </body>
-                    </html>
+                                   </html>
