@@ -3,7 +3,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>KZN MENU - MELHORES MODS GRAAL CLASSIC & GRAAL ERA</title>
+
+    <!-- ===== SEO ===== -->
+    <title>KZN MENU - Melhores Mods para Graal Classic &amp; Era</title>
+    <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
+    <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
+
+    <!-- Open Graph (Compartilhamento) -->
+    <meta property="og:title" content="KZN MENU - Mods para Graal" />
+    <meta property="og:description" content="Os melhores mods para farm e gameplay no Graal Classic e Era." />
+    <meta property="og:image" content="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" />
+    <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Dados Estruturados (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "KZN MENU",
+      "description": "Mod Menu para Graal Classic e Graal Era com recursos de farm, esp e automação.",
+      "brand": { "@type": "Brand", "name": "KZN" },
+      "offers": {
+        "@type": "Offer",
+        "price": "50",
+        "priceCurrency": "BRL"
+      }
+    }
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -256,16 +284,16 @@
             backdrop-filter: blur(8px);
         }
         .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
-
-        /* ===== VÍDEO NO HERO ===== */
-        .hero-video {
-            width: 100%;
-            max-width: 550px;
+        
+        /* ===== HERO IMAGE COM VÍDEO ===== */
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
             margin-left: 2rem;
             position: relative;
             z-index: 1;
         }
-        .hero-video .video-wrapper {
+        .hero-image .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
@@ -275,14 +303,14 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             background: #000;
         }
-        .hero-video .video-wrapper iframe {
+        .hero-image .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
-        .hero-video .video-label {
+        .hero-image .video-label {
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.8rem;
@@ -342,25 +370,14 @@
             align-items: center;
             gap: 10px;
         }
-        .tab-btn:hover {
-            border-color: var(--primary);
-            color: #fff;
-        }
-        .tab-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
-        }
+        .tab-btn:hover { border-color: var(--primary); color: #fff; }
+        .tab-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; box-shadow: 0 4px 30px rgba(220,38,38,0.3); }
         .tab-btn.classic { border-color: var(--classic); }
         .tab-btn.classic.active { background: var(--classic); border-color: var(--classic); }
         .tab-btn.era { border-color: var(--era); }
         .tab-btn.era.active { background: var(--era); border-color: var(--era); }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -455,8 +472,16 @@
         .script-image {
             width: 100%;
             max-width: 280px;
-            border-radius: var(--radius);
+            border-radius: 12px;
             border: 2px solid var(--era);
+            margin: 0.5rem auto;
+            display: block;
+        }
+        .mod-image {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
             margin: 0.5rem auto;
             display: block;
         }
@@ -899,7 +924,7 @@
             .hero-content { max-width: 100%; }
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
-            .hero-video { max-width: 100%; margin-left: 0; margin-top: 2rem; }
+            .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
         }
         @media (max-width: 768px) {
             .nav-menu {
@@ -999,7 +1024,8 @@
                 <a href="#como-comprar" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Como Comprar</a>
             </div>
         </div>
-        <div class="hero-video">
+        <div class="hero-image">
+            <!-- VÍDEO DE DEMONSTRAÇÃO (EMBUTIDO) -->
             <div class="video-wrapper">
                 <iframe 
                     src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1" 
@@ -1059,7 +1085,7 @@
                         <div class="plan-card popular">
                             <span class="badge">🔥 Mais Vantagem</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" style="width:100%; max-width:280px; border-radius:12px; border:2px solid var(--primary);" />
+                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
                             </div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Permanente</div>
@@ -1124,7 +1150,7 @@
                         <div class="plan-card popular">
                             <span class="badge era-badge">🔥 Exclusivo Era</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" style="width:100%; max-width:280px; border-radius:12px; border:2px solid var(--era);" />
+                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
                             </div>
                             <h3>AUTO TRASH AUTOMATIC</h3>
                             <div class="sub-plano">Graal Era</div>
@@ -1616,4 +1642,4 @@
     </script>
 
 </body>
-                    </html>
+                </html>
