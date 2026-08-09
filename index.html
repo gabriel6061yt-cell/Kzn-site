@@ -256,21 +256,38 @@
             backdrop-filter: blur(8px);
         }
         .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
-        .hero-image {
-            flex: 1;
-            max-width: 500px;
+
+        /* ===== VÍDEO NO HERO ===== */
+        .hero-video {
+            width: 100%;
+            max-width: 550px;
             margin-left: 2rem;
             position: relative;
             z-index: 1;
         }
-        .hero-image img {
-            width: 100%;
-            border-radius: var(--radius);
+        .hero-video .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
             border: 2px solid var(--primary);
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            transition: 0.3s;
+            background: #000;
         }
-        .hero-image img:hover { transform: scale(1.02); border-color: var(--secondary); box-shadow: 0 10px 60px rgba(124,58,237,0.2); }
+        .hero-video .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-video .video-label {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
 
         .section { padding: 5rem 2rem; position: relative; }
         .section.dark { background: #050505; }
@@ -437,7 +454,7 @@
 
         .script-image {
             width: 100%;
-            max-width: 300px;
+            max-width: 280px;
             border-radius: var(--radius);
             border: 2px solid var(--era);
             margin: 0.5rem auto;
@@ -882,7 +899,7 @@
             .hero-content { max-width: 100%; }
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
-            .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
+            .hero-video { max-width: 100%; margin-left: 0; margin-top: 2rem; }
         }
         @media (max-width: 768px) {
             .nav-menu {
@@ -982,8 +999,20 @@
                 <a href="#como-comprar" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Como Comprar</a>
             </div>
         </div>
-        <div class="hero-image">
-            <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Menu" />
+        <div class="hero-video">
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1" 
+                    title="KZN MENU - Demonstração" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-label">
+                🎬 Clique no play para assistir à demonstração do KZN MENU
+            </div>
         </div>
     </section>
 
@@ -1587,4 +1616,4 @@
     </script>
 
 </body>
-                                                                                </html>
+                    </html>
