@@ -1,359 +1,700 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GS2 Tutorial - Graal Mobile</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KZN MENU - GUIA GS2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* ===== RESET ===== */
+        /* ============================================================
+           ROOT & RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         :root {
-            --primary: #7c3aed;
-            --primary-dark: #6d28d9;
-            --secondary: #ec4899;
-            --dark: #0a0e1a;
-            --dark-card: #0f1322;
-            --dark-border: #1a1f30;
-            --text: #e2e8f0;
+            --primary: #dc2626;
+            --primary-dark: #b91c1c;
+            --secondary: #7c3aed;
+            --secondary-light: #a78bfa;
+            --dark: #0a0a0a;
+            --dark-card: #111111;
+            --dark-border: #1f1f1f;
+            --text: #f1f5f9;
             --text-muted: #94a3b8;
-            --shadow: 0 10px 40px rgba(0,0,0,0.5);
+            --glass: rgba(255, 255, 255, 0.05);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            --radius: 16px;
         }
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--dark);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             overflow-x: hidden;
+            min-height: 100vh;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        
-        /* NAVBAR */
-        .navbar {
-            position: fixed; top: 0; width: 100%;
-            background: rgba(10,14,26,0.95);
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        /* ============================================================
+           GLASS MORPHISM
+           ============================================================ */
+        .glass {
+            background: var(--glass);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--dark-border);
             z-index: 1000;
             padding: 0 2rem;
+            transition: all 0.3s;
+        }
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.98);
+            border-bottom-color: var(--primary);
         }
         .nav-container {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between;
-            align-items: center; height: 64px;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
         }
         .nav-logo {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 1.2rem; font-weight: 700; color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
         }
-        .nav-logo i { font-size: 1.5rem; }
+        .nav-logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+            transition: 0.3s;
+        }
+        .nav-logo img:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary);
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
+        }
+        .nav-logo span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.3rem;
+        }
+        .nav-logo small {
+            font-size: 0.6rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
+            letter-spacing: 1px;
+            background: var(--glass);
+            padding: 0.1rem 0.6rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
         .nav-menu {
-            display: flex; list-style: none; gap: 0.5rem;
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            flex-wrap: wrap;
         }
         .nav-menu a {
-            color: var(--text-muted); text-decoration: none;
-            padding: 0.5rem 1rem; border-radius: 8px;
-            transition: all 0.3s; font-size: 0.9rem;
-            display: flex; align-items: center; gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid transparent;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .nav-menu a:hover, .nav-menu a.active {
-            color: white; background: var(--primary);
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #fff;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.3);
         }
         .nav-toggle {
-            display: none; color: white; font-size: 1.5rem; cursor: pointer;
+            display: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .nav-toggle:hover {
+            background: var(--primary);
         }
 
-        /* HERO */
+        /* ============================================================
+           HERO SECTION
+           ============================================================ */
         .hero {
             min-height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            padding: 6rem 2rem 4rem;
-            background: radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.08), transparent 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            background: radial-gradient(ellipse at 20% 50%, rgba(220, 38, 38, 0.15), transparent 70%),
+                radial-gradient(ellipse at 80% 50%, rgba(124, 58, 237, 0.10), transparent 70%);
+            position: relative;
+            overflow: hidden;
         }
-        .hero-content { flex: 1; max-width: 600px; }
-        .hero h1 {
-            font-size: 3.5rem; font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.015) 2px,
+                    rgba(255, 255, 255, 0.015) 4px);
+            pointer-events: none;
+            animation: scanlines 20s linear infinite;
+        }
+        @keyframes scanlines {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(4px);
+            }
+        }
+        .hero-content {
+            flex: 1;
+            max-width: 700px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.2rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 .highlight-red {
+            color: var(--primary);
+            -webkit-text-fill-color: var(--primary);
         }
         .hero-subtitle {
-            font-size: 1.2rem; color: var(--text-muted); margin-bottom: 2rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 550px;
         }
         .hero-buttons {
-            display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
         }
         .btn {
-            padding: 0.8rem 2rem; border-radius: 12px;
-            text-decoration: none; font-weight: 600;
-            display: inline-flex; align-items: center; gap: 8px;
-            transition: all 0.3s; border: none; cursor: pointer;
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white; box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 4px 25px rgba(220, 38, 38, 0.4);
         }
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(124,58,237,0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(220, 38, 38, 0.6);
         }
         .btn-secondary {
-            background: var(--dark-card); color: white;
+            background: var(--glass);
+            color: #fff;
             border: 1px solid var(--dark-border);
+            backdrop-filter: blur(8px);
         }
-        .btn-secondary:hover { border-color: var(--primary); background: var(--dark-border); }
-        .hero-stats { display: flex; gap: 3rem; }
-        .stat { text-align: center; }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(220, 38, 38, 0.15);
+            transform: translateY(-3px);
+        }
+        .hero-stats {
+            display: flex;
+            gap: 3.5rem;
+        }
+        .stat {
+            text-align: center;
+        }
         .stat-number {
-            display: block; font-size: 2rem; font-weight: 700; color: var(--primary);
+            display: block;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
         }
-        .stat-label { color: var(--text-muted); font-size: 0.9rem; }
-        .hero-image { flex: 1; max-width: 550px; margin-left: 2rem; }
-        .code-preview {
-            background: #0d1117; border-radius: 16px;
-            border: 1px solid var(--dark-border); overflow: hidden;
-            box-shadow: var(--shadow);
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .code-header {
-            padding: 12px 16px; background: #161b22;
-            display: flex; align-items: center; gap: 8px;
-            border-bottom: 1px solid var(--dark-border);
-        }
-        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-        .dot.red { background: #ff5f56; }
-        .dot.yellow { background: #ffbd2e; }
-        .dot.green { background: #27c93f; }
-        .code-title { color: var(--text-muted); font-size: 0.8rem; margin-left: 8px; }
-        .code-preview pre { padding: 20px; margin: 0; overflow-x: auto; font-size: 0.85rem; }
-        .code-preview code {
-            font-family: 'Fira Code', 'Consolas', monospace;
-            color: #e6edf3; line-height: 1.8;
-        }
-        .comment { color: #8b949e; }
-        .keyword { color: #ff7b72; }
-        .function { color: #d2a8ff; }
-        .boolean { color: #ff7b72; }
-        .number { color: #79c0ff; }
 
-        /* SECTIONS */
-        .section { padding: 5rem 2rem; }
-        .section.dark { background: #060a12; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 3rem; }
+        /* ============================================================
+           SECTIONS
+           ============================================================ */
+        .section {
+            padding: 5rem 2rem;
+        }
+        .section.dark {
+            background: #050505;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
         .section-header h2 {
-            font-size: 2.5rem;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-size: 2.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
         }
-        .section-header h2 i { color: var(--primary); }
-        .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
+        .section-header h2 i {
+            color: var(--primary);
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
 
-        /* CARDS */
+        /* ============================================================
+           CATEGORY TABS
+           ============================================================ */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+        }
+        .category-tab {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            color: var(--text-muted);
+            padding: 0.7rem 1.6rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-tab:hover {
+            border-color: var(--primary);
+            color: #fff;
+            background: rgba(220, 38, 38, 0.1);
+        }
+        .category-tab.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.3);
+        }
+
+        /* ============================================================
+           TUTORIAL CARDS
+           ============================================================ */
         .tutorial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 2rem;
         }
         .tutorial-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .tutorial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: 0.3s;
+        }
+        .tutorial-card:hover::before {
+            opacity: 1;
         }
         .tutorial-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--primary);
-            box-shadow: 0 8px 30px rgba(124,58,237,0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
-        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; color: var(--primary); }
-        .tutorial-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .tutorial-card p { color: var(--text-muted); margin-bottom: 1rem; }
+        .card-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+        .card-badge.purple {
+            background: var(--secondary);
+        }
+        .card-badge.green {
+            background: #22c55e;
+        }
+        .card-badge.orange {
+            background: #f59e0b;
+        }
+        .tutorial-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tutorial-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
         .tutorial-card code {
-            background: #1a1f30; padding: 0.1rem 0.4rem; border-radius: 4px;
-            font-size: 0.85rem; color: var(--secondary);
+            background: #1a1a1a;
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--secondary-light);
+            border: 1px solid var(--dark-border);
         }
         .btn-show {
-            background: var(--primary); color: white; border: none;
-            padding: 0.5rem 1.2rem; border-radius: 8px;
-            cursor: pointer; font-size: 0.85rem; transition: all 0.3s;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
         }
-        .btn-show:hover { background: var(--primary-dark); }
+        .btn-show:hover {
+            background: var(--primary-dark);
+            transform: scale(1.02);
+        }
         .code-hidden {
-            display: none; margin-top: 1rem;
-            background: #0d1117; border-radius: 8px; overflow: hidden;
+            display: none;
+            margin-top: 1rem;
+            background: #0d0d0d;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--dark-border);
         }
-        .code-hidden.show { display: block; }
-        .code-hidden pre { padding: 16px; margin: 0; overflow-x: auto; font-size: 0.8rem; }
+        .code-hidden.show {
+            display: block;
+        }
+        .code-hidden pre {
+            padding: 1.2rem;
+            margin: 0;
+            overflow-x: auto;
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
         .code-hidden code {
             font-family: 'Fira Code', 'Consolas', monospace;
-            color: #e6edf3; line-height: 1.8;
+            color: #e6edf3;
         }
 
-        /* COMANDOS */
-        .comandos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .comando-item {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-        .comando-item:hover { border-color: var(--primary); }
-        .comando-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .comando-tag {
-            font-family: 'Fira Code', monospace;
-            color: var(--secondary); font-weight: 600; font-size: 1.1rem;
-        }
-        .comando-funcao {
-            background: var(--primary); padding: 0.1rem 0.6rem;
-            border-radius: 20px; font-size: 0.7rem; color: white;
-        }
-        .comando-item code {
-            display: block; background: #0d1117; padding: 0.5rem 1rem;
-            border-radius: 6px; font-size: 0.85rem; margin: 0.5rem 0;
-            color: #79c0ff;
-        }
-        .comando-item p { color: var(--text-muted); font-size: 0.9rem; }
-        .comando-item p code {
-            display: inline; background: transparent; padding: 0;
-            color: var(--secondary);
-        }
-
-        /* EXEMPLOS */
-        .exemplos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-        .exemplo-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-        }
-        .exemplo-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-        }
-        .exemplo-badge {
-            display: inline-block; background: var(--primary); color: white;
-            padding: 0.1rem 0.8rem; border-radius: 20px;
-            font-size: 0.7rem; font-weight: 600; margin-bottom: 0.5rem;
-        }
-        .exemplo-card h3 { font-size: 1.2rem; margin-bottom: 0.3rem; }
-        .exemplo-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
-
-        /* GUI */
-        .gui-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .gui-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-        }
-        .gui-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--primary); }
-        .gui-card pre {
-            background: #0d1117; padding: 1rem; border-radius: 8px;
-            overflow-x: auto; font-size: 0.8rem; margin: 0;
-        }
-        .gui-card code {
-            font-family: 'Fira Code', 'Consolas', monospace;
-            color: #e6edf3; line-height: 1.6;
-        }
-
-        /* FOOTER */
+        /* ============================================================
+           FOOTER
+           ============================================================ */
         .footer {
-            background: #060a12; border-top: 1px solid var(--dark-border);
+            background: #050505;
+            border-top: 1px solid var(--dark-border);
             padding: 3rem 2rem 1.5rem;
         }
         .footer-content {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
         }
-        .footer-brand i { font-size: 2rem; color: var(--primary); }
-        .footer-brand span { font-size: 1.2rem; font-weight: 700; color: white; }
-        .footer-brand p { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.3rem; }
-        .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
-        .footer-links a:hover { color: var(--primary); }
-        .footer-social { display: flex; gap: 1rem; }
+        .footer-brand i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        .footer-brand span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        .footer-social {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
         .footer-social a {
-            color: var(--text-muted); font-size: 1.5rem; transition: all 0.3s;
+            color: var(--text-muted);
+            font-size: 1.6rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
         }
-        .footer-social a:hover { color: var(--primary); transform: translateY(-2px); }
+        .footer-social a:hover {
+            color: #fff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+        }
+        .footer-social a.youtube:hover {
+            background: #ff0000;
+            border-color: #ff0000;
+        }
+        .footer-social a.discord:hover {
+            background: #5865f2;
+            border-color: #5865f2;
+        }
+        .footer-social a.github:hover {
+            background: #333;
+            border-color: #333;
+        }
         .footer-bottom {
-            max-width: 1200px; margin: 2rem auto 0; padding-top: 1.5rem;
-            border-top: 1px solid var(--dark-border); text-align: center;
-            color: var(--text-muted); font-size: 0.85rem;
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--dark-border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
         }
 
-        /* RESPONSIVO */
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 1024px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 5rem; }
-            .hero-content { max-width: 100%; }
-            .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; width: 100%; }
-            .hero-buttons { justify-content: center; }
-            .hero-stats { justify-content: center; }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 6rem;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
         }
         @media (max-width: 768px) {
             .nav-menu {
-                display: none; flex-direction: column;
-                position: absolute; top: 64px; left: 0; width: 100%;
-                background: rgba(10,14,26,0.98);
-                padding: 1rem 2rem;
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(10, 10, 10, 0.98);
+                padding: 1.5rem;
                 border-bottom: 1px solid var(--dark-border);
+                gap: 0.5rem;
             }
-            .nav-menu.open { display: flex; }
-            .nav-toggle { display: block; }
-            .hero h1 { font-size: 2.5rem; }
-            .section-header h2 { font-size: 2rem; }
-            .tutorial-grid, .exemplos-grid, .gui-grid { grid-template-columns: 1fr; }
-            .comandos-grid { grid-template-columns: 1fr; }
-            .footer-content { flex-direction: column; text-align: center; align-items: center; }
-            .footer-links { justify-content: center; }
+            .nav-menu.open {
+                display: flex;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            .tutorial-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+            .footer-links {
+                justify-content: center;
+            }
+            .nav-logo small {
+                display: none;
+            }
+            .hero-stats {
+                gap: 2rem;
+            }
+            .category-tabs {
+                gap: 0.5rem;
+            }
+            .category-tab {
+                padding: 0.4rem 1rem;
+                font-size: 0.7rem;
+            }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2rem; }
-            .hero-stats { gap: 1.5rem; }
-            .hero-stats .stat-number { font-size: 1.5rem; }
-            .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
-            .code-preview pre { font-size: 0.7rem; }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .hero-stats .stat-number {
+                font-size: 1.5rem;
+            }
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .nav-logo span {
+                font-size: 1rem;
+            }
+            .footer-social a {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- NAVEGAÇÃO -->
-    <nav class="navbar">
+
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-gamepad"></i>
-                <span>GS2 Tutorial</span>
-            </div>
-            <ul class="nav-menu">
+            <a href="#inicio" class="nav-logo">
+                <img src="https://yt3.googleusercontent.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
+                <span>KZN MENU</span>
+                <small>GUIA GS2</small>
+            </a>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
-                <li><a href="#basico"><i class="fas fa-book"></i> Básico</a></li>
-                <li><a href="#comandos"><i class="fas fa-code"></i> Comandos</a></li>
-                <li><a href="#exemplos"><i class="fas fa-cubes"></i> Exemplos</a></li>
-                <li><a href="#gui"><i class="fas fa-window-maximize"></i> GUI</a></li>
+                <li><a href="#movimento"><i class="fas fa-person-walking"></i> Movimento</a></li>
+                <li><a href="#interface"><i class="fas fa-window-maximize"></i> Interface</a></li>
+                <li><a href="#sistemas"><i class="fas fa-cogs"></i> Sistemas</a></li>
+                <li><a href="#eventos"><i class="fas fa-calendar-days"></i> Eventos</a></li>
+                <li><a href="#ferramentas"><i class="fas fa-tools"></i> Ferramentas</a></li>
+                <li><a href="#hacks"><i class="fas fa-skull"></i> Hacks</a></li>
             </ul>
             <div class="nav-toggle" id="mobileMenu">
                 <i class="fas fa-bars"></i>
@@ -361,26 +702,37 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-            <h1>🚀 GS2 para Graal Mobile</h1>
-            <p class="hero-subtitle">O tutorial mais completo e fácil para criar scripts no Graal Online Mobile</p>
+            <div class="hero-badge"><i class="fas fa-code"></i> O MANUAL DEFINITIVO</div>
+            <h1>
+                <span class="highlight-red">KZN</span>
+                <span class="highlight">MENU</span>
+                <br />
+                <span style="font-size: 2.5rem; color: var(--text-muted);">GUIA GS2</span>
+            </h1>
+            <p class="hero-subtitle">
+                O tutorial mais completo de <strong>GS2</strong> para Graal Mobile.
+                <br />Aprenda todos os sistemas, hacks e ferramentas do jogo!
+            </p>
             <div class="hero-buttons">
-                <a href="#basico" class="btn btn-primary">
-                    <i class="fas fa-rocket"></i> Começar Tutorial
+                <a href="#movimento" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Começar
                 </a>
-                <a href="#exemplos" class="btn btn-secondary">
-                    <i class="fas fa-code"></i> Ver Exemplos
+                <a href="#hacks" class="btn btn-secondary">
+                    <i class="fas fa-skull"></i> Ver Hacks
                 </a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
                     <span class="stat-number">50+</span>
-                    <span class="stat-label">Comandos</span>
+                    <span class="stat-label">Sistemas</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">30+</span>
+                    <span class="stat-number">100+</span>
                     <span class="stat-label">Exemplos</span>
                 </div>
                 <div class="stat">
@@ -389,342 +741,449 @@
                 </div>
             </div>
         </div>
-        <div class="hero-image">
-            <div class="code-preview">
-                <div class="code-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                    <span class="code-title">script.gs</span>
-                </div>
-                <pre><code><span class="comment">//#CLIENTSIDE</span>
-<span class="keyword">function</span> <span class="function">onCreated</span>() {
-    <span class="keyword">this</span>.ativo = <span class="boolean">true</span>;
-    <span class="function">setTimer</span>(<span class="number">0.1</span>);
+    </section>
+
+    <!-- ============================================================
+    MOVIMENTO
+    ============================================================ -->
+    <section id="movimento" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-person-walking"></i> Movimento & Física</h2>
+                <p>Sistemas de locomoção, física e interação do personagem</p>
+            </div>
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <span class="card-badge">Movimento</span>
+                    <h3>📦 Carry</h3>
+                    <p>Sistema de carregar objetos e outros jogadores.</p>
+                    <button class="btn-show" data-target="carry">Ver Exemplo</button>
+                    <div class="code-hidden" id="carry">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.carregando = null;
 }
 
-<span class="keyword">function</span> <span class="function">onTimeout</span>() {
-    <span class="keyword">if</span> (!<span class="keyword">this</span>.ativo) <span class="keyword">return</span>;
-    <span class="comment">// Seu código aqui</span>
-    <span class="function">setTimer</span>(<span class="number">0.1</span>);
+function onPlayerTouchs() {
+    if (this.carregando == null) {
+        this.carregando = player;
+        player.attr[30] = "carry";
+    }
 }</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge">Movimento</span>
+                    <h3>🎬 Cinematic</h3>
+                    <p>Cria cutscenes e cenas cinematográficas.</p>
+                    <button class="btn-show" data-target="cinematic">Ver Exemplo</button>
+                    <div class="code-hidden" id="cinematic">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.cameraX = player.x;
+    this.cameraY = player.y;
+}
+
+function iniciarCutscene() {
+    setTimer(0.05);
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge">Movimento</span>
+                    <h3>🏃 JumpAndRun</h3>
+                    <p>Sistema de pulo e corrida estilo plataforma.</p>
+                    <button class="btn-show" data-target="jump">Ver Exemplo</button>
+                    <div class="code-hidden" id="jump">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.pulando = false;
+    this.velocidadeY = 0;
+}
+
+function onTimeout() {
+    if (keydown(0) && !this.pulando) {
+        this.pulando = true;
+        this.velocidadeY = -0.5;
+    }
+}</code></pre>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- TUTORIAL BÁSICO -->
-    <section id="basico" class="section">
+    <!-- ============================================================
+    INTERFACE
+    ============================================================ -->
+    <section id="interface" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-book"></i> Tutorial Básico</h2>
-                <p>Aprenda do zero como criar seus primeiros scripts</p>
+                <h2><i class="fas fa-window-maximize"></i> Interface & GUI</h2>
+                <p>Janelas, botões, menus e sistemas visuais</p>
             </div>
             <div class="tutorial-grid">
                 <div class="tutorial-card">
-                    <div class="card-icon"><i class="fas fa-file-code"></i></div>
-                    <h3>Estrutura Básica</h3>
-                    <p>Todo script mobile começa com <code>//#CLIENTSIDE</code> e as funções <code>onCreated()</code> e <code>onTimeout()</code>.</p>
-                    <button class="btn-show" data-target="estrutura">Ver Exemplo</button>
-                    <div class="code-hidden" id="estrutura">
-                        <pre><code>//#CLIENTSIDE
-
-function onCreated() {
-    // Inicialização
-    setTimer(0.1);
-}
-
-function onTimeout() {
-    // Código que repete
-    setTimer(0.1);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <div class="card-icon"><i class="fas fa-eye"></i></div>
-                    <h3>ESP de NPC</h3>
-                    <p>Mostra o nome de todos os NPCs em cima deles, com letra amarela.</p>
-                    <button class="btn-show" data-target="esp-npc">Ver Exemplo</button>
-                    <div class="code-hidden" id="esp-npc">
+                    <span class="card-badge purple">GUI</span>
+                    <h3>🖼️ gui_builder</h3>
+                    <p>Construtor de interfaces gráficas completas.</p>
+                    <button class="btn-show" data-target="gui-builder">Ver Exemplo</button>
+                    <div class="code-hidden" id="gui-builder">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    setTimer(0.1);
-}
-
-function onTimeout() {
-    for (temp.i = 0; temp.i < 500; temp.i++) 
-        hideimg(1000 + temp.i);
-
-    temp.idx = 1000;
-    for (temp.npc : npcs) {
-        if (temp.npc.x == nil) continue;
-        showtext(temp.idx, temp.npc.x + 0.5, 
-            temp.npc.y - 0.8, "Arial", "c", 
-            temp.npc.name);
-        changeimgcolors(temp.idx, 1, 1, 0, 1);
-        changeimgzoom(temp.idx, 0.6);
-        temp.idx++;
-    }
-    setTimer(0.1);
-}</code></pre>
-                    </div>
-                </div>
-                <div class="tutorial-card">
-                    <div class="card-icon"><i class="fas fa-window-restore"></i></div>
-                    <h3>Janela com Texto</h3>
-                    <p>Crie janelas interativas com texto, botões e imagens.</p>
-                    <button class="btn-show" data-target="janela">Ver Exemplo</button>
-                    <div class="code-hidden" id="janela">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    new GuiWindowCtrl("MinhaJanela") {
+    new GuiWindowCtrl("Janela") {
         profile = GuiBlueWindowProfile;
-        title = "TÍTULO";
-        x = 50; y = 100;
-        width = 300; height = 150;
+        title = "Minha GUI";
+        x = 50; y = 50;
+        width = 300; height = 200;
         canmove = true;
         canclose = true;
+    }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge purple">GUI</span>
+                    <h3>🎨 gui_charactercustomization</h3>
+                    <p>Personalização de personagem (roupas, cores).</p>
+                    <button class="btn-show" data-target="custom">Ver Exemplo</button>
+                    <div class="code-hidden" id="custom">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.cores = {0, 1, 2, 3, 4};
+}
 
-        new GuiTextCtrl("Texto") {
-            text = "Olá! Mensagem aqui.";
-            x = 10; y = 35;
-            width = 280; height = 50;
-            profile = GuiBlueTextProfile;
+function mudarCor(id, cor) {
+    player.colors[id] = cor;
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge purple">GUI</span>
+                    <h3>👥 gui_friends</h3>
+                    <p>Lista de amigos e sistema de convites.</p>
+                    <button class="btn-show" data-target="friends">Ver Exemplo</button>
+                    <div class="code-hidden" id="friends">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.amigos = {"player1", "player2"};
+    criarListaAmigos();
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SISTEMAS
+    ============================================================ -->
+    <section id="sistemas" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-cogs"></i> Sistemas do Jogo</h2>
+                <p>Mecânicas principais e sistemas internos</p>
+            </div>
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <span class="card-badge green">Sistema</span>
+                    <h3>🛋️ furniture</h3>
+                    <p>Sistema de móveis e decoração de casa.</p>
+                    <button class="btn-show" data-target="furniture">Ver Exemplo</button>
+                    <div class="code-hidden" id="furniture">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.moveis = {};
+}
+
+function colocarMovel(id, x, y) {
+    this.moveis.add({id: id, x: x, y: y});
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge green">Sistema</span>
+                    <h3>💰 gralatshopitem</h3>
+                    <p>Loja de itens com gralats.</p>
+                    <button class="btn-show" data-target="shop">Ver Exemplo</button>
+                    <div class="code-hidden" id="shop">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.itens = {
+        {nome: "Espada", preco: 100},
+        {nome: "Poção", preco: 50}
+    };
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge green">Sistema</span>
+                    <h3>🐴 Horse</h3>
+                    <p>Sistema de montarias e cavalos.</p>
+                    <button class="btn-show" data-target="horse">Ver Exemplo</button>
+                    <div class="code-hidden" id="horse">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.montado = false;
+}
+
+function montar() {
+    this.montado = true;
+    setani("horse_ride", "");
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    EVENTOS
+    ============================================================ -->
+    <section id="eventos" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-days"></i> Eventos & Temporadas</h2>
+                <p>Eventos especiais, feriados e temporadas</p>
+            </div>
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <span class="card-badge orange">Evento</span>
+                    <h3>🥚 easter_eggspawner</h3>
+                    <p>Sistema de ovos de Páscoa.</p>
+                    <button class="btn-show" data-target="easter">Ver Exemplo</button>
+                    <div class="code-hidden" id="easter">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.ovos = 0;
+    setTimer(0.1);
+}
+
+function onTimeout() {
+    for (temp.npc : npcs) {
+        if (npc.image == "egg.png") {
+            this.ovos++;
         }
     }
 }</code></pre>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- COMANDOS -->
-    <section id="comandos" class="section dark">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-code"></i> Comandos Essenciais</h2>
-                <p>Os comandos que funcionam no Graal Mobile</p>
-            </div>
-            <div class="comandos-grid">
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">showtext</span>
-                        <span class="comando-funcao">Mostra texto</span>
-                    </div>
-                    <code>showtext(id, x, y, fonte, estilo, texto)</code>
-                    <p>Exemplo: <code>showtext(1, 10, 10, "Arial", "c", "Olá")</code></p>
-                </div>
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">changeimgcolors</span>
-                        <span class="comando-funcao">Muda cor</span>
-                    </div>
-                    <code>changeimgcolors(id, r, g, b, a)</code>
-                    <p>Exemplo: <code>changeimgcolors(1, 1, 1, 0, 1)</code> (amarelo)</p>
-                </div>
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">setTimer</span>
-                        <span class="comando-funcao">Loop contínuo</span>
-                    </div>
-                    <code>setTimer(segundos)</code>
-                    <p>Exemplo: <code>setTimer(0.1)</code> (10x por segundo)</p>
-                </div>
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">GuiWindowCtrl</span>
-                        <span class="comando-funcao">Cria janela</span>
-                    </div>
-                    <code>new GuiWindowCtrl("nome") { ... }</code>
-                    <p>Perfis: <code>GuiBlueWindowProfile</code> ou <code>GuiRedWindowProfile</code></p>
-                </div>
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">GuiButtonCtrl</span>
-                        <span class="comando-funcao">Cria botão</span>
-                    </div>
-                    <code>new GuiButtonCtrl("nome") { ... }</code>
-                    <p>Perfis: <code>GuiBlueButtonProfile</code>, <code>GuiRedButtonProfile</code></p>
-                </div>
-                <div class="comando-item">
-                    <div class="comando-header">
-                        <span class="comando-tag">warpto</span>
-                        <span class="comando-funcao">Teleporta</span>
-                    </div>
-                    <code>warpto(level, x, y)</code>
-                    <p>Exemplo: <code>warpto("start.nw", 30, 30)</code></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EXEMPLOS -->
-    <section id="exemplos" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-cubes"></i> Exemplos Prontos</h2>
-                <p>Scripts completos que você pode copiar e usar</p>
-            </div>
-            <div class="exemplos-grid">
-                <div class="exemplo-card">
-                    <div class="exemplo-badge">ESP</div>
-                    <h3>👁️ ESP Player</h3>
-                    <p>Linha + nome dos jogadores próximos</p>
-                    <button class="btn-show" data-target="esp-player">Ver Script</button>
-                    <div class="code-hidden" id="esp-player">
+                <div class="tutorial-card">
+                    <span class="card-badge orange">Evento</span>
+                    <h3>🎃 holiday_halloween</h3>
+                    <p>Evento de Halloween com decorações.</p>
+                    <button class="btn-show" data-target="halloween">Ver Exemplo</button>
+                    <div class="code-hidden" id="halloween">
                         <pre><code>//#CLIENTSIDE
 function onCreated() {
-    this.ativo = true;
-    setTimer(0.1);
+    if (month == 10) {
+        ativarHalloween();
+    }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge orange">Evento</span>
+                    <h3>📜 quest_halloween23</h3>
+                    <p>Quests especiais de Halloween.</p>
+                    <button class="btn-show" data-target="quest">Ver Exemplo</button>
+                    <div class="code-hidden" id="quest">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.questAtiva = false;
+    this.itensColetados = 0;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FERRAMENTAS
+    ============================================================ -->
+    <section id="ferramentas" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-tools"></i> Ferramentas & Utilitários</h2>
+                <p>Ferramentas úteis para desenvolvimento</p>
+            </div>
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <span class="card-badge">Ferramenta</span>
+                    <h3>🔄 tween</h3>
+                    <p>Animações suaves e transições.</p>
+                    <button class="btn-show" data-target="tween">Ver Exemplo</button>
+                    <div class="code-hidden" id="tween">
+                        <pre><code>//#CLIENTSIDE
+function animar(obj, prop, final, tempo) {
+    // Anima propriedade de obj
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge">Ferramenta</span>
+                    <h3>💥 system_shoot</h3>
+                    <p>Sistema de tiros e projéteis.</p>
+                    <button class="btn-show" data-target="shoot">Ver Exemplo</button>
+                    <div class="code-hidden" id="shoot">
+                        <pre><code>//#CLIENTSIDE
+function atirar(x, y, ang, power) {
+    shoot(x, y, 2, ang, power, 1, 
+          "ci_thrownobject", "arrow.png");
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge">Ferramenta</span>
+                    <h3>🔥 level_effect</h3>
+                    <p>Efeitos visuais no level.</p>
+                    <button class="btn-show" data-target="effect">Ver Exemplo</button>
+                    <div class="code-hidden" id="effect">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    putexplosion2(5, 8, player.x, player.y);
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    HACKS
+    ============================================================ -->
+    <section id="hacks" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-skull"></i> Hacks & Ferramentas Avançadas</h2>
+                <p>Scripts avançados para mod menu e detecção</p>
+            </div>
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>🎭 Detector de Ganis</h3>
+                    <p>Detecta e testa ganis de NPCs e players.</p>
+                    <button class="btn-show" data-target="ganis">Ver Script</button>
+                    <div class="code-hidden" id="ganis">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    criarJanela();
+    setTimer(0.05);
+}
+
+function criarJanela() {
+    new GuiWindowCtrl("Win") {
+        profile = GuiBlueWindowProfile;
+        title = "🎭 DETECTOR DE GANIS";
+        x = 20; y = 50;
+        width = 320; height = 480;
+        canmove = true;
+        canclose = true;
+        // ... lista de ganis
+    }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>⚔️ Auto Atacar</h3>
+                    <p>Persegue e ataca automaticamente.</p>
+                    <button class="btn-show" data-target="auto-atk">Ver Script</button>
+                    <div class="code-hidden" id="auto-atk">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.autoAtk = false;
+    this.alvo = NULL;
+    setTimer(0.05);
+}
+
+function onTimeout() {
+    if (!this.autoAtk) return;
+    // Procura e persegue alvo
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>👗 Detector de Roupas</h3>
+                    <p>Detecta e copia roupas de outros jogadores.</p>
+                    <button class="btn-show" data-target="roupas">Ver Script</button>
+                    <div class="code-hidden" id="roupas">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.botaoCriado = false;
+    scheduleEvent(0.5, "criarBotao");
+}
+
+function BtnDetectar.onAction() {
+    temp.actor = Games_ProfileWindow_PictureCharacter.actor;
+    // Detecta body, head, hat, shield, accessory, cores
+}</code></pre>
+                    </div>
+                </div>
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>🔫 Metralhadora</h3>
+                    <p>Spam de tiros em todos os jogadores.</p>
+                    <button class="btn-show" data-target="metralhadora">Ver Script</button>
+                    <div class="code-hidden" id="metralhadora">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.ativo = false;
+    criarJanela();
+    setTimer(0.05);
 }
 
 function onTimeout() {
     if (!this.ativo) return;
-    for (temp.i = 0; temp.i < 500; temp.i++) 
-        hideimg(temp.i);
-
-    temp.idx = 0;
     for (temp.p : players) {
         if (temp.p == player) continue;
-        temp.dist = ((temp.p.x - player.x)^2 + 
-            (temp.p.y - player.y)^2) ^ 0.5;
-        if (temp.dist > 15) continue;
-
-        DrawLine(temp.idx, player.x + 1.5, 
-            player.y + 1.5, temp.p.x + 1, 
-            temp.p.y + 1, 0.08, 0, 1, 0, 0.7);
-        showtext(temp.idx + 100, temp.p.x + 0.5, 
-            temp.p.y - 0.8, "Arial", "c", 
-            temp.p.account);
-        changeimgcolors(temp.idx + 100, 0, 1, 0, 1);
-        changeimgzoom(temp.idx + 100, 0.6);
-        temp.idx++;
-    }
-    setTimer(0.1);
-}
-
-function DrawLine(ind, sx, sy, tx, ty, wid, r, g, b, a) {
-    temp.ang = getangle(tx - sx, ty - sy) + (pi/2);
-    with (findimg(ind)) {
-        polygon = {sx, sy, tx, ty, 
-            tx + cos(temp.ang)*wid, 
-            ty - sin(temp.ang)*wid, 
-            sx + cos(temp.ang)*wid, 
-            sy - sin(temp.ang)*wid};
-        red = r; green = g; blue = b; 
-        alpha = a; layer = 3;
+        // Atira em todos os jogadores
     }
 }</code></pre>
                     </div>
                 </div>
-                <div class="exemplo-card">
-                    <div class="exemplo-badge">HACK</div>
-                    <h3>👻 Invisível</h3>
-                    <p>Some completamente com um botão</p>
-                    <button class="btn-show" data-target="invisivel">Ver Script</button>
-                    <div class="code-hidden" id="invisivel">
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>⌨️ TypeWriter Chat</h3>
+                    <p>Efeito de digitação letra por letra.</p>
+                    <button class="btn-show" data-target="typewriter">Ver Script</button>
+                    <div class="code-hidden" id="typewriter">
                         <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ativo = false;
-    new GuiButtonCtrl("BtnInv") {
-        text = "👻 INV";
-        x = screenwidth - 60;
-        y = screenheight - 60;
-        width = 50; height = 50;
-        profile = GuiBlueButtonProfile;
-    }
+function onPlayerChats() {
+    this.fraseCompleta = player.chat;
+    this.fraseAtual = "";
+    this.indiceLetra = 1;
+    this.autoAlterando = true;
+    setTimer(0.08);
 }
 
-function BtnInv.onAction() {
-    this.ativo = !this.ativo;
-    if (this.ativo) {
-        setbody(""); sethead("");
-        player.nick = "";
-        setcoloreffect(1, 1, 1, 0);
-        player.shadow = false;
-        BtnInv.profile = GuiRedButtonProfile;
-    } else {
-        setbody("body0.png");
-        sethead("head0.png");
-        setcoloreffect(1, 1, 1, 1);
-        player.shadow = true;
-        BtnInv.profile = GuiBlueButtonProfile;
+function onTimeout() {
+    if (this.indiceLetra >= this.fraseCompleta.length()) {
+        this.autoAlterando = false;
+        return;
     }
+    this.indiceLetra++;
+    this.fraseAtual = this.fraseCompleta.substring(0, this.indiceLetra);
+    player.chat = this.fraseAtual;
+    setTimer(0.08);
 }</code></pre>
                     </div>
                 </div>
-                <div class="exemplo-card">
-                    <div class="exemplo-badge">GUI</div>
-                    <h3>🖼️ Janela com Imagem</h3>
-                    <p>Exiba imagens por URL direta</p>
-                    <button class="btn-show" data-target="imagem">Ver Script</button>
-                    <div class="code-hidden" id="imagem">
+                <div class="tutorial-card">
+                    <span class="card-badge" style="background:#dc2626;">Hack</span>
+                    <h3>🌊 Arrow Spam</h3>
+                    <p>Spam de flechas em todas as direções.</p>
+                    <button class="btn-show" data-target="arrow-spam">Ver Script</button>
+                    <div class="code-hidden" id="arrow-spam">
                         <pre><code>//#CLIENTSIDE
-function onCreated() {
-    criarBotao();
-}
-
-function criarBotao() {
-    new GuiButtonCtrl("BtnImg") {
-        text = "🖼️ IMG";
-        x = screenwidth - 120;
-        y = screenheight - 60;
-        width = 50; height = 50;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnImg.onAction() {
-    if (isObject("ImgWindow")) 
-        ImgWindow.destroy();
-
-    new GuiWindowCtrl("ImgWindow") {
-        profile = GuiBlueWindowProfile;
-        title = "IMAGEM";
-        x = 50; y = 100;
-        width = 300; height = 300;
-        canclose = true; canmove = true;
-
-        new GuiShowImgCtrl("Imagem") {
-            x = 10; y = 30;
-            width = 280; height = 250;
-            image = "https://i.postimg.cc/xxxxx/imagem.jpg";
-            keepaspectratio = true;
-            fitmode = 1;
-        }
-    }
-}</code></pre>
-                    </div>
-                </div>
-                <div class="exemplo-card">
-                    <div class="exemplo-badge">HACK</div>
-                    <h3>🛡️ God Mode</h3>
-                    <p>Fique invencível com um toque</p>
-                    <button class="btn-show" data-target="godmode">Ver Script</button>
-                    <div class="code-hidden" id="godmode">
-                        <pre><code>//#CLIENTSIDE
-function onCreated() {
-    this.ativo = false;
-    new GuiButtonCtrl("BtnGod") {
-        text = "🛡️ GOD";
-        x = screenwidth - 120;
-        y = screenheight - 60;
-        width = 50; height = 50;
-        profile = GuiBlueButtonProfile;
-    }
-}
-
-function BtnGod.onAction() {
-    this.ativo = !this.ativo;
-    if (this.ativo) {
-        player.isinvincible = true;
-        player.isinvincible2 = true;
-        player.hearts = 100;
-        BtnGod.profile = GuiRedButtonProfile;
-    } else {
-        player.isinvincible = false;
-        player.isinvincible2 = false;
-        BtnGod.profile = GuiBlueButtonProfile;
+function onActionHook(a1, a2, a3, a4, a5, a6, a7) {
+    for (temp.i = 0; temp.i < 1000; temp.i++) {
+        temp.ang = random(0, 6.28);
+        temp.x = a1 + random(-8, 8);
+        temp.y = a2 + random(-8, 8);
+        shoot(temp.x, temp.y, a3, temp.ang, a5, random(0.5, 5), a7);
     }
 }</code></pre>
                     </div>
@@ -733,94 +1192,51 @@ function BtnGod.onAction() {
         </div>
     </section>
 
-    <!-- GUI -->
-    <section id="gui" class="section dark">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-window-maximize"></i> GUI - Janelas e Botões</h2>
-                <p>Tudo sobre criação de interfaces no Graal Mobile</p>
-            </div>
-            <div class="gui-grid">
-                <div class="gui-card">
-                    <h3>📦 Janela Básica</h3>
-                    <pre><code>new GuiWindowCtrl("Janela") {
-    profile = GuiBlueWindowProfile;
-    title = "Título";
-    x = 50; y = 100;
-    width = 300; height = 200;
-    canmove = true;
-    canclose = true;
-}</code></pre>
-                </div>
-                <div class="gui-card">
-                    <h3>🔘 Botão</h3>
-                    <pre><code>new GuiButtonCtrl("Botao") {
-    text = "CLIQUE";
-    x = 10; y = 10;
-    width = 100; height = 40;
-    profile = GuiBlueButtonProfile;
-}
-
-function Botao.onAction() {
-    // Ação aqui
-}</code></pre>
-                </div>
-                <div class="gui-card">
-                    <h3>📝 Texto</h3>
-                    <pre><code>new GuiTextCtrl("Texto") {
-    text = "Mensagem";
-    x = 10; y = 35;
-    width = 280; height = 50;
-    profile = GuiBlueTextProfile;
-    fontsize = 11;
-}</code></pre>
-                </div>
-                <div class="gui-card">
-                    <h3>🖼️ Imagem</h3>
-                    <pre><code>new GuiShowImgCtrl("Imagem") {
-    x = 10; y = 30;
-    width = 280; height = 250;
-    image = "URL_DIRETA.jpg";
-    keepaspectratio = true;
-    fitmode = 1;
-}</code></pre>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
                     <i class="fas fa-gamepad"></i>
-                    <span>GS2 Tutorial</span>
-                    <p>Tutorial completo para Graal Mobile</p>
+                    <span>KZN MENU</span>
+                    <p>O manual definitivo do Graal Mobile</p>
                 </div>
                 <div class="footer-links">
                     <a href="#inicio">Início</a>
-                    <a href="#basico">Básico</a>
-                    <a href="#comandos">Comandos</a>
-                    <a href="#exemplos">Exemplos</a>
-                    <a href="#gui">GUI</a>
+                    <a href="#movimento">Movimento</a>
+                    <a href="#interface">Interface</a>
+                    <a href="#sistemas">Sistemas</a>
+                    <a href="#eventos">Eventos</a>
+                    <a href="#ferramentas">Ferramentas</a>
+                    <a href="#hacks">Hacks</a>
                 </div>
                 <div class="footer-social">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-discord"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="https://youtube.com/@kzn_menu?si=twaL8UfC3L-D7HZJ" target="_blank" class="youtube" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://github.com/gabriel6061yt-cell" target="_blank" class="github" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 GS2 Tutorial - Feito para a comunidade Graal</p>
+                <p>&copy; 2026 KZN MENU - Feito para a comunidade Graal</p>
             </div>
         </div>
     </footer>
 
+    <!-- ============================================================
+    JAVASCRIPT
+    ============================================================ -->
     <script>
-        // ===== MENU MOBILE =====
+        // ===== MOBILE MENU =====
         const mobileMenu = document.getElementById('mobileMenu');
-        const navMenu = document.querySelector('.nav-menu');
+        const navMenu = document.getElementById('navMenu');
 
         mobileMenu.addEventListener('click', () => {
             navMenu.classList.toggle('open');
@@ -832,28 +1248,35 @@ function Botao.onAction() {
             });
         });
 
-        // ===== SCROLL ATIVO NO MENU =====
+        // ===== SCROLL ACTIVE =====
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-menu a');
 
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
+                const sectionTop = section.offsetTop - 120;
                 if (window.scrollY >= sectionTop) {
                     current = section.getAttribute('id');
                 }
             });
-
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === '#' + current) {
                     link.classList.add('active');
                 }
             });
+
+            // Navbar shadow
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         });
 
-        // ===== BOTÕES "VER EXEMPLO" =====
+        // ===== SHOW/HIDE CODE =====
         document.querySelectorAll('.btn-show').forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = document.getElementById(btn.dataset.target);
@@ -865,8 +1288,7 @@ function Botao.onAction() {
         });
 
         // ===== ANIMAÇÃO DE ENTRADA =====
-        const cards = document.querySelectorAll('.tutorial-card, .exemplo-card, .gui-card, .comando-item');
-
+        const cards = document.querySelectorAll('.tutorial-card');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -882,40 +1304,7 @@ function Botao.onAction() {
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
         });
-
-        // ===== COPIAR CÓDIGO =====
-        document.querySelectorAll('.code-hidden pre').forEach(block => {
-            const copyBtn = document.createElement('button');
-            copyBtn.textContent = '📋 Copiar';
-            copyBtn.className = 'btn-copy';
-            copyBtn.style.cssText = `
-                position: absolute;
-                top: 8px;
-                right: 8px;
-                background: #7c3aed;
-                color: white;
-                border: none;
-                padding: 4px 12px;
-                border-radius: 6px;
-                font-size: 0.7rem;
-                cursor: pointer;
-                opacity: 0.7;
-                transition: opacity 0.3s;
-            `;
-            copyBtn.addEventListener('mouseenter', () => copyBtn.style.opacity = '1');
-            copyBtn.addEventListener('mouseleave', () => copyBtn.style.opacity = '0.7');
-
-            block.style.position = 'relative';
-            block.appendChild(copyBtn);
-
-            copyBtn.addEventListener('click', () => {
-                const code = block.querySelector('code').textContent;
-                navigator.clipboard.writeText(code).then(() => {
-                    copyBtn.textContent = '✅ Copiado!';
-                    setTimeout(() => copyBtn.textContent = '📋 Copiar', 2000);
-                });
-            });
-        });
     </script>
+
 </body>
-                    </html>
+                        </html>
