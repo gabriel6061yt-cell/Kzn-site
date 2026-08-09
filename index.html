@@ -1518,22 +1518,21 @@
         });
 
         // ===== FORMULÁRIO =====
-        document.getElementById('formContato').addEventListener('submit', function(e) {
-            const btn = this.querySelector('.btn-submit');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
-            }, 5000);
-        });
-        if (window.location.search.includes('success')) {
-            const status = document.getElementById('formStatus');
-            status.className = 'form-status success';
-            status.style.display = 'block';
-            status.textContent = '✅ Mensagem enviada com sucesso! Em breve entrarei em contato.';
-        }
-    </script>
-
+document.getElementById('formContato').addEventListener('submit', function(e) {
+    const btn = this.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
+    }, 5000);
+});
+if (window.location.search.includes('success')) {
+    const status = document.getElementById('formStatus');
+    status.className = 'form-status success';
+    status.style.display = 'block';
+    status.textContent = '✅ Mensagem enviada com sucesso! Em breve entrarei em contato.';
+}
+</script>
 </body>
-        </html>
+</html>
