@@ -352,16 +352,16 @@
 
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
         }
         .plan-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: var(--radius);
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             transition: 0.4s;
             position: relative;
@@ -391,17 +391,18 @@
             text-transform: uppercase;
         }
         .plan-card .badge.era-badge { background: var(--era); }
-        .plan-card .icon { font-size: 3rem; margin-bottom: 1rem; }
-        .plan-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .plan-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .plan-card h3 { font-size: 1.3rem; margin-bottom: 0.2rem; }
+        .plan-card .sub-plano { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
         .plan-card .price {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 900;
             color: var(--primary);
-            margin: 1rem 0;
+            margin: 0.8rem 0;
         }
-        .plan-card .price small { font-size: 1rem; font-weight: 400; color: var(--text-muted); }
+        .plan-card .price small { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
         .plan-card .price .parcelamento {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--success);
             display: block;
             font-weight: 600;
@@ -409,75 +410,75 @@
         .plan-card .features {
             list-style: none;
             text-align: left;
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
         }
         .plan-card .features li {
-            padding: 0.4rem 0;
+            padding: 0.3rem 0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
-        .plan-card .features li i { color: var(--success); width: 20px; }
+        .plan-card .features li i { color: var(--success); width: 18px; font-size: 0.8rem; }
         .btn-buy {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border: none;
-            padding: 0.9rem 2rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
 
         .script-image {
             width: 100%;
-            max-width: 400px;
+            max-width: 300px;
             border-radius: var(--radius);
             border: 2px solid var(--era);
-            margin: 1rem auto;
+            margin: 0.5rem auto;
             display: block;
         }
         .script-features {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.5rem;
-            margin: 1rem 0;
+            gap: 0.3rem;
+            margin: 0.8rem 0;
         }
         .script-features li {
             list-style: none;
-            padding: 0.3rem 0;
+            padding: 0.2rem 0;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
-        .script-features li i { color: var(--success); }
+        .script-features li i { color: var(--success); font-size: 0.8rem; }
 
         .clientes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.8rem;
-            margin-top: 1.5rem;
-            max-width: 700px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
         }
         .cliente-item {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
-            border-radius: 10px;
-            padding: 0.7rem 0.8rem;
+            border-radius: 8px;
+            padding: 0.5rem 0.6rem;
             text-align: center;
         }
-        .cliente-item .nome { font-weight: 700; color: #fff; font-size: 0.9rem; }
-        .cliente-item .plano { font-size: 0.7rem; color: var(--text-muted); }
-        .cliente-item .data { font-size: 0.6rem; color: var(--text-muted); opacity: 0.6; }
+        .cliente-item .nome { font-weight: 700; color: #fff; font-size: 0.85rem; }
+        .cliente-item .plano { font-size: 0.65rem; color: var(--text-muted); }
+        .cliente-item .data { font-size: 0.55rem; color: var(--text-muted); opacity: 0.6; }
 
         .parceria-container {
             max-width: 700px;
@@ -485,13 +486,13 @@
             background: var(--dark-card);
             border: 2px solid var(--secondary);
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         .parceria-container::before {
-            content: '🔥 PARCERIA OFICIAL | OFFICIAL PARTNERSHIP';
+            content: '🔥 PARCERIA OFICIAL';
             position: absolute;
             top: 0;
             left: 0;
@@ -504,8 +505,8 @@
             letter-spacing: 1px;
         }
         .parceria-container .logo-parceria {
-            max-width: 150px;
-            margin: 1.5rem auto 1rem;
+            max-width: 120px;
+            margin: 1.2rem auto 0.8rem;
             border-radius: 12px;
             border: 2px solid var(--secondary);
             padding: 0.5rem;
@@ -513,36 +514,37 @@
         }
         .parceria-container .logo-parceria img { width: 100%; border-radius: 8px; }
         .parceria-container h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
             background: linear-gradient(135deg, #fff, var(--secondary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .parceria-container .slogan {
             color: var(--secondary-light);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             letter-spacing: 2px;
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
-        .parceria-container p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .parceria-container p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.2rem; }
         .parceria-container .btn-parceria {
             display: inline-block;
             background: #5865f2;
             color: #fff;
-            padding: 0.8rem 2rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 10px;
             text-decoration: none;
             font-weight: 700;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
         .parceria-container .btn-parceria:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
         .parceria-container .aviso {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            margin-top: 1rem;
-            padding: 0.5rem;
+            margin-top: 0.8rem;
+            padding: 0.4rem;
             background: rgba(220,38,38,0.1);
             border-radius: 8px;
             border: 1px solid rgba(220,38,38,0.2);
@@ -550,16 +552,16 @@
 
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 1.5rem;
-            max-width: 900px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.2rem;
+            max-width: 850px;
             margin: 0 auto;
         }
         .step-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: var(--radius);
-            padding: 1.8rem 1.2rem;
+            padding: 1.5rem 1rem;
             text-align: center;
             transition: 0.3s;
         }
@@ -567,56 +569,57 @@
         .step-card .step-number {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #fff;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1rem;
+            margin: 0 auto 0.8rem;
             font-weight: 700;
+            font-size: 0.9rem;
         }
-        .step-card h4 { color: #fff; margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .step-card p { color: var(--text-muted); font-size: 0.85rem; }
+        .step-card h4 { color: #fff; margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .step-card p { color: var(--text-muted); font-size: 0.8rem; }
 
         .depoimentos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            max-width: 900px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+            max-width: 850px;
             margin: 0 auto;
         }
         .depoimento-card {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 1.2rem;
             transition: 0.3s;
         }
         .depoimento-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .depoimento-card .texto { font-size: 0.9rem; color: var(--text); font-style: italic; margin-bottom: 0.5rem; }
-        .depoimento-card .cliente { font-weight: 700; color: var(--primary); font-size: 0.9rem; }
-        .depoimento-card .estrelas { color: #f59e0b; font-size: 0.8rem; margin-bottom: 0.2rem; }
-        .depoimento-card .info { font-size: 0.65rem; color: var(--text-muted); }
+        .depoimento-card .texto { font-size: 0.85rem; color: var(--text); font-style: italic; margin-bottom: 0.4rem; }
+        .depoimento-card .cliente { font-weight: 700; color: var(--primary); font-size: 0.85rem; }
+        .depoimento-card .estrelas { color: #f59e0b; font-size: 0.75rem; margin-bottom: 0.2rem; }
+        .depoimento-card .info { font-size: 0.6rem; color: var(--text-muted); }
 
         .counter-section {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
-            max-width: 350px;
+            max-width: 300px;
             margin: 0 auto;
         }
         .counter-section .number {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 900;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: block;
         }
-        .counter-section .label { font-size: 1.1rem; color: var(--text-muted); }
+        .counter-section .label { font-size: 1rem; color: var(--text-muted); }
 
         .form-container {
             max-width: 600px;
@@ -624,24 +627,24 @@
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 2rem;
         }
-        .form-container .form-group { margin-bottom: 1.2rem; }
+        .form-container .form-group { margin-bottom: 1rem; }
         .form-container label {
             display: block;
             color: var(--text);
             font-weight: 600;
-            margin-bottom: 0.3rem;
-            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
         }
         .form-container input, .form-container select, .form-container textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 0.9rem;
             background: #0a0a0a;
             border: 1px solid var(--dark-border);
             border-radius: 10px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: 0.3s;
             font-family: inherit;
@@ -654,15 +657,15 @@
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(220,38,38,0.1);
         }
-        .form-container textarea { resize: vertical; min-height: 100px; }
+        .form-container textarea { resize: vertical; min-height: 80px; }
         .form-container .btn-submit {
             width: 100%;
-            padding: 1rem;
+            padding: 0.9rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 12px;
             color: #fff;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
@@ -679,6 +682,7 @@
             border-radius: 8px;
             display: none;
             text-align: center;
+            font-size: 0.9rem;
         }
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
         .form-status.error { display: block; background: rgba(220,38,38,0.15); border: 1px solid var(--primary); color: var(--primary); }
@@ -688,28 +692,28 @@
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 0.6rem;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             transition: 0.3s;
         }
         .regra-item:hover { border-color: var(--primary); }
         .regra-item .regra-numero {
             background: var(--primary);
             color: #fff;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
             flex-shrink: 0;
         }
-        .regra-item .regra-texto { color: var(--text-muted); font-size: 0.95rem; }
+        .regra-item .regra-texto { color: var(--text-muted); font-size: 0.85rem; }
         .regra-item .regra-texto strong { color: var(--text); }
         .regra-item .regra-texto .destaque { color: var(--primary); font-weight: 700; }
 
@@ -718,8 +722,8 @@
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 1rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.8rem;
             cursor: pointer;
             transition: 0.3s;
         }
@@ -730,21 +734,22 @@
             align-items: center;
             font-weight: 600;
             color: #fff;
+            font-size: 0.95rem;
         }
         .faq-item .answer {
             display: none;
-            margin-top: 0.8rem;
+            margin-top: 0.6rem;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .faq-item.open .answer { display: block; }
-        .faq-item .faq-icon { transition: 0.3s; }
+        .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
         .faq-item.open .faq-icon { transform: rotate(180deg); }
 
         .footer {
             background: #050505;
             border-top: 1px solid var(--dark-border);
-            padding: 3rem 2rem 1.5rem;
+            padding: 2rem 2rem 1rem;
         }
         .footer-content {
             max-width: 1400px;
@@ -752,30 +757,30 @@
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1.5rem;
         }
         .footer-brand span {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .footer-brand p { color: var(--text-muted); font-size: 0.9rem; }
+        .footer-brand p { color: var(--text-muted); font-size: 0.85rem; }
         .footer-social {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             align-items: center;
         }
         .footer-social a {
             color: var(--text-muted);
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
@@ -786,12 +791,12 @@
         .footer-social a.xcore:hover { background: #7c3aed; border-color: #7c3aed; }
         .footer-bottom {
             max-width: 1400px;
-            margin: 2rem auto 0;
-            padding-top: 1.5rem;
+            margin: 1.5rem auto 0;
+            padding-top: 1rem;
             border-top: 1px solid var(--dark-border);
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .modal {
@@ -812,8 +817,8 @@
             background: var(--dark-card);
             border: 1px solid var(--primary);
             border-radius: var(--radius);
-            padding: 2.5rem;
-            max-width: 420px;
+            padding: 2rem;
+            max-width: 400px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -825,23 +830,23 @@
         }
         .modal-content .close-modal {
             position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 1.5rem;
+            top: 10px;
+            right: 14px;
+            font-size: 1.3rem;
             cursor: pointer;
             color: var(--text-muted);
             transition: 0.3s;
         }
         .modal-content .close-modal:hover { color: #fff; }
-        .modal-content h2 { margin-bottom: 1rem; }
+        .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.4rem; }
         .modal-content .pix-key {
             background: #0a0a0a;
-            padding: 1rem;
+            padding: 0.8rem;
             border-radius: 8px;
             border: 1px solid var(--dark-border);
-            margin: 1rem 0;
+            margin: 0.8rem 0;
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--success);
             word-break: break-all;
         }
@@ -849,24 +854,26 @@
             background: var(--secondary);
             color: #fff;
             border: none;
-            padding: 0.7rem 1.5rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
         .modal-content .btn-copy:hover { transform: scale(1.05); }
-        .modal-content .plan-info { color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem; }
+        .modal-content .plan-info { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.8rem; }
         .modal-content .discord-link {
             display: inline-block;
-            margin-top: 1rem;
-            padding: 0.7rem 1.5rem;
+            margin-top: 0.8rem;
+            padding: 0.6rem 1.2rem;
             background: #5865f2;
             color: #fff;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
+            font-size: 0.9rem;
         }
         .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
@@ -900,13 +907,14 @@
             .btn-whatsapp-fixo { width: 50px; height: 50px; font-size: 26px; bottom: 16px; left: 16px; }
             .parceria-container { padding: 1.5rem; }
             .regra-item { flex-direction: column; align-items: center; text-align: center; }
-            .tab-btn { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
             .script-features { grid-template-columns: 1fr; }
             .clientes-grid { grid-template-columns: 1fr 1fr; }
+            .depoimentos-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
-            .btn { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+            .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
             .modal-content { padding: 1.5rem; }
             .clientes-grid { grid-template-columns: 1fr; }
         }
@@ -1002,12 +1010,30 @@
                 <!-- ===== ABA CLASSIC ===== -->
                 <div class="tab-content active" id="tab-classic">
                     <div class="plans-grid">
+                        <!-- PLANO MENSAL -->
+                        <div class="plan-card">
+                            <div class="icon">📅</div>
+                            <h3>KZN MENU Classic</h3>
+                            <div class="sub-plano">Plano Mensal</div>
+                            <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
+                            <ul class="features">
+                                <li><i class="fas fa-check"></i> Acesso completo ao KZN MENU</li>
+                                <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                                <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                                <li><i class="fas fa-check"></i> Atualizações automáticas</li>
+                                <li><i class="fas fa-check"></i> Válido por 35 dias</li>
+                            </ul>
+                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
+                        </div>
+
+                        <!-- PLANO PERMANENTE -->
                         <div class="plan-card popular">
                             <span class="badge">🔥 Mais Vantagem</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" style="width:100%; max-width:300px; border-radius:12px; border:2px solid var(--primary);" />
+                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" style="width:100%; max-width:280px; border-radius:12px; border:2px solid var(--primary);" />
                             </div>
                             <h3>KZN MENU Classic</h3>
+                            <div class="sub-plano">Plano Permanente</div>
                             <div class="price">
                                 R$ 200,00 <small>/ vitalício</small>
                                 <span class="parcelamento">ou 2x R$ 100,00</span>
@@ -1018,17 +1044,47 @@
                                 <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
                                 <li><i class="fas fa-check"></i> Sem renovação!</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
-                    <!-- CLIENTES CLASSIC (ÚNICA LISTA) -->
+                    <!-- CLIENTES CLASSIC -->
                     <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--classic); font-size: 1.2rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
+                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Guilherme</div><div class="plano">R$ 50,00</div><div class="data">01/08/26</div></div>
                             <div class="cliente-item"><div class="nome">Dark OP</div><div class="plano">R$ 60,00</div><div class="data">19/07/26</div></div>
                             <div class="cliente-item"><div class="nome">Dacota</div><div class="plano">R$ 20,00</div><div class="data">03/08/26</div></div>
                             <div class="cliente-item"><div class="nome">Utaa</div><div class="plano">R$ 200,00</div><div class="data">05/08/26</div></div>
+                        </div>
+                    </div>
+                    <!-- DEPOIMENTOS CLASSIC -->
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Classic</h4>
+                        <div class="depoimentos-grid" style="margin-top: 1rem;">
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
+                                <div class="cliente">- Guilherme</div>
+                                <div class="info">📅 01/08/2026 • R$ 50,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
+                                <div class="cliente">- Dark OP</div>
+                                <div class="info">📅 19/07/2026 • R$ 60,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"</div>
+                                <div class="cliente">- Dacota</div>
+                                <div class="info">📅 03/08/2026 • R$ 20,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"O melhor investimento que fiz no Graal! Menu completo e estável."</div>
+                                <div class="cliente">- Utaa</div>
+                                <div class="info">📅 05/08/2026 • R$ 200,00</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1039,9 +1095,10 @@
                         <div class="plan-card popular">
                             <span class="badge era-badge">🔥 Exclusivo Era</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" style="width:100%; max-width:300px; border-radius:12px; border:2px solid var(--era);" />
+                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" style="width:100%; max-width:280px; border-radius:12px; border:2px solid var(--era);" />
                             </div>
                             <h3>AUTO TRASH AUTOMATIC</h3>
+                            <div class="sub-plano">Graal Era</div>
                             <div class="price">
                                 R$ 200,00 <small>/ vitalício</small>
                                 <span class="parcelamento">ou 2x R$ 100,00</span>
@@ -1054,22 +1111,52 @@
                                 <li><i class="fas fa-check"></i> Compatível com Graal Era</li>
                                 <li><i class="fas fa-check"></i> Suporte dedicado</li>
                             </ul>
-                            <div style="text-align: center; margin: 0.8rem 0; padding: 0.5rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid var(--era);">
-                                <p style="font-size: 0.8rem; color: var(--text-muted);">
+                            <div style="text-align: center; margin: 0.6rem 0; padding: 0.4rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid var(--era);">
+                                <p style="font-size: 0.75rem; color: var(--text-muted);">
                                     <strong style="color: var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40
                                 </p>
                             </div>
                             <button class="btn-buy" onclick="abrirModal('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
-                    <!-- CLIENTES ERA (ÚNICA LISTA) -->
+                    <!-- CLIENTES ERA -->
                     <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--era); font-size: 1.2rem;"><i class="fas fa-users"></i> Clientes Era</h4>
+                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Era</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Ryzen D</div><div class="plano">R$ 60,00</div><div class="data">26/06/26</div></div>
                             <div class="cliente-item"><div class="nome">ЮРИЙ</div><div class="plano">R$ 200,00</div><div class="data">03/07/26</div></div>
                             <div class="cliente-item"><div class="nome">Luixx</div><div class="plano">3x</div><div class="data">05/07/26</div></div>
                             <div class="cliente-item"><div class="nome">ourodeguerra</div><div class="plano">2x R$ 100</div><div class="data">18/07/26</div></div>
+                        </div>
+                    </div>
+                    <!-- DEPOIMENTOS ERA -->
+                    <div style="margin-top: 2rem; text-align: center;">
+                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Era</h4>
+                        <div class="depoimentos-grid" style="margin-top: 1rem;">
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"O Auto Trash é incrível! Farm de lixo automático, recomendo!"</div>
+                                <div class="cliente">- Ryzen D</div>
+                                <div class="info">📅 26/06/2026 • R$ 60,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Script funcionando perfeitamente, suporte rápido e eficiente!"</div>
+                                <div class="cliente">- ourodeguerra</div>
+                                <div class="info">📅 18/07/2026 • 2x R$ 100,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Valeu cada centavo! Farm automático mudou minha gameplay."</div>
+                                <div class="cliente">- ЮРИЙ</div>
+                                <div class="info">📅 03/07/2026 • R$ 200,00</div>
+                            </div>
+                            <div class="depoimento-card">
+                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                                <div class="texto">"Recomendo demais! Suporte excelente e script muito estável."</div>
+                                <div class="cliente">- Luixx</div>
+                                <div class="info">📅 05/07/2026 • 3x</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1166,51 +1253,6 @@
     </section>
 
     <!-- ============================================================
-    DEPOIMENTOS
-    ============================================================ -->
-    <section id="depoimentos" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-star"></i> O que nossos clientes dizem</h2>
-                <p>Feedbacks reais de quem já comprou</p>
-            </div>
-            <div class="depoimentos-grid">
-                <div class="depoimento-card">
-                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                    <div class="texto">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
-                    <div class="cliente">- Guilherme (Classic)</div>
-                    <div class="info">📅 01/08/2026 • R$ 50,00</div>
-                </div>
-                <div class="depoimento-card">
-                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                    <div class="texto">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
-                    <div class="cliente">- Dark OP (Classic)</div>
-                    <div class="info">📅 19/07/2026 • R$ 60,00</div>
-                </div>
-                <div class="depoimento-card">
-                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                    <div class="texto">"O Auto Trash é incrível! Farm de lixo automático, recomendo!"</div>
-                    <div class="cliente">- Ryzen D (Era)</div>
-                    <div class="info">📅 26/06/2026 • R$ 60,00</div>
-                </div>
-                <div class="depoimento-card">
-                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                    <div class="texto">"Script funcionando perfeitamente, suporte rápido e eficiente!"</div>
-                    <div class="cliente">- ourodeguerra (Era)</div>
-                    <div class="info">📅 18/07/2026 • 2x R$ 100,00</div>
-                </div>
-            </div>
-
-            <div style="margin-top: 3rem;">
-                <div class="counter-section">
-                    <span class="number">8</span>
-                    <span class="label">Clientes satisfeitos</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
     CONTATO / FORMULÁRIO COM COMPROVANTE
     ============================================================ -->
     <section id="contato" class="section dark">
@@ -1244,8 +1286,9 @@
                         <label><i class="fas fa-crown"></i> Plano Escolhido</label>
                         <select name="Plano" required>
                             <option value="">Selecione um plano...</option>
-                            <option value="KZN MENU Classic - R$ 200,00">⚔️ KZN MENU Classic - R$ 200,00</option>
-                            <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">♻️ Auto Trash Automatic - R$ 200,00 (Graal Era)</option>
+                            <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
+                            <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
+                            <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">♻️ Auto Trash - R$ 200,00 (Graal Era)</option>
                             <option value="Classic - 2x R$ 100,00">⚔️ Classic - 2x R$ 100,00</option>
                             <option value="Era - 2x R$ 100,00">♻️ Era - 2x R$ 100,00</option>
                         </select>
@@ -1496,18 +1539,10 @@
                 rule3_text: 'The Mod Menu was primarily developed to assist players in in-game activities such as: <strong>🐛 Insect farming, 🏠 House leveling, 🏢 GH leveling, ⚔️ Spar, 🎉 Events, 🔧 Other farming activities</strong>.',
                 testimonials_title: 'What our customers say',
                 testimonials_sub: 'Real feedback from those who already bought',
-                testimonial1: '"Very good mod menu, it sped up my farming 3x with insects, highly recommend!"',
-                testimonial2: '"Best mod menu I\'ve ever used! Works perfectly on mobile."',
-                testimonial3: '"Auto Trash is amazing! Automatic trash farming, recommend!"',
-                testimonial4: '"Script working perfectly, fast and efficient support!"',
                 counter_label: 'Satisfied customers',
                 contact_title: 'Contact Us', contact_sub: 'Fill out the form and get your Mod Menu',
                 form_name: 'Your Name', form_email: 'Your Email', form_whatsapp: 'WhatsApp',
                 form_plan: 'Selected Plan', form_select: 'Select a plan...',
-                form_plan_classic: '⚔️ KZN MENU Classic - R$ 200,00',
-                form_plan_era: '♻️ Auto Trash Automatic - R$ 200,00 (Graal Era)',
-                form_plan_classic_installment: '⚔️ Classic - 2x R$ 100,00',
-                form_plan_era_installment: '♻️ Era - 2x R$ 100,00',
                 form_message: 'Message (optional)', form_send: 'Send Message',
                 faq_title: 'Frequently Asked Questions', faq_sub: 'Common questions about KZN Menu',
                 faq1_q: '🔒 Is KZN Menu safe?',
@@ -1552,4 +1587,4 @@
     </script>
 
 </body>
-    </html>
+                                                                                </html>
