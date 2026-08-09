@@ -9,11 +9,7 @@
         /* ============================================================
            ROOT & RESET
            ============================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
             --primary-dark: #b91c1c;
@@ -42,6 +38,107 @@
         ::-webkit-scrollbar-thumb { 
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
+        }
+
+        /* ============================================================
+           WHATSAPP FIXO
+           ============================================================ */
+        .btn-whatsapp-fixo {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 9999;
+            background: #25d366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            transition: 0.3s;
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .btn-whatsapp-fixo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(37, 211, 102, 0.6);
+        }
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 50px rgba(37, 211, 102, 0.8); }
+            100% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4); }
+        }
+
+        /* ============================================================
+           NOTIFICAÇÃO DE COMPRA
+           ============================================================ */
+        .notificacao-container {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 340px;
+            pointer-events: none;
+        }
+        .notificacao-item {
+            background: var(--dark-card);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow);
+            animation: notifIn 0.5s ease;
+            pointer-events: auto;
+            max-width: 100%;
+        }
+        .notificacao-item .notif-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .notificacao-item .notif-nome {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        .notificacao-item .notif-plano {
+            font-size: 0.7rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .notificacao-item .notif-texto {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .notificacao-item .notif-tempo {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+        .notificacao-item .notif-fechar {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            background: none;
+            border: none;
+            padding: 0 4px;
+        }
+        @keyframes notifIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes notifOut {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(50px); }
+        }
+        .notificacao-item.saindo {
+            animation: notifOut 0.5s ease forwards;
         }
 
         /* ============================================================
@@ -141,10 +238,9 @@
             align-items: center;
             justify-content: center;
             padding: 7rem 2rem 4rem;
-            background: 
-                radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.2), transparent 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15), transparent 60%),
-                var(--dark);
+            background: radial-gradient(ellipse at 20% 30%, rgba(220, 38, 38, 0.2), transparent 60%),
+                        radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15), transparent 60%),
+                        var(--dark);
             position: relative;
             overflow: hidden;
         }
@@ -262,18 +358,6 @@
             border-color: var(--secondary);
             box-shadow: 0 10px 60px rgba(124, 58, 237, 0.2);
         }
-        .hero-image .badge-img {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background: var(--primary);
-            color: #fff;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
 
         /* ============================================================
            SECTIONS
@@ -282,9 +366,7 @@
             padding: 5rem 2rem;
             position: relative;
         }
-        .section.dark {
-            background: #050505;
-        }
+        .section.dark { background: #050505; }
         .section::before {
             content: '';
             position: absolute;
@@ -295,10 +377,7 @@
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0.3;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
         .section-header {
             text-align: center;
             margin-bottom: 3.5rem;
@@ -311,9 +390,7 @@
             justify-content: center;
             gap: 14px;
         }
-        .section-header h2 i {
-            color: var(--primary);
-        }
+        .section-header h2 i { color: var(--primary); }
         .section-header p {
             color: var(--text-muted);
             font-size: 1.1rem;
@@ -370,14 +447,8 @@
             font-weight: 700;
             text-transform: uppercase;
         }
-        .plan-card .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        .plan-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+        .plan-card .icon { font-size: 3rem; margin-bottom: 1rem; }
+        .plan-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
         .plan-card .price {
             font-size: 2.5rem;
             font-weight: 900;
@@ -388,6 +459,12 @@
             font-size: 1rem;
             font-weight: 400;
             color: var(--text-muted);
+        }
+        .plan-card .price .parcelamento {
+            font-size: 1rem;
+            color: var(--success);
+            display: block;
+            font-weight: 600;
         }
         .plan-card .features {
             list-style: none;
@@ -402,10 +479,7 @@
             color: var(--text-muted);
             font-size: 0.95rem;
         }
-        .plan-card .features li i {
-            color: var(--success);
-            width: 20px;
-        }
+        .plan-card .features li i { color: var(--success); width: 20px; }
         .btn-buy {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
@@ -428,7 +502,7 @@
            ============================================================ */
         .steps-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
             max-width: 900px;
             margin: 0 auto;
@@ -441,10 +515,7 @@
             text-align: center;
             transition: 0.3s;
         }
-        .step-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-        }
+        .step-card:hover { border-color: var(--primary); transform: translateY(-4px); }
         .step-card .step-number {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: #fff;
@@ -457,17 +528,159 @@
             margin: 0 auto 1rem;
             font-weight: 700;
         }
-        .step-card h4 {
-            color: #fff;
-            margin-bottom: 0.5rem;
+        .step-card h4 { color: #fff; margin-bottom: 0.5rem; }
+        .step-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* ============================================================
+           PARCERIA XCORE
+           ============================================================ */
+        .parceria-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--dark-card);
+            border: 2px solid var(--secondary);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .step-card p {
-            color: var(--text-muted);
+        .parceria-container::before {
+            content: '🔥 PARCERIA OFICIAL';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem;
+            letter-spacing: 2px;
+        }
+        .parceria-container .logo-parceria {
+            max-width: 150px;
+            margin: 1.5rem auto 1rem;
+            border-radius: 12px;
+            border: 2px solid var(--secondary);
+            padding: 0.5rem;
+            background: #0a0a0a;
+        }
+        .parceria-container .logo-parceria img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .parceria-container h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, var(--secondary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .parceria-container .slogan {
+            color: var(--secondary-light);
             font-size: 0.9rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .parceria-container p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        .parceria-container .btn-parceria {
+            display: inline-block;
+            background: #5865f2;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .parceria-container .btn-parceria:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 30px rgba(88, 101, 242, 0.4);
+        }
+        .parceria-container .aviso {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: rgba(220, 38, 38, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
         }
 
         /* ============================================================
-           FORMULÁRIO DE CONTATO
+           DEPOIMENTOS
+           ============================================================ */
+        .depoimentos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .depoimento-card {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            transition: 0.3s;
+        }
+        .depoimento-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .depoimento-card .texto {
+            font-size: 0.95rem;
+            color: var(--text);
+            font-style: italic;
+            margin-bottom: 0.8rem;
+        }
+        .depoimento-card .cliente {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .depoimento-card .estrelas {
+            color: #f59e0b;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .depoimento-card .info {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           CONTADOR
+           ============================================================ */
+        .counter-section {
+            background: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .counter-section .number {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+        .counter-section .label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* ============================================================
+           FORMULÁRIO
            ============================================================ */
         .form-container {
             max-width: 600px;
@@ -477,9 +690,7 @@
             border-radius: var(--radius);
             padding: 2.5rem;
         }
-        .form-container .form-group {
-            margin-bottom: 1.2rem;
-        }
+        .form-container .form-group { margin-bottom: 1.2rem; }
         .form-container label {
             display: block;
             color: var(--text);
@@ -507,10 +718,7 @@
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(220, 38, 38, 0.1);
         }
-        .form-container textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
+        .form-container textarea { resize: vertical; min-height: 100px; }
         .form-container .btn-submit {
             width: 100%;
             padding: 1rem;
@@ -558,10 +766,7 @@
         /* ============================================================
            FAQ
            ============================================================ */
-        .faq-grid {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .faq-grid { max-width: 800px; margin: 0 auto; }
         .faq-item {
             background: var(--dark-card);
             border: 1px solid var(--dark-border);
@@ -571,9 +776,7 @@
             cursor: pointer;
             transition: 0.3s;
         }
-        .faq-item:hover {
-            border-color: var(--primary);
-        }
+        .faq-item:hover { border-color: var(--primary); }
         .faq-item .question {
             display: flex;
             justify-content: space-between;
@@ -587,15 +790,9 @@
             color: var(--text-muted);
             font-size: 0.95rem;
         }
-        .faq-item.open .answer {
-            display: block;
-        }
-        .faq-item .faq-icon {
-            transition: 0.3s;
-        }
-        .faq-item.open .faq-icon {
-            transform: rotate(180deg);
-        }
+        .faq-item.open .answer { display: block; }
+        .faq-item .faq-icon { transition: 0.3s; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
 
         /* ============================================================
            FOOTER
@@ -626,10 +823,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .footer-brand p { color: var(--text-muted); font-size: 0.9rem; }
         .footer-social {
             display: flex;
             gap: 1rem;
@@ -652,18 +846,9 @@
             color: #fff;
             transform: translateY(-4px);
         }
-        .footer-social a.discord:hover {
-            background: #5865f2;
-            border-color: #5865f2;
-        }
-        .footer-social a.youtube:hover {
-            background: #ff0000;
-            border-color: #ff0000;
-        }
-        .footer-social a.pix:hover {
-            background: #22c55e;
-            border-color: #22c55e;
-        }
+        .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
+        .footer-social a.pix:hover { background: #22c55e; border-color: #22c55e; }
+        .footer-social a.xcore:hover { background: #7c3aed; border-color: #7c3aed; }
         .footer-bottom {
             max-width: 1400px;
             margin: 2rem auto 0;
@@ -690,9 +875,7 @@
             align-items: center;
             justify-content: center;
         }
-        .modal.open {
-            display: flex;
-        }
+        .modal.open { display: flex; }
         .modal-content {
             background: var(--dark-card);
             border: 1px solid var(--primary);
@@ -717,12 +900,8 @@
             color: var(--text-muted);
             transition: 0.3s;
         }
-        .modal-content .close-modal:hover {
-            color: #fff;
-        }
-        .modal-content h2 {
-            margin-bottom: 1rem;
-        }
+        .modal-content .close-modal:hover { color: #fff; }
+        .modal-content h2 { margin-bottom: 1rem; }
         .modal-content .pix-key {
             background: #0a0a0a;
             padding: 1rem;
@@ -744,9 +923,7 @@
             font-weight: 600;
             transition: 0.3s;
         }
-        .modal-content .btn-copy:hover {
-            transform: scale(1.05);
-        }
+        .modal-content .btn-copy:hover { transform: scale(1.05); }
         .modal-content .plan-info {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -772,11 +949,7 @@
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1024px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding-top: 6rem;
-            }
+            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
             .hero-content { max-width: 100%; }
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
@@ -800,6 +973,9 @@
             .section-header h2 { font-size: 2rem; }
             .plans-grid { grid-template-columns: 1fr; }
             .form-container { padding: 1.5rem; }
+            .notificacao-container { right: 10px; left: 10px; max-width: 100%; }
+            .btn-whatsapp-fixo { width: 50px; height: 50px; font-size: 26px; bottom: 16px; left: 16px; }
+            .parceria-container { padding: 1.5rem; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
@@ -809,6 +985,18 @@
     </style>
 </head>
 <body>
+
+    <!-- ============================================================
+    WHATSAPP FIXO
+    ============================================================ -->
+    <a href="https://wa.me/554288752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ============================================================
+    NOTIFICAÇÃO DE COMPRA
+    ============================================================ -->
+    <div class="notificacao-container" id="notificacaoContainer"></div>
 
     <!-- ============================================================
     NAVBAR
@@ -862,7 +1050,6 @@
         </div>
         <div class="hero-image">
             <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN Menu" />
-            <span class="badge-img"><i class="fas fa-star"></i> +50 Funcionalidades</span>
         </div>
     </section>
 
@@ -898,7 +1085,10 @@
                     <span class="badge">🔥 Mais Vantagem</span>
                     <div class="icon">♾️</div>
                     <h3>Plano Permanente</h3>
-                    <div class="price">R$ 200,00 <small>/ vitalício</small></div>
+                    <div class="price">
+                        R$ 200,00 <small>/ vitalício</small>
+                        <span class="parcelamento">ou 2x R$ 100,00</span>
+                    </div>
                     <ul class="features">
                         <li><i class="fas fa-check"></i> Acesso completo ao KZN Menu</li>
                         <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
@@ -915,7 +1105,7 @@
     </section>
 
     <!-- ============================================================
-    COMO COMPRAR
+    COMO COMPRAR + PARCERIA XCORE
     ============================================================ -->
     <section id="como-comprar" class="section">
         <div class="container">
@@ -923,26 +1113,93 @@
                 <h2><i class="fas fa-shopping-cart"></i> Como Comprar</h2>
                 <p>Simples, rápido e seguro. Siga os passos abaixo:</p>
             </div>
+
+            <!-- PARCERIA XCORE -->
+            <div class="parceria-container" style="margin-bottom: 3rem;">
+                <div class="logo-parceria">
+                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" />
+                </div>
+                <h3>⚡ XCORE EXECUTE</h3>
+                <div class="slogan">FOR GAMERS, BY GAMERS</div>
+                <p>
+                    A <strong>Xcore Execute</strong> é a ferramenta principal para acessar o <strong>KZN MENU</strong>.
+                    Compatível com celular e PC, com segurança e estabilidade.
+                </p>
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria">
+                    <i class="fab fa-discord"></i> Entrar no Discord da Xcore
+                </a>
+                <div class="aviso">
+                    ⚠️ É obrigatório ter a Xcore Execute para usar o KZN MENU!
+                </div>
+            </div>
+
+            <!-- PASSOS -->
             <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">0</div>
+                    <h4>⚡ Baixe a Xcore</h4>
+                    <p>Entre no Discord da Xcore Execute e baixe a ferramenta</p>
+                </div>
                 <div class="step-card">
                     <div class="step-number">1</div>
                     <h4>📋 Escolha o Plano</h4>
-                    <p>Selecione o plano que melhor atende você (Mensal ou Permanente)</p>
+                    <p>Selecione o plano que melhor atende você</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
                     <h4>💳 Gere o Pagamento</h4>
-                    <p>Clique em "Comprar" e copie a chave PIX ou QR Code</p>
+                    <p>Clique em "Comprar" e copie a chave PIX</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h4>✅ Confirme o Pagamento</h4>
+                    <h4>✅ Confirme no Discord</h4>
                     <p>Após o pagamento, entre em contato no Discord para ativação</p>
                 </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <h4>🎮 Receba seu Menu</h4>
-                    <p>Você receberá a key e instruções para ativar o Mod Menu</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    DEPOIMENTOS
+    ============================================================ -->
+    <section id="depoimentos" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> O que nossos clientes dizem</h2>
+                <p>Feedbacks reais de quem já comprou o KZN MENU</p>
+            </div>
+            <div class="depoimentos-grid">
+                <div class="depoimento-card">
+                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                    <div class="texto">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
+                    <div class="cliente">- Guilherme</div>
+                    <div class="info">📅 01/08/2026 • Plano: R$ 50,00</div>
+                </div>
+                <div class="depoimento-card">
+                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                    <div class="texto">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
+                    <div class="cliente">- Dark OP</div>
+                    <div class="info">📅 19/07/2026 • Plano: R$ 60,00</div>
+                </div>
+                <div class="depoimento-card">
+                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                    <div class="texto">"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"</div>
+                    <div class="cliente">- Dacota</div>
+                    <div class="info">📅 03/08/2026 • Plano: R$ 20,00</div>
+                </div>
+                <div class="depoimento-card">
+                    <div class="estrelas">⭐⭐⭐⭐⭐</div>
+                    <div class="texto">"O melhor investimento que fiz no Graal! Menu completo e estável."</div>
+                    <div class="cliente">- Utaa</div>
+                    <div class="info">📅 05/08/2026 • Plano: R$ 200,00</div>
+                </div>
+            </div>
+
+            <!-- CONTADOR -->
+            <div style="margin-top: 3rem;">
+                <div class="counter-section">
+                    <span class="number">350+</span>
+                    <span class="label">Clientes satisfeitos</span>
                 </div>
             </div>
         </div>
@@ -951,7 +1208,7 @@
     <!-- ============================================================
     CONTATO / FORMULÁRIO
     ============================================================ -->
-    <section id="contato" class="section dark">
+    <section id="contato" class="section">
         <div class="container">
             <div class="section-header">
                 <h2><i class="fas fa-envelope"></i> Entre em Contato</h2>
@@ -959,7 +1216,6 @@
             </div>
             <div class="form-container">
                 <form id="formContato" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST">
-                    <!-- Proteção anti-spam -->
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
@@ -985,6 +1241,7 @@
                             <option value="">Selecione um plano...</option>
                             <option value="Mensal - R$ 50,00 (35 dias)">📅 Mensal - R$ 50,00 (35 dias)</option>
                             <option value="Permanente - R$ 200,00 (vitalício)">♾️ Permanente - R$ 200,00 (vitalício)</option>
+                            <option value="Permanente - 2x R$ 100,00">♾️ Permanente - 2x R$ 100,00</option>
                         </select>
                     </div>
 
@@ -1006,7 +1263,7 @@
     <!-- ============================================================
     FAQ
     ============================================================ -->
-    <section id="faq" class="section">
+    <section id="faq" class="section dark">
         <div class="container">
             <div class="section-header">
                 <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
@@ -1025,7 +1282,7 @@
                         <span>📱 Funciona no celular?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS).</div>
+                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
@@ -1046,7 +1303,14 @@
                         <span>💳 Quais formas de pagamento?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer">Atualmente, aceitamos apenas PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>).</div>
+                    <div class="answer">Aceitamos PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Plano permanente pode ser parcelado em 2x R$ 100,00.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
+                        <span>⚡ O que é Xcore Execute?</span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">A Xcore Execute é a ferramenta oficial para executar o KZN MENU. Você precisa baixá-la no Discord da Xcore para usar o mod menu.</div>
                 </div>
             </div>
         </div>
@@ -1064,8 +1328,11 @@
                     <p>O melhor Mod Menu para Graal Mobile</p>
                 </div>
                 <div class="footer-social">
-                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord">
+                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN">
                         <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore">
+                        <i class="fas fa-bolt"></i>
                     </a>
                     <a href="#" class="pix" onclick="abrirModalPix()" title="PIX">
                         <i class="fas fa-qrcode"></i>
@@ -1182,26 +1449,59 @@
             if (e.target === this) fecharModal();
         });
 
+        // ===== NOTIFICAÇÃO DE COMPRA =====
+        const nomes = [
+            'João Silva', 'Maria Santos', 'Pedro Costa', 'Ana Oliveira',
+            'Lucas Ferreira', 'Camila Rocha', 'Rafael Souza', 'Fernanda Lima',
+            'Guilherme', 'Dark OP', 'Dacota', 'Utaa'
+        ];
+        const planos = ['Mensal', 'Permanente'];
+
+        function gerarNotificacao() {
+            const container = document.getElementById('notificacaoContainer');
+            const nome = nomes[Math.floor(Math.random() * nomes.length)];
+            const plano = planos[Math.floor(Math.random() * planos.length)];
+            const tempo = Math.floor(Math.random() * 5) + 1;
+
+            const notif = document.createElement('div');
+            notif.className = 'notificacao-item';
+            notif.innerHTML = `
+                <div class="notif-header">
+                    <span class="notif-nome">🔥 ${nome}</span>
+                    <span class="notif-plano">${plano}</span>
+                    <button class="notif-fechar" onclick="fecharNotificacao(this)">✕</button>
+                </div>
+                <div class="notif-texto">comprou o KZN MENU há ${tempo} minuto${tempo > 1 ? 's' : ''}!</div>
+                <div class="notif-tempo">🕐 ${tempo} minuto${tempo > 1 ? 's' : ''} atrás</div>
+            `;
+            container.appendChild(notif);
+
+            setTimeout(() => {
+                fecharNotificacao(notif.querySelector('.notif-fechar'));
+            }, 6000);
+        }
+
+        function fecharNotificacao(btn) {
+            const item = btn.closest('.notificacao-item');
+            item.classList.add('saindo');
+            setTimeout(() => item.remove(), 500);
+        }
+
+        // Gera notificações aleatórias
+        gerarNotificacao();
+        setInterval(gerarNotificacao, 8000 + Math.random() * 7000);
+
         // ===== FORMULÁRIO =====
         document.getElementById('formContato').addEventListener('submit', function(e) {
-            const status = document.getElementById('formStatus');
-            status.className = 'form-status';
-            status.style.display = 'none';
-
-            // Mostra loading
             const btn = this.querySelector('.btn-submit');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
-            // O formulário é enviado pelo FormSubmit
-            // O status é atualizado após o envio (a página recarrega)
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
             }, 5000);
         });
 
-        // Verifica se veio com sucesso do FormSubmit
         if (window.location.search.includes('success')) {
             const status = document.getElementById('formStatus');
             status.className = 'form-status success';
@@ -1211,4 +1511,4 @@
     </script>
 
 </body>
-                                   </html>
+                </html>
