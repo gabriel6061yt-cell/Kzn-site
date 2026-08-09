@@ -1,1 +1,1253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GS2 Tutorial - Graal Mobile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVEGAÇÃO -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-gamepad"></i>
+                <span>GS2 Tutorial</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#basico"><i class="fas fa-book"></i> Básico</a></li>
+                <li><a href="#comandos"><i class="fas fa-code"></i> Comandos</a></li>
+                <li><a href="#exemplos"><i class="fas fa-cubes"></i> Exemplos</a></li>
+                <li><a href="#gui"><i class="fas fa-window-maximize"></i> GUI</a></li>
+            </ul>
+            <div class="nav-toggle" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
 
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>🚀 GS2 para Graal Mobile</h1>
+            <p class="hero-subtitle">O tutorial mais completo e fácil para criar scripts no Graal Online Mobile</p>
+            <div class="hero-buttons">
+                <a href="#basico" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Começar Tutorial
+                </a>
+                <a href="#exemplos" class="btn btn-secondary">
+                    <i class="fas fa-code"></i> Ver Exemplos
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Comandos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Exemplos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Mobile</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="code-preview">
+                <div class="code-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="code-title">script.gs</span>
+                </div>
+                <pre><code><span class="comment">//#CLIENTSIDE</span>
+<span class="keyword">function</span> <span class="function">onCreated</span>() {
+    <span class="keyword">this</span>.ativo = <span class="boolean">true</span>;
+    <span class="function">setTimer</span>(<span class="number">0.1</span>);
+}
+
+<span class="keyword">function</span> <span class="function">onTimeout</span>() {
+    <span class="keyword">if</span> (!<span class="keyword">this</span>.ativo) <span class="keyword">return</span>;
+    <span class="comment">// Seu código aqui</span>
+    <span class="function">setTimer</span>(<span class="number">0.1</span>);
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- TUTORIAL BÁSICO -->
+    <section id="basico" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-book"></i> Tutorial Básico</h2>
+                <p>Aprenda do zero como criar seus primeiros scripts</p>
+            </div>
+            
+            <div class="tutorial-grid">
+                <div class="tutorial-card">
+                    <div class="card-icon"><i class="fas fa-file-code"></i></div>
+                    <h3>Estrutura Básica</h3>
+                    <p>Todo script mobile começa com <code>//#CLIENTSIDE</code> e as funções <code>onCreated()</code> e <code>onTimeout()</code>.</p>
+                    <button class="btn-show" data-target="estrutura">Ver Exemplo</button>
+                    <div class="code-hidden" id="estrutura">
+                        <pre><code>//#CLIENTSIDE
+
+function onCreated() {
+    // Inicialização
+    setTimer(0.1);
+}
+
+function onTimeout() {
+    // Código que repete
+    setTimer(0.1);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tutorial-card">
+                    <div class="card-icon"><i class="fas fa-eye"></i></div>
+                    <h3>ESP de NPC</h3>
+                    <p>Mostra o nome de todos os NPCs em cima deles, com letra amarela.</p>
+                    <button class="btn-show" data-target="esp-npc">Ver Exemplo</button>
+                    <div class="code-hidden" id="esp-npc">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    setTimer(0.1);
+}
+
+function onTimeout() {
+    for (temp.i = 0; temp.i < 500; temp.i++) 
+        hideimg(1000 + temp.i);
+    
+    temp.idx = 1000;
+    for (temp.npc : npcs) {
+        if (temp.npc.x == nil) continue;
+        showtext(temp.idx, temp.npc.x + 0.5, 
+            temp.npc.y - 0.8, "Arial", "c", 
+            temp.npc.name);
+        changeimgcolors(temp.idx, 1, 1, 0, 1);
+        changeimgzoom(temp.idx, 0.6);
+        temp.idx++;
+    }
+    setTimer(0.1);
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="tutorial-card">
+                    <div class="card-icon"><i class="fas fa-window-restore"></i></div>
+                    <h3>Janela com Texto</h3>
+                    <p>Crie janelas interativas com texto, botões e imagens.</p>
+                    <button class="btn-show" data-target="janela">Ver Exemplo</button>
+                    <div class="code-hidden" id="janela">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    new GuiWindowCtrl("MinhaJanela") {
+        profile = GuiBlueWindowProfile;
+        title = "TÍTULO";
+        x = 50; y = 100;
+        width = 300; height = 150;
+        canmove = true;
+        canclose = true;
+        
+        new GuiTextCtrl("Texto") {
+            text = "Olá! Mensagem aqui.";
+            x = 10; y = 35;
+            width = 280; height = 50;
+            profile = GuiBlueTextProfile;
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMANDOS -->
+    <section id="comandos" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-code"></i> Comandos Essenciais</h2>
+                <p>Os comandos que funcionam no Graal Mobile</p>
+            </div>
+
+            <div class="comandos-grid">
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">showtext</span>
+                        <span class="comando-funcao">Mostra texto</span>
+                    </div>
+                    <code>showtext(id, x, y, fonte, estilo, texto)</code>
+                    <p>Exemplo: <code>showtext(1, 10, 10, "Arial", "c", "Olá")</code></p>
+                </div>
+
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">changeimgcolors</span>
+                        <span class="comando-funcao">Muda cor</span>
+                    </div>
+                    <code>changeimgcolors(id, r, g, b, a)</code>
+                    <p>Exemplo: <code>changeimgcolors(1, 1, 1, 0, 1)</code> (amarelo)</p>
+                </div>
+
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">setTimer</span>
+                        <span class="comando-funcao">Loop contínuo</span>
+                    </div>
+                    <code>setTimer(segundos)</code>
+                    <p>Exemplo: <code>setTimer(0.1)</code> (10x por segundo)</p>
+                </div>
+
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">GuiWindowCtrl</span>
+                        <span class="comando-funcao">Cria janela</span>
+                    </div>
+                    <code>new GuiWindowCtrl("nome") { ... }</code>
+                    <p>Perfis: <code>GuiBlueWindowProfile</code> ou <code>GuiRedWindowProfile</code></p>
+                </div>
+
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">GuiButtonCtrl</span>
+                        <span class="comando-funcao">Cria botão</span>
+                    </div>
+                    <code>new GuiButtonCtrl("nome") { ... }</code>
+                    <p>Perfis: <code>GuiBlueButtonProfile</code>, <code>GuiRedButtonProfile</code></p>
+                </div>
+
+                <div class="comando-item">
+                    <div class="comando-header">
+                        <span class="comando-tag">warpto</span>
+                        <span class="comando-funcao">Teleporta</span>
+                    </div>
+                    <code>warpto(level, x, y)</code>
+                    <p>Exemplo: <code>warpto("start.nw", 30, 30)</code></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXEMPLOS -->
+    <section id="exemplos" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-cubes"></i> Exemplos Prontos</h2>
+                <p>Scripts completos que você pode copiar e usar</p>
+            </div>
+
+            <div class="exemplos-grid">
+                <div class="exemplo-card">
+                    <div class="exemplo-badge">ESP</div>
+                    <h3>👁️ ESP Player</h3>
+                    <p>Linha + nome dos jogadores próximos</p>
+                    <button class="btn-show" data-target="esp-player">Ver Script</button>
+                    <div class="code-hidden" id="esp-player">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.ativo = true;
+    setTimer(0.1);
+}
+
+function onTimeout() {
+    if (!this.ativo) return;
+    for (temp.i = 0; temp.i < 500; temp.i++) 
+        hideimg(temp.i);
+    
+    temp.idx = 0;
+    for (temp.p : players) {
+        if (temp.p == player) continue;
+        temp.dist = ((temp.p.x - player.x)^2 + 
+            (temp.p.y - player.y)^2) ^ 0.5;
+        if (temp.dist > 15) continue;
+        
+        DrawLine(temp.idx, player.x + 1.5, 
+            player.y + 1.5, temp.p.x + 1, 
+            temp.p.y + 1, 0.08, 0, 1, 0, 0.7);
+        showtext(temp.idx + 100, temp.p.x + 0.5, 
+            temp.p.y - 0.8, "Arial", "c", 
+            temp.p.account);
+        changeimgcolors(temp.idx + 100, 0, 1, 0, 1);
+        changeimgzoom(temp.idx + 100, 0.6);
+        temp.idx++;
+    }
+    setTimer(0.1);
+}
+
+function DrawLine(ind, sx, sy, tx, ty, wid, r, g, b, a) {
+    temp.ang = getangle(tx - sx, ty - sy) + (pi/2);
+    with (findimg(ind)) {
+        polygon = {sx, sy, tx, ty, 
+            tx + cos(temp.ang)*wid, 
+            ty - sin(temp.ang)*wid, 
+            sx + cos(temp.ang)*wid, 
+            sy - sin(temp.ang)*wid};
+        red = r; green = g; blue = b; 
+        alpha = a; layer = 3;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="exemplo-card">
+                    <div class="exemplo-badge">HACK</div>
+                    <h3>👻 Invisível</h3>
+                    <p>Some completamente com um botão</p>
+                    <button class="btn-show" data-target="invisivel">Ver Script</button>
+                    <div class="code-hidden" id="invisivel">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.ativo = false;
+    new GuiButtonCtrl("BtnInv") {
+        text = "👻 INV";
+        x = screenwidth - 60;
+        y = screenheight - 60;
+        width = 50; height = 50;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnInv.onAction() {
+    this.ativo = !this.ativo;
+    if (this.ativo) {
+        setbody(""); sethead("");
+        player.nick = "";
+        setcoloreffect(1, 1, 1, 0);
+        player.shadow = false;
+        BtnInv.profile = GuiRedButtonProfile;
+    } else {
+        setbody("body0.png");
+        sethead("head0.png");
+        setcoloreffect(1, 1, 1, 1);
+        player.shadow = true;
+        BtnInv.profile = GuiBlueButtonProfile;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="exemplo-card">
+                    <div class="exemplo-badge">GUI</div>
+                    <h3>🖼️ Janela com Imagem</h3>
+                    <p>Exiba imagens por URL direta</p>
+                    <button class="btn-show" data-target="imagem">Ver Script</button>
+                    <div class="code-hidden" id="imagem">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    criarBotao();
+}
+
+function criarBotao() {
+    new GuiButtonCtrl("BtnImg") {
+        text = "🖼️ IMG";
+        x = screenwidth - 120;
+        y = screenheight - 60;
+        width = 50; height = 50;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnImg.onAction() {
+    if (isObject("ImgWindow")) 
+        ImgWindow.destroy();
+    
+    new GuiWindowCtrl("ImgWindow") {
+        profile = GuiBlueWindowProfile;
+        title = "IMAGEM";
+        x = 50; y = 100;
+        width = 300; height = 300;
+        canclose = true; canmove = true;
+        
+        new GuiShowImgCtrl("Imagem") {
+            x = 10; y = 30;
+            width = 280; height = 250;
+            image = "https://i.postimg.cc/xxxxx/imagem.jpg";
+            keepaspectratio = true;
+            fitmode = 1;
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="exemplo-card">
+                    <div class="exemplo-badge">HACK</div>
+                    <h3>🛡️ God Mode</h3>
+                    <p>Fique invencível com um toque</p>
+                    <button class="btn-show" data-target="godmode">Ver Script</button>
+                    <div class="code-hidden" id="godmode">
+                        <pre><code>//#CLIENTSIDE
+function onCreated() {
+    this.ativo = false;
+    new GuiButtonCtrl("BtnGod") {
+        text = "🛡️ GOD";
+        x = screenwidth - 120;
+        y = screenheight - 60;
+        width = 50; height = 50;
+        profile = GuiBlueButtonProfile;
+    }
+}
+
+function BtnGod.onAction() {
+    this.ativo = !this.ativo;
+    if (this.ativo) {
+        player.isinvincible = true;
+        player.isinvincible2 = true;
+        player.hearts = 100;
+        BtnGod.profile = GuiRedButtonProfile;
+    } else {
+        player.isinvincible = false;
+        player.isinvincible2 = false;
+        BtnGod.profile = GuiBlueButtonProfile;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GUI -->
+    <section id="gui" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-window-maximize"></i> GUI - Janelas e Botões</h2>
+                <p>Tudo sobre criação de interfaces no Graal Mobile</p>
+            </div>
+
+            <div class="gui-grid">
+                <div class="gui-card">
+                    <h3>📦 Janela Básica</h3>
+                    <pre><code>new GuiWindowCtrl("Janela") {
+    profile = GuiBlueWindowProfile;
+    title = "Título";
+    x = 50; y = 100;
+    width = 300; height = 200;
+    canmove = true;
+    canclose = true;
+}</code></pre>
+                </div>
+
+                <div class="gui-card">
+                    <h3>🔘 Botão</h3>
+                    <pre><code>new GuiButtonCtrl("Botao") {
+    text = "CLIQUE";
+    x = 10; y = 10;
+    width = 100; height = 40;
+    profile = GuiBlueButtonProfile;
+}
+
+function Botao.onAction() {
+    // Ação aqui
+}</code></pre>
+                </div>
+
+                <div class="gui-card">
+                    <h3>📝 Texto</h3>
+                    <pre><code>new GuiTextCtrl("Texto") {
+    text = "Mensagem";
+    x = 10; y = 35;
+    width = 280; height = 50;
+    profile = GuiBlueTextProfile;
+    fontsize = 11;
+}</code></pre>
+                </div>
+
+                <div class="gui-card">
+                    <h3>🖼️ Imagem</h3>
+                    <pre><code>new GuiShowImgCtrl("Imagem") {
+    x = 10; y = 30;
+    width = 280; height = 250;
+    image = "URL_DIRETA.jpg";
+    keepaspectratio = true;
+    fitmode = 1;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-gamepad"></i>
+                    <span>GS2 Tutorial</span>
+                    <p>Tutorial completo para Graal Mobile</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#inicio">Início</a>
+                    <a href="#basico">Básico</a>
+                    <a href="#comandos">Comandos</a>
+                    <a href="#exemplos">Exemplos</a>
+                    <a href="#gui">GUI</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 GS2 Tutorial - Feito para a comunidade Graal</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+          </html>
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #7c3aed;
+    --primary-dark: #6d28d9;
+    --secondary: #ec4899;
+    --dark: #0a0e1a;
+    --dark-card: #0f1322;
+    --dark-border: #1a1f30;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { 
+    background: var(--primary); 
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 14, 26, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--dark-border);
+    z-index: 1000;
+    padding: 0 2rem;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.nav-logo i { font-size: 1.5rem; }
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+}
+
+.nav-menu a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: white;
+    background: var(--primary);
+}
+
+.nav-toggle {
+    display: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ===== HERO ===== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    background: radial-gradient(ellipse at 30% 50%, rgba(124, 58, 237, 0.08), transparent 70%);
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.btn {
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(124, 58, 237, 0.6);
+}
+
+.btn-secondary {
+    background: var(--dark-card);
+    color: white;
+    border: 1px solid var(--dark-border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary);
+    background: var(--dark-border);
+}
+
+.hero-stats {
+    display: flex;
+    gap: 3rem;
+}
+
+.stat { text-align: center; }
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+.stat-label { color: var(--text-muted); font-size: 0.9rem; }
+
+.hero-image {
+    flex: 1;
+    max-width: 550px;
+    margin-left: 2rem;
+}
+
+.code-preview {
+    background: #0d1117;
+    border-radius: 16px;
+    border: 1px solid var(--dark-border);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.code-header {
+    padding: 12px 16px;
+    background: #161b22;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.code-title {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-left: 8px;
+}
+
+.code-preview pre {
+    padding: 20px;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 0.85rem;
+}
+
+.code-preview code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    color: #e6edf3;
+    line-height: 1.8;
+}
+
+.comment { color: #8b949e; }
+.keyword { color: #ff7b72; }
+.function { color: #d2a8ff; }
+.boolean { color: #ff7b72; }
+.number { color: #79c0ff; }
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 5rem 2rem;
+}
+
+.section.dark {
+    background: #060a12;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.section-header h2 i {
+    color: var(--primary);
+}
+
+.section-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* ===== TUTORIAL CARDS ===== */
+.tutorial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.tutorial-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.15);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.tutorial-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.tutorial-card p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.tutorial-card code {
+    background: #1a1f30;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--secondary);
+}
+
+.btn-show {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.btn-show:hover {
+    background: var(--primary-dark);
+}
+
+.code-hidden {
+    display: none;
+    margin-top: 1rem;
+    background: #0d1117;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.code-hidden.show { display: block; }
+
+.code-hidden pre {
+    padding: 16px;
+    margin: 0;
+    overflow-x: auto;
+    font-size: 0.8rem;
+}
+
+.code-hidden code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    color: #e6edf3;
+    line-height: 1.8;
+}
+
+/* ===== COMANDOS ===== */
+.comandos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.comando-item {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.comando-item:hover {
+    border-color: var(--primary);
+}
+
+.comando-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.comando-tag {
+    font-family: 'Fira Code', monospace;
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.comando-funcao {
+    background: var(--primary);
+    padding: 0.1rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    color: white;
+}
+
+.comando-item code {
+    display: block;
+    background: #0d1117;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    color: #79c0ff;
+}
+
+.comando-item p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.comando-item p code {
+    display: inline;
+    background: transparent;
+    padding: 0;
+    color: var(--secondary);
+}
+
+/* ===== EXEMPLOS ===== */
+.exemplos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+}
+
+.exemplo-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.exemplo-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-4px);
+}
+
+.exemplo-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 0.1rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.exemplo-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.exemplo-card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* ===== GUI ===== */
+.gui-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.gui-card {
+    background: var(--dark-card);
+    border: 1px solid var(--dark-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.gui-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+}
+
+.gui-card pre {
+    background: #0d1117;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.gui-card code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    color: #e6edf3;
+    line-height: 1.6;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: #060a12;
+    border-top: 1px solid var(--dark-border);
+    padding: 3rem 2rem 1.5rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-brand i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.footer-brand span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-social a {
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    transition: all 0.3s;
+}
+
+.footer-social a:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--dark-border);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 5rem;
+    }
+    .hero-content { max-width: 100%; }
+    .hero-image { 
+        max-width: 100%; 
+        margin-left: 0;
+        margin-top: 2rem;
+        width: 100%;
+    }
+    .hero-buttons { justify-content: center; }
+    .hero-stats { justify-content: center; }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 14, 26, 0.98);
+        padding: 1rem 2rem;
+        border-bottom: 1px solid var(--dark-border);
+    }
+    .nav-menu.open { display: flex; }
+    .nav-toggle { display: block; }
+    
+    .hero h1 { font-size: 2.5rem; }
+    .section-header h2 { font-size: 2rem; }
+    
+    .tutorial-grid,
+    .exemplos-grid,
+    .gui-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .comandos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 { font-size: 2rem; }
+    .hero-stats { gap: 1.5rem; }
+    .hero-stats .stat-number { font-size: 1.5rem; }
+    .btn { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+    .code-preview pre { font-size: 0.7rem; }
+}
+// ===== MENU MOBILE =====
+const mobileMenu = document.getElementById('mobileMenu');
+const navMenu = document.querySelector('.nav-menu');
+
+mobileMenu.addEventListener('click', () => {
+    navMenu.classList.toggle('open');
+});
+
+// ===== FECHAR MENU AO CLICAR EM LINK =====
+document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+    });
+});
+
+// ===== SCROLL ATIVO NO MENU =====
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-menu a');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (window.scrollY >= sectionTop) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// ===== BOTÕES "VER EXEMPLO" =====
+document.querySelectorAll('.btn-show').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const target = document.getElementById(btn.dataset.target);
+        if (target) {
+            target.classList.toggle('show');
+            btn.textContent = target.classList.contains('show') ? 'Ocultar' : 'Ver Exemplo';
+        }
+    });
+});
+
+// ===== ANIMAÇÃO DE ENTRADA (Intersection Observer) =====
+const cards = document.querySelectorAll('.tutorial-card, .exemplo-card, .gui-card, .comando-item');
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+cards.forEach(card => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(card);
+});
+
+// ===== COPIAR CÓDIGO (opcional) =====
+document.querySelectorAll('.code-hidden pre').forEach(block => {
+    const copyBtn = document.createElement('button');
+    copyBtn.textContent = '📋 Copiar';
+    copyBtn.className = 'btn-copy';
+    copyBtn.style.cssText = `
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 0.7rem;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s;
+    `;
+    copyBtn.addEventListener('mouseenter', () => copyBtn.style.opacity = '1');
+    copyBtn.addEventListener('mouseleave', () => copyBtn.style.opacity = '0.7');
+    
+    block.style.position = 'relative';
+    block.appendChild(copyBtn);
+    
+    copyBtn.addEventListener('click', () => {
+        const code = block.querySelector('code').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            copyBtn.textContent = '✅ Copiado!';
+            setTimeout(() => copyBtn.textContent = '📋 Copiar', 2000);
+        });
+    });
+});
