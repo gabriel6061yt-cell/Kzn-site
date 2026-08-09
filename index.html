@@ -123,8 +123,8 @@
             text-decoration: none;
         }
         .nav-logo img {
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 2px solid var(--primary);
             object-fit: cover;
@@ -155,12 +155,12 @@
         .nav-xcore {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             text-decoration: none;
         }
         .nav-xcore img {
-            width: 30px;
-            height: 30px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             border: 2px solid var(--secondary);
             object-fit: cover;
@@ -171,13 +171,13 @@
             line-height: 1.1;
         }
         .nav-xcore .xcore-text .name {
-            font-size: 0.55rem;
+            font-size: 0.65rem;
             font-weight: 700;
             color: var(--secondary-light);
             letter-spacing: 0.5px;
         }
         .nav-xcore .xcore-text .team {
-            font-size: 0.4rem;
+            font-size: 0.5rem;
             color: var(--text-muted);
         }
         .nav-menu {
@@ -1038,8 +1038,8 @@
                 <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="nav-xcore">
                     <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" />
                     <div class="xcore-text">
-                        <span class="name">XCORE EXECUTE</span>
-                        <span class="team">TEAM</span>
+                        <span class="name">TEAM XCORE</span>
+                        <span class="team">EXECUTE</span>
                     </div>
                 </a>
             </div>
@@ -1737,7 +1737,6 @@
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
-                    // Se o texto contém HTML, usa innerHTML
                     if (translations[lang][key].includes('<')) {
                         el.innerHTML = translations[lang][key];
                     } else {
@@ -1762,4 +1761,4 @@
     </script>
 
 </body>
-    </html>
+                        </html>
