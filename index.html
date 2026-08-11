@@ -98,7 +98,7 @@
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
             z-index: 1000;
-            padding: 0 2rem;
+            padding: 0 1rem;
             transition: var(--transition);
         }
         .navbar.scrolled {
@@ -111,23 +111,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 65px;
+            gap: 8px;
         }
 
         .nav-logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-shrink: 0;
         }
         .nav-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
         }
         .nav-logo img {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             border: 2px solid var(--primary);
             object-fit: cover;
@@ -144,14 +146,14 @@
             line-height: 1.1;
         }
         .nav-logo .logo-text span {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .nav-logo .logo-text small {
-            font-size: 0.45rem;
+            font-size: 0.4rem;
             color: var(--text-muted);
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -159,19 +161,20 @@
 
         .nav-divider {
             width: 1px;
-            height: 30px;
+            height: 25px;
             background: var(--border);
         }
 
         .nav-xcore {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             text-decoration: none;
+            flex-shrink: 0;
         }
         .nav-xcore img {
-            width: 38px;
-            height: 38px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             border: 2px solid var(--secondary);
             object-fit: cover;
@@ -182,29 +185,29 @@
             line-height: 1.1;
         }
         .nav-xcore .xcore-text .name {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
             color: var(--secondary-light);
             letter-spacing: 0.5px;
         }
         .nav-xcore .xcore-text .team {
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             color: var(--text-muted);
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 0.3rem;
+            gap: 0.2rem;
             flex-wrap: wrap;
         }
         .nav-menu a {
             color: var(--text-muted);
             text-decoration: none;
-            padding: 0.4rem 1rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 8px;
             transition: var(--transition);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -220,30 +223,32 @@
         .nav-toggle {
             display: none;
             color: var(--text);
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             cursor: pointer;
+            padding: 4px;
         }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
+            flex-shrink: 0;
         }
 
         /* BOTÃO PERFIL */
         .profile-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background: var(--glass);
             border: 1px solid var(--border);
             border-radius: 50px;
-            padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+            padding: 0.2rem 0.6rem 0.2rem 0.2rem;
             cursor: pointer;
             transition: var(--transition);
             color: var(--text);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
         .profile-btn:hover {
@@ -251,30 +256,32 @@
             background: rgba(220,38,38,0.1);
         }
         .profile-btn .avatar {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 700;
             color: #fff;
+            flex-shrink: 0;
         }
         .profile-btn .user-name {
-            max-width: 80px;
+            max-width: 70px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            font-size: 0.7rem;
         }
         .profile-btn .badge-cart {
             background: var(--primary);
             color: #fff;
-            font-size: 0.5rem;
+            font-size: 0.45rem;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -283,17 +290,17 @@
 
         .lang-toggle {
             display: flex;
-            gap: 0.2rem;
+            gap: 0.15rem;
             align-items: center;
         }
         .lang-toggle button {
             background: var(--glass);
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 0.2rem 0.6rem;
+            padding: 0.15rem 0.5rem;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: 700;
             transition: var(--transition);
         }
@@ -301,6 +308,27 @@
             background: var(--primary);
             border-color: var(--primary);
             color: #fff;
+        }
+
+        .cart-icon-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .cart-count {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.45rem;
+            font-weight: 700;
+            position: absolute;
+            top: -6px;
+            right: -8px;
         }
 
         /* ============================================================
@@ -311,7 +339,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 8rem 2rem 5rem;
+            padding: 7rem 2rem 4rem;
             background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
                         radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
                         var(--bg);
@@ -1172,27 +1200,8 @@
         }
 
         /* ============================================================
-           CARRINHO
+           CARRINHO DROPDOWN
            ============================================================ */
-        .cart-count {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            position: absolute;
-            top: -6px;
-            right: -6px;
-        }
-        .profile-btn .cart-icon-wrap {
-            position: relative;
-        }
-
         .cart-dropdown {
             position: absolute;
             top: 100%;
@@ -1582,7 +1591,7 @@
         .modal-pix .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
         /* ============================================================
-           RESPONSIVE
+           RESPONSIVE - CORRIGIDO
            ============================================================ */
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
@@ -1593,22 +1602,89 @@
             .modal-content { padding: 1.5rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
         }
+
         @media (max-width: 768px) {
+            /* NAVBAR COMPACTA */
+            .navbar { padding: 0 0.5rem; }
+            .nav-container {
+                height: 58px;
+                gap: 4px;
+                padding: 0 4px;
+            }
+            
+            .nav-logo-wrapper { gap: 4px; flex-shrink: 0; }
+            .nav-logo img { width: 30px; height: 30px; }
+            .nav-logo .logo-text span { font-size: 0.75rem; }
+            .nav-logo .logo-text small { display: none; }
+            
+            .nav-divider { display: none; }
+            
+            .nav-xcore .xcore-text { display: none; }
+            .nav-xcore img { width: 26px; height: 26px; border-width: 1.5px; }
+            
             .nav-menu {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 70px;
+                top: 58px;
                 left: 0;
                 width: 100%;
                 background: var(--bg-card);
-                padding: 1.5rem;
+                padding: 0.8rem 1rem;
                 border-bottom: 1px solid var(--border);
-                gap: 0.5rem;
+                gap: 0.2rem;
+                z-index: 999;
             }
             .nav-menu.open { display: flex; }
-            .nav-toggle { display: block; }
-            .lang-toggle { margin-left: 0; }
+            .nav-menu a {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+            
+            .nav-toggle { display: block; font-size: 1.1rem; padding: 2px 6px; }
+            
+            .nav-actions { gap: 4px; flex-shrink: 0; }
+            
+            /* PERFIL BOTÃO */
+            .profile-btn {
+                padding: 0.15rem 0.4rem 0.15rem 0.15rem;
+                font-size: 0.6rem;
+                gap: 4px;
+                border-width: 1px;
+            }
+            .profile-btn .avatar {
+                width: 20px;
+                height: 20px;
+                font-size: 0.5rem;
+            }
+            .profile-btn .user-name {
+                display: none;
+            }
+            .profile-btn .badge-cart {
+                width: 14px;
+                height: 14px;
+                font-size: 0.4rem;
+            }
+            .profile-btn .cart-icon-wrap .cart-count {
+                width: 14px;
+                height: 14px;
+                font-size: 0.4rem;
+                top: -5px;
+                right: -6px;
+            }
+            
+            .lang-toggle button {
+                padding: 0.1rem 0.35rem;
+                font-size: 0.45rem;
+                border-width: 1px;
+            }
+            
+            .cart-dropdown {
+                width: 260px;
+                right: -40px;
+            }
+            
+            /* RESTO */
             .hero h1 { font-size: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
             .plans-grid { grid-template-columns: 1fr; }
@@ -1620,14 +1696,11 @@
             .script-features { grid-template-columns: 1fr; }
             .clientes-grid { grid-template-columns: 1fr 1fr; }
             .depoimentos-grid { grid-template-columns: 1fr; }
-            .nav-divider { display: none; }
-            .nav-xcore .xcore-text { display: none; }
             .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
             .progress-step .step-arrow { display: none; }
-            .profile-btn .user-name { display: none; }
             .profile-section .profile-stats { grid-template-columns: 1fr; gap: 0.5rem; }
-            .cart-dropdown { width: 280px; right: -80px; }
         }
+
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
             .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
@@ -1636,7 +1709,11 @@
             .modal-pix .modal-content { padding: 1.5rem; }
             .modal-pix .modal-content .pix-key { font-size: 0.8rem; }
             .profile-section .profile-actions { flex-direction: column; }
-            .cart-dropdown { width: 260px; right: -60px; }
+            .cart-dropdown { width: 240px; right: -30px; }
+            .nav-logo .logo-text span { font-size: 0.65rem; }
+            .nav-logo img { width: 26px; height: 26px; }
+            .nav-xcore img { width: 22px; height: 22px; }
+            .profile-btn .avatar { width: 18px; height: 18px; }
         }
     </style>
 </head>
@@ -1645,18 +1722,18 @@
     <!-- ============================================================
     WHATSAPP
     ============================================================ -->
-    <a href="https://wa.me/554288752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
+    <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- ============================================================
-    NAVBAR
+    NAVBAR - CORRIGIDA
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo-wrapper">
                 <a href="#inicio" class="nav-logo">
-                    <img src="https://yt3.ggpht.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
+                    <img src="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" alt="KZN Logo" />
                     <div class="logo-text">
                         <span>KZN MENU</span>
                         <small>Classic • Era</small>
@@ -1688,7 +1765,7 @@
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
                         <span class="avatar" id="avatarLetter">K</span>
                         <span class="user-name" id="userDisplay">Entrar</span>
-                        <span style="position:relative;">
+                        <span class="cart-icon-wrap">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-count" id="cartCount">0</span>
                         </span>
@@ -2147,7 +2224,6 @@
                     usuarioLogado = null;
                 }
             } else {
-                // Usuário demo
                 usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
             }
         }
@@ -2176,7 +2252,6 @@
             usuarioLogado.email = email;
 
             if (senha.length >= 6) {
-                // Atualiza senha (em produção, isso seria enviado ao servidor)
                 alert('🔐 Senha atualizada com sucesso!');
             }
 
