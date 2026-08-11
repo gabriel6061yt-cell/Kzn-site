@@ -8,10 +8,9 @@
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
 
-    <!-- ===== NOVA IMAGEM ===== -->
     <meta property="og:title" content="KZN MENU - Mods para Graal" />
     <meta property="og:description" content="Os melhores mods para farm e gameplay no Graal Classic e Era." />
-    <meta property="og:image" content="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" />
+    <meta property="og:image" content="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
 
@@ -233,6 +232,7 @@
             color: #fff;
         }
 
+        /* ===== HERO COM GIF ANIMADO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -328,24 +328,19 @@
             position: relative;
             z-index: 1;
         }
-        .hero-image .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
+        .hero-image .gif-wrapper {
             border-radius: 16px;
             border: 2px solid var(--primary);
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
             background: #000;
         }
-        .hero-image .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-image .gif-wrapper img {
             width: 100%;
-            height: 100%;
+            height: auto;
+            display: block;
         }
-        .hero-image .video-label {
+        .hero-image .gif-label {
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.8rem;
@@ -1066,7 +1061,7 @@
     </nav>
 
     <!-- ============================================================
-    HERO
+    HERO COM GIF ANIMADO
     ============================================================ -->
     <section id="inicio" class="hero">
         <div class="hero-content">
@@ -1087,18 +1082,11 @@
             </div>
         </div>
         <div class="hero-image">
-            <div class="video-wrapper">
-                <iframe 
-                    src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1" 
-                    title="KZN MENU - Demonstração" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen>
-                </iframe>
+            <div class="gif-wrapper">
+                <img src="https://raw.githubusercontent.com/gabriel6061yt-cell/Audios/refs/heads/main/vidma_20260714_081845.gif" alt="KZN MENU Animado" />
             </div>
-            <div class="video-label" data-i18n="video_label">
-                🎬 Clique no play para assistir à demonstração do KZN MENU
+            <div class="gif-label" data-i18n="gif_label">
+                🎮 KZN MENU - A revolução do Graal
             </div>
         </div>
     </section>
@@ -1632,6 +1620,7 @@
                 hero_desc: 'Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.',
                 hero_btn_mods: 'Ver Mods',
                 hero_btn_how: 'Como Comprar',
+                gif_label: '🎮 KZN MENU - A revolução do Graal',
                 video_label: '🎬 Clique no play para assistir à demonstração do KZN MENU',
                 mods_title: 'Nossos Mods',
                 mods_sub: 'Escolha seu jogo e veja os scripts disponíveis',
@@ -1740,6 +1729,7 @@
                 hero_desc: 'The best mods for <strong>Graal Classic</strong> and <strong>Graal Era</strong>.',
                 hero_btn_mods: 'View Mods',
                 hero_btn_how: 'How to Buy',
+                gif_label: '🎮 KZN MENU - The Graal revolution',
                 video_label: '🎬 Click play to watch the KZN MENU demonstration',
                 mods_title: 'Our Mods',
                 mods_sub: 'Choose your game and see available scripts',
@@ -1868,4 +1858,4 @@
     </script>
 
 </body>
-                                                                </html>
+                                    </html>
