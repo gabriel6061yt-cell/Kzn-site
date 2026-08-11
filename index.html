@@ -254,52 +254,44 @@
             gap: 8px;
         }
 
-        /* BOTÃO LOGIN */
+        /* BOTÃO LOGIN (AGORA ABRE MODAL) */
         .login-btn {
             background: var(--glass);
             border: 1px solid var(--border);
             color: var(--text);
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 6px;
             text-decoration: none;
         }
         .login-btn:hover {
             border-color: var(--secondary);
-            background: rgba(124,58,237,0.1);
-        }
-        .login-btn .badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--success);
-            color: #fff;
-            font-size: 0.5rem;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
+            background: rgba(124,58,237,0.15);
+            color: var(--secondary-light);
         }
         .login-btn .user-avatar {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 700;
             color: #fff;
+        }
+        .login-btn .user-name {
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         /* IDIOMA */
@@ -1153,7 +1145,7 @@
         }
 
         /* ============================================================
-           MODAL
+           MODAL LOGIN
            ============================================================ */
         .modal {
             display: none;
@@ -1171,14 +1163,15 @@
         .modal.open { display: flex; }
         .modal-content {
             background: var(--bg-card);
-            border: 1px solid var(--primary);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 2.5rem;
             max-width: 420px;
             width: 90%;
-            text-align: center;
             position: relative;
             animation: modalIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         @keyframes modalIn {
             from { opacity: 0; transform: scale(0.9) translateY(20px); }
@@ -1194,8 +1187,200 @@
             transition: var(--transition);
         }
         .modal-content .close-modal:hover { color: var(--text); }
-        .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.4rem; }
-        .modal-content .pix-key {
+        .modal-content .modal-logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-content .modal-logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+        .modal-content .modal-logo h2 {
+            font-size: 1.4rem;
+            margin-top: 0.3rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .modal-content .modal-tabs {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 1.5rem;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 0.3rem;
+        }
+        .modal-content .modal-tab {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .modal-content .modal-tab.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+        }
+        .modal-content .modal-tab:hover:not(.active) {
+            color: var(--text);
+            background: var(--glass);
+        }
+        .modal-content .modal-form { display: none; }
+        .modal-content .modal-form.active { display: block; }
+
+        .modal-content .form-group { margin-bottom: 1rem; }
+        .modal-content .form-group label {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.85rem;
+        }
+        .modal-content .form-group input {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .modal-content .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(220,38,38,0.1);
+        }
+
+        .modal-content .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.8rem 0 1.2rem;
+            font-size: 0.8rem;
+        }
+        .modal-content .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .modal-content .form-options label input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .modal-content .form-options a {
+            color: var(--secondary-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .modal-content .form-options a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .modal-content .btn-submit-modal {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 0.5rem;
+        }
+        .modal-content .btn-submit-modal:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
+        }
+
+        .modal-content .auth-message {
+            margin-top: 0.8rem;
+            padding: 0.6rem;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .modal-content .auth-message.success {
+            display: block;
+            background: rgba(34,197,94,0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .modal-content .auth-message.error {
+            display: block;
+            background: rgba(220,38,38,0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        .modal-content .auth-message.info {
+            display: block;
+            background: rgba(124,58,237,0.15);
+            border: 1px solid var(--secondary);
+            color: var(--secondary-light);
+        }
+
+        /* ============================================================
+           MODAL PIX
+           ============================================================ */
+        .modal-pix {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-pix.open { display: flex; }
+        .modal-pix .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        .modal-pix .modal-content .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .modal-pix .modal-content .close-modal:hover { color: var(--text); }
+        .modal-pix .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.4rem; }
+        .modal-pix .modal-content .pix-key {
             background: var(--bg);
             padding: 0.8rem;
             border-radius: 8px;
@@ -1206,7 +1391,7 @@
             color: var(--success);
             word-break: break-all;
         }
-        .modal-content .btn-copy {
+        .modal-pix .modal-content .btn-copy {
             background: var(--secondary);
             color: #fff;
             border: none;
@@ -1217,9 +1402,9 @@
             transition: var(--transition);
             font-size: 0.9rem;
         }
-        .modal-content .btn-copy:hover { transform: scale(1.05); }
-        .modal-content .plan-info { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.8rem; }
-        .modal-content .discord-link {
+        .modal-pix .modal-content .btn-copy:hover { transform: scale(1.05); }
+        .modal-pix .modal-content .plan-info { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.8rem; }
+        .modal-pix .modal-content .discord-link {
             display: inline-block;
             margin-top: 0.8rem;
             padding: 0.6rem 1.2rem;
@@ -1231,7 +1416,7 @@
             transition: var(--transition);
             font-size: 0.9rem;
         }
-        .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
+        .modal-pix .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
         /* ============================================================
            RESPONSIVE
@@ -1242,6 +1427,7 @@
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
+            .modal-content { padding: 1.5rem; }
         }
         @media (max-width: 768px) {
             .nav-menu {
@@ -1274,12 +1460,15 @@
             .nav-xcore .xcore-text { display: none; }
             .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
             .progress-step .step-arrow { display: none; }
+            .login-btn .user-name { display: none; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
             .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
             .modal-content { padding: 1.5rem; }
             .clientes-grid { grid-template-columns: 1fr; }
+            .modal-pix .modal-content { padding: 1.5rem; }
+            .modal-pix .modal-content .pix-key { font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -1329,10 +1518,11 @@
             </ul>
 
             <div class="nav-actions">
-                <!-- BOTÃO LOGIN -->
-                <a href="login.html" class="login-btn" title="Minha conta">
+                <!-- BOTÃO LOGIN (ABRE MODAL) -->
+                <button class="login-btn" id="loginBtn" title="Minha conta">
                     <i class="fas fa-user"></i>
-                </a>
+                    <span class="user-name" id="userDisplay">Entrar</span>
+                </button>
 
                 <!-- IDIOMA -->
                 <div class="lang-toggle">
@@ -1434,6 +1624,9 @@
                 <div class="tab-content active" id="tab-classic">
                     <div class="plans-grid">
                         <div class="plan-card">
+                            <div style="text-align: center; margin: 0.5rem 0;">
+                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                            </div>
                             <div class="icon">📅</div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Mensal</div>
@@ -1445,7 +1638,7 @@
                                 <li><i class="fas fa-check"></i> Atualizações automáticas</li>
                                 <li><i class="fas fa-check"></i> Válido por 35 dias</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
+                            <button class="btn-buy" onclick="abrirModalPix('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
                         </div>
 
                         <div class="plan-card popular">
@@ -1465,7 +1658,7 @@
                                 <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
                                 <li><i class="fas fa-check"></i> Sem renovação!</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="abrirModalPix('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
                     <!-- CLIENTES CLASSIC -->
@@ -1537,7 +1730,7 @@
                                     <strong style="color: var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40
                                 </p>
                             </div>
-                            <button class="btn-buy" onclick="abrirModal('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="abrirModalPix('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
                     <!-- CLIENTES ERA -->
@@ -1818,7 +2011,7 @@
                     <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore">
                         <i class="fas fa-bolt"></i>
                     </a>
-                    <a href="#" class="pix" onclick="abrirModalPix()" title="PIX">
+                    <a href="#" class="pix" onclick="abrirModalPix2()" title="PIX">
                         <i class="fas fa-qrcode"></i>
                     </a>
                 </div>
@@ -1832,9 +2025,9 @@
     <!-- ============================================================
     MODAL PIX
     ============================================================ -->
-    <div class="modal" id="modalPix">
+    <div class="modal-pix" id="modalPix">
         <div class="modal-content">
-            <span class="close-modal" onclick="fecharModal()">✕</span>
+            <span class="close-modal" onclick="fecharModalPix()">✕</span>
             <h2>💳 Pagamento PIX</h2>
             <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Copie a chave abaixo e realize o pagamento</p>
             <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
@@ -1848,6 +2041,97 @@
             <div style="margin-top: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
                 <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
             </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL LOGIN
+    ============================================================ -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharLogin()">✕</span>
+
+            <div class="modal-logo">
+                <img src="https://yt3.ggpht.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
+                <h2>KZN MENU</h2>
+            </div>
+
+            <!-- TABS -->
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="login" onclick="switchAuthTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+                <button class="modal-tab" data-tab="register" onclick="switchAuthTab('register')">
+                    <i class="fas fa-user-plus"></i> Registrar
+                </button>
+            </div>
+
+            <!-- ÁREA DO USUÁRIO LOGADO -->
+            <div id="userLoggedArea" style="display: none;">
+                <div style="text-align: center; padding: 1rem; background: var(--bg); border-radius: 10px; margin-bottom: 1.5rem;">
+                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);" id="displayName">Usuário</div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);" id="displayEmail">email@exemplo.com</div>
+                </div>
+                <button onclick="logout()" style="width:100%;padding:0.7rem;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--text);font-weight:600;cursor:pointer;transition:var(--transition);">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+
+            <!-- FORMULÁRIO LOGIN -->
+            <div class="modal-form active" id="formLoginContainer">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="loginEmail" placeholder="Digite seu e-mail" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="loginSenha" placeholder="Digite sua senha" required />
+                    </div>
+
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" id="rememberMe" /> Lembrar-me
+                        </label>
+                        <a href="#" onclick="alert('🔐 Entre em contato com o suporte para redefinir sua senha.')">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit-modal">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
+                    </button>
+
+                    <div class="auth-message" id="loginMessage"></div>
+                </form>
+            </div>
+
+            <!-- FORMULÁRIO REGISTRO -->
+            <div class="modal-form" id="formRegisterContainer">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nome completo</label>
+                        <input type="text" id="regNome" placeholder="Digite seu nome" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="regEmail" placeholder="Digite seu e-mail" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="regSenha" placeholder="Crie uma senha (mínimo 6 caracteres)" required minlength="6" />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-check-circle"></i> Confirmar senha</label>
+                        <input type="password" id="regConfirmSenha" placeholder="Confirme sua senha" required />
+                    </div>
+
+                    <button type="submit" class="btn-submit-modal">
+                        <i class="fas fa-user-plus"></i> Criar conta
+                    </button>
+
+                    <div class="auth-message" id="registerMessage"></div>
+                </form>
+            </div>
+
         </div>
     </div>
 
@@ -1935,22 +2219,22 @@
         // ============================================================
         // MODAL PIX
         // ============================================================
-        let planoSelecionado = '',
-            valorSelecionado = 0;
+        let planoSelecionadoPix = '',
+            valorSelecionadoPix = 0;
 
-        function abrirModal(plano, valor) {
-            planoSelecionado = plano;
-            valorSelecionado = valor;
+        function abrirModalPix(plano, valor) {
+            planoSelecionadoPix = plano;
+            valorSelecionadoPix = valor;
             document.getElementById('planInfo').textContent = `Plano: ${plano} | Valor: R$ ${valor},00`;
             document.getElementById('modalPix').classList.add('open');
         }
 
-        function abrirModalPix() {
+        function abrirModalPix2() {
             document.getElementById('planInfo').textContent = 'Clique em "Comprar" para gerar o pagamento';
             document.getElementById('modalPix').classList.add('open');
         }
 
-        function fecharModal() {
+        function fecharModalPix() {
             document.getElementById('modalPix').classList.remove('open');
         }
 
@@ -1966,11 +2250,232 @@
         }
 
         document.getElementById('modalPix').addEventListener('click', function(e) {
-            if (e.target === this) fecharModal();
+            if (e.target === this) fecharModalPix();
         });
 
         // ============================================================
-        // FORMULÁRIO
+        // SISTEMA DE LOGIN (INTEGRADO)
+        // ============================================================
+
+        // Banco de dados de usuários
+        let usuarios = [];
+
+        function carregarUsuarios() {
+            const dados = localStorage.getItem('kzn_usuarios');
+            if (dados) {
+                usuarios = JSON.parse(dados);
+            } else {
+                usuarios = [{ nome: 'Gabriel', email: 'gabriel@kzn.com', senha: '123456' }];
+                salvarUsuarios();
+            }
+        }
+
+        function salvarUsuarios() {
+            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+        }
+
+        // Registrar
+        function registrarUsuario(nome, email, senha) {
+            if (usuarios.find(u => u.email === email)) {
+                return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
+            }
+            usuarios.push({ nome, email, senha });
+            salvarUsuarios();
+            return { sucesso: true, mensagem: 'Conta criada com sucesso! Faça login.' };
+        }
+
+        // Login
+        function fazerLogin(email, senha) {
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+            if (usuario) {
+                return { sucesso: true, usuario, mensagem: 'Login realizado com sucesso!' };
+            }
+            return { sucesso: false, mensagem: 'E-mail ou senha incorretos.' };
+        }
+
+        // Mostrar mensagem
+        function mostrarMensagem(elemento, tipo, texto) {
+            elemento.className = `auth-message ${tipo}`;
+            elemento.style.display = 'block';
+            elemento.textContent = texto;
+            setTimeout(() => {
+                elemento.style.display = 'none';
+            }, 5000);
+        }
+
+        // Alternar entre tabs
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.modal-form').forEach(f => f.classList.remove('active'));
+
+            if (tab === 'login') {
+                document.querySelector('.modal-tab[data-tab="login"]').classList.add('active');
+                document.getElementById('formLoginContainer').classList.add('active');
+            } else {
+                document.querySelector('.modal-tab[data-tab="register"]').classList.add('active');
+                document.getElementById('formRegisterContainer').classList.add('active');
+            }
+
+            document.getElementById('loginMessage').className = 'auth-message';
+            document.getElementById('loginMessage').style.display = 'none';
+            document.getElementById('registerMessage').className = 'auth-message';
+            document.getElementById('registerMessage').style.display = 'none';
+        }
+
+        // Abrir/fechar modal de login
+        function abrirLogin() {
+            document.getElementById('loginModal').classList.add('open');
+            // Reset UI
+            document.getElementById('userLoggedArea').style.display = 'none';
+            document.getElementById('formLoginContainer').classList.add('active');
+            document.getElementById('formRegisterContainer').classList.remove('active');
+        }
+
+        function fecharLogin() {
+            document.getElementById('loginModal').classList.remove('open');
+        }
+
+        // Mostrar usuário logado
+        function mostrarUsuarioLogado(usuario) {
+            document.getElementById('userLoggedArea').style.display = 'block';
+            document.getElementById('formLoginContainer').style.display = 'none';
+            document.getElementById('formRegisterContainer').style.display = 'none';
+            document.getElementById('displayName').textContent = usuario.nome;
+            document.getElementById('displayEmail').textContent = usuario.email;
+
+            // Atualiza botão na navbar
+            const userDisplay = document.getElementById('userDisplay');
+            userDisplay.textContent = usuario.nome;
+            userDisplay.style.color = 'var(--success)';
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('kzn_usuario_logado');
+            document.getElementById('userLoggedArea').style.display = 'none';
+            document.getElementById('formLoginContainer').style.display = 'block';
+            document.getElementById('formRegisterContainer').style.display = 'none';
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginSenha').value = '';
+            document.getElementById('loginMessage').className = 'auth-message';
+            document.getElementById('loginMessage').style.display = 'none';
+
+            const userDisplay = document.getElementById('userDisplay');
+            userDisplay.textContent = 'Entrar';
+            userDisplay.style.color = 'var(--text)';
+
+            // Fecha modal
+            fecharLogin();
+        }
+
+        // ============================================================
+        // EVENTOS DE LOGIN
+        // ============================================================
+
+        // Registro
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('regNome').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const senha = document.getElementById('regSenha').value;
+            const confirmSenha = document.getElementById('regConfirmSenha').value;
+            const msg = document.getElementById('registerMessage');
+
+            if (!nome || !email || !senha || !confirmSenha) {
+                mostrarMensagem(msg, 'error', '⚠️ Preencha todos os campos.');
+                return;
+            }
+            if (senha.length < 6) {
+                mostrarMensagem(msg, 'error', '⚠️ A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+            if (senha !== confirmSenha) {
+                mostrarMensagem(msg, 'error', '⚠️ As senhas não coincidem.');
+                return;
+            }
+
+            const resultado = registrarUsuario(nome, email, senha);
+
+            if (resultado.sucesso) {
+                mostrarMensagem(msg, 'success', '✅ ' + resultado.mensagem);
+                document.getElementById('regNome').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('regSenha').value = '';
+                document.getElementById('regConfirmSenha').value = '';
+                setTimeout(() => switchAuthTab('login'), 1500);
+            } else {
+                mostrarMensagem(msg, 'error', '❌ ' + resultado.mensagem);
+            }
+        });
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value;
+            const remember = document.getElementById('rememberMe').checked;
+            const msg = document.getElementById('loginMessage');
+
+            if (!email || !senha) {
+                mostrarMensagem(msg, 'error', '⚠️ Preencha todos os campos.');
+                return;
+            }
+
+            const resultado = fazerLogin(email, senha);
+
+            if (resultado.sucesso) {
+                mostrarMensagem(msg, 'success', '✅ ' + resultado.mensagem);
+
+                if (remember) {
+                    localStorage.setItem('kzn_usuario_logado', JSON.stringify({
+                        nome: resultado.usuario.nome,
+                        email: resultado.usuario.email
+                    }));
+                }
+
+                setTimeout(() => {
+                    mostrarUsuarioLogado(resultado.usuario);
+                    fecharLogin();
+                }, 800);
+
+            } else {
+                mostrarMensagem(msg, 'error', '❌ ' + resultado.mensagem);
+            }
+        });
+
+        // Botão de login
+        document.getElementById('loginBtn').addEventListener('click', abrirLogin);
+
+        // Fechar modal clicando fora
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) fecharLogin();
+        });
+
+        // ============================================================
+        // CARREGA USUÁRIO SALVO
+        // ============================================================
+
+        carregarUsuarios();
+
+        const usuarioSalvo = localStorage.getItem('kzn_usuario_logado');
+        if (usuarioSalvo) {
+            try {
+                const usuario = JSON.parse(usuarioSalvo);
+                const existe = usuarios.find(u => u.email === usuario.email);
+                if (existe) {
+                    mostrarUsuarioLogado(existe);
+                } else {
+                    localStorage.removeItem('kzn_usuario_logado');
+                }
+            } catch (e) {
+                localStorage.removeItem('kzn_usuario_logado');
+            }
+        }
+
+        // ============================================================
+        // FORMULÁRIO DE CONTATO
         // ============================================================
         document.getElementById('formContato').addEventListener('submit', function(e) {
             const btn = this.querySelector('.btn-submit');
@@ -1998,7 +2503,6 @@
             idiomaAtual = lang;
             document.getElementById('langPt').classList.toggle('active', lang === 'pt');
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
-            // Aqui você pode adicionar mais traduções se quiser
         }
     </script>
 
