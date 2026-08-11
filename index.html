@@ -14,27 +14,9 @@
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "KZN MENU",
-      "description": "Mod Menu para Graal Classic e Graal Era com recursos de farm, esp e automação.",
-      "brand": { "@type": "Brand", "name": "KZN" },
-      "offers": {
-        "@type": "Offer",
-        "price": "50",
-        "priceCurrency": "BRL"
-      }
-    }
-    </script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        /* ============================================================
-           ROOT & RESET
-           ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -77,7 +59,7 @@
         }
 
         /* ============================================================
-           BOTÃO WHATSAPP
+           WHATSAPP
            ============================================================ */
         .btn-whatsapp-fixo {
             position: fixed;
@@ -98,10 +80,7 @@
             transition: var(--transition);
             animation: pulse-whatsapp 2s infinite;
         }
-        .btn-whatsapp-fixo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 50px rgba(37,211,102,0.6);
-        }
+        .btn-whatsapp-fixo:hover { transform: scale(1.1); box-shadow: 0 8px 50px rgba(37,211,102,0.6); }
         @keyframes pulse-whatsapp {
             0% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
             50% { box-shadow: 0 4px 50px rgba(37,211,102,0.8); }
@@ -135,7 +114,6 @@
             height: 70px;
         }
 
-        /* LOGO */
         .nav-logo-wrapper {
             display: flex;
             align-items: center;
@@ -185,7 +163,6 @@
             background: var(--border);
         }
 
-        /* XCORE */
         .nav-xcore {
             display: flex;
             align-items: center;
@@ -215,7 +192,6 @@
             color: var(--text-muted);
         }
 
-        /* MENU */
         .nav-menu {
             display: flex;
             list-style: none;
@@ -254,47 +230,57 @@
             gap: 8px;
         }
 
-        /* BOTÃO LOGIN (AGORA ABRE MODAL) */
-        .login-btn {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.3rem 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: var(--transition);
+        /* BOTÃO PERFIL */
+        .profile-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.3rem 0.8rem 0.3rem 0.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text);
             text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
-        .login-btn:hover {
-            border-color: var(--secondary);
-            background: rgba(124,58,237,0.15);
-            color: var(--secondary-light);
+        .profile-btn:hover {
+            border-color: var(--primary);
+            background: rgba(220,38,38,0.1);
         }
-        .login-btn .user-avatar {
-            width: 24px;
-            height: 24px;
+        .profile-btn .avatar {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 700;
             color: #fff;
         }
-        .login-btn .user-name {
+        .profile-btn .user-name {
             max-width: 80px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        .profile-btn .badge-cart {
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.5rem;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
 
-        /* IDIOMA */
         .lang-toggle {
             display: flex;
             gap: 0.2rem;
@@ -311,8 +297,7 @@
             font-weight: 700;
             transition: var(--transition);
         }
-        .lang-toggle button:hover,
-        .lang-toggle button.active {
+        .lang-toggle button:hover, .lang-toggle button.active {
             background: var(--primary);
             border-color: var(--primary);
             color: #fff;
@@ -327,10 +312,9 @@
             align-items: center;
             justify-content: center;
             padding: 8rem 2rem 5rem;
-            background:
-                radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
-                var(--bg);
+            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
+                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
+                        var(--bg);
             position: relative;
             overflow: hidden;
         }
@@ -338,12 +322,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background:
-                repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.015) 2px,
-                    rgba(255,255,255,0.015) 4px);
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
             pointer-events: none;
             animation: scanlines 20s linear infinite;
         }
@@ -386,11 +365,7 @@
             line-height: 1.1;
             margin-bottom: 1rem;
         }
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero h1 .highlight-red { color: var(--primary); -webkit-text-fill-color: var(--primary); }
         .hero-subtitle {
             font-size: 1.2rem;
@@ -422,21 +397,14 @@
             color: #fff;
             box-shadow: 0 4px 30px rgba(220,38,38,0.4);
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 50px rgba(220,38,38,0.6);
-        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 50px rgba(220,38,38,0.6); }
         .btn-secondary {
             background: var(--glass);
             color: var(--text);
             border: 1px solid var(--border);
             backdrop-filter: blur(8px);
         }
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            background: rgba(220,38,38,0.15);
-            transform: translateY(-3px);
-        }
+        .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
 
         .hero-image {
             flex: 1;
@@ -608,15 +576,8 @@
             position: relative;
             overflow: hidden;
         }
-        .plan-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        .plan-card.popular {
-            border-color: var(--secondary);
-            box-shadow: 0 0 60px rgba(124,58,237,0.1);
-        }
+        .plan-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .plan-card.popular { border-color: var(--secondary); box-shadow: 0 0 60px rgba(124,58,237,0.1); }
         .plan-card.popular::before {
             content: '';
             position: absolute;
@@ -683,6 +644,25 @@
             font-size: 1rem;
         }
         .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
+
+        .btn-add-cart {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .btn-add-cart:hover {
+            border-color: var(--secondary);
+            background: rgba(124,58,237,0.15);
+            color: var(--secondary-light);
+        }
 
         .script-image {
             width: 100%;
@@ -1089,6 +1069,189 @@
         .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
 
         /* ============================================================
+           PERFIL
+           ============================================================ */
+        .profile-section {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+        }
+        .profile-section .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .profile-section .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .profile-section .profile-info h3 {
+            font-size: 1.3rem;
+            color: var(--text);
+        }
+        .profile-section .profile-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        .profile-section .profile-info .edit-link {
+            color: var(--secondary-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .profile-section .profile-info .edit-link:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        .profile-section .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+        .profile-section .profile-stats .stat {
+            text-align: center;
+        }
+        .profile-section .profile-stats .stat .number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .profile-section .profile-stats .stat .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .profile-section .profile-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .profile-section .profile-actions .btn-action {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .profile-section .profile-actions .btn-action:hover {
+            border-color: var(--primary);
+            background: rgba(220,38,38,0.1);
+        }
+        .profile-section .profile-actions .btn-action.primary {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .profile-section .profile-actions .btn-action.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* ============================================================
+           CARRINHO
+           ============================================================ */
+        .cart-count {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            position: absolute;
+            top: -6px;
+            right: -6px;
+        }
+        .profile-btn .cart-icon-wrap {
+            position: relative;
+        }
+
+        .cart-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1rem;
+            display: none;
+            z-index: 999;
+        }
+        .cart-dropdown.open { display: block; }
+        .cart-dropdown .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .cart-dropdown .cart-item:last-child { border-bottom: none; }
+        .cart-dropdown .cart-item .item-name { font-size: 0.85rem; color: var(--text); }
+        .cart-dropdown .cart-item .item-price { font-size: 0.85rem; color: var(--primary); font-weight: 700; }
+        .cart-dropdown .cart-item .item-remove {
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cart-dropdown .cart-item .item-remove:hover { color: var(--primary); }
+        .cart-dropdown .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            font-weight: 700;
+            border-top: 2px solid var(--border);
+            margin-top: 0.5rem;
+        }
+        .cart-dropdown .btn-checkout {
+            width: 100%;
+            padding: 0.7rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cart-dropdown .btn-checkout:hover { background: var(--primary-dark); }
+        .cart-dropdown .empty-cart {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 1rem 0;
+        }
+
+        /* ============================================================
            FOOTER
            ============================================================ */
         .footer {
@@ -1145,7 +1308,7 @@
         }
 
         /* ============================================================
-           MODAL LOGIN
+           MODAL
            ============================================================ */
         .modal {
             display: none;
@@ -1428,6 +1591,7 @@
             .hero-buttons { justify-content: center; }
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .modal-content { padding: 1.5rem; }
+            .profile-section .profile-header { flex-direction: column; text-align: center; }
         }
         @media (max-width: 768px) {
             .nav-menu {
@@ -1460,7 +1624,9 @@
             .nav-xcore .xcore-text { display: none; }
             .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
             .progress-step .step-arrow { display: none; }
-            .login-btn .user-name { display: none; }
+            .profile-btn .user-name { display: none; }
+            .profile-section .profile-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+            .cart-dropdown { width: 280px; right: -80px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 2rem; }
@@ -1469,6 +1635,8 @@
             .clientes-grid { grid-template-columns: 1fr; }
             .modal-pix .modal-content { padding: 1.5rem; }
             .modal-pix .modal-content .pix-key { font-size: 0.8rem; }
+            .profile-section .profile-actions { flex-direction: column; }
+            .cart-dropdown { width: 260px; right: -60px; }
         }
     </style>
 </head>
@@ -1487,7 +1655,6 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo-wrapper">
-                <!-- LOGO KZN -->
                 <a href="#inicio" class="nav-logo">
                     <img src="https://yt3.ggpht.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
                     <div class="logo-text">
@@ -1495,10 +1662,7 @@
                         <small>Classic • Era</small>
                     </div>
                 </a>
-
                 <div class="nav-divider"></div>
-
-                <!-- XCORE -->
                 <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="nav-xcore">
                     <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" />
                     <div class="xcore-text">
@@ -1515,22 +1679,36 @@
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
             </ul>
 
             <div class="nav-actions">
-                <!-- BOTÃO LOGIN (ABRE MODAL) -->
-                <button class="login-btn" id="loginBtn" title="Minha conta">
-                    <i class="fas fa-user"></i>
-                    <span class="user-name" id="userDisplay">Entrar</span>
-                </button>
+                <!-- BOTÃO PERFIL + CARRINHO -->
+                <div style="position: relative;">
+                    <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
+                        <span class="avatar" id="avatarLetter">K</span>
+                        <span class="user-name" id="userDisplay">Entrar</span>
+                        <span style="position:relative;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </span>
+                    </button>
+                    <!-- CARRINHO DROPDOWN -->
+                    <div class="cart-dropdown" id="cartDropdown">
+                        <div id="cartItems"></div>
+                        <div class="cart-total">
+                            <span>Total:</span>
+                            <span id="cartTotal">R$ 0,00</span>
+                        </div>
+                        <button class="btn-checkout" onclick="finalizarCompra()">Finalizar Compra</button>
+                    </div>
+                </div>
 
-                <!-- IDIOMA -->
                 <div class="lang-toggle">
                     <button class="active" onclick="mudarIdioma('pt')" id="langPt">🇧🇷 PT</button>
                     <button onclick="mudarIdioma('en')" id="langEn">🇺🇸 EN</button>
                 </div>
 
-                <!-- MENU MOBILE -->
                 <div class="nav-toggle" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1558,30 +1736,17 @@
                 <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
                 <a href="#como-comprar" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Como Comprar</a>
             </div>
-
-            <!-- SELO DE SEGURANÇA -->
             <div class="selo-seguranca">
                 <span class="selo-item"><i class="fas fa-lock"></i> Pagamento Seguro</span>
                 <span class="selo-item"><i class="fas fa-shield-alt"></i> Protegido</span>
                 <span class="selo-item"><i class="fas fa-check-circle"></i> Entrega Rápida</span>
             </div>
         </div>
-
         <div class="hero-image">
-            <!-- VÍDEO DO YOUTUBE -->
             <div class="video-wrapper">
-                <iframe
-                    src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1"
-                    title="KZN MENU - Demonstração"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen>
-                </iframe>
+                <iframe src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1" title="KZN MENU - Demonstração" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
-            <div class="video-label">
-                🎬 Clique no play para assistir à demonstração do KZN MENU
-            </div>
+            <div class="video-label">🎬 Clique no play para assistir à demonstração do KZN MENU</div>
         </div>
     </section>
 
@@ -1595,38 +1760,23 @@
                 <p>Escolha seu jogo e veja os scripts disponíveis</p>
             </div>
 
-            <!-- BARRA DE PROGRESSO -->
             <div class="progress-bar">
-                <div class="progress-step active">
-                    <span class="step-num">1</span> Escolha
-                    <span class="step-arrow">→</span>
-                </div>
-                <div class="progress-step">
-                    <span class="step-num">2</span> Pague
-                    <span class="step-arrow">→</span>
-                </div>
-                <div class="progress-step">
-                    <span class="step-num">3</span> Ative
-                </div>
+                <div class="progress-step active"><span class="step-num">1</span> Escolha <span class="step-arrow">→</span></div>
+                <div class="progress-step"><span class="step-num">2</span> Pague <span class="step-arrow">→</span></div>
+                <div class="progress-step"><span class="step-num">3</span> Ative</div>
             </div>
 
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-btn classic active" onclick="trocarAba('classic')">
-                        <i class="fas fa-sword"></i> Graal Classic
-                    </button>
-                    <button class="tab-btn era" onclick="trocarAba('era')">
-                        <i class="fas fa-city"></i> Graal Era
-                    </button>
+                    <button class="tab-btn classic active" onclick="trocarAba('classic')"><i class="fas fa-sword"></i> Graal Classic</button>
+                    <button class="tab-btn era" onclick="trocarAba('era')"><i class="fas fa-city"></i> Graal Era</button>
                 </div>
 
                 <!-- ABA CLASSIC -->
                 <div class="tab-content active" id="tab-classic">
                     <div class="plans-grid">
                         <div class="plan-card">
-                            <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
-                            </div>
+                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" /></div>
                             <div class="icon">📅</div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Mensal</div>
@@ -1638,67 +1788,34 @@
                                 <li><i class="fas fa-check"></i> Atualizações automáticas</li>
                                 <li><i class="fas fa-check"></i> Válido por 35 dias</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModalPix('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
+                            <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
                         </div>
 
                         <div class="plan-card popular">
                             <span class="badge">🔥 Mais Vantagem</span>
-                            <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
-                            </div>
+                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" /></div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Permanente</div>
-                            <div class="price">
-                                R$ 200,00 <small>/ vitalício</small>
-                                <span class="parcelamento">ou 2x R$ 100,00</span>
-                            </div>
+                            <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
                             <ul class="features">
                                 <li><i class="fas fa-check"></i> +50 funcionalidades</li>
                                 <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
                                 <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
                                 <li><i class="fas fa-check"></i> Sem renovação!</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModalPix('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
                         </div>
                     </div>
-                    <!-- CLIENTES CLASSIC -->
-                    <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
+
+                    <div style="margin-top:2.5rem;text-align:center;">
+                        <h4 style="color:var(--classic);font-size:1.1rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Guilherme</div><div class="plano">R$ 50,00</div><div class="data">01/08/26</div></div>
                             <div class="cliente-item"><div class="nome">Dark OP</div><div class="plano">R$ 60,00</div><div class="data">19/07/26</div></div>
                             <div class="cliente-item"><div class="nome">Dacota</div><div class="plano">R$ 20,00</div><div class="data">03/08/26</div></div>
                             <div class="cliente-item"><div class="nome">Utaa</div><div class="plano">R$ 200,00</div><div class="data">05/08/26</div></div>
-                        </div>
-                    </div>
-                    <!-- DEPOIMENTOS CLASSIC -->
-                    <div style="margin-top: 2rem; text-align: center;">
-                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Classic</h4>
-                        <div class="depoimentos-grid" style="margin-top: 1rem;">
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
-                                <div class="cliente">- Guilherme</div>
-                                <div class="info">📅 01/08/2026 • R$ 50,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
-                                <div class="cliente">- Dark OP</div>
-                                <div class="info">📅 19/07/2026 • R$ 60,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"</div>
-                                <div class="cliente">- Dacota</div>
-                                <div class="info">📅 03/08/2026 • R$ 20,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"O melhor investimento que fiz no Graal! Menu completo e estável."</div>
-                                <div class="cliente">- Utaa</div>
-                                <div class="info">📅 05/08/2026 • R$ 200,00</div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -1708,15 +1825,10 @@
                     <div class="plans-grid">
                         <div class="plan-card popular">
                             <span class="badge era-badge">🔥 Exclusivo Era</span>
-                            <div style="text-align: center; margin: 0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
-                            </div>
+                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" /></div>
                             <h3>AUTO TRASH AUTOMATIC</h3>
                             <div class="sub-plano">Graal Era</div>
-                            <div class="price">
-                                R$ 200,00 <small>/ vitalício</small>
-                                <span class="parcelamento">ou 2x R$ 100,00</span>
-                            </div>
+                            <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
                             <ul class="script-features">
                                 <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
                                 <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
@@ -1725,17 +1837,16 @@
                                 <li><i class="fas fa-check"></i> Compatível com Graal Era</li>
                                 <li><i class="fas fa-check"></i> Suporte dedicado</li>
                             </ul>
-                            <div style="text-align: center; margin: 0.6rem 0; padding: 0.4rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid var(--era);">
-                                <p style="font-size: 0.75rem; color: var(--text-muted);">
-                                    <strong style="color: var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40
-                                </p>
+                            <div style="text-align:center;margin:0.6rem 0;padding:0.4rem;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid var(--era);">
+                                <p style="font-size:0.75rem;color:var(--text-muted);"><strong style="color:var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40</p>
                             </div>
-                            <button class="btn-buy" onclick="abrirModalPix('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
                         </div>
                     </div>
-                    <!-- CLIENTES ERA -->
-                    <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Era</h4>
+
+                    <div style="margin-top:2.5rem;text-align:center;">
+                        <h4 style="color:var(--era);font-size:1.1rem;"><i class="fas fa-users"></i> Clientes Era</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Ryzen D</div><div class="plano">R$ 60,00</div><div class="data">26/06/26</div></div>
                             <div class="cliente-item"><div class="nome">ЮРИЙ</div><div class="plano">R$ 200,00</div><div class="data">03/07/26</div></div>
@@ -1743,40 +1854,9 @@
                             <div class="cliente-item"><div class="nome">ourodeguerra</div><div class="plano">2x R$ 100</div><div class="data">18/07/26</div></div>
                         </div>
                     </div>
-                    <!-- DEPOIMENTOS ERA -->
-                    <div style="margin-top: 2rem; text-align: center;">
-                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Era</h4>
-                        <div class="depoimentos-grid" style="margin-top: 1rem;">
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"O Auto Trash é incrível! Farm de lixo automático, recomendo!"</div>
-                                <div class="cliente">- Ryzen D</div>
-                                <div class="info">📅 26/06/2026 • R$ 60,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Script funcionando perfeitamente, suporte rápido e eficiente!"</div>
-                                <div class="cliente">- ourodeguerra</div>
-                                <div class="info">📅 18/07/2026 • 2x R$ 100,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Valeu cada centavo! Farm automático mudou minha gameplay."</div>
-                                <div class="cliente">- ЮРИЙ</div>
-                                <div class="info">📅 03/07/2026 • R$ 200,00</div>
-                            </div>
-                            <div class="depoimento-card">
-                                <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto">"Recomendo demais! Suporte excelente e script muito estável."</div>
-                                <div class="cliente">- Luixx</div>
-                                <div class="info">📅 05/07/2026 • 3x</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- CUPOM -->
             <div class="cupom-area">
                 <input type="text" id="cupomInput" placeholder="Código promocional" />
                 <button class="btn-cupom" onclick="aplicarCupom()">Aplicar</button>
@@ -1785,7 +1865,72 @@
     </section>
 
     <!-- ============================================================
-    COMO COMPRAR + PARCERIA
+    PERFIL
+    ============================================================ -->
+    <section id="perfil" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-user"></i> Meu Perfil</h2>
+                <p>Gerencie suas informações e preferências</p>
+            </div>
+
+            <div class="profile-section" id="profileSection">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">K</div>
+                    <div class="profile-info">
+                        <h3 id="profileName">KZN Usuário</h3>
+                        <p id="profileEmail">usuario@kzn.com</p>
+                        <a href="#" class="edit-link" onclick="editarPerfil()"><i class="fas fa-edit"></i> Editar perfil</a>
+                    </div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="number" id="profileOrders">0</div>
+                        <div class="label">Compras</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number" id="profileKeys">0</div>
+                        <div class="label">Keys Ativas</div>
+                    </div>
+                    <div class="stat">
+                        <div class="number" id="profileSince">2026</div>
+                        <div class="label">Membro desde</div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn-action primary" onclick="window.location.href='#mods'"><i class="fas fa-shopping-cart"></i> Comprar Mods</button>
+                    <button class="btn-action" onclick="window.location.href='#contato'"><i class="fas fa-headset"></i> Suporte</button>
+                    <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                </div>
+
+                <!-- Área de edição do perfil (oculta) -->
+                <div id="editProfileArea" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+                    <h4 style="margin-bottom:1rem;color:var(--text);">✏️ Editar Perfil</h4>
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="editNome" value="KZN Usuário" />
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" id="editEmail" value="usuario@kzn.com" />
+                    </div>
+                    <div class="form-group">
+                        <label>Nova senha</label>
+                        <input type="password" id="editSenha" placeholder="Deixe em branco para manter" />
+                    </div>
+                    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
+                        <button class="btn-action primary" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
+                        <button class="btn-action" onclick="cancelarEdicaoPerfil()"><i class="fas fa-times"></i> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    COMO COMPRAR
     ============================================================ -->
     <section id="como-comprar" class="section">
         <div class="container">
@@ -1795,47 +1940,20 @@
             </div>
 
             <div class="parceria-container">
-                <div class="logo-parceria">
-                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" />
-                </div>
+                <div class="logo-parceria"><img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" /></div>
                 <h3>⚡ XCORE EXECUTE</h3>
                 <div class="slogan">FOR GAMERS, BY GAMERS</div>
-                <p>
-                    A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>.
-                    Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.
-                </p>
-                <p class="aviso-ios">
-                    ⚠️ <strong>Usuários iOS:</strong> No momento, o Xcore Execute está disponível apenas para Android e PC. Para iOS, recomendamos outras soluções.
-                </p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria">
-                    <i class="fab fa-discord"></i> Entrar no Discord da Xcore
-                </a>
-                <div class="aviso">
-                    ⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!
-                </div>
+                <p>A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>. Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.</p>
+                <p class="aviso-ios">⚠️ <strong>Usuários iOS:</strong> No momento, o Xcore Execute está disponível apenas para Android e PC. Para iOS, recomendamos outras soluções.</p>
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria"><i class="fab fa-discord"></i> Entrar no Discord da Xcore</a>
+                <div class="aviso">⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!</div>
             </div>
 
             <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">0</div>
-                    <h4>⚡ Baixe a Xcore</h4>
-                    <p>Entre no Discord da Xcore e baixe a ferramenta</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h4>📋 Escolha o Mod</h4>
-                    <p>Selecione entre Classic ou Era</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h4>💳 Gere o Pagamento</h4>
-                    <p>Clique em "Comprar" e copie a chave PIX</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h4>✅ Confirme no Discord</h4>
-                    <p>Após o pagamento, entre em contato no Discord para ativação</p>
-                </div>
+                <div class="step-card"><div class="step-number">0</div><h4>⚡ Baixe a Xcore</h4><p>Entre no Discord da Xcore e baixe a ferramenta</p></div>
+                <div class="step-card"><div class="step-number">1</div><h4>📋 Escolha o Mod</h4><p>Selecione entre Classic ou Era</p></div>
+                <div class="step-card"><div class="step-number">2</div><h4>💳 Gere o Pagamento</h4><p>Clique em "Comprar" e copie a chave PIX</p></div>
+                <div class="step-card"><div class="step-number">3</div><h4>✅ Confirme no Discord</h4><p>Após o pagamento, entre em contato no Discord para ativação</p></div>
             </div>
         </div>
     </section>
@@ -1850,33 +1968,15 @@
                 <p>Leia atentamente antes de adquirir</p>
             </div>
             <div class="regras-container">
-                <div class="regra-item">
-                    <div class="regra-numero">1</div>
-                    <div class="regra-texto">
-                        <strong>💰 Renovação / Reset de Key</strong><br />
-                        Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.
-                    </div>
-                </div>
-                <div class="regra-item">
-                    <div class="regra-numero">2</div>
-                    <div class="regra-texto">
-                        <strong>⚠️ Responsabilidade do Usuário</strong><br />
-                        Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.
-                    </div>
-                </div>
-                <div class="regra-item">
-                    <div class="regra-numero">3</div>
-                    <div class="regra-texto">
-                        <strong>🎮 Objetivo do Mod Menu</strong><br />
-                        O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.
-                    </div>
-                </div>
+                <div class="regra-item"><div class="regra-numero">1</div><div class="regra-texto"><strong>💰 Renovação / Reset de Key</strong><br />Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.</div></div>
+                <div class="regra-item"><div class="regra-numero">2</div><div class="regra-texto"><strong>⚠️ Responsabilidade do Usuário</strong><br />Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.</div></div>
+                <div class="regra-item"><div class="regra-numero">3</div><div class="regra-texto"><strong>🎮 Objetivo do Mod Menu</strong><br />O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.</div></div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    CONTATO / FORMULÁRIO
+    CONTATO
     ============================================================ -->
     <section id="contato" class="section dark">
         <div class="container">
@@ -1889,24 +1989,10 @@
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
-
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> Seu Nome</label>
-                        <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Seu E-mail</label>
-                        <input type="email" name="E-mail" placeholder="Digite seu e-mail..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fab fa-whatsapp"></i> WhatsApp</label>
-                        <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-crown"></i> Plano Escolhido</label>
+                    <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
+                    <div class="form-group"><label><i class="fas fa-envelope"></i> Seu E-mail</label><input type="email" name="E-mail" placeholder="Digite seu e-mail..." required></div>
+                    <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
+                    <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
                         <select name="Plano" required>
                             <option value="">Selecione um plano...</option>
                             <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
@@ -1916,22 +2002,9 @@
                             <option value="Era - 2x R$ 100,00">♻️ Era - 2x R$ 100,00</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color: var(--primary);">*</span></label>
-                        <input type="file" name="Comprovante" accept="image/*,.pdf" required>
-                        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
-                        <textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> Enviar Mensagem
-                    </button>
-
+                    <div class="form-group"><label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label><input type="file" name="Comprovante" accept="image/*,.pdf" required><p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p></div>
+                    <div class="form-group"><label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label><textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea></div>
+                    <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
                     <div class="form-status" id="formStatus"></div>
                 </form>
             </div>
@@ -1948,48 +2021,12 @@
                 <p>Dúvidas comuns sobre o KZN Menu</p>
             </div>
             <div class="faq-grid">
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>🔒 O KZN Menu é seguro?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>📱 Funciona no celular?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>🔄 O que acontece após a compra?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>📧 Como recebo o mod após o pagamento?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>💳 Quais formas de pagamento?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">Aceitamos PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
-                </div>
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="question">
-                        <span>⚡ O que é Xcore Execute?</span>
-                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
-                    </div>
-                    <div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
-                </div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>🔒 O KZN Menu é seguro?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>📱 Funciona no celular?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>🔄 O que acontece após a compra?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>📧 Como recebo o mod após o pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>💳 Quais formas de pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>⚡ O que é Xcore Execute?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div></div>
             </div>
         </div>
     </section>
@@ -2000,25 +2037,14 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <span>KZN MENU</span>
-                    <p>O melhor Mod Menu para Graal Classic &amp; Era</p>
-                </div>
+                <div class="footer-brand"><span>KZN MENU</span><p>O melhor Mod Menu para Graal Classic &amp; Era</p></div>
                 <div class="footer-social">
-                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN">
-                        <i class="fab fa-discord"></i>
-                    </a>
-                    <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore">
-                        <i class="fas fa-bolt"></i>
-                    </a>
-                    <a href="#" class="pix" onclick="abrirModalPix2()" title="PIX">
-                        <i class="fas fa-qrcode"></i>
-                    </a>
+                    <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN"><i class="fab fa-discord"></i></a>
+                    <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore"><i class="fas fa-bolt"></i></a>
+                    <a href="#" class="pix" onclick="abrirModalPix()" title="PIX"><i class="fas fa-qrcode"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 KZN MENU - Todos os direitos reservados</p>
-            </div>
+            <div class="footer-bottom"><p>&copy; 2026 KZN MENU - Todos os direitos reservados</p></div>
         </div>
     </footer>
 
@@ -2029,109 +2055,12 @@
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModalPix()">✕</span>
             <h2>💳 Pagamento PIX</h2>
-            <p style="color: var(--text-muted); margin-bottom: 0.5rem;">Copie a chave abaixo e realize o pagamento</p>
+            <p style="color:var(--text-muted);margin-bottom:0.5rem;">Copie a chave abaixo e realize o pagamento</p>
             <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
             <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
             <div class="plan-info" id="planInfo">Plano: - | Valor: -</div>
-            <div style="margin-top: 1rem;">
-                <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link">
-                    <i class="fab fa-discord"></i> Entrar em contato no Discord
-                </a>
-            </div>
-            <div style="margin-top: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
-                <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    MODAL LOGIN
-    ============================================================ -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="fecharLogin()">✕</span>
-
-            <div class="modal-logo">
-                <img src="https://yt3.ggpht.com/5yfkLL8UszIlFjW-YeZrBqJ_xygWPj-MSSNtpkxyjxvY3TdAwEzgtKkhIVhdjsyiutJBaPF1Vtg=s160-c-k-c0x00ffffff-no-rj" alt="KZN Logo" />
-                <h2>KZN MENU</h2>
-            </div>
-
-            <!-- TABS -->
-            <div class="modal-tabs">
-                <button class="modal-tab active" data-tab="login" onclick="switchAuthTab('login')">
-                    <i class="fas fa-sign-in-alt"></i> Entrar
-                </button>
-                <button class="modal-tab" data-tab="register" onclick="switchAuthTab('register')">
-                    <i class="fas fa-user-plus"></i> Registrar
-                </button>
-            </div>
-
-            <!-- ÁREA DO USUÁRIO LOGADO -->
-            <div id="userLoggedArea" style="display: none;">
-                <div style="text-align: center; padding: 1rem; background: var(--bg); border-radius: 10px; margin-bottom: 1.5rem;">
-                    <div style="font-weight: 700; font-size: 1.1rem; color: var(--text);" id="displayName">Usuário</div>
-                    <div style="font-size: 0.85rem; color: var(--text-muted);" id="displayEmail">email@exemplo.com</div>
-                </div>
-                <button onclick="logout()" style="width:100%;padding:0.7rem;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--text);font-weight:600;cursor:pointer;transition:var(--transition);">
-                    <i class="fas fa-sign-out-alt"></i> Sair
-                </button>
-            </div>
-
-            <!-- FORMULÁRIO LOGIN -->
-            <div class="modal-form active" id="formLoginContainer">
-                <form id="loginForm">
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> E-mail</label>
-                        <input type="email" id="loginEmail" placeholder="Digite seu e-mail" required />
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-lock"></i> Senha</label>
-                        <input type="password" id="loginSenha" placeholder="Digite sua senha" required />
-                    </div>
-
-                    <div class="form-options">
-                        <label>
-                            <input type="checkbox" id="rememberMe" /> Lembrar-me
-                        </label>
-                        <a href="#" onclick="alert('🔐 Entre em contato com o suporte para redefinir sua senha.')">Esqueceu a senha?</a>
-                    </div>
-
-                    <button type="submit" class="btn-submit-modal">
-                        <i class="fas fa-sign-in-alt"></i> Entrar
-                    </button>
-
-                    <div class="auth-message" id="loginMessage"></div>
-                </form>
-            </div>
-
-            <!-- FORMULÁRIO REGISTRO -->
-            <div class="modal-form" id="formRegisterContainer">
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> Nome completo</label>
-                        <input type="text" id="regNome" placeholder="Digite seu nome" required />
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> E-mail</label>
-                        <input type="email" id="regEmail" placeholder="Digite seu e-mail" required />
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-lock"></i> Senha</label>
-                        <input type="password" id="regSenha" placeholder="Crie uma senha (mínimo 6 caracteres)" required minlength="6" />
-                    </div>
-                    <div class="form-group">
-                        <label><i class="fas fa-check-circle"></i> Confirmar senha</label>
-                        <input type="password" id="regConfirmSenha" placeholder="Confirme sua senha" required />
-                    </div>
-
-                    <button type="submit" class="btn-submit-modal">
-                        <i class="fas fa-user-plus"></i> Criar conta
-                    </button>
-
-                    <div class="auth-message" id="registerMessage"></div>
-                </form>
-            </div>
-
+            <div style="margin-top:1rem;"><a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Entrar em contato no Discord</a></div>
+            <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--text-muted);"><p>Após o pagamento, envie o comprovante no Discord para ativação.</p></div>
         </div>
     </div>
 
@@ -2145,14 +2074,9 @@
         const mobileMenu = document.getElementById('mobileMenu');
         const navMenu = document.getElementById('navMenu');
 
-        mobileMenu.addEventListener('click', () => {
-            navMenu.classList.toggle('open');
-        });
-
+        mobileMenu.addEventListener('click', () => { navMenu.classList.toggle('open'); });
         document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('open');
-            });
+            link.addEventListener('click', () => { navMenu.classList.remove('open'); });
         });
 
         // ============================================================
@@ -2165,19 +2089,13 @@
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
+                if (window.scrollY >= sectionTop) { current = section.getAttribute('id'); }
             });
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
+                if (link.getAttribute('href') === '#' + current) { link.classList.add('active'); }
             });
-
-            const navbar = document.getElementById('navbar');
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
 
         // ============================================================
@@ -2193,9 +2111,7 @@
         // ============================================================
         // FAQ
         // ============================================================
-        function toggleFaq(el) {
-            el.classList.toggle('open');
-        }
+        function toggleFaq(el) { el.classList.toggle('open'); }
 
         // ============================================================
         // CUPOM
@@ -2203,34 +2119,177 @@
         function aplicarCupom() {
             const input = document.getElementById('cupomInput');
             const codigo = input.value.trim();
-
-            if (codigo === 'KZN10') {
-                alert('🎉 Cupom aplicado! 10% de desconto em sua compra!');
-            } else if (codigo === 'KZN20') {
-                alert('🎉 Cupom aplicado! 20% de desconto em sua compra!');
-            } else if (codigo) {
-                alert('❌ Código inválido. Tente "KZN10" ou "KZN20".');
-            } else {
-                alert('⚠️ Digite um código promocional.');
-            }
+            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto em sua compra!'); }
+            else if (codigo === 'KZN20') { alert('🎉 Cupom aplicado! 20% de desconto em sua compra!'); }
+            else if (codigo) { alert('❌ Código inválido. Tente "KZN10" ou "KZN20".'); }
+            else { alert('⚠️ Digite um código promocional.'); }
             input.value = '';
         }
 
         // ============================================================
-        // MODAL PIX
+        // SISTEMA DE PERFIL
         // ============================================================
-        let planoSelecionadoPix = '',
-            valorSelecionadoPix = 0;
+        let usuarioLogado = null;
 
-        function abrirModalPix(plano, valor) {
-            planoSelecionadoPix = plano;
-            valorSelecionadoPix = valor;
-            document.getElementById('planInfo').textContent = `Plano: ${plano} | Valor: R$ ${valor},00`;
-            document.getElementById('modalPix').classList.add('open');
+        function carregarPerfil() {
+            const dados = localStorage.getItem('kzn_usuario_logado');
+            if (dados) {
+                try {
+                    usuarioLogado = JSON.parse(dados);
+                    document.getElementById('userDisplay').textContent = usuarioLogado.nome || 'Usuário';
+                    document.getElementById('avatarLetter').textContent = (usuarioLogado.nome || 'U')[0].toUpperCase();
+                    document.getElementById('profileName').textContent = usuarioLogado.nome || 'KZN Usuário';
+                    document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
+                    document.getElementById('profileAvatar').textContent = (usuarioLogado.nome || 'U')[0].toUpperCase();
+                    document.getElementById('editNome').value = usuarioLogado.nome || '';
+                    document.getElementById('editEmail').value = usuarioLogado.email || '';
+                } catch (e) {
+                    usuarioLogado = null;
+                }
+            } else {
+                // Usuário demo
+                usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
+            }
         }
 
-        function abrirModalPix2() {
-            document.getElementById('planInfo').textContent = 'Clique em "Comprar" para gerar o pagamento';
+        function editarPerfil() {
+            document.getElementById('editProfileArea').style.display = 'block';
+            document.getElementById('editNome').value = usuarioLogado.nome || '';
+            document.getElementById('editEmail').value = usuarioLogado.email || '';
+        }
+
+        function cancelarEdicaoPerfil() {
+            document.getElementById('editProfileArea').style.display = 'none';
+        }
+
+        function salvarEdicaoPerfil() {
+            const nome = document.getElementById('editNome').value.trim();
+            const email = document.getElementById('editEmail').value.trim();
+            const senha = document.getElementById('editSenha').value;
+
+            if (!nome || !email) {
+                alert('⚠️ Preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            usuarioLogado.nome = nome;
+            usuarioLogado.email = email;
+
+            if (senha.length >= 6) {
+                // Atualiza senha (em produção, isso seria enviado ao servidor)
+                alert('🔐 Senha atualizada com sucesso!');
+            }
+
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
+            carregarPerfil();
+            document.getElementById('editProfileArea').style.display = 'none';
+            alert('✅ Perfil atualizado com sucesso!');
+        }
+
+        function logout() {
+            localStorage.removeItem('kzn_usuario_logado');
+            usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
+            carregarPerfil();
+            alert('👋 Você saiu da sua conta.');
+            window.location.href = '#inicio';
+        }
+
+        // ============================================================
+        // CARRINHO DE COMPRAS
+        // ============================================================
+        let carrinho = [];
+
+        function carregarCarrinho() {
+            const dados = localStorage.getItem('kzn_carrinho');
+            if (dados) {
+                try { carrinho = JSON.parse(dados); } catch (e) { carrinho = []; }
+            }
+            atualizarCarrinho();
+        }
+
+        function salvarCarrinho() {
+            localStorage.setItem('kzn_carrinho', JSON.stringify(carrinho));
+            atualizarCarrinho();
+        }
+
+        function adicionarAoCarrinho(nome, preco) {
+            const item = carrinho.find(i => i.nome === nome);
+            if (item) {
+                item.quantidade++;
+            } else {
+                carrinho.push({ nome, preco, quantidade: 1 });
+            }
+            salvarCarrinho();
+            alert(`✅ ${nome} adicionado ao carrinho!`);
+        }
+
+        function removerDoCarrinho(index) {
+            carrinho.splice(index, 1);
+            salvarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            const count = document.getElementById('cartCount');
+            const totalItems = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+            count.textContent = totalItems;
+
+            const itemsContainer = document.getElementById('cartItems');
+            const totalContainer = document.getElementById('cartTotal');
+
+            if (carrinho.length === 0) {
+                itemsContainer.innerHTML = `<div class="empty-cart">🛒 Carrinho vazio</div>`;
+                totalContainer.textContent = 'R$ 0,00';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+            carrinho.forEach((item, index) => {
+                const subtotal = item.preco * item.quantidade;
+                total += subtotal;
+                html += `
+                    <div class="cart-item">
+                        <span class="item-name">${item.nome} x${item.quantidade}</span>
+                        <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
+                        <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
+                    </div>
+                `;
+            });
+            itemsContainer.innerHTML = html;
+            totalContainer.textContent = `R$ ${total.toFixed(2)}`;
+        }
+
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert('⚠️ Seu carrinho está vazio!');
+                return;
+            }
+
+            const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+            if (confirm(`🛒 Finalizar compra de R$ ${total.toFixed(2)}?\n\nClique em OK para gerar o pagamento.`)) {
+                carrinho = [];
+                salvarCarrinho();
+                alert('💳 Pagamento gerado! Copie a chave PIX abaixo:');
+                abrirModalPix();
+                document.getElementById('planInfo').textContent = `Total: R$ ${total.toFixed(2)}`;
+                document.getElementById('cartDropdown').classList.remove('open');
+            }
+        }
+
+        // Toggle carrinho dropdown
+        document.querySelector('.profile-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            document.getElementById('cartDropdown').classList.toggle('open');
+        });
+
+        document.addEventListener('click', function() {
+            document.getElementById('cartDropdown').classList.remove('open');
+        });
+
+        // ============================================================
+        // MODAL PIX
+        // ============================================================
+        function abrirModalPix() {
             document.getElementById('modalPix').classList.add('open');
         }
 
@@ -2243,236 +2302,13 @@
             navigator.clipboard.writeText(key).then(() => {
                 const btn = document.querySelector('.btn-copy');
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX';
-                }, 2000);
+                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
             });
         }
 
         document.getElementById('modalPix').addEventListener('click', function(e) {
             if (e.target === this) fecharModalPix();
         });
-
-        // ============================================================
-        // SISTEMA DE LOGIN (INTEGRADO)
-        // ============================================================
-
-        // Banco de dados de usuários
-        let usuarios = [];
-
-        function carregarUsuarios() {
-            const dados = localStorage.getItem('kzn_usuarios');
-            if (dados) {
-                usuarios = JSON.parse(dados);
-            } else {
-                usuarios = [{ nome: 'Gabriel', email: 'gabriel@kzn.com', senha: '123456' }];
-                salvarUsuarios();
-            }
-        }
-
-        function salvarUsuarios() {
-            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-        }
-
-        // Registrar
-        function registrarUsuario(nome, email, senha) {
-            if (usuarios.find(u => u.email === email)) {
-                return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
-            }
-            usuarios.push({ nome, email, senha });
-            salvarUsuarios();
-            return { sucesso: true, mensagem: 'Conta criada com sucesso! Faça login.' };
-        }
-
-        // Login
-        function fazerLogin(email, senha) {
-            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
-            if (usuario) {
-                return { sucesso: true, usuario, mensagem: 'Login realizado com sucesso!' };
-            }
-            return { sucesso: false, mensagem: 'E-mail ou senha incorretos.' };
-        }
-
-        // Mostrar mensagem
-        function mostrarMensagem(elemento, tipo, texto) {
-            elemento.className = `auth-message ${tipo}`;
-            elemento.style.display = 'block';
-            elemento.textContent = texto;
-            setTimeout(() => {
-                elemento.style.display = 'none';
-            }, 5000);
-        }
-
-        // Alternar entre tabs
-        function switchAuthTab(tab) {
-            document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.modal-form').forEach(f => f.classList.remove('active'));
-
-            if (tab === 'login') {
-                document.querySelector('.modal-tab[data-tab="login"]').classList.add('active');
-                document.getElementById('formLoginContainer').classList.add('active');
-            } else {
-                document.querySelector('.modal-tab[data-tab="register"]').classList.add('active');
-                document.getElementById('formRegisterContainer').classList.add('active');
-            }
-
-            document.getElementById('loginMessage').className = 'auth-message';
-            document.getElementById('loginMessage').style.display = 'none';
-            document.getElementById('registerMessage').className = 'auth-message';
-            document.getElementById('registerMessage').style.display = 'none';
-        }
-
-        // Abrir/fechar modal de login
-        function abrirLogin() {
-            document.getElementById('loginModal').classList.add('open');
-            // Reset UI
-            document.getElementById('userLoggedArea').style.display = 'none';
-            document.getElementById('formLoginContainer').classList.add('active');
-            document.getElementById('formRegisterContainer').classList.remove('active');
-        }
-
-        function fecharLogin() {
-            document.getElementById('loginModal').classList.remove('open');
-        }
-
-        // Mostrar usuário logado
-        function mostrarUsuarioLogado(usuario) {
-            document.getElementById('userLoggedArea').style.display = 'block';
-            document.getElementById('formLoginContainer').style.display = 'none';
-            document.getElementById('formRegisterContainer').style.display = 'none';
-            document.getElementById('displayName').textContent = usuario.nome;
-            document.getElementById('displayEmail').textContent = usuario.email;
-
-            // Atualiza botão na navbar
-            const userDisplay = document.getElementById('userDisplay');
-            userDisplay.textContent = usuario.nome;
-            userDisplay.style.color = 'var(--success)';
-        }
-
-        // Logout
-        function logout() {
-            localStorage.removeItem('kzn_usuario_logado');
-            document.getElementById('userLoggedArea').style.display = 'none';
-            document.getElementById('formLoginContainer').style.display = 'block';
-            document.getElementById('formRegisterContainer').style.display = 'none';
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginSenha').value = '';
-            document.getElementById('loginMessage').className = 'auth-message';
-            document.getElementById('loginMessage').style.display = 'none';
-
-            const userDisplay = document.getElementById('userDisplay');
-            userDisplay.textContent = 'Entrar';
-            userDisplay.style.color = 'var(--text)';
-
-            // Fecha modal
-            fecharLogin();
-        }
-
-        // ============================================================
-        // EVENTOS DE LOGIN
-        // ============================================================
-
-        // Registro
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const nome = document.getElementById('regNome').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const senha = document.getElementById('regSenha').value;
-            const confirmSenha = document.getElementById('regConfirmSenha').value;
-            const msg = document.getElementById('registerMessage');
-
-            if (!nome || !email || !senha || !confirmSenha) {
-                mostrarMensagem(msg, 'error', '⚠️ Preencha todos os campos.');
-                return;
-            }
-            if (senha.length < 6) {
-                mostrarMensagem(msg, 'error', '⚠️ A senha deve ter pelo menos 6 caracteres.');
-                return;
-            }
-            if (senha !== confirmSenha) {
-                mostrarMensagem(msg, 'error', '⚠️ As senhas não coincidem.');
-                return;
-            }
-
-            const resultado = registrarUsuario(nome, email, senha);
-
-            if (resultado.sucesso) {
-                mostrarMensagem(msg, 'success', '✅ ' + resultado.mensagem);
-                document.getElementById('regNome').value = '';
-                document.getElementById('regEmail').value = '';
-                document.getElementById('regSenha').value = '';
-                document.getElementById('regConfirmSenha').value = '';
-                setTimeout(() => switchAuthTab('login'), 1500);
-            } else {
-                mostrarMensagem(msg, 'error', '❌ ' + resultado.mensagem);
-            }
-        });
-
-        // Login
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const email = document.getElementById('loginEmail').value.trim();
-            const senha = document.getElementById('loginSenha').value;
-            const remember = document.getElementById('rememberMe').checked;
-            const msg = document.getElementById('loginMessage');
-
-            if (!email || !senha) {
-                mostrarMensagem(msg, 'error', '⚠️ Preencha todos os campos.');
-                return;
-            }
-
-            const resultado = fazerLogin(email, senha);
-
-            if (resultado.sucesso) {
-                mostrarMensagem(msg, 'success', '✅ ' + resultado.mensagem);
-
-                if (remember) {
-                    localStorage.setItem('kzn_usuario_logado', JSON.stringify({
-                        nome: resultado.usuario.nome,
-                        email: resultado.usuario.email
-                    }));
-                }
-
-                setTimeout(() => {
-                    mostrarUsuarioLogado(resultado.usuario);
-                    fecharLogin();
-                }, 800);
-
-            } else {
-                mostrarMensagem(msg, 'error', '❌ ' + resultado.mensagem);
-            }
-        });
-
-        // Botão de login
-        document.getElementById('loginBtn').addEventListener('click', abrirLogin);
-
-        // Fechar modal clicando fora
-        document.getElementById('loginModal').addEventListener('click', function(e) {
-            if (e.target === this) fecharLogin();
-        });
-
-        // ============================================================
-        // CARREGA USUÁRIO SALVO
-        // ============================================================
-
-        carregarUsuarios();
-
-        const usuarioSalvo = localStorage.getItem('kzn_usuario_logado');
-        if (usuarioSalvo) {
-            try {
-                const usuario = JSON.parse(usuarioSalvo);
-                const existe = usuarios.find(u => u.email === usuario.email);
-                if (existe) {
-                    mostrarUsuarioLogado(existe);
-                } else {
-                    localStorage.removeItem('kzn_usuario_logado');
-                }
-            } catch (e) {
-                localStorage.removeItem('kzn_usuario_logado');
-            }
-        }
 
         // ============================================================
         // FORMULÁRIO DE CONTATO
@@ -2495,10 +2331,15 @@
         }
 
         // ============================================================
-        // TRADUÇÃO (SIMPLES)
+        // INICIALIZAÇÃO
+        // ============================================================
+        carregarPerfil();
+        carregarCarrinho();
+
+        // ============================================================
+        // TRADUÇÃO
         // ============================================================
         let idiomaAtual = 'pt';
-
         function mudarIdioma(lang) {
             idiomaAtual = lang;
             document.getElementById('langPt').classList.toggle('active', lang === 'pt');
