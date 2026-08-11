@@ -8,14 +8,12 @@
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
 
-    <!-- ===== OPEN GRAPH ===== -->
     <meta property="og:title" content="KZN MENU - Mods para Graal" />
     <meta property="og:description" content="Os melhores mods para farm e gameplay no Graal Classic e Era." />
     <meta property="og:image" content="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- ===== SCHEMA.ORG ===== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -40,7 +38,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            /* CORES PRINCIPAIS */
             --primary: #dc2626;
             --primary-dark: #b91c1c;
             --secondary: #7c3aed;
@@ -49,8 +46,6 @@
             --warning: #f59e0b;
             --classic: #3b82f6;
             --era: #f59e0b;
-
-            /* TEMA CLARO (PADRÃO) */
             --bg: #0a0a0a;
             --bg-card: #111111;
             --bg-card-hover: #1a1a2e;
@@ -61,18 +56,7 @@
             --glass: rgba(255,255,255,0.05);
             --radius: 16px;
             --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* TEMA ESCURO (ATIVADO POR JS) */
-        body.light-mode {
-            --bg: #f1f5f9;
-            --bg-card: #ffffff;
-            --bg-card-hover: #f8fafc;
-            --border: #e2e8f0;
-            --text: #0f172a;
-            --text-muted: #475569;
-            --shadow: 0 10px 40px rgba(0,0,0,0.1);
-            --glass: rgba(0,0,0,0.03);
+            --container-max: 1200px;
         }
 
         html { scroll-behavior: smooth; }
@@ -138,15 +122,12 @@
             padding: 0 2rem;
             transition: var(--transition);
         }
-        body.light-mode .navbar {
-            background: rgba(255,255,255,0.92);
-        }
         .navbar.scrolled {
             border-bottom-color: var(--primary);
             box-shadow: 0 4px 40px rgba(0,0,0,0.3);
         }
         .nav-container {
-            max-width: 1400px;
+            max-width: var(--container-max);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -259,10 +240,6 @@
             border-color: var(--primary);
             box-shadow: 0 0 25px rgba(220,38,38,0.3);
         }
-        body.light-mode .nav-menu a:hover,
-        body.light-mode .nav-menu a.active {
-            color: #fff;
-        }
 
         .nav-toggle {
             display: none;
@@ -277,8 +254,8 @@
             gap: 8px;
         }
 
-        /* BOTÃO TEMA */
-        .theme-toggle {
+        /* BOTÃO LOGIN */
+        .login-btn {
             background: var(--glass);
             border: 1px solid var(--border);
             color: var(--text);
@@ -291,10 +268,38 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-decoration: none;
         }
-        .theme-toggle:hover {
-            border-color: var(--primary);
-            background: rgba(220,38,38,0.1);
+        .login-btn:hover {
+            border-color: var(--secondary);
+            background: rgba(124,58,237,0.1);
+        }
+        .login-btn .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--success);
+            color: #fff;
+            font-size: 0.5rem;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        .login-btn .user-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
         }
 
         /* IDIOMA */
@@ -329,7 +334,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 7rem 2rem 4rem;
+            padding: 8rem 2rem 5rem;
             background:
                 radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
                 radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
@@ -366,7 +371,7 @@
 
         .hero-content {
             flex: 1;
-            max-width: 650px;
+            max-width: 600px;
             position: relative;
             z-index: 1;
         }
@@ -384,7 +389,7 @@
             box-shadow: 0 4px 30px rgba(220,38,38,0.3);
         }
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             font-weight: 900;
             line-height: 1.1;
             margin-bottom: 1rem;
@@ -441,7 +446,6 @@
             transform: translateY(-3px);
         }
 
-        /* VÍDEO E GIF */
         .hero-image {
             flex: 1;
             max-width: 500px;
@@ -476,7 +480,12 @@
         /* ============================================================
            SECTIONS
            ============================================================ */
-        .section { padding: 5rem 2rem; position: relative; }
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
         .section.dark { background: var(--bg); }
         .section::before {
             content: '';
@@ -488,7 +497,6 @@
             background: linear-gradient(90deg, transparent, var(--primary), transparent);
             opacity: 0.3;
         }
-        .container { max-width: 1400px; margin: 0 auto; }
 
         .section-header {
             text-align: center;
@@ -506,7 +514,7 @@
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
         /* ============================================================
-           BARRA DE PROGRESSO
+           PROGRESS BAR
            ============================================================ */
         .progress-bar {
             display: flex;
@@ -602,14 +610,14 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2rem 1.5rem;
+            padding: 2.5rem 2rem;
             text-align: center;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
         }
         .plan-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: var(--primary);
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
@@ -684,7 +692,6 @@
         }
         .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
 
-        /* IMAGENS DOS MODS */
         .script-image {
             width: 100%;
             max-width: 280px;
@@ -734,7 +741,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 0.5rem 0.6rem;
+            padding: 0.6rem 0.8rem;
             text-align: center;
             transition: var(--transition);
         }
@@ -752,7 +759,7 @@
             background: var(--bg-card);
             border: 2px solid var(--secondary);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 2.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -876,7 +883,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.2rem;
+            padding: 1.5rem;
             transition: var(--transition);
         }
         .depoimento-card:hover { border-color: var(--primary); transform: translateY(-4px); }
@@ -889,7 +896,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
             max-width: 300px;
             margin: 0 auto;
@@ -913,7 +920,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 2.5rem;
         }
         .form-container .form-group { margin-bottom: 1rem; }
         .form-container label {
@@ -925,7 +932,7 @@
         }
         .form-container input, .form-container select, .form-container textarea {
             width: 100%;
-            padding: 0.7rem 0.9rem;
+            padding: 0.8rem 1rem;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 10px;
@@ -943,7 +950,7 @@
         .form-container textarea { resize: vertical; min-height: 80px; }
         .form-container .btn-submit {
             width: 100%;
-            padding: 0.9rem;
+            padding: 1rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 12px;
@@ -979,7 +986,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 0.8rem 1.2rem;
+            padding: 1rem 1.2rem;
             margin-bottom: 0.6rem;
             display: flex;
             align-items: flex-start;
@@ -1090,155 +1097,15 @@
         .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
 
         /* ============================================================
-           CHAT AO VIVO
-           ============================================================ */
-        .chat-widget {
-            position: fixed;
-            bottom: 100px;
-            right: 24px;
-            z-index: 9998;
-            width: 320px;
-            max-height: 400px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        .chat-widget.open { display: flex; }
-        .chat-widget .chat-header {
-            padding: 0.8rem 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .chat-widget .chat-header .close-chat {
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-        .chat-widget .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            max-height: 280px;
-        }
-        .chat-widget .chat-messages .msg {
-            margin-bottom: 0.5rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            max-width: 80%;
-            font-size: 0.85rem;
-        }
-        .chat-widget .chat-messages .msg.bot {
-            background: var(--glass);
-            color: var(--text);
-            align-self: flex-start;
-        }
-        .chat-widget .chat-messages .msg.user {
-            background: var(--primary);
-            color: #fff;
-            align-self: flex-end;
-            margin-left: auto;
-        }
-        .chat-widget .chat-input-area {
-            display: flex;
-            padding: 0.5rem;
-            border-top: 1px solid var(--border);
-        }
-        .chat-widget .chat-input-area input {
-            flex: 1;
-            padding: 0.5rem 0.8rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            outline: none;
-            font-size: 0.85rem;
-        }
-        .chat-widget .chat-input-area input:focus { border-color: var(--primary); }
-        .chat-widget .chat-input-area button {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            margin-left: 0.5rem;
-            cursor: pointer;
-            font-weight: 700;
-            transition: var(--transition);
-        }
-        .chat-widget .chat-input-area button:hover { background: var(--primary-dark); }
-
-        .chat-toggle {
-            position: fixed;
-            bottom: 100px;
-            right: 24px;
-            z-index: 9997;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            border: none;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
-            transition: var(--transition);
-        }
-        .chat-toggle:hover { transform: scale(1.1); }
-        .chat-toggle.hidden { display: none; }
-
-        /* ============================================================
-           NOTIFICAÇÃO PUSH
-           ============================================================ */
-        .push-notification {
-            position: fixed;
-            top: 80px;
-            right: 24px;
-            z-index: 9996;
-            background: var(--bg-card);
-            border: 1px solid var(--success);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            box-shadow: var(--shadow);
-            display: none;
-            animation: slideIn 0.5s ease;
-            max-width: 320px;
-        }
-        .push-notification.show { display: block; }
-        .push-notification .push-title {
-            font-weight: 700;
-            color: var(--success);
-            font-size: 0.9rem;
-        }
-        .push-notification .push-text {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* ============================================================
            FOOTER
            ============================================================ */
         .footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
-            padding: 2rem 2rem 1rem;
+            padding: 3rem 2rem 1.5rem;
         }
         .footer-content {
-            max-width: 1400px;
+            max-width: var(--container-max);
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -1276,7 +1143,7 @@
         .footer-social a.pix:hover { background: var(--success); border-color: var(--success); }
         .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
         .footer-bottom {
-            max-width: 1400px;
+            max-width: var(--container-max);
             margin: 1.5rem auto 0;
             padding-top: 1rem;
             border-top: 1px solid var(--border);
@@ -1306,8 +1173,8 @@
             background: var(--bg-card);
             border: 1px solid var(--primary);
             border-radius: var(--radius);
-            padding: 2rem;
-            max-width: 400px;
+            padding: 2.5rem;
+            max-width: 420px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -1370,7 +1237,7 @@
            RESPONSIVE
            ============================================================ */
         @media (max-width: 1024px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
+            .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
             .hero-content { max-width: 100%; }
             .hero-subtitle { margin: 0 auto 2rem; }
             .hero-buttons { justify-content: center; }
@@ -1392,7 +1259,7 @@
             .nav-menu.open { display: flex; }
             .nav-toggle { display: block; }
             .lang-toggle { margin-left: 0; }
-            .hero h1 { font-size: 2.2rem; }
+            .hero h1 { font-size: 2.5rem; }
             .section-header h2 { font-size: 2rem; }
             .plans-grid { grid-template-columns: 1fr; }
             .form-container { padding: 1.5rem; }
@@ -1405,12 +1272,11 @@
             .depoimentos-grid { grid-template-columns: 1fr; }
             .nav-divider { display: none; }
             .nav-xcore .xcore-text { display: none; }
-            .chat-widget { width: 90%; right: 5%; bottom: 80px; }
             .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
             .progress-step .step-arrow { display: none; }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.8rem; }
+            .hero h1 { font-size: 2rem; }
             .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
             .modal-content { padding: 1.5rem; }
             .clientes-grid { grid-template-columns: 1fr; }
@@ -1425,35 +1291,6 @@
     <a href="https://wa.me/554288752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
-
-    <!-- ============================================================
-    CHAT AO VIVO
-    ============================================================ -->
-    <button class="chat-toggle" id="chatToggle" title="Chat ao vivo">
-        <i class="fas fa-comment-dots"></i>
-    </button>
-
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header">
-            <span><i class="fas fa-headset"></i> Atendimento</span>
-            <button class="close-chat" id="chatClose"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="msg bot">👋 Olá! Como posso ajudar você hoje?</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
-            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    NOTIFICAÇÃO PUSH
-    ============================================================ -->
-    <div class="push-notification" id="pushNotif">
-        <div class="push-title">✅ Pedido aprovado!</div>
-        <div class="push-text">Seu pagamento foi confirmado. Acesse o Discord para ativar sua key.</div>
-    </div>
 
     <!-- ============================================================
     NAVBAR
@@ -1483,19 +1320,19 @@
             </div>
 
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#inicio" class="active" data-i18n="nav_home"><i class="fas fa-home"></i> Início</a></li>
-                <li><a href="#mods" data-i18n="nav_mods"><i class="fas fa-cubes"></i> Mods</a></li>
-                <li><a href="#como-comprar" data-i18n="nav_buy"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
-                <li><a href="#regras" data-i18n="nav_rules"><i class="fas fa-gavel"></i> Regras</a></li>
-                <li><a href="#contato" data-i18n="nav_contact"><i class="fas fa-envelope"></i> Contato</a></li>
-                <li><a href="#faq" data-i18n="nav_faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
+                <li><a href="#como-comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
+                <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
 
             <div class="nav-actions">
-                <!-- TEMA -->
-                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
+                <!-- BOTÃO LOGIN -->
+                <a href="login.html" class="login-btn" title="Minha conta">
+                    <i class="fas fa-user"></i>
+                </a>
 
                 <!-- IDIOMA -->
                 <div class="lang-toggle">
@@ -1516,20 +1353,20 @@
     ============================================================ -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-            <div class="hero-badge" data-i18n="hero_badge"><i class="fas fa-crown"></i> Edição Premium</div>
+            <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
             <h1>
                 <span class="highlight-red">KZN</span>
                 <span class="highlight">MENU</span>
                 <br />
-                <span style="font-size: 1.8rem; color: var(--text-muted);" data-i18n="hero_subtitle">MELHORES MODS GRAAL CLASSIC &amp; GRAAL ERA</span>
+                <span style="font-size: 2rem; color: var(--text-muted);">MELHORES MODS GRAAL CLASSIC &amp; GRAAL ERA</span>
             </h1>
-            <p class="hero-subtitle" data-i18n="hero_desc">
+            <p class="hero-subtitle">
                 Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.
                 <br /><strong style="color: var(--primary);">Scripts exclusivos</strong> para farm e gameplay!
             </p>
             <div class="hero-buttons">
-                <a href="#mods" class="btn btn-primary" data-i18n="hero_btn_mods"><i class="fas fa-cubes"></i> Ver Mods</a>
-                <a href="#como-comprar" class="btn btn-secondary" data-i18n="hero_btn_how"><i class="fas fa-info-circle"></i> Como Comprar</a>
+                <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
+                <a href="#como-comprar" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Como Comprar</a>
             </div>
 
             <!-- SELO DE SEGURANÇA -->
@@ -1552,20 +1389,20 @@
                     allowfullscreen>
                 </iframe>
             </div>
-            <div class="video-label" data-i18n="video_label">
+            <div class="video-label">
                 🎬 Clique no play para assistir à demonstração do KZN MENU
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    MODS COM ABAS
+    MODS
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-cubes"></i> <span data-i18n="mods_title">Nossos Mods</span></h2>
-                <p data-i18n="mods_sub">Escolha seu jogo e veja os scripts disponíveis</p>
+                <h2><i class="fas fa-cubes"></i> Nossos Mods</h2>
+                <p>Escolha seu jogo e veja os scripts disponíveis</p>
             </div>
 
             <!-- BARRA DE PROGRESSO -->
@@ -1598,42 +1435,42 @@
                     <div class="plans-grid">
                         <div class="plan-card">
                             <div class="icon">📅</div>
-                            <h3 data-i18n="plan_classic_title">KZN MENU Classic</h3>
-                            <div class="sub-plano" data-i18n="plan_monthly_label">Plano Mensal</div>
-                            <div class="price">R$ 50,00 <small data-i18n="plan_monthly_days">/ 35 dias</small></div>
+                            <h3>KZN MENU Classic</h3>
+                            <div class="sub-plano">Plano Mensal</div>
+                            <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
                             <ul class="features">
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature1">Acesso completo</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature2">Todas as funcionalidades</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature3">Suporte via Discord</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature4">Atualizações automáticas</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_monthly_valid">Válido por 35 dias</span></li>
+                                <li><i class="fas fa-check"></i> Acesso completo</li>
+                                <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                                <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                                <li><i class="fas fa-check"></i> Atualizações automáticas</li>
+                                <li><i class="fas fa-check"></i> Válido por 35 dias</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Mensal', 50)" data-i18n="plan_buy">Comprar R$ 50,00</button>
+                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
                         </div>
 
                         <div class="plan-card popular">
-                            <span class="badge" data-i18n="plan_best">🔥 Mais Vantagem</span>
+                            <span class="badge">🔥 Mais Vantagem</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
                                 <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
                             </div>
-                            <h3 data-i18n="plan_classic_title">KZN MENU Classic</h3>
-                            <div class="sub-plano" data-i18n="plan_permanent_label">Plano Permanente</div>
+                            <h3>KZN MENU Classic</h3>
+                            <div class="sub-plano">Plano Permanente</div>
                             <div class="price">
-                                R$ 200,00 <small data-i18n="plan_permanent_lifetime">/ vitalício</small>
-                                <span class="parcelamento" data-i18n="plan_permanent_installment">ou 2x R$ 100,00</span>
+                                R$ 200,00 <small>/ vitalício</small>
+                                <span class="parcelamento">ou 2x R$ 100,00</span>
                             </div>
                             <ul class="features">
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature5">+50 funcionalidades</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_permanent_feature">Suporte VIP via Discord</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_permanent_feature2">Atualizações vitalícias</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_permanent_feature3">Sem renovação!</span></li>
+                                <li><i class="fas fa-check"></i> +50 funcionalidades</li>
+                                <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
+                                <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
+                                <li><i class="fas fa-check"></i> Sem renovação!</li>
                             </ul>
-                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Permanente', 200)" data-i18n="plan_buy_permanent">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="abrirModal('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
                     <!-- CLIENTES CLASSIC -->
                     <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-users"></i> <span data-i18n="clients_classic">Clientes Classic</span></h4>
+                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Guilherme</div><div class="plano">R$ 50,00</div><div class="data">01/08/26</div></div>
                             <div class="cliente-item"><div class="nome">Dark OP</div><div class="plano">R$ 60,00</div><div class="data">19/07/26</div></div>
@@ -1643,29 +1480,29 @@
                     </div>
                     <!-- DEPOIMENTOS CLASSIC -->
                     <div style="margin-top: 2rem; text-align: center;">
-                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-star"></i> <span data-i18n="testimonials_classic">Depoimentos Classic</span></h4>
+                        <h4 style="color: var(--classic); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Classic</h4>
                         <div class="depoimentos-grid" style="margin-top: 1rem;">
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="testimonial1">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
+                                <div class="texto">"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"</div>
                                 <div class="cliente">- Guilherme</div>
                                 <div class="info">📅 01/08/2026 • R$ 50,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="testimonial2">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
+                                <div class="texto">"Melhor mod menu que já usei! Funciona perfeitamente no celular."</div>
                                 <div class="cliente">- Dark OP</div>
                                 <div class="info">📅 19/07/2026 • R$ 60,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="testimonial3">"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"</div>
+                                <div class="texto">"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"</div>
                                 <div class="cliente">- Dacota</div>
                                 <div class="info">📅 03/08/2026 • R$ 20,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="testimonial4">"O melhor investimento que fiz no Graal! Menu completo e estável."</div>
+                                <div class="texto">"O melhor investimento que fiz no Graal! Menu completo e estável."</div>
                                 <div class="cliente">- Utaa</div>
                                 <div class="info">📅 05/08/2026 • R$ 200,00</div>
                             </div>
@@ -1677,35 +1514,35 @@
                 <div class="tab-content" id="tab-era">
                     <div class="plans-grid">
                         <div class="plan-card popular">
-                            <span class="badge era-badge" data-i18n="plan_exclusive">🔥 Exclusivo Era</span>
+                            <span class="badge era-badge">🔥 Exclusivo Era</span>
                             <div style="text-align: center; margin: 0.5rem 0;">
                                 <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
                             </div>
                             <h3>AUTO TRASH AUTOMATIC</h3>
-                            <div class="sub-plano" data-i18n="plan_era_label">Graal Era</div>
+                            <div class="sub-plano">Graal Era</div>
                             <div class="price">
-                                R$ 200,00 <small data-i18n="plan_permanent_lifetime">/ vitalício</small>
-                                <span class="parcelamento" data-i18n="plan_permanent_installment">ou 2x R$ 100,00</span>
+                                R$ 200,00 <small>/ vitalício</small>
+                                <span class="parcelamento">ou 2x R$ 100,00</span>
                             </div>
                             <ul class="script-features">
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature1">100% AUTOMATIZADO</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature2">Farm de lixo 24/7</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature3">Movimento inteligente</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature4">Coleta automática</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature5">Compatível com Graal Era</span></li>
-                                <li><i class="fas fa-check"></i> <span data-i18n="era_feature6">Suporte dedicado</span></li>
+                                <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
+                                <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
+                                <li><i class="fas fa-check"></i> Movimento inteligente</li>
+                                <li><i class="fas fa-check"></i> Coleta automática</li>
+                                <li><i class="fas fa-check"></i> Compatível com Graal Era</li>
+                                <li><i class="fas fa-check"></i> Suporte dedicado</li>
                             </ul>
                             <div style="text-align: center; margin: 0.6rem 0; padding: 0.4rem; background: rgba(245, 158, 11, 0.1); border-radius: 8px; border: 1px solid var(--era);">
                                 <p style="font-size: 0.75rem; color: var(--text-muted);">
-                                    <strong style="color: var(--era);" data-i18n="era_example_label">💡 Exemplo:</strong> <span data-i18n="era_example_text">2.000 trash em ~2h40</span>
+                                    <strong style="color: var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40
                                 </p>
                             </div>
-                            <button class="btn-buy" onclick="abrirModal('Auto Trash Automatic', 200)" data-i18n="plan_buy_permanent">Comprar R$ 200,00</button>
+                            <button class="btn-buy" onclick="abrirModal('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
                         </div>
                     </div>
                     <!-- CLIENTES ERA -->
                     <div style="margin-top: 2.5rem; text-align: center;">
-                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-users"></i> <span data-i18n="clients_era">Clientes Era</span></h4>
+                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-users"></i> Clientes Era</h4>
                         <div class="clientes-grid">
                             <div class="cliente-item"><div class="nome">Ryzen D</div><div class="plano">R$ 60,00</div><div class="data">26/06/26</div></div>
                             <div class="cliente-item"><div class="nome">ЮРИЙ</div><div class="plano">R$ 200,00</div><div class="data">03/07/26</div></div>
@@ -1715,29 +1552,29 @@
                     </div>
                     <!-- DEPOIMENTOS ERA -->
                     <div style="margin-top: 2rem; text-align: center;">
-                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-star"></i> <span data-i18n="testimonials_era">Depoimentos Era</span></h4>
+                        <h4 style="color: var(--era); font-size: 1.1rem;"><i class="fas fa-star"></i> Depoimentos Era</h4>
                         <div class="depoimentos-grid" style="margin-top: 1rem;">
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="era_testimonial1">"O Auto Trash é incrível! Farm de lixo automático, recomendo!"</div>
+                                <div class="texto">"O Auto Trash é incrível! Farm de lixo automático, recomendo!"</div>
                                 <div class="cliente">- Ryzen D</div>
                                 <div class="info">📅 26/06/2026 • R$ 60,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="era_testimonial2">"Script funcionando perfeitamente, suporte rápido e eficiente!"</div>
+                                <div class="texto">"Script funcionando perfeitamente, suporte rápido e eficiente!"</div>
                                 <div class="cliente">- ourodeguerra</div>
                                 <div class="info">📅 18/07/2026 • 2x R$ 100,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="era_testimonial3">"Valeu cada centavo! Farm automático mudou minha gameplay."</div>
+                                <div class="texto">"Valeu cada centavo! Farm automático mudou minha gameplay."</div>
                                 <div class="cliente">- ЮРИЙ</div>
                                 <div class="info">📅 03/07/2026 • R$ 200,00</div>
                             </div>
                             <div class="depoimento-card">
                                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                                <div class="texto" data-i18n="era_testimonial4">"Recomendo demais! Suporte excelente e script muito estável."</div>
+                                <div class="texto">"Recomendo demais! Suporte excelente e script muito estável."</div>
                                 <div class="cliente">- Luixx</div>
                                 <div class="info">📅 05/07/2026 • 3x</div>
                             </div>
@@ -1746,7 +1583,7 @@
                 </div>
             </div>
 
-            <!-- CUPOM DE DESCONTO -->
+            <!-- CUPOM -->
             <div class="cupom-area">
                 <input type="text" id="cupomInput" placeholder="Código promocional" />
                 <button class="btn-cupom" onclick="aplicarCupom()">Aplicar</button>
@@ -1760,8 +1597,8 @@
     <section id="como-comprar" class="section">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-shopping-cart"></i> <span data-i18n="how_title">Como Comprar</span></h2>
-                <p data-i18n="how_sub">Simples, rápido e seguro. Siga os passos abaixo:</p>
+                <h2><i class="fas fa-shopping-cart"></i> Como Comprar</h2>
+                <p>Simples, rápido e seguro. Siga os passos abaixo:</p>
             </div>
 
             <div class="parceria-container">
@@ -1770,17 +1607,17 @@
                 </div>
                 <h3>⚡ XCORE EXECUTE</h3>
                 <div class="slogan">FOR GAMERS, BY GAMERS</div>
-                <p data-i18n="xcore_desc">
+                <p>
                     A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>.
                     Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.
                 </p>
-                <p class="aviso-ios" data-i18n="xcore_ios_aviso">
+                <p class="aviso-ios">
                     ⚠️ <strong>Usuários iOS:</strong> No momento, o Xcore Execute está disponível apenas para Android e PC. Para iOS, recomendamos outras soluções.
                 </p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria" data-i18n="xcore_btn">
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria">
                     <i class="fab fa-discord"></i> Entrar no Discord da Xcore
                 </a>
-                <div class="aviso" data-i18n="xcore_aviso">
+                <div class="aviso">
                     ⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!
                 </div>
             </div>
@@ -1788,23 +1625,23 @@
             <div class="steps-grid">
                 <div class="step-card">
                     <div class="step-number">0</div>
-                    <h4 data-i18n="step0_title">⚡ Baixe a Xcore</h4>
-                    <p data-i18n="step0_desc">Entre no Discord da Xcore e baixe a ferramenta</p>
+                    <h4>⚡ Baixe a Xcore</h4>
+                    <p>Entre no Discord da Xcore e baixe a ferramenta</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">1</div>
-                    <h4 data-i18n="step1_title">📋 Escolha o Mod</h4>
-                    <p data-i18n="step1_desc">Selecione entre Classic ou Era</p>
+                    <h4>📋 Escolha o Mod</h4>
+                    <p>Selecione entre Classic ou Era</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">2</div>
-                    <h4 data-i18n="step2_title">💳 Gere o Pagamento</h4>
-                    <p data-i18n="step2_desc">Clique em "Comprar" e copie a chave PIX</p>
+                    <h4>💳 Gere o Pagamento</h4>
+                    <p>Clique em "Comprar" e copie a chave PIX</p>
                 </div>
                 <div class="step-card">
                     <div class="step-number">3</div>
-                    <h4 data-i18n="step3_title">✅ Confirme no Discord</h4>
-                    <p data-i18n="step3_desc">Após o pagamento, entre em contato no Discord para ativação</p>
+                    <h4>✅ Confirme no Discord</h4>
+                    <p>Após o pagamento, entre em contato no Discord para ativação</p>
                 </div>
             </div>
         </div>
@@ -1816,29 +1653,29 @@
     <section id="regras" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-gavel"></i> <span data-i18n="rules_title">Regras do KZN MENU</span></h2>
-                <p data-i18n="rules_sub">Leia atentamente antes de adquirir</p>
+                <h2><i class="fas fa-gavel"></i> Regras do KZN MENU</h2>
+                <p>Leia atentamente antes de adquirir</p>
             </div>
             <div class="regras-container">
                 <div class="regra-item">
                     <div class="regra-numero">1</div>
                     <div class="regra-texto">
-                        <strong data-i18n="rule1_title">💰 Renovação / Reset de Key</strong><br />
-                        <span data-i18n="rule1_text">Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.</span>
+                        <strong>💰 Renovação / Reset de Key</strong><br />
+                        Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.
                     </div>
                 </div>
                 <div class="regra-item">
                     <div class="regra-numero">2</div>
                     <div class="regra-texto">
-                        <strong data-i18n="rule2_title">⚠️ Responsabilidade do Usuário</strong><br />
-                        <span data-i18n="rule2_text">Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.</span>
+                        <strong>⚠️ Responsabilidade do Usuário</strong><br />
+                        Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.
                     </div>
                 </div>
                 <div class="regra-item">
                     <div class="regra-numero">3</div>
                     <div class="regra-texto">
-                        <strong data-i18n="rule3_title">🎮 Objetivo do Mod Menu</strong><br />
-                        <span data-i18n="rule3_text">O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.</span>
+                        <strong>🎮 Objetivo do Mod Menu</strong><br />
+                        O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.
                     </div>
                 </div>
             </div>
@@ -1851,8 +1688,8 @@
     <section id="contato" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-envelope"></i> <span data-i18n="contact_title">Entre em Contato</span></h2>
-                <p data-i18n="contact_sub">Preencha o formulário e receba seu Mod Menu</p>
+                <h2><i class="fas fa-envelope"></i> Entre em Contato</h2>
+                <p>Preencha o formulário e receba seu Mod Menu</p>
             </div>
             <div class="form-container">
                 <form id="formContato" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST" enctype="multipart/form-data">
@@ -1861,45 +1698,45 @@
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
 
                     <div class="form-group">
-                        <label><i class="fas fa-user"></i> <span data-i18n="form_name">Seu Nome</span></label>
+                        <label><i class="fas fa-user"></i> Seu Nome</label>
                         <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> <span data-i18n="form_email">Seu E-mail</span></label>
+                        <label><i class="fas fa-envelope"></i> Seu E-mail</label>
                         <input type="email" name="E-mail" placeholder="Digite seu e-mail..." required>
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fab fa-whatsapp"></i> <span data-i18n="form_whatsapp">WhatsApp</span></label>
+                        <label><i class="fab fa-whatsapp"></i> WhatsApp</label>
                         <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fas fa-crown"></i> <span data-i18n="form_plan">Plano Escolhido</span></label>
+                        <label><i class="fas fa-crown"></i> Plano Escolhido</label>
                         <select name="Plano" required>
-                            <option value="" data-i18n="form_select">Selecione um plano...</option>
-                            <option value="KZN MENU Classic - Mensal R$ 50,00" data-i18n="form_plan_monthly">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
-                            <option value="KZN MENU Classic - Permanente R$ 200,00" data-i18n="form_plan_permanent">⚔️ Classic - Permanente R$ 200,00</option>
-                            <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)" data-i18n="form_plan_era">♻️ Auto Trash - R$ 200,00 (Graal Era)</option>
-                            <option value="Classic - 2x R$ 100,00" data-i18n="form_plan_classic_installment">⚔️ Classic - 2x R$ 100,00</option>
-                            <option value="Era - 2x R$ 100,00" data-i18n="form_plan_era_installment">♻️ Era - 2x R$ 100,00</option>
+                            <option value="">Selecione um plano...</option>
+                            <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
+                            <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
+                            <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">♻️ Auto Trash - R$ 200,00 (Graal Era)</option>
+                            <option value="Classic - 2x R$ 100,00">⚔️ Classic - 2x R$ 100,00</option>
+                            <option value="Era - 2x R$ 100,00">♻️ Era - 2x R$ 100,00</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color: var(--primary);">*</span></label>
                         <input type="file" name="Comprovante" accept="image/*,.pdf" required>
-                        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;" data-i18n="form_comprovante_info">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
+                        <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
                     </div>
 
                     <div class="form-group">
-                        <label><i class="fas fa-pencil-alt"></i> <span data-i18n="form_message">Mensagem (opcional)</span></label>
+                        <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
                         <textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> <span data-i18n="form_send">Enviar Mensagem</span>
+                        <i class="fas fa-paper-plane"></i> Enviar Mensagem
                     </button>
 
                     <div class="form-status" id="formStatus"></div>
@@ -1914,51 +1751,51 @@
     <section id="faq" class="section">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-question-circle"></i> <span data-i18n="faq_title">Perguntas Frequentes</span></h2>
-                <p data-i18n="faq_sub">Dúvidas comuns sobre o KZN Menu</p>
+                <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
+                <p>Dúvidas comuns sobre o KZN Menu</p>
             </div>
             <div class="faq-grid">
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq1_q">🔒 O KZN Menu é seguro?</span>
+                        <span>🔒 O KZN Menu é seguro?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq1_a">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
+                    <div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq2_q">📱 Funciona no celular?</span>
+                        <span>📱 Funciona no celular?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq2_a">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
+                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq3_q">🔄 O que acontece após a compra?</span>
+                        <span>🔄 O que acontece após a compra?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq3_a">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
+                    <div class="answer">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq4_q">📧 Como recebo o mod após o pagamento?</span>
+                        <span>📧 Como recebo o mod após o pagamento?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq4_a">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
+                    <div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq5_q">💳 Quais formas de pagamento?</span>
+                        <span>💳 Quais formas de pagamento?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq5_a">Aceitamos PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
+                    <div class="answer">Aceitamos PIX (chave: <code style="color: var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
                 </div>
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="question">
-                        <span data-i18n="faq6_q">⚡ O que é Xcore Execute?</span>
+                        <span>⚡ O que é Xcore Execute?</span>
                         <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div class="answer" data-i18n="faq6_a">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
+                    <div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
                 </div>
             </div>
         </div>
@@ -1972,7 +1809,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <span>KZN MENU</span>
-                    <p data-i18n="footer_desc">O melhor Mod Menu para Graal Classic &amp; Era</p>
+                    <p>O melhor Mod Menu para Graal Classic &amp; Era</p>
                 </div>
                 <div class="footer-social">
                     <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN">
@@ -2060,29 +1897,6 @@
         });
 
         // ============================================================
-        // TEMAS (CLARO/ESCURO)
-        // ============================================================
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-
-        let isDark = true;
-
-        themeToggle.addEventListener('click', () => {
-            isDark = !isDark;
-            document.body.classList.toggle('light-mode', !isDark);
-            themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
-            localStorage.setItem('kzn_theme', isDark ? 'dark' : 'light');
-        });
-
-        // Carrega tema salvo
-        const savedTheme = localStorage.getItem('kzn_theme');
-        if (savedTheme === 'light') {
-            isDark = false;
-            document.body.classList.add('light-mode');
-            themeIcon.className = 'fas fa-sun';
-        }
-
-        // ============================================================
         // ABAS
         // ============================================================
         function trocarAba(aba) {
@@ -2097,6 +1911,25 @@
         // ============================================================
         function toggleFaq(el) {
             el.classList.toggle('open');
+        }
+
+        // ============================================================
+        // CUPOM
+        // ============================================================
+        function aplicarCupom() {
+            const input = document.getElementById('cupomInput');
+            const codigo = input.value.trim();
+
+            if (codigo === 'KZN10') {
+                alert('🎉 Cupom aplicado! 10% de desconto em sua compra!');
+            } else if (codigo === 'KZN20') {
+                alert('🎉 Cupom aplicado! 20% de desconto em sua compra!');
+            } else if (codigo) {
+                alert('❌ Código inválido. Tente "KZN10" ou "KZN20".');
+            } else {
+                alert('⚠️ Digite um código promocional.');
+            }
+            input.value = '';
         }
 
         // ============================================================
@@ -2137,80 +1970,6 @@
         });
 
         // ============================================================
-        // CHAT AO VIVO
-        // ============================================================
-        const chatToggle = document.getElementById('chatToggle');
-        const chatWidget = document.getElementById('chatWidget');
-        const chatClose = document.getElementById('chatClose');
-        const chatInput = document.getElementById('chatInput');
-        const chatSend = document.getElementById('chatSend');
-        const chatMessages = document.getElementById('chatMessages');
-
-        chatToggle.addEventListener('click', () => {
-            chatWidget.classList.toggle('open');
-            chatToggle.classList.toggle('hidden');
-        });
-
-        chatClose.addEventListener('click', () => {
-            chatWidget.classList.remove('open');
-            chatToggle.classList.remove('hidden');
-        });
-
-        function enviarMensagem() {
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-
-            chatMessages.innerHTML += `<div class="msg user">${msg}</div>`;
-            chatInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Resposta automática
-            setTimeout(() => {
-                chatMessages.innerHTML += `<div class="msg bot">✅ Recebemos sua mensagem! Em breve respondemos.</div>`;
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 800);
-        }
-
-        chatSend.addEventListener('click', enviarMensagem);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') enviarMensagem();
-        });
-
-        // ============================================================
-        // CUPOM DE DESCONTO
-        // ============================================================
-        function aplicarCupom() {
-            const input = document.getElementById('cupomInput');
-            const codigo = input.value.trim();
-
-            if (codigo === 'KZN10') {
-                alert('🎉 Cupom aplicado! 10% de desconto em sua compra!');
-            } else if (codigo === 'KZN20') {
-                alert('🎉 Cupom aplicado! 20% de desconto em sua compra!');
-            } else if (codigo) {
-                alert('❌ Código inválido. Tente "KZN10" ou "KZN20".');
-            } else {
-                alert('⚠️ Digite um código promocional.');
-            }
-            input.value = '';
-        }
-
-        // ============================================================
-        // NOTIFICAÇÃO PUSH
-        // ============================================================
-        function mostrarNotificacao() {
-            const notif = document.getElementById('pushNotif');
-            notif.classList.add('show');
-
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 5000);
-        }
-
-        // Mostra notificação após 5 segundos
-        setTimeout(mostrarNotificacao, 5000);
-
-        // ============================================================
         // FORMULÁRIO
         // ============================================================
         document.getElementById('formContato').addEventListener('submit', function(e) {
@@ -2231,257 +1990,17 @@
         }
 
         // ============================================================
-        // TRADUÇÕES
+        // TRADUÇÃO (SIMPLES)
         // ============================================================
-        const translations = {
-            pt: {
-                nav_home: 'Início',
-                nav_mods: 'Mods',
-                nav_buy: 'Comprar',
-                nav_rules: 'Regras',
-                nav_contact: 'Contato',
-                nav_faq: 'FAQ',
-                hero_badge: 'Edição Premium',
-                hero_subtitle: 'MELHORES MODS GRAAL CLASSIC & GRAAL ERA',
-                hero_desc: 'Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.',
-                hero_btn_mods: 'Ver Mods',
-                hero_btn_how: 'Como Comprar',
-                video_label: '🎬 Clique no play para assistir à demonstração do KZN MENU',
-                mods_title: 'Nossos Mods',
-                mods_sub: 'Escolha seu jogo e veja os scripts disponíveis',
-                plan_best: '🔥 Mais Vantagem',
-                plan_classic_title: 'KZN MENU Classic',
-                plan_monthly_label: 'Plano Mensal',
-                plan_monthly_days: '/ 35 dias',
-                plan_monthly_valid: 'Válido por 35 dias',
-                plan_permanent_label: 'Plano Permanente',
-                plan_permanent_lifetime: '/ vitalício',
-                plan_permanent_installment: 'ou 2x R$ 100,00',
-                plan_feature1: 'Acesso completo ao KZN MENU',
-                plan_feature2: 'Todas as funcionalidades',
-                plan_feature3: 'Suporte via Discord',
-                plan_feature4: 'Atualizações automáticas',
-                plan_feature5: '+50 funcionalidades',
-                plan_permanent_feature: 'Suporte VIP via Discord',
-                plan_permanent_feature2: 'Atualizações vitalícias',
-                plan_permanent_feature3: 'Sem renovação!',
-                plan_buy: 'Comprar R$ 50,00',
-                plan_buy_permanent: 'Comprar R$ 200,00',
-                plan_exclusive: '🔥 Exclusivo Era',
-                plan_era_label: 'Graal Era',
-                era_feature1: '100% AUTOMATIZADO',
-                era_feature2: 'Farm de lixo 24/7',
-                era_feature3: 'Movimento inteligente',
-                era_feature4: 'Coleta automática',
-                era_feature5: 'Compatível com Graal Era',
-                era_feature6: 'Suporte dedicado',
-                era_example_label: '💡 Exemplo:',
-                era_example_text: '2.000 trash em ~2h40',
-                clients_classic: 'Clientes Classic',
-                clients_era: 'Clientes Era',
-                testimonials_classic: 'Depoimentos Classic',
-                testimonials_era: 'Depoimentos Era',
-                testimonial1: '"Mod menu muito bom, acelerou meu farm em 3x com insetos, recomendo demais!"',
-                testimonial2: '"Melhor mod menu que já usei! Funciona perfeitamente no celular."',
-                testimonial3: '"Recomendo para todo mundo que quer dominar o jogo. Suporte rápido!"',
-                testimonial4: '"O melhor investimento que fiz no Graal! Menu completo e estável."',
-                era_testimonial1: '"O Auto Trash é incrível! Farm de lixo automático, recomendo!"',
-                era_testimonial2: '"Script funcionando perfeitamente, suporte rápido e eficiente!"',
-                era_testimonial3: '"Valeu cada centavo! Farm automático mudou minha gameplay."',
-                era_testimonial4: '"Recomendo demais! Suporte excelente e script muito estável."',
-                how_title: 'Como Comprar',
-                how_sub: 'Simples, rápido e seguro. Siga os passos abaixo:',
-                xcore_desc: '<strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>. Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.',
-                xcore_ios_aviso: '⚠️ <strong>Usuários iOS:</strong> No momento, o Xcore Execute está disponível apenas para Android e PC. Para iOS, recomendamos outras soluções.',
-                xcore_btn: 'Entrar no Discord da Xcore',
-                xcore_aviso: '⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!',
-                step0_title: '⚡ Baixe a Xcore',
-                step0_desc: 'Entre no Discord da Xcore e baixe a ferramenta',
-                step1_title: '📋 Escolha o Mod',
-                step1_desc: 'Selecione entre Classic ou Era',
-                step2_title: '💳 Gere o Pagamento',
-                step2_desc: 'Clique em "Comprar" e copie a chave PIX',
-                step3_title: '✅ Confirme no Discord',
-                step3_desc: 'Após o pagamento, entre em contato no Discord para ativação',
-                rules_title: 'Regras do KZN MENU',
-                rules_sub: 'Leia atentamente antes de adquirir',
-                rule1_title: '💰 Renovação / Reset de Key',
-                rule1_text: 'Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.',
-                rule2_title: '⚠️ Responsabilidade do Usuário',
-                rule2_text: 'Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.',
-                rule3_title: '🎮 Objetivo do Mod Menu',
-                rule3_text: 'O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.',
-                contact_title: 'Entre em Contato',
-                contact_sub: 'Preencha o formulário e receba seu Mod Menu',
-                form_name: 'Seu Nome',
-                form_email: 'Seu E-mail',
-                form_whatsapp: 'WhatsApp',
-                form_plan: 'Plano Escolhido',
-                form_select: 'Selecione um plano...',
-                form_plan_monthly: '⚔️ Classic - Mensal R$ 50,00 (35 dias)',
-                form_plan_permanent: '⚔️ Classic - Permanente R$ 200,00',
-                form_plan_era: '♻️ Auto Trash - R$ 200,00 (Graal Era)',
-                form_plan_classic_installment: '⚔️ Classic - 2x R$ 100,00',
-                form_plan_era_installment: '♻️ Era - 2x R$ 100,00',
-                form_comprovante_info: 'Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)',
-                form_message: 'Mensagem (opcional)',
-                form_send: 'Enviar Mensagem',
-                faq_title: 'Perguntas Frequentes',
-                faq_sub: 'Dúvidas comuns sobre o KZN Menu',
-                faq1_q: '🔒 O KZN Menu é seguro?',
-                faq1_a: 'Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.',
-                faq2_q: '📱 Funciona no celular?',
-                faq2_a: 'Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.',
-                faq3_q: '🔄 O que acontece após a compra?',
-                faq3_a: 'Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.',
-                faq4_q: '📧 Como recebo o mod após o pagamento?',
-                faq4_a: 'Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.',
-                faq5_q: '💳 Quais formas de pagamento?',
-                faq5_a: 'Aceitamos PIX (chave: 6c80021c-957b-49c0-9a5d-98371bf67120). Parcelamento em 2x R$ 100,00.',
-                faq6_q: '⚡ O que é Xcore Execute?',
-                faq6_a: 'A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.',
-                footer_desc: 'O melhor Mod Menu para Graal Classic & Era'
-            },
-            en: {
-                nav_home: 'Home',
-                nav_mods: 'Mods',
-                nav_buy: 'Buy',
-                nav_rules: 'Rules',
-                nav_contact: 'Contact',
-                nav_faq: 'FAQ',
-                hero_badge: 'Premium Edition',
-                hero_subtitle: 'BEST MODS GRAAL CLASSIC & GRAAL ERA',
-                hero_desc: 'The best mods for <strong>Graal Classic</strong> and <strong>Graal Era</strong>.',
-                hero_btn_mods: 'View Mods',
-                hero_btn_how: 'How to Buy',
-                video_label: '🎬 Click play to watch the KZN MENU demonstration',
-                mods_title: 'Our Mods',
-                mods_sub: 'Choose your game and see available scripts',
-                plan_best: '🔥 Best Value',
-                plan_classic_title: 'KZN MENU Classic',
-                plan_monthly_label: 'Monthly Plan',
-                plan_monthly_days: '/ 35 days',
-                plan_monthly_valid: 'Valid for 35 days',
-                plan_permanent_label: 'Permanent Plan',
-                plan_permanent_lifetime: '/ lifetime',
-                plan_permanent_installment: 'or 2x R$ 100,00',
-                plan_feature1: 'Full access to KZN MENU',
-                plan_feature2: 'All features',
-                plan_feature3: 'Support via Discord',
-                plan_feature4: 'Automatic updates',
-                plan_feature5: '+50 features',
-                plan_permanent_feature: 'VIP Support via Discord',
-                plan_permanent_feature2: 'Lifetime updates',
-                plan_permanent_feature3: 'No renewal!',
-                plan_buy: 'Buy R$ 50,00',
-                plan_buy_permanent: 'Buy R$ 200,00',
-                plan_exclusive: '🔥 Era Exclusive',
-                plan_era_label: 'Graal Era',
-                era_feature1: '100% AUTOMATED',
-                era_feature2: '24/7 trash farming',
-                era_feature3: 'Smart movement',
-                era_feature4: 'Automatic collection',
-                era_feature5: 'Compatible with Graal Era',
-                era_feature6: 'Dedicated support',
-                era_example_label: '💡 Example:',
-                era_example_text: '2,000 trash in ~2h40',
-                clients_classic: 'Classic Clients',
-                clients_era: 'Era Clients',
-                testimonials_classic: 'Classic Testimonials',
-                testimonials_era: 'Era Testimonials',
-                testimonial1: '"Very good mod menu, it sped up my farming 3x with insects, highly recommend!"',
-                testimonial2: '"Best mod menu I\'ve ever used! Works perfectly on mobile."',
-                testimonial3: '"I recommend it to everyone who wants to dominate the game. Fast support!"',
-                testimonial4: '"The best investment I made in Graal! Complete and stable menu."',
-                era_testimonial1: '"Auto Trash is amazing! Automatic trash farming, highly recommend!"',
-                era_testimonial2: '"Script working perfectly, fast and efficient support!"',
-                era_testimonial3: '"Worth every penny! Automatic farming changed my gameplay."',
-                era_testimonial4: '"Highly recommend! Excellent support and very stable script."',
-                how_title: 'How to Buy',
-                how_sub: 'Simple, fast and secure. Follow the steps below:',
-                xcore_desc: '<strong>Xcore Execute</strong> is the main tool to access KZN MENU mods. Compatible with <strong>Android</strong> and PC, with security and stability.',
-                xcore_ios_aviso: '⚠️ <strong>iOS Users:</strong> Currently, Xcore Execute is only available for Android and PC. For iOS, we recommend other solutions.',
-                xcore_btn: 'Join Xcore Discord',
-                xcore_aviso: '⚠️ You must have Xcore Execute to use KZN MENU mods!',
-                step0_title: '⚡ Download Xcore',
-                step0_desc: 'Join Xcore Discord and download the tool',
-                step1_title: '📋 Choose Mod',
-                step1_desc: 'Select between Classic or Era',
-                step2_title: '💳 Generate Payment',
-                step2_desc: 'Click "Buy" and copy the PIX key',
-                step3_title: '✅ Confirm on Discord',
-                step3_desc: 'After payment, contact us on Discord for activation',
-                rules_title: 'KZN MENU Rules',
-                rules_sub: 'Read carefully before purchasing',
-                rule1_title: '💰 Key Renewal / Reset',
-                rule1_text: 'In case of loss, reset request or issuance of a new Key, a fee of <span class="destaque">R$ 30,00</span> will be charged per request. We are not responsible for lost, deleted, shared or misplaced Keys.',
-                rule2_title: '⚠️ User Responsibility',
-                rule2_text: 'We are not responsible for bans, punishments or any other penalties applied to your account as a result of using the Mod Menu.',
-                rule3_title: '🎮 Mod Menu Purpose',
-                rule3_text: 'The Mod Menu was primarily developed to assist players in in-game activities such as: <strong>🐛 Insect farming, 🏠 House leveling, 🏢 GH leveling, ⚔️ Spar, 🎉 Events, 🔧 Other farming activities</strong>.',
-                contact_title: 'Contact Us',
-                contact_sub: 'Fill out the form and get your Mod Menu',
-                form_name: 'Your Name',
-                form_email: 'Your Email',
-                form_whatsapp: 'WhatsApp',
-                form_plan: 'Selected Plan',
-                form_select: 'Select a plan...',
-                form_plan_monthly: '⚔️ Classic - Monthly R$ 50,00 (35 days)',
-                form_plan_permanent: '⚔️ Classic - Permanent R$ 200,00',
-                form_plan_era: '♻️ Auto Trash - R$ 200,00 (Graal Era)',
-                form_plan_classic_installment: '⚔️ Classic - 2x R$ 100,00',
-                form_plan_era_installment: '♻️ Era - 2x R$ 100,00',
-                form_comprovante_info: 'Send a photo of the PIX receipt (PNG, JPG, PDF - up to 5MB)',
-                form_message: 'Message (optional)',
-                form_send: 'Send Message',
-                faq_title: 'Frequently Asked Questions',
-                faq_sub: 'Common questions about KZN Menu',
-                faq1_q: '🔒 Is KZN Menu safe?',
-                faq1_a: 'Yes! KZN Menu is developed with optimized and tested code. Thousands of players already use it without problems.',
-                faq2_q: '📱 Does it work on mobile?',
-                faq2_a: 'Yes! KZN Menu is 100% compatible with Graal Mobile (Android and iOS), using Xcore Execute.',
-                faq3_q: '🔄 What happens after purchase?',
-                faq3_a: 'Both mods are lifetime! You receive the key and instructions via Discord. No renewal.',
-                faq4_q: '📧 How do I receive the mod after payment?',
-                faq4_a: 'After confirming payment, you will receive the key and activation instructions via Discord and/or email.',
-                faq5_q: '💳 What payment methods?',
-                faq5_a: 'We accept PIX (key: 6c80021c-957b-49c0-9a5d-98371bf67120). Installment in 2x R$ 100,00.',
-                faq6_q: '⚡ What is Xcore Execute?',
-                faq6_a: 'Xcore Execute is the official tool to run KZN MENU mods. You need to download it on Xcore Discord to use.',
-                footer_desc: 'The best Mod Menu for Graal Classic & Era'
-            }
-        };
-
         let idiomaAtual = 'pt';
 
         function mudarIdioma(lang) {
             idiomaAtual = lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    if (translations[lang][key].includes('<')) {
-                        el.innerHTML = translations[lang][key];
-                    } else {
-                        el.textContent = translations[lang][key];
-                    }
-                }
-            });
             document.getElementById('langPt').classList.toggle('active', lang === 'pt');
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
+            // Aqui você pode adicionar mais traduções se quiser
         }
-
-        const langSalvo = localStorage.getItem('kzn_idioma') || 'pt';
-        mudarIdioma(langSalvo);
-
-        document.getElementById('langPt').addEventListener('click', () => {
-            localStorage.setItem('kzn_idioma', 'pt');
-            mudarIdioma('pt');
-        });
-        document.getElementById('langEn').addEventListener('click', () => {
-            localStorage.setItem('kzn_idioma', 'en');
-            mudarIdioma('en');
-        });
     </script>
 
 </body>
-    </html>
+</html>
