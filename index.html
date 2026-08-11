@@ -8,12 +8,14 @@
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
 
+    <!-- ===== OPEN GRAPH ===== -->
     <meta property="og:title" content="KZN MENU - Mods para Graal" />
     <meta property="og:description" content="Os melhores mods para farm e gameplay no Graal Classic e Era." />
-    <meta property="og:image" content="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" />
+    <meta property="og:image" content="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- ===== SCHEMA.ORG ===== -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -30,40 +32,69 @@
     </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
     <style>
+        /* ============================================================
+           ROOT & RESET
+           ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         :root {
+            /* CORES PRINCIPAIS */
             --primary: #dc2626;
             --primary-dark: #b91c1c;
             --secondary: #7c3aed;
             --secondary-light: #a78bfa;
-            --dark: #0a0a0a;
-            --dark-card: #111111;
-            --dark-border: #1f1f1f;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
             --success: #22c55e;
+            --warning: #f59e0b;
             --classic: #3b82f6;
             --era: #f59e0b;
-            --glass: rgba(255, 255, 255, 0.05);
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+
+            /* TEMA CLARO (PADRÃO) */
+            --bg: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a2e;
+            --border: #1f1f1f;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --shadow: 0 10px 40px rgba(0,0,0,0.8);
+            --glass: rgba(255,255,255,0.05);
             --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* TEMA ESCURO (ATIVADO POR JS) */
+        body.light-mode {
+            --bg: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --glass: rgba(0,0,0,0.03);
+        }
+
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--dark);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: background var(--transition), color var(--transition);
         }
+
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark); }
-        ::-webkit-scrollbar-thumb { 
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
         }
 
+        /* ============================================================
+           BOTÃO WHATSAPP
+           ============================================================ */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 24px;
@@ -78,30 +109,42 @@
             align-items: center;
             justify-content: center;
             font-size: 32px;
-            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+            box-shadow: 0 4px 30px rgba(37,211,102,0.4);
             text-decoration: none;
-            transition: 0.3s;
+            transition: var(--transition);
             animation: pulse-whatsapp 2s infinite;
         }
-        .btn-whatsapp-fixo:hover { transform: scale(1.1); box-shadow: 0 8px 50px rgba(37, 211, 102, 0.6); }
+        .btn-whatsapp-fixo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(37,211,102,0.6);
+        }
         @keyframes pulse-whatsapp {
-            0% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4); }
-            50% { box-shadow: 0 4px 50px rgba(37, 211, 102, 0.8); }
-            100% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4); }
+            0% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 50px rgba(37,211,102,0.8); }
+            100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
 
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(10,10,10,0.92);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--border);
             z-index: 1000;
             padding: 0 2rem;
-            transition: 0.3s;
+            transition: var(--transition);
         }
-        .navbar.scrolled { border-bottom-color: var(--primary); box-shadow: 0 4px 40px rgba(0,0,0,0.5); }
+        body.light-mode .navbar {
+            background: rgba(255,255,255,0.92);
+        }
+        .navbar.scrolled {
+            border-bottom-color: var(--primary);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+        }
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -110,6 +153,8 @@
             align-items: center;
             height: 70px;
         }
+
+        /* LOGO */
         .nav-logo-wrapper {
             display: flex;
             align-items: center;
@@ -127,6 +172,12 @@
             border-radius: 50%;
             border: 2px solid var(--primary);
             object-fit: cover;
+            transition: var(--transition);
+            animation: logo-glow 3s ease-in-out infinite;
+        }
+        @keyframes logo-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(220,38,38,0.2); }
+            50% { box-shadow: 0 0 30px rgba(220,38,38,0.5); }
         }
         .nav-logo .logo-text {
             display: flex;
@@ -146,11 +197,14 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
+
         .nav-divider {
             width: 1px;
             height: 30px;
-            background: var(--dark-border);
+            background: var(--border);
         }
+
+        /* XCORE */
         .nav-xcore {
             display: flex;
             align-items: center;
@@ -179,6 +233,8 @@
             font-size: 0.5rem;
             color: var(--text-muted);
         }
+
+        /* MENU */
         .nav-menu {
             display: flex;
             list-style: none;
@@ -190,7 +246,7 @@
             text-decoration: none;
             padding: 0.4rem 1rem;
             border-radius: 8px;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 0.7rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -203,45 +259,81 @@
             border-color: var(--primary);
             box-shadow: 0 0 25px rgba(220,38,38,0.3);
         }
+        body.light-mode .nav-menu a:hover,
+        body.light-mode .nav-menu a.active {
+            color: #fff;
+        }
+
         .nav-toggle {
             display: none;
-            color: #fff;
+            color: var(--text);
             font-size: 1.5rem;
             cursor: pointer;
         }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* BOTÃO TEMA */
+        .theme-toggle {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            background: rgba(220,38,38,0.1);
+        }
+
+        /* IDIOMA */
         .lang-toggle {
             display: flex;
             gap: 0.2rem;
             align-items: center;
-            margin-left: 0.5rem;
         }
         .lang-toggle button {
             background: var(--glass);
-            border: 1px solid var(--dark-border);
+            border: 1px solid var(--border);
             color: var(--text-muted);
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.6rem;
             font-weight: 700;
-            transition: 0.3s;
+            transition: var(--transition);
         }
-        .lang-toggle button:hover, .lang-toggle button.active {
+        .lang-toggle button:hover,
+        .lang-toggle button.active {
             background: var(--primary);
             border-color: var(--primary);
             color: #fff;
         }
 
-        /* ===== HERO COM GIF ANIMADO ===== */
+        /* ============================================================
+           HERO
+           ============================================================ */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 7rem 2rem 4rem;
-            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.2), transparent 60%),
-                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.15), transparent 60%),
-                        var(--dark);
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
+                var(--bg);
             position: relative;
             overflow: hidden;
         }
@@ -249,11 +341,29 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+            background:
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.015) 2px,
+                    rgba(255,255,255,0.015) 4px);
             pointer-events: none;
             animation: scanlines 20s linear infinite;
         }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(220,38,38,0.03), transparent 70%);
+            pointer-events: none;
+            animation: rotateGlow 30s linear infinite;
+        }
         @keyframes scanlines { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
+        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .hero-content {
             flex: 1;
             max-width: 650px;
@@ -279,7 +389,11 @@
             line-height: 1.1;
             margin-bottom: 1rem;
         }
-        .hero h1 .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .hero h1 .highlight-red { color: var(--primary); -webkit-text-fill-color: var(--primary); }
         .hero-subtitle {
             font-size: 1.2rem;
@@ -287,7 +401,6 @@
             margin-bottom: 2rem;
             max-width: 500px;
         }
-        .hero-subtitle strong { color: var(--primary); }
         .hero-buttons {
             display: flex;
             gap: 1rem;
@@ -302,7 +415,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: 0.3s;
+            transition: var(--transition);
             border: none;
             cursor: pointer;
             font-size: 1rem;
@@ -312,15 +425,23 @@
             color: #fff;
             box-shadow: 0 4px 30px rgba(220,38,38,0.4);
         }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 50px rgba(220,38,38,0.6); }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 50px rgba(220,38,38,0.6);
+        }
         .btn-secondary {
             background: var(--glass);
-            color: #fff;
-            border: 1px solid var(--dark-border);
+            color: var(--text);
+            border: 1px solid var(--border);
             backdrop-filter: blur(8px);
         }
-        .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(220,38,38,0.15);
+            transform: translateY(-3px);
+        }
 
+        /* VÍDEO E GIF */
         .hero-image {
             flex: 1;
             max-width: 500px;
@@ -328,27 +449,35 @@
             position: relative;
             z-index: 1;
         }
-        .hero-image .gif-wrapper {
+        .hero-image .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
             border-radius: 16px;
             border: 2px solid var(--primary);
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            overflow: hidden;
             background: #000;
         }
-        .hero-image .gif-wrapper img {
+        .hero-image .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
         }
-        .hero-image .gif-label {
+        .hero-image .video-label {
             text-align: center;
             margin-top: 0.5rem;
             font-size: 0.8rem;
             color: var(--text-muted);
         }
 
+        /* ============================================================
+           SECTIONS
+           ============================================================ */
         .section { padding: 5rem 2rem; position: relative; }
-        .section.dark { background: #050505; }
+        .section.dark { background: var(--bg); }
         .section::before {
             content: '';
             position: absolute;
@@ -360,6 +489,7 @@
             opacity: 0.3;
         }
         .container { max-width: 1400px; margin: 0 auto; }
+
         .section-header {
             text-align: center;
             margin-bottom: 3.5rem;
@@ -375,10 +505,49 @@
         .section-header h2 i { color: var(--primary); }
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
-        .tabs-container {
-            max-width: 900px;
-            margin: 0 auto 3rem;
+        /* ============================================================
+           BARRA DE PROGRESSO
+           ============================================================ */
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .progress-step .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .progress-step.active .step-num {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 0 25px rgba(220,38,38,0.3);
+        }
+        .progress-step.active { color: var(--text); }
+        .progress-step .step-arrow { color: var(--text-muted); font-size: 1.2rem; }
+
+        /* ============================================================
+           TABS
+           ============================================================ */
+        .tabs-container { max-width: 900px; margin: 0 auto 3rem; }
         .tabs-nav {
             display: flex;
             gap: 0.5rem;
@@ -388,20 +557,25 @@
         }
         .tab-btn {
             padding: 0.8rem 2rem;
-            border: 2px solid var(--dark-border);
+            border: 2px solid var(--border);
             border-radius: 12px;
-            background: var(--dark-card);
+            background: var(--bg-card);
             color: var(--text-muted);
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .tab-btn:hover { border-color: var(--primary); color: #fff; }
-        .tab-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; box-shadow: 0 4px 30px rgba(220,38,38,0.3); }
+        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
+        .tab-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
+        }
         .tab-btn.classic { border-color: var(--classic); }
         .tab-btn.classic.active { background: var(--classic); border-color: var(--classic); }
         .tab-btn.era { border-color: var(--era); }
@@ -414,25 +588,35 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ============================================================
+           CARDS / PLANOS
+           ============================================================ */
         .plans-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             max-width: 950px;
             margin: 0 auto;
         }
         .plan-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 2rem 1.5rem;
             text-align: center;
-            transition: 0.4s;
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
         }
-        .plan-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 0 60px rgba(220,38,38,0.15); }
-        .plan-card.popular { border-color: var(--secondary); box-shadow: 0 0 60px rgba(124,58,237,0.15); }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .plan-card.popular {
+            border-color: var(--secondary);
+            box-shadow: 0 0 60px rgba(124,58,237,0.1);
+        }
         .plan-card.popular::before {
             content: '';
             position: absolute;
@@ -485,6 +669,7 @@
             font-size: 0.85rem;
         }
         .plan-card .features li i { color: var(--success); width: 18px; font-size: 0.8rem; }
+
         .btn-buy {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
@@ -493,12 +678,13 @@
             border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
             width: 100%;
             font-size: 1rem;
         }
         .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
 
+        /* IMAGENS DOS MODS */
         .script-image {
             width: 100%;
             max-width: 280px;
@@ -532,6 +718,9 @@
         }
         .script-features li i { color: var(--success); font-size: 0.8rem; }
 
+        /* ============================================================
+           CLIENTES
+           ============================================================ */
         .clientes-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -542,27 +731,34 @@
             margin-right: auto;
         }
         .cliente-item {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 0.5rem 0.6rem;
             text-align: center;
+            transition: var(--transition);
         }
-        .cliente-item .nome { font-weight: 700; color: #fff; font-size: 0.85rem; }
+        .cliente-item:hover { border-color: var(--primary); transform: translateY(-2px); }
+        .cliente-item .nome { font-weight: 700; color: var(--text); font-size: 0.85rem; }
         .cliente-item .plano { font-size: 0.65rem; color: var(--text-muted); }
         .cliente-item .data { font-size: 0.55rem; color: var(--text-muted); opacity: 0.6; }
 
+        /* ============================================================
+           PARCERIA XCORE
+           ============================================================ */
         .parceria-container {
             max-width: 700px;
             margin: 0 auto 3rem;
-            background: var(--dark-card);
+            background: var(--bg-card);
             border: 2px solid var(--secondary);
             border-radius: var(--radius);
             padding: 2rem;
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: var(--transition);
         }
+        .parceria-container:hover { box-shadow: 0 10px 40px rgba(124,58,237,0.1); }
         .parceria-container::before {
             content: '🔥 PARCERIA OFICIAL | OFFICIAL PARTNERSHIP';
             position: absolute;
@@ -603,7 +799,7 @@
         .parceria-container p.aviso-ios {
             font-size: 0.75rem;
             color: var(--text-muted);
-            background: rgba(220, 38, 38, 0.1);
+            background: rgba(220,38,38,0.1);
             padding: 0.4rem;
             border-radius: 8px;
             border-left: 3px solid var(--primary);
@@ -617,7 +813,7 @@
             border-radius: 10px;
             text-decoration: none;
             font-weight: 700;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 0.9rem;
         }
         .parceria-container .btn-parceria:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
@@ -631,6 +827,9 @@
             border: 1px solid rgba(220,38,38,0.2);
         }
 
+        /* ============================================================
+           STEPS
+           ============================================================ */
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -639,12 +838,12 @@
             margin: 0 auto;
         }
         .step-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.5rem 1rem;
             text-align: center;
-            transition: 0.3s;
+            transition: var(--transition);
         }
         .step-card:hover { border-color: var(--primary); transform: translateY(-4px); }
         .step-card .step-number {
@@ -660,9 +859,12 @@
             font-weight: 700;
             font-size: 0.9rem;
         }
-        .step-card h4 { color: #fff; margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .step-card h4 { color: var(--text); margin-bottom: 0.3rem; font-size: 0.85rem; }
         .step-card p { color: var(--text-muted); font-size: 0.8rem; }
 
+        /* ============================================================
+           DEPOIMENTOS
+           ============================================================ */
         .depoimentos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -671,21 +873,21 @@
             margin: 0 auto;
         }
         .depoimento-card {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.2rem;
-            transition: 0.3s;
+            transition: var(--transition);
         }
         .depoimento-card:hover { border-color: var(--primary); transform: translateY(-4px); }
         .depoimento-card .texto { font-size: 0.85rem; color: var(--text); font-style: italic; margin-bottom: 0.4rem; }
         .depoimento-card .cliente { font-weight: 700; color: var(--primary); font-size: 0.85rem; }
-        .depoimento-card .estrelas { color: #f59e0b; font-size: 0.75rem; margin-bottom: 0.2rem; }
+        .depoimento-card .estrelas { color: var(--warning); font-size: 0.75rem; margin-bottom: 0.2rem; }
         .depoimento-card .info { font-size: 0.6rem; color: var(--text-muted); }
 
         .counter-section {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 1.5rem;
             text-align: center;
@@ -702,11 +904,14 @@
         }
         .counter-section .label { font-size: 1rem; color: var(--text-muted); }
 
+        /* ============================================================
+           FORMULÁRIO
+           ============================================================ */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: var(--radius);
             padding: 2rem;
         }
@@ -721,19 +926,16 @@
         .form-container input, .form-container select, .form-container textarea {
             width: 100%;
             padding: 0.7rem 0.9rem;
-            background: #0a0a0a;
-            border: 1px solid var(--dark-border);
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 10px;
-            color: #fff;
+            color: var(--text);
             font-size: 0.95rem;
             outline: none;
-            transition: 0.3s;
+            transition: var(--transition);
             font-family: inherit;
         }
-        .form-container input[type="file"] {
-            padding: 0.5rem;
-            background: #0a0a0a;
-        }
+        .form-container input[type="file"] { padding: 0.5rem; background: var(--bg); }
         .form-container input:focus, .form-container select:focus, .form-container textarea:focus {
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(220,38,38,0.1);
@@ -749,7 +951,7 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -757,6 +959,7 @@
         }
         .form-container .btn-submit:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
         .form-container .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
         .form-status {
             margin-top: 1rem;
             padding: 0.8rem;
@@ -768,17 +971,20 @@
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
         .form-status.error { display: block; background: rgba(220,38,38,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
+        /* ============================================================
+           REGRAS
+           ============================================================ */
         .regras-container { max-width: 800px; margin: 0 auto; }
         .regra-item {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 0.8rem 1.2rem;
             margin-bottom: 0.6rem;
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            transition: 0.3s;
+            transition: var(--transition);
         }
         .regra-item:hover { border-color: var(--primary); }
         .regra-item .regra-numero {
@@ -798,15 +1004,18 @@
         .regra-item .regra-texto strong { color: var(--text); }
         .regra-item .regra-texto .destaque { color: var(--primary); font-weight: 700; }
 
+        /* ============================================================
+           FAQ
+           ============================================================ */
         .faq-grid { max-width: 800px; margin: 0 auto; }
         .faq-item {
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1rem 1.2rem;
             margin-bottom: 0.8rem;
             cursor: pointer;
-            transition: 0.3s;
+            transition: var(--transition);
         }
         .faq-item:hover { border-color: var(--primary); }
         .faq-item .question {
@@ -814,7 +1023,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
-            color: #fff;
+            color: var(--text);
             font-size: 0.95rem;
         }
         .faq-item .answer {
@@ -824,12 +1033,208 @@
             font-size: 0.9rem;
         }
         .faq-item.open .answer { display: block; }
-        .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
+        .faq-item .faq-icon { transition: var(--transition); font-size: 0.9rem; }
         .faq-item.open .faq-icon { transform: rotate(180deg); }
 
+        /* ============================================================
+           SELO DE SEGURANÇA
+           ============================================================ */
+        .selo-seguranca {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .selo-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .selo-item i { color: var(--success); font-size: 1.2rem; }
+
+        /* ============================================================
+           CUPOM
+           ============================================================ */
+        .cupom-area {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+        .cupom-area input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .cupom-area input:focus { border-color: var(--primary); }
+        .cupom-area .btn-cupom {
+            padding: 0.6rem 1.2rem;
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
+
+        /* ============================================================
+           CHAT AO VIVO
+           ============================================================ */
+        .chat-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            z-index: 9998;
+            width: 320px;
+            max-height: 400px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .chat-widget.open { display: flex; }
+        .chat-widget .chat-header {
+            padding: 0.8rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-widget .chat-header .close-chat {
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+        .chat-widget .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            max-height: 280px;
+        }
+        .chat-widget .chat-messages .msg {
+            margin-bottom: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            max-width: 80%;
+            font-size: 0.85rem;
+        }
+        .chat-widget .chat-messages .msg.bot {
+            background: var(--glass);
+            color: var(--text);
+            align-self: flex-start;
+        }
+        .chat-widget .chat-messages .msg.user {
+            background: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .chat-widget .chat-input-area {
+            display: flex;
+            padding: 0.5rem;
+            border-top: 1px solid var(--border);
+        }
+        .chat-widget .chat-input-area input {
+            flex: 1;
+            padding: 0.5rem 0.8rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .chat-widget .chat-input-area input:focus { border-color: var(--primary); }
+        .chat-widget .chat-input-area button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: 700;
+            transition: var(--transition);
+        }
+        .chat-widget .chat-input-area button:hover { background: var(--primary-dark); }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            z-index: 9997;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
+            transition: var(--transition);
+        }
+        .chat-toggle:hover { transform: scale(1.1); }
+        .chat-toggle.hidden { display: none; }
+
+        /* ============================================================
+           NOTIFICAÇÃO PUSH
+           ============================================================ */
+        .push-notification {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 9996;
+            background: var(--bg-card);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow);
+            display: none;
+            animation: slideIn 0.5s ease;
+            max-width: 320px;
+        }
+        .push-notification.show { display: block; }
+        .push-notification .push-title {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+        .push-notification .push-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
         .footer {
-            background: #050505;
-            border-top: 1px solid var(--dark-border);
+            background: var(--bg);
+            border-top: 1px solid var(--border);
             padding: 2rem 2rem 1rem;
         }
         .footer-content {
@@ -856,30 +1261,33 @@
         .footer-social a {
             color: var(--text-muted);
             font-size: 1.3rem;
-            transition: 0.3s;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
         }
         .footer-social a:hover { color: #fff; transform: translateY(-4px); }
         .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
-        .footer-social a.pix:hover { background: #22c55e; border-color: #22c55e; }
-        .footer-social a.xcore:hover { background: #7c3aed; border-color: #7c3aed; }
+        .footer-social a.pix:hover { background: var(--success); border-color: var(--success); }
+        .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
         .footer-bottom {
             max-width: 1400px;
             margin: 1.5rem auto 0;
             padding-top: 1rem;
-            border-top: 1px solid var(--dark-border);
+            border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-muted);
             font-size: 0.75rem;
         }
 
+        /* ============================================================
+           MODAL
+           ============================================================ */
         .modal {
             display: none;
             position: fixed;
@@ -895,7 +1303,7 @@
         }
         .modal.open { display: flex; }
         .modal-content {
-            background: var(--dark-card);
+            background: var(--bg-card);
             border: 1px solid var(--primary);
             border-radius: var(--radius);
             padding: 2rem;
@@ -916,15 +1324,15 @@
             font-size: 1.3rem;
             cursor: pointer;
             color: var(--text-muted);
-            transition: 0.3s;
+            transition: var(--transition);
         }
-        .modal-content .close-modal:hover { color: #fff; }
+        .modal-content .close-modal:hover { color: var(--text); }
         .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.4rem; }
         .modal-content .pix-key {
-            background: #0a0a0a;
+            background: var(--bg);
             padding: 0.8rem;
             border-radius: 8px;
-            border: 1px solid var(--dark-border);
+            border: 1px solid var(--border);
             margin: 0.8rem 0;
             font-family: monospace;
             font-size: 1rem;
@@ -939,7 +1347,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 0.9rem;
         }
         .modal-content .btn-copy:hover { transform: scale(1.05); }
@@ -953,11 +1361,14 @@
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            transition: var(--transition);
             font-size: 0.9rem;
         }
         .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
             .hero-content { max-width: 100%; }
@@ -973,9 +1384,9 @@
                 top: 70px;
                 left: 0;
                 width: 100%;
-                background: rgba(10,10,10,0.98);
+                background: var(--bg-card);
                 padding: 1.5rem;
-                border-bottom: 1px solid var(--dark-border);
+                border-bottom: 1px solid var(--border);
                 gap: 0.5rem;
             }
             .nav-menu.open { display: flex; }
@@ -992,25 +1403,57 @@
             .script-features { grid-template-columns: 1fr; }
             .clientes-grid { grid-template-columns: 1fr 1fr; }
             .depoimentos-grid { grid-template-columns: 1fr; }
+            .nav-divider { display: none; }
+            .nav-xcore .xcore-text { display: none; }
+            .chat-widget { width: 90%; right: 5%; bottom: 80px; }
+            .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
+            .progress-step .step-arrow { display: none; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
             .modal-content { padding: 1.5rem; }
             .clientes-grid { grid-template-columns: 1fr; }
-            .nav-divider { display: none; }
-            .nav-xcore .xcore-text { display: none; }
         }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    WHATSAPP FIXO
+    WHATSAPP
     ============================================================ -->
     <a href="https://wa.me/554288752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- ============================================================
+    CHAT AO VIVO
+    ============================================================ -->
+    <button class="chat-toggle" id="chatToggle" title="Chat ao vivo">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <span><i class="fas fa-headset"></i> Atendimento</span>
+            <button class="close-chat" id="chatClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="msg bot">👋 Olá! Como posso ajudar você hoje?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
+            <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    NOTIFICAÇÃO PUSH
+    ============================================================ -->
+    <div class="push-notification" id="pushNotif">
+        <div class="push-title">✅ Pedido aprovado!</div>
+        <div class="push-text">Seu pagamento foi confirmado. Acesse o Discord para ativar sua key.</div>
+    </div>
 
     <!-- ============================================================
     NAVBAR
@@ -1029,7 +1472,7 @@
 
                 <div class="nav-divider"></div>
 
-                <!-- LOGO XCORE EXECUTE TEAM -->
+                <!-- XCORE -->
                 <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="nav-xcore">
                     <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" />
                     <div class="xcore-text">
@@ -1048,11 +1491,19 @@
                 <li><a href="#faq" data-i18n="nav_faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
 
-            <div style="display:flex;align-items:center;gap:8px;">
+            <div class="nav-actions">
+                <!-- TEMA -->
+                <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+
+                <!-- IDIOMA -->
                 <div class="lang-toggle">
                     <button class="active" onclick="mudarIdioma('pt')" id="langPt">🇧🇷 PT</button>
                     <button onclick="mudarIdioma('en')" id="langEn">🇺🇸 EN</button>
                 </div>
+
+                <!-- MENU MOBILE -->
                 <div class="nav-toggle" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1061,7 +1512,7 @@
     </nav>
 
     <!-- ============================================================
-    HERO COM GIF ANIMADO
+    HERO
     ============================================================ -->
     <section id="inicio" class="hero">
         <div class="hero-content">
@@ -1080,13 +1531,29 @@
                 <a href="#mods" class="btn btn-primary" data-i18n="hero_btn_mods"><i class="fas fa-cubes"></i> Ver Mods</a>
                 <a href="#como-comprar" class="btn btn-secondary" data-i18n="hero_btn_how"><i class="fas fa-info-circle"></i> Como Comprar</a>
             </div>
-        </div>
-        <div class="hero-image">
-            <div class="gif-wrapper">
-                <img src="https://raw.githubusercontent.com/gabriel6061yt-cell/Audios/refs/heads/main/vidma_20260714_081845.gif" alt="KZN MENU Animado" />
+
+            <!-- SELO DE SEGURANÇA -->
+            <div class="selo-seguranca">
+                <span class="selo-item"><i class="fas fa-lock"></i> Pagamento Seguro</span>
+                <span class="selo-item"><i class="fas fa-shield-alt"></i> Protegido</span>
+                <span class="selo-item"><i class="fas fa-check-circle"></i> Entrega Rápida</span>
             </div>
-            <div class="gif-label" data-i18n="gif_label">
-                🎮 KZN MENU - A revolução do Graal
+        </div>
+
+        <div class="hero-image">
+            <!-- VÍDEO DO YOUTUBE -->
+            <div class="video-wrapper">
+                <iframe
+                    src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1"
+                    title="KZN MENU - Demonstração"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="video-label" data-i18n="video_label">
+                🎬 Clique no play para assistir à demonstração do KZN MENU
             </div>
         </div>
     </section>
@@ -1101,6 +1568,21 @@
                 <p data-i18n="mods_sub">Escolha seu jogo e veja os scripts disponíveis</p>
             </div>
 
+            <!-- BARRA DE PROGRESSO -->
+            <div class="progress-bar">
+                <div class="progress-step active">
+                    <span class="step-num">1</span> Escolha
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-num">2</span> Pague
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-num">3</span> Ative
+                </div>
+            </div>
+
             <div class="tabs-container">
                 <div class="tabs-nav">
                     <button class="tab-btn classic active" onclick="trocarAba('classic')">
@@ -1111,7 +1593,7 @@
                     </button>
                 </div>
 
-                <!-- ===== ABA CLASSIC ===== -->
+                <!-- ABA CLASSIC -->
                 <div class="tab-content active" id="tab-classic">
                     <div class="plans-grid">
                         <div class="plan-card">
@@ -1120,7 +1602,7 @@
                             <div class="sub-plano" data-i18n="plan_monthly_label">Plano Mensal</div>
                             <div class="price">R$ 50,00 <small data-i18n="plan_monthly_days">/ 35 dias</small></div>
                             <ul class="features">
-                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature1">Acesso completo ao KZN MENU</span></li>
+                                <li><i class="fas fa-check"></i> <span data-i18n="plan_feature1">Acesso completo</span></li>
                                 <li><i class="fas fa-check"></i> <span data-i18n="plan_feature2">Todas as funcionalidades</span></li>
                                 <li><i class="fas fa-check"></i> <span data-i18n="plan_feature3">Suporte via Discord</span></li>
                                 <li><i class="fas fa-check"></i> <span data-i18n="plan_feature4">Atualizações automáticas</span></li>
@@ -1191,7 +1673,7 @@
                     </div>
                 </div>
 
-                <!-- ===== ABA ERA ===== -->
+                <!-- ABA ERA -->
                 <div class="tab-content" id="tab-era">
                     <div class="plans-grid">
                         <div class="plan-card popular">
@@ -1262,6 +1744,12 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- CUPOM DE DESCONTO -->
+            <div class="cupom-area">
+                <input type="text" id="cupomInput" placeholder="Código promocional" />
+                <button class="btn-cupom" onclick="aplicarCupom()">Aplicar</button>
             </div>
         </div>
     </section>
@@ -1358,7 +1846,7 @@
     </section>
 
     <!-- ============================================================
-    CONTATO / FORMULÁRIO COM COMPROVANTE
+    CONTATO / FORMULÁRIO
     ============================================================ -->
     <section id="contato" class="section dark">
         <div class="container">
@@ -1530,31 +2018,73 @@
     JAVASCRIPT
     ============================================================ -->
     <script>
-        // ===== MENU MOBILE =====
+        // ============================================================
+        // MENU MOBILE
+        // ============================================================
         const mobileMenu = document.getElementById('mobileMenu');
         const navMenu = document.getElementById('navMenu');
-        mobileMenu.addEventListener('click', () => { navMenu.classList.toggle('open'); });
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => { navMenu.classList.remove('open'); });
+
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
         });
 
-        // ===== SCROLL ACTIVE =====
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+            });
+        });
+
+        // ============================================================
+        // SCROLL ACTIVE
+        // ============================================================
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-menu a');
+
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) { current = section.getAttribute('id'); }
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
             });
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) { link.classList.add('active'); }
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
             });
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // ===== ABAS =====
+        // ============================================================
+        // TEMAS (CLARO/ESCURO)
+        // ============================================================
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            document.body.classList.toggle('light-mode', !isDark);
+            themeIcon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+            localStorage.setItem('kzn_theme', isDark ? 'dark' : 'light');
+        });
+
+        // Carrega tema salvo
+        const savedTheme = localStorage.getItem('kzn_theme');
+        if (savedTheme === 'light') {
+            isDark = false;
+            document.body.classList.add('light-mode');
+            themeIcon.className = 'fas fa-sun';
+        }
+
+        // ============================================================
+        // ABAS
+        // ============================================================
         function trocarAba(aba) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -1562,34 +2092,127 @@
             document.querySelector('.tab-btn.' + aba).classList.add('active');
         }
 
-        // ===== FAQ =====
-        function toggleFaq(el) { el.classList.toggle('open'); }
+        // ============================================================
+        // FAQ
+        // ============================================================
+        function toggleFaq(el) {
+            el.classList.toggle('open');
+        }
 
-        // ===== MODAL PIX =====
-        let planoSelecionado = '', valorSelecionado = 0;
+        // ============================================================
+        // MODAL PIX
+        // ============================================================
+        let planoSelecionado = '',
+            valorSelecionado = 0;
+
         function abrirModal(plano, valor) {
-            planoSelecionado = plano; valorSelecionado = valor;
+            planoSelecionado = plano;
+            valorSelecionado = valor;
             document.getElementById('planInfo').textContent = `Plano: ${plano} | Valor: R$ ${valor},00`;
             document.getElementById('modalPix').classList.add('open');
         }
+
         function abrirModalPix() {
             document.getElementById('planInfo').textContent = 'Clique em "Comprar" para gerar o pagamento';
             document.getElementById('modalPix').classList.add('open');
         }
-        function fecharModal() { document.getElementById('modalPix').classList.remove('open'); }
+
+        function fecharModal() {
+            document.getElementById('modalPix').classList.remove('open');
+        }
+
         function copiarPix() {
             const key = document.getElementById('pixKey').textContent;
             navigator.clipboard.writeText(key).then(() => {
                 const btn = document.querySelector('.btn-copy');
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX';
+                }, 2000);
             });
         }
+
         document.getElementById('modalPix').addEventListener('click', function(e) {
             if (e.target === this) fecharModal();
         });
 
-        // ===== FORMULÁRIO =====
+        // ============================================================
+        // CHAT AO VIVO
+        // ============================================================
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWidget = document.getElementById('chatWidget');
+        const chatClose = document.getElementById('chatClose');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatMessages = document.getElementById('chatMessages');
+
+        chatToggle.addEventListener('click', () => {
+            chatWidget.classList.toggle('open');
+            chatToggle.classList.toggle('hidden');
+        });
+
+        chatClose.addEventListener('click', () => {
+            chatWidget.classList.remove('open');
+            chatToggle.classList.remove('hidden');
+        });
+
+        function enviarMensagem() {
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+
+            chatMessages.innerHTML += `<div class="msg user">${msg}</div>`;
+            chatInput.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Resposta automática
+            setTimeout(() => {
+                chatMessages.innerHTML += `<div class="msg bot">✅ Recebemos sua mensagem! Em breve respondemos.</div>`;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 800);
+        }
+
+        chatSend.addEventListener('click', enviarMensagem);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') enviarMensagem();
+        });
+
+        // ============================================================
+        // CUPOM DE DESCONTO
+        // ============================================================
+        function aplicarCupom() {
+            const input = document.getElementById('cupomInput');
+            const codigo = input.value.trim();
+
+            if (codigo === 'KZN10') {
+                alert('🎉 Cupom aplicado! 10% de desconto em sua compra!');
+            } else if (codigo === 'KZN20') {
+                alert('🎉 Cupom aplicado! 20% de desconto em sua compra!');
+            } else if (codigo) {
+                alert('❌ Código inválido. Tente "KZN10" ou "KZN20".');
+            } else {
+                alert('⚠️ Digite um código promocional.');
+            }
+            input.value = '';
+        }
+
+        // ============================================================
+        // NOTIFICAÇÃO PUSH
+        // ============================================================
+        function mostrarNotificacao() {
+            const notif = document.getElementById('pushNotif');
+            notif.classList.add('show');
+
+            setTimeout(() => {
+                notif.classList.remove('show');
+            }, 5000);
+        }
+
+        // Mostra notificação após 5 segundos
+        setTimeout(mostrarNotificacao, 5000);
+
+        // ============================================================
+        // FORMULÁRIO
+        // ============================================================
         document.getElementById('formContato').addEventListener('submit', function(e) {
             const btn = this.querySelector('.btn-submit');
             btn.disabled = true;
@@ -1599,6 +2222,7 @@
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
             }, 5000);
         });
+
         if (window.location.search.includes('success')) {
             const status = document.getElementById('formStatus');
             status.className = 'form-status success';
@@ -1606,7 +2230,9 @@
             status.textContent = '✅ Mensagem enviada com sucesso! Em breve entrarei em contato.';
         }
 
-        // ===== TRADUÇÕES =====
+        // ============================================================
+        // TRADUÇÕES
+        // ============================================================
         const translations = {
             pt: {
                 nav_home: 'Início',
@@ -1620,7 +2246,6 @@
                 hero_desc: 'Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.',
                 hero_btn_mods: 'Ver Mods',
                 hero_btn_how: 'Como Comprar',
-                gif_label: '🎮 KZN MENU - A revolução do Graal',
                 video_label: '🎬 Clique no play para assistir à demonstração do KZN MENU',
                 mods_title: 'Nossos Mods',
                 mods_sub: 'Escolha seu jogo e veja os scripts disponíveis',
@@ -1729,7 +2354,6 @@
                 hero_desc: 'The best mods for <strong>Graal Classic</strong> and <strong>Graal Era</strong>.',
                 hero_btn_mods: 'View Mods',
                 hero_btn_how: 'How to Buy',
-                gif_label: '🎮 KZN MENU - The Graal revolution',
                 video_label: '🎬 Click play to watch the KZN MENU demonstration',
                 mods_title: 'Our Mods',
                 mods_sub: 'Choose your game and see available scripts',
@@ -1829,6 +2453,7 @@
         };
 
         let idiomaAtual = 'pt';
+
         function mudarIdioma(lang) {
             idiomaAtual = lang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1847,6 +2472,7 @@
 
         const langSalvo = localStorage.getItem('kzn_idioma') || 'pt';
         mudarIdioma(langSalvo);
+
         document.getElementById('langPt').addEventListener('click', () => {
             localStorage.setItem('kzn_idioma', 'pt');
             mudarIdioma('pt');
@@ -1858,4 +2484,4 @@
     </script>
 
 </body>
-                                    </html>
+    </html>
