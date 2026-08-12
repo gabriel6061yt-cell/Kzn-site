@@ -3315,6 +3315,7 @@
             document.getElementById('editEmail').style.cursor = 'not-allowed';
         };
 
+        // ====== FUNÇÃO SALVAR PERFIL CORRIGIDA ======
         window.salvarEdicaoPerfil = function() {
             const nome = document.getElementById('editNome').value.trim();
             const senha = document.getElementById('editSenha').value;
@@ -3344,12 +3345,23 @@
                 localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
             }
 
-            carregarPerfil();
+            // Atualiza o nome em todos os lugares da interface
+            document.getElementById('userDisplay').textContent = nome;
+            document.getElementById('profileName').textContent = nome;
+            
+            if (!usuario.avatar) {
+                const letra = nome[0].toUpperCase();
+                document.getElementById('avatarText').textContent = letra;
+                document.getElementById('avatarProfileText').textContent = letra;
+            }
+
             document.getElementById('editProfileArea').style.display = 'none';
             document.getElementById('editEmail').disabled = true;
             document.getElementById('editEmail').style.opacity = '0.6';
             document.getElementById('editEmail').style.cursor = 'not-allowed';
-            alert('✅ Nome atualizado com sucesso!');
+            
+            // Notificação de sucesso
+            alert('✅ Perfil atualizado com sucesso!');
         };
 
         // ====== CHAT ======
@@ -3727,7 +3739,7 @@
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
         };
 
-        // ====== MENU MOBILE - CORRIGIDO ======
+        // ====== MENU MOBILE ======
         document.addEventListener('DOMContentLoaded', function() {
             const mobileToggle = document.getElementById('mobileMenu');
             const navMenuMobile = document.getElementById('navMenuMobile');
@@ -3740,14 +3752,12 @@
                 });
             }
 
-            // Fechar menu ao clicar fora
             document.addEventListener('click', function(e) {
                 if (navMenuMobile && !e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
                     navMenuMobile.classList.remove('open');
                 }
             });
 
-            // Fechar menu ao clicar em um link
             document.querySelectorAll('#navMenuMobile a').forEach(link => {
                 link.addEventListener('click', () => {
                     navMenuMobile.classList.remove('open');
@@ -3799,7 +3809,6 @@
                 adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
             }
 
-            // Fechar dropdowns e modais com ESC
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     document.getElementById('notifDropdown').classList.remove('open');
@@ -3809,7 +3818,6 @@
                 }
             });
 
-            // Fechar dropdowns ao clicar fora
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
                     document.getElementById('notifDropdown').classList.remove('open');
