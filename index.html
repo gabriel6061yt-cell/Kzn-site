@@ -750,7 +750,7 @@
         /* ============================================================
            TABS
            ============================================================ */
-        .tabs-container { max-width: 900px; margin: 0 auto 3rem; }
+        .tabs-container { max-width: 950px; margin: 0 auto 3rem; }
         .tabs-nav {
             display: flex;
             gap: 0.5rem;
@@ -759,50 +759,7 @@
             flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 0.8rem 2rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-card);
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
-        .tab-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
-        }
-        .tab-btn.classic { border-color: var(--classic); }
-        .tab-btn.classic.active { background: var(--classic); border-color: var(--classic); }
-        .tab-btn.era { border-color: var(--era); }
-        .tab-btn.era.active { background: var(--era); border-color: var(--era); }
-
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ============================================================
-           XCORE EXECUTOR - ABAS DE IDIOMA
-           ============================================================ */
-        .xcore-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .xcore-tab-btn {
-            padding: 0.6rem 2rem;
+            padding: 0.7rem 1.5rem;
             border: 2px solid var(--border);
             border-radius: 12px;
             background: var(--bg-card);
@@ -815,18 +772,170 @@
             align-items: center;
             gap: 8px;
         }
-        .xcore-tab-btn:hover { border-color: var(--secondary); color: var(--text); }
-        .xcore-tab-btn.active {
-            border-color: var(--secondary);
-            background: var(--secondary);
+        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
+        .tab-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
             color: #fff;
-            box-shadow: 0 4px 30px rgba(124,58,237,0.3);
+            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
         }
-        .xcore-lang { display: none; animation: fadeIn 0.4s ease; }
-        .xcore-lang.active { display: block; }
+        .tab-btn.classic { border-color: var(--classic); }
+        .tab-btn.classic.active { background: var(--classic); border-color: var(--classic); }
+        .tab-btn.era { border-color: var(--era); }
+        .tab-btn.era.active { background: var(--era); border-color: var(--era); }
+        .tab-btn.xcore-tab { border-color: var(--secondary); }
+        .tab-btn.xcore-tab.active { background: var(--secondary); border-color: var(--secondary); }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* ============================================================
-           XCORE - PLANOS
+           CARDS / PLANOS
+           ============================================================ */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .plan-card.popular { border-color: var(--secondary); box-shadow: 0 0 60px rgba(124,58,237,0.1); }
+        .plan-card.popular::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        .plan-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
+            color: #fff;
+            padding: 0.1rem 1rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .plan-card .badge.era-badge { background: var(--era); }
+        .plan-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .plan-card h3 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .plan-card .sub-plano { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .plan-card .price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0.8rem 0;
+        }
+        .plan-card .price small { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
+        .plan-card .price .parcelamento {
+            font-size: 0.8rem;
+            color: var(--success);
+            display: block;
+            font-weight: 600;
+        }
+        .plan-card .features {
+            list-style: none;
+            text-align: left;
+            margin: 1rem 0;
+        }
+        .plan-card .features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .plan-card .features li i { color: var(--success); width: 18px; font-size: 0.7rem; }
+
+        .btn-buy {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+        .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
+
+        .btn-add-cart {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .btn-add-cart:hover {
+            border-color: var(--secondary);
+            background: rgba(124,58,237,0.15);
+            color: var(--secondary-light);
+        }
+
+        .script-image {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 12px;
+            border: 2px solid var(--era);
+            margin: 0.5rem auto;
+            display: block;
+        }
+        .mod-image {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 12px;
+            border: 2px solid var(--primary);
+            margin: 0.5rem auto;
+            display: block;
+        }
+        .script-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.3rem;
+            margin: 0.8rem 0;
+        }
+        .script-features li {
+            list-style: none;
+            padding: 0.2rem 0;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .script-features li i { color: var(--success); font-size: 0.7rem; }
+
+        /* ============================================================
+           XCORE PLANOS
            ============================================================ */
         .xcore-plans {
             display: grid;
@@ -853,14 +962,13 @@
             margin-bottom: 0.2rem;
         }
         .xcore-plan .plan-sub {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
         .xcore-plan .plan-price {
             font-size: 2rem;
             font-weight: 900;
-            color: var(--primary);
             margin: 0.8rem 0;
         }
         .xcore-plan .plan-price small {
@@ -888,7 +996,7 @@
             border: none;
             border-radius: 10px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: 0.3s;
             color: #fff;
@@ -906,7 +1014,7 @@
         .xcore-plan.gold .plan-name { color: var(--warning); }
 
         /* ============================================================
-           XCORE - RESTRIÇÕES
+           XCORE RESTRIÇÕES
            ============================================================ */
         .xcore-restrictions {
             max-width: 800px;
@@ -960,155 +1068,49 @@
         .xcore-restrictions .restriction-note i { color: var(--warning); }
 
         /* ============================================================
-           CARDS / PLANOS (KZN)
+           XCORE AVISO OBRIGATÓRIO
            ============================================================ */
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
-        .plan-card.popular { border-color: var(--secondary); box-shadow: 0 0 60px rgba(124,58,237,0.1); }
-        .plan-card.popular::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        .plan-card .badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--secondary);
-            color: #fff;
-            padding: 0.1rem 1rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .plan-card .badge.era-badge { background: var(--era); }
-        .plan-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .plan-card h3 { font-size: 1.3rem; margin-bottom: 0.2rem; }
-        .plan-card .sub-plano { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .plan-card .price {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 0.8rem 0;
-        }
-        .plan-card .price small { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
-        .plan-card .price .parcelamento {
-            font-size: 0.9rem;
-            color: var(--success);
-            display: block;
-            font-weight: 600;
-        }
-        .plan-card .features {
-            list-style: none;
-            text-align: left;
-            margin: 1.2rem 0;
-        }
-        .plan-card .features li {
-            padding: 0.3rem 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .plan-card .features li i { color: var(--success); width: 18px; font-size: 0.8rem; }
-
-        .btn-buy {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            font-size: 1rem;
-        }
-        .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
-
-        .btn-add-cart {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            width: 100%;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-        }
-        .btn-add-cart:hover {
-            border-color: var(--secondary);
-            background: rgba(124,58,237,0.15);
-            color: var(--secondary-light);
-        }
-
-        .script-image {
-            width: 100%;
-            max-width: 280px;
-            border-radius: 12px;
-            border: 2px solid var(--era);
-            margin: 0.5rem auto;
-            display: block;
-        }
-        .mod-image {
-            width: 100%;
-            max-width: 280px;
-            border-radius: 12px;
+        .xcore-obrigatorio {
+            max-width: 800px;
+            margin: 1.5rem auto 0;
+            background: rgba(220,38,38,0.08);
             border: 2px solid var(--primary);
-            margin: 0.5rem auto;
-            display: block;
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            text-align: center;
         }
-        .script-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.3rem;
-            margin: 0.8rem 0;
+        .xcore-obrigatorio p {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
         }
-        .script-features li {
-            list-style: none;
-            padding: 0.2rem 0;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .xcore-obrigatorio p i { margin-right: 8px; }
+        .xcore-obrigatorio .discord-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: #5865f2;
+            color: #fff;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+            font-size: 0.9rem;
         }
-        .script-features li i { color: var(--success); font-size: 0.8rem; }
+        .xcore-obrigatorio .discord-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 30px rgba(88,101,242,0.4);
+        }
 
         /* ============================================================
            CLIENTES
            ============================================================ */
         .clientes-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 0.6rem;
             margin-top: 1.2rem;
-            max-width: 650px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -1116,156 +1118,14 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 0.6rem 0.8rem;
+            padding: 0.5rem 0.6rem;
             text-align: center;
             transition: 0.3s;
         }
         .cliente-item:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .cliente-item .nome { font-weight: 700; color: var(--text); font-size: 0.85rem; }
-        .cliente-item .plano { font-size: 0.65rem; color: var(--text-muted); }
-        .cliente-item .data { font-size: 0.55rem; color: var(--text-muted); opacity: 0.6; }
-
-        /* ============================================================
-           PARCERIA XCORE
-           ============================================================ */
-        .parceria-container {
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            background: var(--bg-card);
-            border: 2px solid var(--secondary);
-            border-radius: var(--radius);
-            padding: 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-        .parceria-container:hover { box-shadow: 0 10px 40px rgba(124,58,237,0.1); }
-        .parceria-container::before {
-            content: '🔥 PARCERIA OFICIAL | OFFICIAL PARTNERSHIP';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 700;
-            padding: 0.3rem;
-            letter-spacing: 1px;
-        }
-        .parceria-container .logo-parceria {
-            max-width: 120px;
-            margin: 1.2rem auto 0.8rem;
-            border-radius: 12px;
-            border: 2px solid var(--secondary);
-            padding: 0.5rem;
-            background: #0a0a0a;
-        }
-        .parceria-container .logo-parceria img { width: 100%; border-radius: 8px; }
-        .parceria-container h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.3rem;
-            background: linear-gradient(135deg, #fff, var(--secondary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .parceria-container .slogan {
-            color: var(--secondary-light);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-        }
-        .parceria-container p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.8rem; }
-        .parceria-container p.aviso-ios {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            background: rgba(220,38,38,0.1);
-            padding: 0.4rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--primary);
-            margin-top: 0.5rem;
-        }
-        .parceria-container .btn-parceria {
-            display: inline-block;
-            background: #5865f2;
-            color: #fff;
-            padding: 0.7rem 1.8rem;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-        .parceria-container .btn-parceria:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
-        .parceria-container .aviso {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-top: 0.8rem;
-            padding: 0.4rem;
-            background: rgba(220,38,38,0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(220,38,38,0.2);
-        }
-
-        /* ============================================================
-           STEPS
-           ============================================================ */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.2rem;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .step-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem 1rem;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .step-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .step-card .step-number {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.8rem;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        .step-card h4 { color: var(--text); margin-bottom: 0.3rem; font-size: 0.85rem; }
-        .step-card p { color: var(--text-muted); font-size: 0.8rem; }
-
-        /* ============================================================
-           DEPOIMENTOS
-           ============================================================ */
-        .depoimentos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.2rem;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-        .depoimento-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            transition: 0.3s;
-        }
-        .depoimento-card:hover { border-color: var(--primary); transform: translateY(-4px); }
-        .depoimento-card .texto { font-size: 0.85rem; color: var(--text); font-style: italic; margin-bottom: 0.4rem; }
-        .depoimento-card .cliente { font-weight: 700; color: var(--primary); font-size: 0.85rem; }
-        .depoimento-card .estrelas { color: var(--warning); font-size: 0.75rem; margin-bottom: 0.2rem; }
-        .depoimento-card .info { font-size: 0.6rem; color: var(--text-muted); }
+        .cliente-item .nome { font-weight: 700; color: var(--text); font-size: 0.8rem; }
+        .cliente-item .plano { font-size: 0.6rem; color: var(--text-muted); }
+        .cliente-item .data { font-size: 0.5rem; color: var(--text-muted); opacity: 0.6; }
 
         /* ============================================================
            FORMULÁRIO
@@ -1276,24 +1136,24 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 2rem;
         }
-        .form-container .form-group { margin-bottom: 1rem; }
+        .form-container .form-group { margin-bottom: 0.8rem; }
         .form-container label {
             display: block;
             color: var(--text);
             font-weight: 600;
             margin-bottom: 0.2rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .form-container input, .form-container select, .form-container textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
+            padding: 0.7rem 1rem;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 10px;
             color: var(--text);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             outline: none;
             transition: 0.3s;
             font-family: inherit;
@@ -1303,15 +1163,15 @@
             border-color: var(--primary);
             box-shadow: 0 0 20px rgba(220,38,38,0.1);
         }
-        .form-container textarea { resize: vertical; min-height: 80px; }
+        .form-container textarea { resize: vertical; min-height: 70px; }
         .form-container .btn-submit {
             width: 100%;
-            padding: 1rem;
+            padding: 0.8rem;
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border: none;
             border-radius: 12px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
@@ -1329,7 +1189,7 @@
             border-radius: 8px;
             display: none;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
         .form-status.error { display: block; background: rgba(220,38,38,0.15); border: 1px solid var(--primary); color: var(--primary); }
@@ -1342,7 +1202,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem 1.2rem;
+            padding: 0.8rem 1rem;
             margin-bottom: 0.6rem;
             display: flex;
             align-items: flex-start;
@@ -1353,17 +1213,17 @@
         .regra-item .regra-numero {
             background: var(--primary);
             color: #fff;
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 700;
             flex-shrink: 0;
         }
-        .regra-item .regra-texto { color: var(--text-muted); font-size: 0.85rem; }
+        .regra-item .regra-texto { color: var(--text-muted); font-size: 0.8rem; }
         .regra-item .regra-texto strong { color: var(--text); }
         .regra-item .regra-texto .destaque { color: var(--primary); font-weight: 700; }
 
@@ -1375,7 +1235,7 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem 1.2rem;
+            padding: 0.8rem 1rem;
             margin-bottom: 0.8rem;
             cursor: pointer;
             transition: 0.3s;
@@ -1387,13 +1247,13 @@
             align-items: center;
             font-weight: 600;
             color: var(--text);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         .faq-item .answer {
             display: none;
-            margin-top: 0.6rem;
+            margin-top: 0.5rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .faq-item.open .answer { display: block; }
         .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
@@ -1414,10 +1274,10 @@
             align-items: center;
             gap: 8px;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
         }
-        .selo-item i { color: var(--success); font-size: 1.2rem; }
+        .selo-item i { color: var(--success); font-size: 1.1rem; }
 
         /* ============================================================
            CUPOM
@@ -1430,18 +1290,18 @@
         }
         .cupom-area input {
             flex: 1;
-            padding: 0.6rem 1rem;
+            padding: 0.5rem 1rem;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             outline: none;
             transition: 0.3s;
         }
         .cupom-area input:focus { border-color: var(--primary); }
         .cupom-area .btn-cupom {
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             background: var(--secondary);
             color: #fff;
             border: none;
@@ -1449,6 +1309,7 @@
             font-weight: 700;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 0.85rem;
         }
         .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
 
@@ -1461,23 +1322,23 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2.5rem;
+            padding: 2rem;
         }
         .profile-section .profile-header {
             display: flex;
             align-items: center;
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
         .profile-section .profile-avatar {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
@@ -1506,7 +1367,7 @@
             opacity: 0;
             transition: 0.3s;
             border-radius: 50%;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #fff;
             font-weight: 600;
         }
@@ -1514,22 +1375,22 @@
             opacity: 1;
         }
         .profile-section .profile-avatar .avatar-letter {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: #fff;
         }
         .profile-section .profile-info h3 {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             color: var(--text);
         }
         .profile-section .profile-info p {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .profile-section .profile-info .edit-link {
             color: var(--secondary-light);
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             transition: 0.3s;
         }
@@ -1540,33 +1401,33 @@
         .profile-section .profile-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            padding: 1rem 0;
+            gap: 0.8rem;
+            padding: 0.8rem 0;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
         .profile-section .profile-stats .stat {
             text-align: center;
         }
         .profile-section .profile-stats .stat .number {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text);
         }
         .profile-section .profile-stats .stat .label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
         }
         .profile-section .profile-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
         }
         .profile-section .profile-actions .btn-action {
             flex: 1;
-            min-width: 120px;
-            padding: 0.7rem;
+            min-width: 100px;
+            padding: 0.6rem;
             border: 1px solid var(--border);
             border-radius: 8px;
             background: var(--bg);
@@ -1576,7 +1437,7 @@
             transition: 0.3s;
             text-align: center;
             text-decoration: none;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
         .profile-section .profile-actions .btn-action:hover {
             border-color: var(--primary);
@@ -1616,8 +1477,8 @@
             background: var(--bg-card);
             border: 1px solid var(--primary);
             border-radius: var(--radius);
-            padding: 2.5rem;
-            max-width: 420px;
+            padding: 2rem;
+            max-width: 400px;
             width: 90%;
             text-align: center;
             position: relative;
@@ -1631,13 +1492,13 @@
             position: absolute;
             top: 10px;
             right: 14px;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             cursor: pointer;
             color: var(--text-muted);
             transition: 0.3s;
         }
         .modal-pix .modal-content .close-modal:hover { color: var(--text); }
-        .modal-pix .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.4rem; }
+        .modal-pix .modal-content h2 { margin-bottom: 0.8rem; font-size: 1.3rem; }
         .modal-pix .modal-content .pix-key {
             background: var(--bg);
             padding: 0.8rem;
@@ -1645,7 +1506,7 @@
             border: 1px solid var(--border);
             margin: 0.8rem 0;
             font-family: monospace;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--success);
             word-break: break-all;
         }
@@ -1653,26 +1514,26 @@
             background: var(--secondary);
             color: #fff;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
             transition: 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .modal-pix .modal-content .btn-copy:hover { transform: scale(1.05); }
-        .modal-pix .modal-content .plan-info { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.8rem; }
+        .modal-pix .modal-content .plan-info { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.8rem; }
         .modal-pix .modal-content .discord-link {
             display: inline-block;
             margin-top: 0.8rem;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1.2rem;
             background: #5865f2;
             color: #fff;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         .modal-pix .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
@@ -1682,7 +1543,7 @@
         .footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
-            padding: 3rem 2rem 1.5rem;
+            padding: 2.5rem 2rem 1.5rem;
         }
         .footer-content {
             max-width: var(--container-max);
@@ -1699,21 +1560,21 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .footer-brand p { color: var(--text-muted); font-size: 0.85rem; }
+        .footer-brand p { color: var(--text-muted); font-size: 0.8rem; }
         .footer-social {
             display: flex;
-            gap: 0.8rem;
+            gap: 0.6rem;
             align-items: center;
         }
         .footer-social a {
             color: var(--text-muted);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1724,12 +1585,12 @@
         .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
         .footer-bottom {
             max-width: var(--container-max);
-            margin: 1.5rem auto 0;
-            padding-top: 1rem;
+            margin: 1.2rem auto 0;
+            padding-top: 0.8rem;
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
 
         /* ============================================================
@@ -1743,33 +1604,32 @@
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
             .dropdown { width: 300px; right: -20px; }
-            .xcore-plans { grid-template-columns: 1fr; max-width: 400px; }
         }
 
         @media (max-width: 768px) {
             .navbar { padding: 0 0.5rem; }
             .nav-container {
-                height: 64px;
+                height: 60px;
                 gap: 4px;
                 padding: 0 2px;
             }
             
             .nav-logo-wrapper { gap: 4px; flex-shrink: 0; }
-            .nav-logo img { width: 34px; height: 34px; }
-            .nav-logo .logo-text span { font-size: 0.8rem; }
+            .nav-logo img { width: 30px; height: 30px; }
+            .nav-logo .logo-text span { font-size: 0.75rem; }
             .nav-logo .logo-text small { display: none; }
             
             .nav-divider { display: none; }
             
-            .nav-xcore img { width: 30px; height: 30px; }
-            .nav-xcore .xcore-text .name { font-size: 0.5rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.4rem; }
+            .nav-xcore img { width: 26px; height: 26px; }
+            .nav-xcore .xcore-text .name { font-size: 0.45rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.35rem; }
             
             .nav-menu {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 64px;
+                top: 60px;
                 left: 0;
                 width: 100%;
                 background: var(--bg-card);
@@ -1781,7 +1641,7 @@
             .nav-menu.open { display: flex; }
             .nav-menu a {
                 padding: 0.4rem 0.8rem;
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
             
             .nav-toggle { display: block; font-size: 1.1rem; padding: 2px 6px; }
@@ -1789,13 +1649,13 @@
             .nav-actions { gap: 4px; flex-shrink: 0; }
             
             .nav-icon-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8rem;
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
             }
             .nav-icon-btn .badge {
-                min-width: 16px;
-                height: 16px;
+                min-width: 14px;
+                height: 14px;
                 font-size: 0.4rem;
                 top: -3px;
                 right: -3px;
@@ -1803,75 +1663,73 @@
             
             .profile-btn {
                 padding: 0.15rem 0.4rem 0.15rem 0.15rem;
-                font-size: 0.6rem;
+                font-size: 0.55rem;
                 gap: 3px;
             }
             .profile-btn .avatar {
-                width: 22px;
-                height: 22px;
-                font-size: 0.5rem;
+                width: 20px;
+                height: 20px;
+                font-size: 0.45rem;
             }
             .profile-btn .user-name {
                 display: none;
             }
             .profile-btn .cart-count {
-                width: 14px;
-                height: 14px;
-                font-size: 0.4rem;
-                top: -5px;
+                width: 12px;
+                height: 12px;
+                font-size: 0.35rem;
+                top: -4px;
                 right: -6px;
             }
             
             .lang-toggle button {
-                padding: 0.1rem 0.35rem;
-                font-size: 0.45rem;
+                padding: 0.1rem 0.3rem;
+                font-size: 0.4rem;
             }
             
             .dropdown {
-                width: 280px;
-                right: -60px;
+                width: 260px;
+                right: -50px;
                 max-height: 350px;
             }
             .cart-dropdown {
-                width: 260px;
-                right: -40px;
+                width: 240px;
+                right: -30px;
             }
             
-            .hero h1 { font-size: 2.5rem; }
-            .section-header h2 { font-size: 2rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .section-header h2 { font-size: 1.8rem; }
             .plans-grid { grid-template-columns: 1fr; }
-            .form-container { padding: 1.5rem; }
-            .btn-whatsapp-fixo { width: 50px; height: 50px; font-size: 26px; bottom: 16px; left: 16px; }
-            .parceria-container { padding: 1.5rem; }
+            .xcore-plans { grid-template-columns: 1fr; }
+            .form-container { padding: 1.2rem; }
+            .btn-whatsapp-fixo { width: 44px; height: 44px; font-size: 22px; bottom: 14px; left: 14px; }
             .regra-item { flex-direction: column; align-items: center; text-align: center; }
-            .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+            .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
             .script-features { grid-template-columns: 1fr; }
             .clientes-grid { grid-template-columns: 1fr 1fr; }
-            .depoimentos-grid { grid-template-columns: 1fr; }
-            .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
+            .progress-bar { gap: 0.5rem; font-size: 0.65rem; }
             .progress-step .step-arrow { display: none; }
             .profile-section .profile-stats { grid-template-columns: 1fr; gap: 0.5rem; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
-            .xcore-tab-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
+            .xcore-obrigatorio p { font-size: 0.8rem; }
         }
 
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2rem; }
-            .btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            .hero h1 { font-size: 1.8rem; }
+            .btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
             .clientes-grid { grid-template-columns: 1fr; }
-            .modal-pix .modal-content { padding: 1.5rem; }
-            .modal-pix .modal-content .pix-key { font-size: 0.8rem; }
+            .modal-pix .modal-content { padding: 1.2rem; }
+            .modal-pix .modal-content .pix-key { font-size: 0.75rem; }
             .profile-section .profile-actions { flex-direction: column; }
-            .dropdown { width: 260px; right: -40px; }
-            .cart-dropdown { width: 240px; right: -30px; }
-            .nav-logo .logo-text span { font-size: 0.7rem; }
-            .nav-logo img { width: 30px; height: 30px; }
-            .nav-xcore img { width: 26px; height: 26px; }
-            .nav-xcore .xcore-text .name { font-size: 0.45rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.35rem; }
-            .profile-btn .avatar { width: 20px; height: 20px; }
-            .nav-icon-btn { width: 28px; height: 28px; font-size: 0.7rem; }
-            .xcore-plan .plan-price { font-size: 1.5rem; }
+            .dropdown { width: 230px; right: -30px; }
+            .cart-dropdown { width: 210px; right: -20px; }
+            .nav-logo .logo-text span { font-size: 0.65rem; }
+            .nav-logo img { width: 26px; height: 26px; }
+            .nav-xcore img { width: 22px; height: 22px; }
+            .nav-xcore .xcore-text .name { font-size: 0.4rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.3rem; }
+            .profile-btn .avatar { width: 18px; height: 18px; }
+            .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -2003,31 +1861,32 @@
     </section>
 
     <!-- ============================================================
-    MODS (KZN MENU)
+    MODS (KZN MENU - Classic e Era)
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-cubes"></i> Nossos Mods</h2>
+                <h2><i class="fas fa-cubes"></i> Mods KZN MENU</h2>
                 <p>Escolha seu jogo e veja os scripts disponíveis</p>
-            </div>
-
-            <div class="progress-bar">
-                <div class="progress-step active"><span class="step-num">1</span> Escolha <span class="step-arrow">→</span></div>
-                <div class="progress-step"><span class="step-num">2</span> Pague <span class="step-arrow">→</span></div>
-                <div class="progress-step"><span class="step-num">3</span> Ative</div>
             </div>
 
             <div class="tabs-container">
                 <div class="tabs-nav">
-                    <button class="tab-btn classic active" onclick="trocarAba('classic')"><i class="fas fa-sword"></i> Graal Classic</button>
-                    <button class="tab-btn era" onclick="trocarAba('era')"><i class="fas fa-city"></i> Graal Era</button>
+                    <button class="tab-btn classic active" onclick="trocarAba('classic')">
+                        <i class="fas fa-sword"></i> Graal Classic
+                    </button>
+                    <button class="tab-btn era" onclick="trocarAba('era')">
+                        <i class="fas fa-city"></i> Graal Era
+                    </button>
                 </div>
 
+                <!-- ABA CLASSIC -->
                 <div class="tab-content active" id="tab-classic">
                     <div class="plans-grid">
                         <div class="plan-card">
-                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" /></div>
+                            <div style="text-align:center;margin:0.5rem 0;">
+                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                            </div>
                             <div class="icon">📅</div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Mensal</div>
@@ -2040,12 +1899,14 @@
                                 <li><i class="fas fa-check"></i> Válido por 35 dias</li>
                             </ul>
                             <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                         </div>
 
                         <div class="plan-card popular">
                             <span class="badge">🔥 Mais Vantagem</span>
-                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" /></div>
+                            <div style="text-align:center;margin:0.5rem 0;">
+                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                            </div>
                             <h3>KZN MENU Classic</h3>
                             <div class="sub-plano">Plano Permanente</div>
                             <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
@@ -2056,26 +1917,19 @@
                                 <li><i class="fas fa-check"></i> Sem renovação!</li>
                             </ul>
                             <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:2.5rem;text-align:center;">
-                        <h4 style="color:var(--classic);font-size:1.1rem;"><i class="fas fa-users"></i> Clientes Classic</h4>
-                        <div class="clientes-grid">
-                            <div class="cliente-item"><div class="nome">Guilherme</div><div class="plano">R$ 50,00</div><div class="data">01/08/26</div></div>
-                            <div class="cliente-item"><div class="nome">Dark OP</div><div class="plano">R$ 60,00</div><div class="data">19/07/26</div></div>
-                            <div class="cliente-item"><div class="nome">Dacota</div><div class="plano">R$ 20,00</div><div class="data">03/08/26</div></div>
-                            <div class="cliente-item"><div class="nome">Utaa</div><div class="plano">R$ 200,00</div><div class="data">05/08/26</div></div>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                         </div>
                     </div>
                 </div>
 
+                <!-- ABA ERA -->
                 <div class="tab-content" id="tab-era">
                     <div class="plans-grid">
                         <div class="plan-card popular">
                             <span class="badge era-badge">🔥 Exclusivo Era</span>
-                            <div style="text-align:center;margin:0.5rem 0;"><img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" /></div>
+                            <div style="text-align:center;margin:0.5rem 0;">
+                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
+                            </div>
                             <h3>AUTO TRASH AUTOMATIC</h3>
                             <div class="sub-plano">Graal Era</div>
                             <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
@@ -2088,28 +1942,13 @@
                                 <li><i class="fas fa-check"></i> Suporte dedicado</li>
                             </ul>
                             <div style="text-align:center;margin:0.6rem 0;padding:0.4rem;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid var(--era);">
-                                <p style="font-size:0.75rem;color:var(--text-muted);"><strong style="color:var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40</p>
+                                <p style="font-size:0.7rem;color:var(--text-muted);"><strong style="color:var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40</p>
                             </div>
                             <button class="btn-buy" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
-                        </div>
-                    </div>
-
-                    <div style="margin-top:2.5rem;text-align:center;">
-                        <h4 style="color:var(--era);font-size:1.1rem;"><i class="fas fa-users"></i> Clientes Era</h4>
-                        <div class="clientes-grid">
-                            <div class="cliente-item"><div class="nome">Ryzen D</div><div class="plano">R$ 60,00</div><div class="data">26/06/26</div></div>
-                            <div class="cliente-item"><div class="nome">ЮРИЙ</div><div class="plano">R$ 200,00</div><div class="data">03/07/26</div></div>
-                            <div class="cliente-item"><div class="nome">Luixx</div><div class="plano">3x</div><div class="data">05/07/26</div></div>
-                            <div class="cliente-item"><div class="nome">ourodeguerra</div><div class="plano">2x R$ 100</div><div class="data">18/07/26</div></div>
+                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="cupom-area">
-                <input type="text" id="cupomInput" placeholder="Código promocional" />
-                <button class="btn-cupom" onclick="aplicarCupom()">Aplicar</button>
             </div>
         </div>
     </section>
@@ -2121,184 +1960,175 @@
         <div class="container">
             <div class="section-header">
                 <h2><i class="fas fa-bolt" style="color:var(--secondary);"></i> XCORE EXECUTOR</h2>
-                <p id="xcoreSubtitle">⚡ Um executor de Graal • A Graal Script Executor</p>
+                <p>⚡ Execute scripts no Graal com o melhor executor do mercado!</p>
+            </div>
+
+            <!-- DISCORD OFICIAL -->
+            <div style="max-width:700px;margin:0 auto 2rem;text-align:center;background:var(--bg-card);border:2px solid #5865f2;border-radius:var(--radius);padding:1.5rem;">
+                <p style="color:var(--text-muted);font-size:0.9rem;">
+                    <i class="fab fa-discord" style="color:#5865f2;font-size:1.5rem;display:block;margin-bottom:0.3rem;"></i>
+                    <strong style="color:var(--text);">Entre no Discord Oficial da Xcore</strong>
+                </p>
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link" style="display:inline-block;margin-top:0.5rem;padding:0.6rem 2rem;background:#5865f2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;font-size:0.9rem;">
+                    <i class="fab fa-discord"></i> Entrar no Discord
+                </a>
             </div>
 
             <!-- BANNER XCORE -->
-            <div style="max-width:700px;margin:0 auto 3rem;text-align:center;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;">
+            <div style="max-width:700px;margin:0 auto 2rem;text-align:center;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;">
                 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));"></div>
                 <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
-                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
+                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:60px;height:60px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
                     <div>
-                        <h2 style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE</h2>
-                        <p style="color:var(--text-muted);font-size:1rem;letter-spacing:2px;">EXECUTOR DE GRAAL • GRAAL SCRIPT EXECUTOR</p>
+                        <h3 style="font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
+                        <p style="color:var(--text-muted);font-size:0.8rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
                     </div>
                 </div>
-                <p style="color:var(--text-muted);font-size:0.85rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.8rem;">
+                <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.6rem;">
                     <i class="fas fa-rocket" style="color:var(--secondary);"></i>
-                    <span id="xcoreTagline">Escolha o plano ideal para você e maximize sua experiência no GraalOnline!</span>
+                    Escolha o plano ideal para você e maximize sua experiência no GraalOnline!
                 </p>
             </div>
 
-            <!-- TABS DE IDIOMA -->
-            <div class="xcore-tabs">
-                <button class="xcore-tab-btn active" onclick="trocarIdiomaXcore('pt')" id="xcorePtBtn">
-                    🇧🇷 Português
-                </button>
-                <button class="xcore-tab-btn" onclick="trocarIdiomaXcore('en')" id="xcoreEnBtn">
-                    🇺🇸 English
-                </button>
-            </div>
-
-            <!-- PORTUGUÊS -->
-            <div class="xcore-lang active" id="xcorePt">
-                <div class="xcore-plans">
-                    <!-- FREE -->
-                    <div class="xcore-plan free">
-                        <div class="plan-icon">🆓</div>
-                        <div class="plan-name">FREE</div>
-                        <div class="plan-sub">Grátis • Ideal para começar</div>
-                        <div class="plan-price" style="color:var(--success);">R$ 0,00</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> Scripts no mapa principal</li>
-                            <li><i class="fas fa-check"></i> Acesso básico ao runtime</li>
-                            <li><i class="fas fa-check"></i> Permissões limitadas de execução</li>
-                            <li><i class="fas fa-check"></i> 5 horas de uso por dia</li>
-                        </ul>
-                        <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
-                    </div>
-
-                    <!-- SILVER -->
-                    <div class="xcore-plan silver">
-                        <div class="plan-icon">🥈</div>
-                        <div class="plan-name">SILVER</div>
-                        <div class="plan-sub">R$ 35/Mês • Para quem quer ir além</div>
-                        <div class="plan-price" style="color:#94a3b8;">R$ 35,00 <small>/mês</small></div>
-                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> <strong>Tudo do FREE +</strong></li>
-                            <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
-                            <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
-                        </ul>
-                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
-                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
-                    </div>
-
-                    <!-- GOLD -->
-                    <div class="xcore-plan gold">
-                        <div class="plan-icon">🥇</div>
-                        <div class="plan-name">GOLD</div>
-                        <div class="plan-sub">R$ 90/Mês • Experiência completa</div>
-                        <div class="plan-price" style="color:var(--warning);">R$ 90,00 <small>/mês</small></div>
-                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> <strong>Tudo do SILVER +</strong></li>
-                            <li><i class="fas fa-check"></i> Scripts em níveis de trabalho</li>
-                            <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
-                            <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
-                        </ul>
-                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
-                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
-                    </div>
+            <!-- PLANOS XCORE -->
+            <div class="xcore-plans">
+                <!-- FREE -->
+                <div class="xcore-plan free">
+                    <div class="plan-icon">🆓</div>
+                    <div class="plan-name">FREE</div>
+                    <div class="plan-sub">Grátis • Ideal para começar</div>
+                    <div class="plan-price" style="color:var(--success);">R$ 0,00</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> Scripts no mapa principal</li>
+                        <li><i class="fas fa-check"></i> Acesso básico ao runtime</li>
+                        <li><i class="fas fa-check"></i> Permissões limitadas de execução</li>
+                        <li><i class="fas fa-check"></i> 5 horas de uso por dia</li>
+                    </ul>
+                    <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
                 </div>
 
-                <!-- RESTRIÇÕES PT -->
-                <div class="xcore-restrictions">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Restrições de Runtime</h3>
-                    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Algumas áreas exigem um nível de execução mais alto.</p>
-                    <div class="xcore-restrictions-grid">
-                        <div class="xcore-restriction-item">
-                            <span class="area">🌐 Mapa principal</span>
-                            <span class="level level-free">FREE</span>
-                        </div>
-                        <div class="xcore-restriction-item">
-                            <span class="area">⚔️ Casas / Bases</span>
-                            <span class="level level-silver">SILVER</span>
-                        </div>
-                        <div class="xcore-restriction-item">
-                            <span class="area">🏆 Trabalho / Eventos / Spar</span>
-                            <span class="level level-gold">GOLD</span>
-                        </div>
-                    </div>
-                    <div class="restriction-note">
-                        <i class="fas fa-arrow-up"></i> Atualize seu plano para desbloquear mais zonas de execução e permissões avançadas de runtime.
-                    </div>
+                <!-- SILVER -->
+                <div class="xcore-plan silver">
+                    <div class="plan-icon">🥈</div>
+                    <div class="plan-name">SILVER</div>
+                    <div class="plan-sub">R$ 35/Mês • Para quem quer ir além</div>
+                    <div class="plan-price" style="color:#94a3b8;">R$ 35,00 <small>/mês</small></div>
+                    <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> <strong>Tudo do FREE +</strong></li>
+                        <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
+                        <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
+                    </ul>
+                    <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
+                    <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                </div>
+
+                <!-- GOLD -->
+                <div class="xcore-plan gold">
+                    <div class="plan-icon">🥇</div>
+                    <div class="plan-name">GOLD</div>
+                    <div class="plan-sub">R$ 90/Mês • Experiência completa</div>
+                    <div class="plan-price" style="color:var(--warning);">R$ 90,00 <small>/mês</small></div>
+                    <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> <strong>Tudo do SILVER +</strong></li>
+                        <li><i class="fas fa-check"></i> Scripts em níveis de trabalho</li>
+                        <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
+                        <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
+                    </ul>
+                    <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
+                    <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                 </div>
             </div>
 
-            <!-- INGLÊS -->
-            <div class="xcore-lang" id="xcoreEn">
-                <div class="xcore-plans">
-                    <!-- FREE -->
-                    <div class="xcore-plan free">
-                        <div class="plan-icon">🆓</div>
-                        <div class="plan-name">FREE</div>
-                        <div class="plan-sub">Free • Ideal to start</div>
-                        <div class="plan-price" style="color:var(--success);">$0.00</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> Execute scripts on the main map</li>
-                            <li><i class="fas fa-check"></i> Basic access to the runtime</li>
-                            <li><i class="fas fa-check"></i> Limited execution permissions</li>
-                            <li><i class="fas fa-check"></i> 5 hours of daily use</li>
-                        </ul>
-                        <button class="plan-btn free" onclick="alert('🎉 FREE plan selected! Enjoy!')">Get Started</button>
+            <!-- RESTRIÇÕES -->
+            <div class="xcore-restrictions">
+                <h3><i class="fas fa-exclamation-triangle"></i> Restrições de Runtime</h3>
+                <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Algumas áreas exigem um nível de execução mais alto.</p>
+                <div class="xcore-restrictions-grid">
+                    <div class="xcore-restriction-item">
+                        <span class="area">🌐 Mapa principal</span>
+                        <span class="level level-free">FREE</span>
                     </div>
-
-                    <!-- SILVER -->
-                    <div class="xcore-plan silver">
-                        <div class="plan-icon">🥈</div>
-                        <div class="plan-name">SILVER</div>
-                        <div class="plan-sub">$4.99/Month • Go further</div>
-                        <div class="plan-price" style="color:#94a3b8;">$4.99 <small>/month</small></div>
-                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Monthly renewal</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> <strong>Everything in FREE +</strong></li>
-                            <li><i class="fas fa-check"></i> Execute scripts at houses and battle bases</li>
-                            <li><i class="fas fa-check"></i> Extended runtime permissions</li>
-                        </ul>
-                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Subscribe $4.99</button>
-                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    <div class="xcore-restriction-item">
+                        <span class="area">⚔️ Casas / Bases</span>
+                        <span class="level level-silver">SILVER</span>
                     </div>
-
-                    <!-- GOLD -->
-                    <div class="xcore-plan gold">
-                        <div class="plan-icon">🥇</div>
-                        <div class="plan-name">GOLD</div>
-                        <div class="plan-sub">$12.99/Month • Full experience</div>
-                        <div class="plan-price" style="color:var(--warning);">$12.99 <small>/month</small></div>
-                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Monthly renewal</div>
-                        <ul class="plan-features">
-                            <li><i class="fas fa-check"></i> <strong>Everything in SILVER +</strong></li>
-                            <li><i class="fas fa-check"></i> Execute scripts at work levels</li>
-                            <li><i class="fas fa-check"></i> Execute scripts during events and PvP</li>
-                            <li><i class="fas fa-check"></i> <strong>Full access to runtime</strong></li>
-                        </ul>
-                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Subscribe $12.99</button>
-                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    <div class="xcore-restriction-item">
+                        <span class="area">🏆 Trabalho / Eventos / Spar</span>
+                        <span class="level level-gold">GOLD</span>
                     </div>
                 </div>
+                <div class="restriction-note">
+                    <i class="fas fa-arrow-up"></i> Atualize seu plano para desbloquear mais zonas de execução e permissões avançadas de runtime.
+                </div>
+            </div>
 
-                <!-- RESTRIÇÕES EN -->
-                <div class="xcore-restrictions">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Runtime Restrictions</h3>
-                    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Some areas require a higher execution level.</p>
-                    <div class="xcore-restrictions-grid">
-                        <div class="xcore-restriction-item">
-                            <span class="area">🌐 Main map</span>
-                            <span class="level level-free">FREE</span>
+            <!-- AVISO OBRIGATÓRIO -->
+            <div class="xcore-obrigatorio">
+                <p><i class="fas fa-exclamation-circle"></i> ⚠️ É obrigatório baixar o <strong>XCORE EXECUTOR</strong> para usar os mods do KZN MENU!</p>
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link">
+                    <i class="fab fa-discord"></i> Baixar no Discord
+                </a>
+            </div>
+
+            <!-- ============================================================
+            FORMULÁRIO XCORE (SEPARADO)
+            ============================================================ -->
+            <div style="max-width:600px;margin:3rem auto 0;">
+                <div style="text-align:center;margin-bottom:1.5rem;">
+                    <h3 style="color:var(--secondary);font-size:1.3rem;"><i class="fas fa-paper-plane"></i> Comprar Xcore Executor</h3>
+                    <p style="color:var(--text-muted);font-size:0.85rem;">Preencha o formulário abaixo para adquirir seu plano Xcore</p>
+                </div>
+
+                <div class="form-container">
+                    <form id="formXcore" action="https://formsubmit.co/xcoreexecute@gmail.com" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_subject" value="📩 COMPRA XCORE EXECUTOR - NOVO PEDIDO!">
+
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Seu Nome <span style="color:var(--primary);">*</span></label>
+                            <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
                         </div>
-                        <div class="xcore-restriction-item">
-                            <span class="area">⚔️ Houses / Battle Bases</span>
-                            <span class="level level-silver">SILVER</span>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
+                            <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
+                            <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                         </div>
-                        <div class="xcore-restriction-item">
-                            <span class="area">🏆 Work Levels / Events / PvP</span>
-                            <span class="level level-gold">GOLD</span>
+
+                        <div class="form-group">
+                            <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--primary);">*</span></label>
+                            <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
                         </div>
-                    </div>
-                    <div class="restriction-note">
-                        <i class="fas fa-arrow-up"></i> Upgrade your plan to unlock more execution zones and advanced runtime permissions.
-                    </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--primary);">*</span></label>
+                            <select name="Plano" required>
+                                <option value="">Selecione um plano...</option>
+                                <option value="Xcore FREE - Grátis">🆓 FREE - Grátis</option>
+                                <option value="Xcore SILVER - R$ 35,00/mês">🥈 SILVER - R$ 35,00/mês</option>
+                                <option value="Xcore GOLD - R$ 90,00/mês">🥇 GOLD - R$ 90,00/mês</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label>
+                            <input type="file" name="Comprovante" accept="image/*,.pdf" required>
+                            <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
+                            <textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="formXcoreBtn">
+                            <i class="fas fa-paper-plane"></i> Enviar Pedido Xcore
+                        </button>
+                        <div class="form-status" id="formXcoreStatus"></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -2352,8 +2182,8 @@
                     <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </div>
 
-                <div id="editProfileArea" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
-                    <h4 style="margin-bottom:1rem;color:var(--text);">✏️ Editar Perfil</h4>
+                <div id="editProfileArea" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+                    <h4 style="margin-bottom:0.8rem;color:var(--text);font-size:1rem;">✏️ Editar Perfil</h4>
                     <div class="form-group">
                         <label>Nome</label>
                         <input type="text" id="editNome" value="KZN Usuário" />
@@ -2366,7 +2196,7 @@
                         <label>Nova senha</label>
                         <input type="password" id="editSenha" placeholder="Deixe em branco para manter" />
                     </div>
-                    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
+                    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.8rem;">
                         <button class="btn-action primary" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
                         <button class="btn-action" onclick="cancelarEdicaoPerfil()"><i class="fas fa-times"></i> Cancelar</button>
                     </div>
@@ -2385,21 +2215,44 @@
                 <p>Simples, rápido e seguro. Siga os passos abaixo:</p>
             </div>
 
-            <div class="parceria-container">
-                <div class="logo-parceria"><img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" /></div>
-                <h3>⚡ XCORE EXECUTE</h3>
-                <div class="slogan">FOR GAMERS, BY GAMERS</div>
-                <p>A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>. Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.</p>
-                <p class="aviso-ios">⚠️ <strong>Usuários iOS:</strong> No momento, o Xcore Execute está disponível apenas para Android e PC. Para iOS, recomendamos outras soluções.</p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="btn-parceria"><i class="fab fa-discord"></i> Entrar no Discord da Xcore</a>
-                <div class="aviso">⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!</div>
+            <div style="max-width:700px;margin:0 auto 3rem;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:2rem;text-align:center;position:relative;overflow:hidden;transition:0.3s;">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary));"></div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" style="width:50px;height:50px;border-radius:50%;border:2px solid var(--secondary);object-fit:cover;" />
+                    <div>
+                        <h3 style="font-size:1.3rem;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">⚡ XCORE EXECUTE</h3>
+                        <div style="color:var(--secondary-light);font-size:0.7rem;letter-spacing:2px;font-weight:600;">FOR GAMERS, BY GAMERS</div>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:0.5rem;">A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>. Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.</p>
+                <p style="font-size:0.75rem;color:var(--text-muted);background:rgba(220,38,38,0.1);padding:0.4rem;border-radius:8px;border-left:3px solid var(--primary);margin-top:0.5rem;">⚠️ <strong>Usuários iOS:</strong> Disponível apenas para Android e PC.</p>
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" style="display:inline-block;margin-top:0.8rem;padding:0.6rem 1.8rem;background:#5865f2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;font-size:0.85rem;">
+                    <i class="fab fa-discord"></i> Entrar no Discord da Xcore
+                </a>
+                <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;padding:0.4rem;background:rgba(220,38,38,0.1);border-radius:8px;border:1px solid rgba(220,38,38,0.2);">⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!</div>
             </div>
 
-            <div class="steps-grid">
-                <div class="step-card"><div class="step-number">0</div><h4>⚡ Baixe a Xcore</h4><p>Entre no Discord da Xcore e baixe a ferramenta</p></div>
-                <div class="step-card"><div class="step-number">1</div><h4>📋 Escolha o Mod</h4><p>Selecione entre Classic ou Era</p></div>
-                <div class="step-card"><div class="step-number">2</div><h4>💳 Gere o Pagamento</h4><p>Clique em "Comprar" e copie a chave PIX</p></div>
-                <div class="step-card"><div class="step-number">3</div><h4>✅ Confirme no Discord</h4><p>Após o pagamento, entre em contato no Discord para ativação</p></div>
+            <div class="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;max-width:850px;margin:0 auto;">
+                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
+                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">0</div>
+                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">⚡ Baixe a Xcore</h4>
+                    <p style="color:var(--text-muted);font-size:0.75rem;">Entre no Discord da Xcore e baixe a ferramenta</p>
+                </div>
+                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
+                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">1</div>
+                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">📋 Escolha o Mod</h4>
+                    <p style="color:var(--text-muted);font-size:0.75rem;">Selecione entre Classic, Era ou Xcore</p>
+                </div>
+                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
+                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">2</div>
+                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">💳 Gere o Pagamento</h4>
+                    <p style="color:var(--text-muted);font-size:0.75rem;">Clique em "Comprar" e copie a chave PIX</p>
+                </div>
+                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
+                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">3</div>
+                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">✅ Confirme no Discord</h4>
+                    <p style="color:var(--text-muted);font-size:0.75rem;">Após o pagamento, entre em contato no Discord para ativação</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2422,13 +2275,13 @@
     </section>
 
     <!-- ============================================================
-    CONTATO
+    CONTATO (KZN)
     ============================================================ -->
     <section id="contato" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-envelope"></i> Entre em Contato</h2>
-                <p>Preencha o formulário e receba seu Mod Menu</p>
+                <h2><i class="fas fa-envelope"></i> Entre em Contato - KZN MENU</h2>
+                <p>Preencha o formulário para comprar os mods KZN MENU</p>
             </div>
             <div class="form-container">
                 <form id="formContato" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST" enctype="multipart/form-data">
@@ -2438,27 +2291,25 @@
                     
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
-                        <input type="email" name="Email" id="clienteEmail" placeholder="Digite seu e-mail (ex: joao@gmail.com)" required>
+                        <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
                         <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                     </div>
                     
                     <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
                     <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
                     <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
-                        <select name="Plano" id="planoEscolhido" required>
+                        <select name="Plano" required>
                             <option value="">Selecione um plano...</option>
                             <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
                             <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
                             <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">♻️ Auto Trash - R$ 200,00 (Graal Era)</option>
-                            <option value="Xcore SILVER - R$ 35,00/mês">🥈 Xcore SILVER - R$ 35,00/mês</option>
-                            <option value="Xcore GOLD - R$ 90,00/mês">🥇 Xcore GOLD - R$ 90,00/mês</option>
                             <option value="Classic - 2x R$ 100,00">⚔️ Classic - 2x R$ 100,00</option>
                             <option value="Era - 2x R$ 100,00">♻️ Era - 2x R$ 100,00</option>
                         </select>
                     </div>
-                    <div class="form-group"><label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label><input type="file" name="Comprovante" accept="image/*,.pdf" required><p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p></div>
-                    <div class="form-group"><label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label><textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea></div>
-                    <button type="submit" class="btn-submit" id="formSubmitBtn"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
+                    <div class="form-group"><label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label><input type="file" name="Comprovante" accept="image/*,.pdf" required><p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p></div>
+                    <div class="form-group"><label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label><textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea></div>
+                    <button type="submit" class="btn-submit" id="formSubmitBtn"><i class="fas fa-paper-plane"></i> Enviar Pedido KZN</button>
                     <div class="form-status" id="formStatus"></div>
                 </form>
             </div>
@@ -2472,7 +2323,7 @@
         <div class="container">
             <div class="section-header">
                 <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
-                <p>Dúvidas comuns sobre o KZN Menu</p>
+                <p>Dúvidas comuns sobre o KZN Menu e Xcore Executor</p>
             </div>
             <div class="faq-grid">
                 <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>🔒 O KZN Menu é seguro?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div></div>
@@ -2481,6 +2332,7 @@
                 <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>📧 Como recebo o mod após o pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div></div>
                 <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>💳 Quais formas de pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div></div>
                 <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>⚡ O que é Xcore Execute?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div></div>
+                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>💰 Quanto custa o Xcore?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div></div>
             </div>
         </div>
     </section>
@@ -2491,7 +2343,10 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand"><span>KZN MENU</span><p>O melhor Mod Menu para Graal Classic &amp; Era</p></div>
+                <div class="footer-brand">
+                    <span>KZN MENU</span>
+                    <p>O melhor Mod Menu para Graal Classic &amp; Era</p>
+                </div>
                 <div class="footer-social">
                     <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN"><i class="fab fa-discord"></i></a>
                     <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore"><i class="fas fa-bolt"></i></a>
@@ -2509,12 +2364,16 @@
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModalPix()">✕</span>
             <h2>💳 Pagamento PIX</h2>
-            <p style="color:var(--text-muted);margin-bottom:0.5rem;">Copie a chave abaixo e realize o pagamento</p>
+            <p style="color:var(--text-muted);margin-bottom:0.5rem;font-size:0.85rem;">Copie a chave abaixo e realize o pagamento</p>
             <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
             <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
             <div class="plan-info" id="planInfo">Plano: - | Valor: -</div>
-            <div style="margin-top:1rem;"><a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Entrar em contato no Discord</a></div>
-            <div style="margin-top:0.8rem;font-size:0.8rem;color:var(--text-muted);"><p>Após o pagamento, envie o comprovante no Discord para ativação.</p></div>
+            <div style="margin-top:0.8rem;">
+                <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Entrar em contato no Discord</a>
+            </div>
+            <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--text-muted);">
+                <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
+            </div>
         </div>
     </div>
 
@@ -2560,26 +2419,6 @@
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + aba).classList.add('active');
             document.querySelector('.tab-btn.' + aba).classList.add('active');
-        }
-
-        // ============================================================
-        // XCORE - TROCA DE IDIOMA
-        // ============================================================
-        function trocarIdiomaXcore(idioma) {
-            document.querySelectorAll('.xcore-lang').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.xcore-tab-btn').forEach(el => el.classList.remove('active'));
-            
-            if (idioma === 'pt') {
-                document.getElementById('xcorePt').classList.add('active');
-                document.getElementById('xcorePtBtn').classList.add('active');
-                document.getElementById('xcoreSubtitle').textContent = '⚡ Um executor de Graal';
-                document.getElementById('xcoreTagline').textContent = 'Escolha o plano ideal para você e maximize sua experiência no GraalOnline! 🚀';
-            } else {
-                document.getElementById('xcoreEn').classList.add('active');
-                document.getElementById('xcoreEnBtn').classList.add('active');
-                document.getElementById('xcoreSubtitle').textContent = '⚡ A Graal Script Executor';
-                document.getElementById('xcoreTagline').textContent = 'Choose the ideal plan for you and maximize your GraalOnline experience! 🚀';
-            }
         }
 
         // ============================================================
@@ -2901,18 +2740,18 @@
         });
 
         // ============================================================
-        // FORMULÁRIO
+        // FORMULÁRIO XCORE (separado)
         // ============================================================
-        document.getElementById('formContato').addEventListener('submit', function(e) {
-            const btn = document.getElementById('formSubmitBtn');
+        document.getElementById('formXcore').addEventListener('submit', function(e) {
+            const btn = document.getElementById('formXcoreBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-            const nome = document.querySelector('input[name="Nome"]').value;
-            const email = document.querySelector('input[name="Email"]').value;
-            const plano = document.querySelector('select[name="Plano"]').value;
+            const nome = document.querySelector('#formXcore input[name="Nome"]').value;
+            const email = document.querySelector('#formXcore input[name="Email"]').value;
+            const plano = document.querySelector('#formXcore select[name="Plano"]').value;
 
-            adicionarNotificacao(`📩 Novo pedido de ${nome} - ${plano}`, 'compra');
+            adicionarNotificacao(`⚡ Novo pedido Xcore de ${nome} - ${plano}`, 'compra');
 
             if (email) {
                 localStorage.setItem('kzn_cliente_email', email);
@@ -2920,13 +2759,43 @@
 
             setTimeout(() => {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido Xcore';
+                const status = document.getElementById('formXcoreStatus');
+                status.className = 'form-status success';
+                status.style.display = 'block';
+                status.textContent = '✅ Pedido Xcore enviado com sucesso! Você receberá sua key em breve.';
+                this.reset();
+                adicionarNotificacao(`✅ Pedido Xcore de ${nome} enviado com sucesso!`, 'sucesso');
+            }, 3000);
+        });
+
+        // ============================================================
+        // FORMULÁRIO KZN
+        // ============================================================
+        document.getElementById('formContato').addEventListener('submit', function(e) {
+            const btn = document.getElementById('formSubmitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            const nome = document.querySelector('#formContato input[name="Nome"]').value;
+            const email = document.querySelector('#formContato input[name="Email"]').value;
+            const plano = document.querySelector('#formContato select[name="Plano"]').value;
+
+            adicionarNotificacao(`📩 Novo pedido KZN de ${nome} - ${plano}`, 'compra');
+
+            if (email) {
+                localStorage.setItem('kzn_cliente_email', email);
+            }
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido KZN';
                 const status = document.getElementById('formStatus');
                 status.className = 'form-status success';
                 status.style.display = 'block';
-                status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
+                status.textContent = '✅ Pedido KZN enviado com sucesso! Você receberá sua key em breve.';
                 this.reset();
-                adicionarNotificacao(`✅ Pedido de ${nome} enviado com sucesso!`, 'sucesso');
+                adicionarNotificacao(`✅ Pedido KZN de ${nome} enviado com sucesso!`, 'sucesso');
             }, 3000);
         });
 
@@ -2980,7 +2849,7 @@
 
         console.log('✅ KZN MENU carregado com sucesso!');
         console.log('🔔 Sistema de notificações ativo!');
-        console.log('⚡ Xcore Executor integrado!');
+        console.log('⚡ Xcore Executor integrado com formulário próprio!');
     </script>
 
 </body>
