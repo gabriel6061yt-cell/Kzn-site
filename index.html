@@ -1358,7 +1358,7 @@
         }
 
         /* ============================================================
-           TELA DE BOAS-VINDAS
+           TELA DE BOAS-VINDAS (COM LOGO)
            ============================================================ */
         .welcome-overlay {
             position: fixed;
@@ -1436,16 +1436,16 @@
         }
 
         /* ============================================================
-           CHAT - JANELA
+           CHAT - JANELA (AUMENTADA)
            ============================================================ */
         .chat-window {
             position: fixed;
             bottom: 230px;
             left: 24px;
             z-index: 9997;
-            width: 360px;
-            max-height: 480px;
-            height: 480px;
+            width: 420px;
+            max-height: 550px;
+            height: 550px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -1519,6 +1519,28 @@
             color: var(--text-muted);
             font-size: 0.55rem;
             margin-left: 6px;
+        }
+        .chat-msg .admin-badge {
+            color: var(--warning);
+            font-size: 0.55rem;
+            font-weight: 700;
+            background: rgba(245,158,11,0.2);
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 4px;
+        }
+        .chat-msg .delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.3s;
+            padding: 0 4px;
+        }
+        .chat-msg .delete-btn:hover {
+            color: var(--primary);
+            transform: scale(1.1);
         }
 
         .chat-input-area {
@@ -1911,9 +1933,9 @@
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
             .chat-window {
-                width: 300px;
-                max-height: 400px;
-                height: 400px;
+                width: 320px;
+                max-height: 420px;
+                height: 420px;
                 bottom: 200px;
                 left: 10px;
             }
@@ -1949,9 +1971,9 @@
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
             .chat-window {
-                width: 260px;
-                max-height: 350px;
-                height: 350px;
+                width: 280px;
+                max-height: 380px;
+                height: 380px;
                 bottom: 180px;
                 left: 10px;
             }
@@ -1988,7 +2010,7 @@
     </button>
 
     <!-- ============================================================
-    CHAT - JANELA
+    CHAT - JANELA (AUMENTADA)
     ============================================================ -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
@@ -2637,12 +2659,13 @@
     </section>
 
     <!-- ============================================================
-    TELA DE BOAS-VINDAS
+    TELA DE BOAS-VINDAS (COM LOGO)
     ============================================================ -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <div style="text-align:center;margin-bottom:2rem;">
-                <div style="font-size:4rem;margin-bottom:1rem;">🚀</div>
+                <!-- LOGO NO LUGAR DO EMOJI -->
+                <img src="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" alt="KZN MENU Logo" style="width:100px;height:100px;border-radius:50%;border:3px solid var(--primary);margin-bottom:1rem;object-fit:cover;" />
                 <h1 style="font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KZN MENU</h1>
                 <p style="color:var(--text-muted);font-size:1.1rem;">Entre com sua conta Google para acessar o chat!</p>
             </div>
@@ -2735,7 +2758,7 @@
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onChildAdded, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
@@ -2753,6 +2776,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const mensagensRef = ref(db, 'chat');
+
+        // ADMIN - email do administrador
+        const ADMIN_EMAIL = 'gabriel6061yt@gmail.com';
 
         // ============================================================
         // TELA DE BOAS-VINDAS
@@ -2797,6 +2823,25 @@
         }
 
         // ============================================================
+        // ADMIN - APAGAR MENSAGEM
+        // ============================================================
+        window.apagarMensagem = function(key) {
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (!usuario || usuario.email !== ADMIN_EMAIL) {
+                alert('⚠️ Apenas administradores podem apagar mensagens!');
+                return;
+            }
+            if (confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) {
+                const msgRef = ref(db, 'chat/' + key);
+                remove(msgRef).then(() => {
+                    alert('✅ Mensagem apagada!');
+                }).catch(() => {
+                    alert('❌ Erro ao apagar mensagem.');
+                });
+            }
+        };
+
+        // ============================================================
         // CHAT - ENVIAR MENSAGEM
         // ============================================================
         window.enviarMensagem = function() {
@@ -2813,6 +2858,7 @@
             push(mensagensRef, {
                 nome: usuario.nome,
                 avatar: usuario.avatar || '',
+                email: usuario.email || '',
                 mensagem: texto,
                 data: new Date().toISOString()
             });
@@ -2823,7 +2869,7 @@
         };
 
         // ============================================================
-        // CHAT - CARREGAR MENSAGENS
+        // CHAT - CARREGAR MENSAGENS (COM BOTÃO APAGAR PARA ADMIN)
         // ============================================================
         let contadorNaoLidas = 0;
         let chatAberto = false;
@@ -2833,17 +2879,28 @@
             container.innerHTML = '';
 
             onChildAdded(mensagensRef, (snapshot) => {
+                const key = snapshot.key;
                 const dados = snapshot.val();
                 const data = new Date(dados.data);
                 const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
+                // Verifica se o usuário atual é admin
+                const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                const isAdmin = usuario && usuario.email === ADMIN_EMAIL;
+                const isAdminAuthor = dados.email === ADMIN_EMAIL;
+
                 const div = document.createElement('div');
                 div.className = 'chat-msg';
+
                 div.innerHTML = `
-                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
-                                ${dados.avatar ? `<img src="${dados.avatar}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" />` : ''}
-                                <strong style="color:var(--secondary-light);font-size:0.85rem;">${dados.nome}</strong>
-                                <span style="color:var(--text-muted);font-size:0.6rem;">${hora}</span>
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;justify-content:space-between;">
+                                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                    ${dados.avatar ? `<img src="${dados.avatar}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" />` : ''}
+                                    <strong style="color:var(--secondary-light);font-size:0.85rem;">${dados.nome}</strong>
+                                    ${isAdminAuthor ? '<span class="admin-badge">👑 ADMIN</span>' : ''}
+                                    <span class="msg-time">${hora}</span>
+                                </div>
+                                ${isAdmin ? `<button class="delete-btn" onclick="apagarMensagem('${key}')" title="Apagar mensagem"><i class="fas fa-trash"></i></button>` : ''}
                             </div>
                             <p style="color:var(--text);font-size:0.9rem;word-wrap:break-word;margin-left:32px;">${dados.mensagem}</p>
                         `;
@@ -2891,6 +2948,7 @@
         });
 
         console.log('🔥 Chat KZN MENU conectado ao Firebase!');
+        console.log('👑 ADMIN: gabriel6061yt@gmail.com');
     </script>
 
 </body>
