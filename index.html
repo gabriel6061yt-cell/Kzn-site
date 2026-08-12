@@ -1517,7 +1517,7 @@
         .modal-pix-xcore .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
         /* ============================================================
-           FAQ - CORRIGIDA
+           FAQ
            ============================================================ */
         .faq-item {
             background: var(--bg-card);
@@ -2140,7 +2140,7 @@
     </section>
 
     <!-- ============================================================
-    PERFIL
+    PERFIL - CORRIGIDO (BOTÃO SAIR FUNCIONANDO)
     ============================================================ -->
     <section id="perfil" class="section dark">
         <div class="container">
@@ -2181,9 +2181,15 @@
                 </div>
 
                 <div class="profile-actions">
-                    <button class="btn-action primary" onclick="window.location.href='#mods'"><i class="fas fa-shopping-cart"></i> Comprar Mods</button>
-                    <button class="btn-action" onclick="window.location.href='#contato'"><i class="fas fa-headset"></i> Suporte</button>
-                    <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
+                    <button class="btn-action primary" onclick="window.location.href='#mods'">
+                        <i class="fas fa-shopping-cart"></i> Comprar Mods
+                    </button>
+                    <button class="btn-action" onclick="window.location.href='#contato'">
+                        <i class="fas fa-headset"></i> Suporte
+                    </button>
+                    <button class="btn-action" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
                 </div>
 
                 <div id="editProfileArea" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
@@ -2278,7 +2284,7 @@
     </section>
 
     <!-- ============================================================
-    FAQ - CORRIGIDA
+    FAQ
     ============================================================ -->
     <section id="faq" class="section">
         <div class="container">
@@ -2498,7 +2504,7 @@
         }
 
         // ============================================================
-        // FAQ - TOGGLE CORRIGIDO
+        // FAQ - TOGGLE
         // ============================================================
         function toggleFaq(el) {
             el.classList.toggle('open');
@@ -2630,9 +2636,23 @@
         });
 
         // ============================================================
-        // SISTEMA DE PERFIL
+        // SISTEMA DE PERFIL - CORRIGIDO (BOTÃO SAIR FUNCIONA)
         // ============================================================
         let usuarioLogado = null;
+
+        function resetarPerfilPadrao() {
+            usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
+            document.getElementById('userDisplay').textContent = 'Entrar';
+            document.getElementById('profileName').textContent = 'KZN Usuário';
+            document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
+            document.getElementById('avatarText').textContent = 'K';
+            document.getElementById('avatarProfileText').textContent = 'K';
+            document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
+            document.getElementById('avatarProfileImage').style.display = 'none';
+            document.getElementById('avatarProfileText').style.display = 'block';
+            document.getElementById('editNome').value = '';
+            document.getElementById('editEmail').value = '';
+        }
 
         function carregarPerfil() {
             const dados = localStorage.getItem('kzn_usuario_logado');
@@ -2660,12 +2680,10 @@
                         document.getElementById('avatarText').textContent = letra;
                     }
                 } catch (e) {
-                    usuarioLogado = null;
+                    resetarPerfilPadrao();
                 }
             } else {
-                usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
-                document.getElementById('avatarText').textContent = 'K';
-                document.getElementById('avatarProfileText').textContent = 'K';
+                resetarPerfilPadrao();
             }
         }
 
@@ -2714,11 +2732,20 @@
             alert('✅ Perfil atualizado com sucesso!');
         }
 
+        // ============================================================
+        // LOGOUT - FUNÇÃO CORRIGIDA (BOTÃO SAIR FUNCIONA)
+        // ============================================================
         function logout() {
+            // Remove os dados do usuário
             localStorage.removeItem('kzn_usuario_logado');
-            usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
-            carregarPerfil();
+
+            // Reseta o perfil
+            resetarPerfilPadrao();
+
+            // Mensagem
             alert('👋 Você saiu da sua conta.');
+
+            // Volta para o topo
             window.location.href = '#inicio';
         }
 
