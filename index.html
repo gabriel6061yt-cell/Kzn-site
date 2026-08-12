@@ -1358,7 +1358,7 @@
         }
 
         /* ============================================================
-           TELA DE BOAS-VINDAS (COM LOGO)
+           TELA DE BOAS-VINDAS (PROFISSIONAL)
            ============================================================ */
         .welcome-overlay {
             position: fixed;
@@ -1378,14 +1378,73 @@
             pointer-events: none;
         }
         .welcome-content {
-            max-width: 420px;
+            max-width: 440px;
             width: 90%;
-            padding: 2.5rem;
+            padding: 2.8rem 2rem;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
             text-align: center;
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+        }
+        .welcome-brand {
+            margin-bottom: 1.5rem;
+        }
+        .welcome-brand img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            margin-bottom: 0.5rem;
+        }
+        .welcome-brand h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+        }
+        .welcome-brand p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        .welcome-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 0 auto 1.2rem;
+            border-radius: 2px;
+        }
+        .welcome-subtitle {
+            color: var(--text);
+            font-size: 0.95rem;
+            margin-bottom: 1.8rem;
+            font-weight: 500;
+        }
+        .google-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .welcome-footer {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
         }
 
         /* ============================================================
@@ -1458,6 +1517,22 @@
         .chat-window.open {
             display: flex;
         }
+        .chat-window.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            max-height: 100vh;
+            bottom: 0;
+            right: 0;
+            z-index: 9999;
+            border-radius: 0;
+            animation: none;
+        }
+        .chat-window.fullscreen .chat-messages {
+            max-height: calc(100vh - 120px);
+        }
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -1476,6 +1551,7 @@
             padding: 0.8rem 1rem;
             background: rgba(255,255,255,0.03);
             border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
         .chat-header span {
             font-weight: 700;
@@ -1486,17 +1562,24 @@
             color: var(--secondary);
             margin-right: 6px;
         }
-        .chat-header .close-chat-btn {
+        .chat-header .chat-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .chat-header .chat-actions button {
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: 0.3s;
+            padding: 4px 6px;
+            border-radius: 4px;
         }
-        .chat-header .close-chat-btn:hover {
+        .chat-header .chat-actions button:hover {
             color: var(--text);
-            transform: rotate(90deg);
+            background: var(--glass);
         }
 
         .chat-messages {
@@ -1589,6 +1672,7 @@
             padding: 0.6rem 1rem;
             border-top: 1px solid var(--border);
             background: rgba(255,255,255,0.02);
+            flex-shrink: 0;
         }
         .chat-input-area input {
             flex: 1;
@@ -2055,7 +2139,14 @@
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <span><i class="fas fa-comment-dots"></i> Chat Global - KZN</span>
-            <button class="close-chat-btn" onclick="toggleChat()">✕</button>
+            <div class="chat-actions">
+                <button onclick="toggleFullscreenChat()" title="Tela cheia" id="fullscreenBtn">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    ✕
+                </button>
+            </div>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div style="text-align:center;color:var(--text-muted);padding:2rem;">
@@ -2702,16 +2793,19 @@
     </section>
 
     <!-- ============================================================
-    TELA DE BOAS-VINDAS (COM LOGO)
+    TELA DE BOAS-VINDAS (PROFISSIONAL)
     ============================================================ -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
-            <div style="text-align:center;margin-bottom:2rem;">
-                <!-- LOGO NO LUGAR DO EMOJI -->
-                <img src="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" alt="KZN MENU Logo" style="width:100px;height:100px;border-radius:50%;border:3px solid var(--primary);margin-bottom:1rem;object-fit:cover;" />
-                <h1 style="font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KZN MENU</h1>
-                <p style="color:var(--text-muted);font-size:1.1rem;">Entre com sua conta Google para acessar o chat!</p>
+            <div class="welcome-brand">
+                <img src="https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1" alt="KZN MENU" />
+                <h1>KZN MENU</h1>
+                <p>O melhor Mod Menu para Graal</p>
             </div>
+
+            <div class="welcome-divider"></div>
+
+            <p class="welcome-subtitle">Entre com sua conta Google para acessar todos os recursos</p>
 
             <div id="g_id_onload"
                  data-client_id="642206758344-ma2e07eu08dokkui9d28cfiqfnrss50v.apps.googleusercontent.com"
@@ -2719,7 +2813,7 @@
                  data-auto_prompt="false">
             </div>
 
-            <div style="display:flex;justify-content:center;margin:1.5rem 0;">
+            <div class="google-btn-wrapper">
                 <div class="g_id_signin"
                      data-type="standard"
                      data-shape="rectangular"
@@ -2730,7 +2824,7 @@
                 </div>
             </div>
 
-            <p style="color:var(--text-muted);font-size:0.8rem;">Faça login para conversar com outros jogadores!</p>
+            <p class="welcome-footer">Ao entrar, você concorda com nossos Termos de Serviço</p>
         </div>
     </div>
 
@@ -2801,7 +2895,7 @@
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onChildAdded, onChildRemoved, remove, set, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onChildAdded, onChildRemoved, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
@@ -2851,7 +2945,6 @@
                     setTimeout(() => { osc2.stop(); }, 150);
                 }, 200);
             } catch (e) {
-                // Fallback: criar um elemento de áudio simples
                 try {
                     const audio = new Audio('data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVQAAABCAAAARFVGRUZQAAwAAAAEAAAAIABCTEVTAAwAAAABAAgAZGF0YQAAAAAA');
                     audio.volume = 0.3;
@@ -2876,22 +2969,43 @@
             }
         }
 
-        // Callback do login Google (chamado pelo botão)
+        // Callback do login Google (chamado pelo botão) - CORRIGIDO
         window.handleWelcomeLogin = function(response) {
-            const payload = parseJwt(response.credential);
-            const usuario = {
-                nome: payload.name,
-                email: payload.email,
-                avatar: payload.picture
-            };
-            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-            document.getElementById('welcomeOverlay').classList.add('hidden');
-            document.getElementById('chatToggleBtn').style.display = 'flex';
-            carregarMensagens();
-            carregarTyping();
-            // Atualiza o perfil no site
-            if (typeof carregarPerfil === 'function') {
-                carregarPerfil();
+            try {
+                const payload = parseJwt(response.credential);
+                const usuario = {
+                    nome: payload.name,
+                    email: payload.email,
+                    avatar: payload.picture
+                };
+                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+
+                // Oculta a tela de boas-vindas e mostra o chat
+                document.getElementById('welcomeOverlay').classList.add('hidden');
+                document.getElementById('chatToggleBtn').style.display = 'flex';
+
+                // Carrega mensagens
+                carregarMensagens();
+                carregarTyping();
+
+                // Atualiza o perfil
+                if (typeof carregarPerfil === 'function') {
+                    carregarPerfil();
+                }
+
+                // Fecha a janela de login (se houver)
+                if (typeof fecharModalLogin === 'function') {
+                    fecharModalLogin();
+                }
+
+                // Fecha o modal de login antigo se existir
+                const modalLogin = document.getElementById('modalLogin');
+                if (modalLogin) {
+                    modalLogin.classList.remove('open');
+                }
+            } catch (e) {
+                console.error('Erro no login:', e);
+                alert('❌ Ocorreu um erro ao fazer login. Tente novamente.');
             }
         };
 
@@ -2916,7 +3030,6 @@
             if (confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) {
                 const msgRef = ref(db, 'chat/' + key);
                 remove(msgRef).then(() => {
-                    // A remoção é detectada automaticamente pelo onChildRemoved
                     playNotificationSound();
                 }).catch(() => {
                     alert('❌ Erro ao apagar mensagem.');
@@ -2949,11 +3062,11 @@
             input.value = '';
             const container = document.getElementById('chatMessages');
             container.scrollTop = container.scrollHeight;
-            
+
             // Remove typing indicator quando enviar
             const typingIndicator = document.getElementById('typingIndicator');
             typingIndicator.classList.remove('show');
-            
+
             // Mostra que parou de digitar
             const userEmail = usuario.email || '';
             const userTypingRef = ref(db, 'typing/' + userEmail);
@@ -2971,7 +3084,6 @@
             const container = document.getElementById('chatMessages');
             container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
 
-            // Limpa cache
             mensagensCache = {};
 
             // Listener para novas mensagens
@@ -2986,7 +3098,6 @@
             onChildRemoved(mensagensRef, (snapshot) => {
                 const key = snapshot.key;
                 delete mensagensCache[key];
-                // Remove o elemento da DOM
                 const msgElement = document.getElementById('msg-' + key);
                 if (msgElement) {
                     msgElement.style.opacity = '0';
@@ -3001,20 +3112,17 @@
 
         function renderizarMensagem(key, dados) {
             const container = document.getElementById('chatMessages');
-            
-            // Remove o loading se existir
+
             const loading = container.querySelector('.loading-messages');
             if (loading) loading.remove();
 
             const data = new Date(dados.data);
             const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-            // Verifica se o usuário atual é admin
             const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
             const isAdmin = usuario && usuario.email === ADMIN_EMAIL;
             const isAdminAuthor = dados.email === ADMIN_EMAIL;
 
-            // Verifica se a mensagem já existe na DOM
             const existingMsg = document.getElementById('msg-' + key);
             if (existingMsg) return;
 
@@ -3035,12 +3143,10 @@
                         <p style="color:var(--text);font-size:0.9rem;word-wrap:break-word;margin-left:32px;">${dados.mensagem}</p>
                     `;
 
-            // Insere no final
             const typingIndicator = document.getElementById('typingIndicator');
             container.insertBefore(div, typingIndicator);
             container.scrollTop = container.scrollHeight;
 
-            // Notificação se o chat estiver fechado
             if (!chatAberto) {
                 contadorNaoLidas++;
                 const badge = document.getElementById('chatBadge');
@@ -3054,7 +3160,6 @@
         // SISTEMA DE TYPING (Alguém está digitando)
         // ============================================================
         let typingTimeout = null;
-        let isTyping = false;
 
         function carregarTyping() {
             const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
@@ -3062,16 +3167,13 @@
 
             const typingIndicator = document.getElementById('typingIndicator');
 
-            // Escuta mudanças no nó de typing
             onChildAdded(typingRef, (snapshot) => {
                 const email = snapshot.key;
                 const dados = snapshot.val();
-                
+
                 if (!dados || !dados.nome) return;
-                
-                // Não mostra "digitando" se for o próprio usuário
                 if (email === usuario.email) return;
-                
+
                 typingIndicator.innerHTML = `<i class="fas fa-pen-fancy"></i> ${dados.nome} está digitando...`;
                 typingIndicator.classList.add('show');
             });
@@ -3079,12 +3181,9 @@
             onChildRemoved(typingRef, (snapshot) => {
                 const email = snapshot.key;
                 if (email === usuario.email) return;
-                
-                // Verifica se ainda tem alguém digitando
-                const typingContainer = document.getElementById('typingContainer');
                 setTimeout(() => {
-                    // Verifica se tem outros usuários digitando
-                    const hasOtherTyping = false; // Simplificado
+                    // Verifica se ainda tem alguém digitando
+                    const hasOtherTyping = false;
                     if (!hasOtherTyping) {
                         typingIndicator.classList.remove('show');
                     }
@@ -3099,7 +3198,6 @@
                 input.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         window.enviarMensagem();
-                        // Remove typing quando enviar
                         const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
                         if (usuario) {
                             const userTypingRef = ref(db, 'typing/' + usuario.email);
@@ -3107,8 +3205,7 @@
                         }
                         return;
                     }
-                    
-                    // Ativa o typing
+
                     const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
                     if (usuario) {
                         const userTypingRef = ref(db, 'typing/' + usuario.email);
@@ -3116,15 +3213,14 @@
                             nome: usuario.nome,
                             timestamp: Date.now()
                         });
-                        
-                        // Limpa o typing após 2 segundos de inatividade
+
                         clearTimeout(typingTimeout);
                         typingTimeout = setTimeout(() => {
                             set(userTypingRef, null);
                         }, 3000);
                     }
                 });
-                
+
                 input.addEventListener('blur', function() {
                     const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
                     if (usuario) {
@@ -3145,7 +3241,6 @@
             chatAberto = chat.classList.contains('open');
 
             if (chatAberto) {
-                // Reseta contador
                 contadorNaoLidas = 0;
                 document.getElementById('chatBadge').classList.remove('show');
                 const container = document.getElementById('chatMessages');
@@ -3154,34 +3249,53 @@
         };
 
         // ============================================================
+        // TELA CHEIA DO CHAT
+        // ============================================================
+        let isFullscreen = false;
+
+        window.toggleFullscreenChat = function() {
+            const chat = document.getElementById('chatWindow');
+            const btn = document.getElementById('fullscreenBtn');
+
+            if (!isFullscreen) {
+                chat.classList.add('fullscreen');
+                btn.innerHTML = '<i class="fas fa-compress"></i>';
+                isFullscreen = true;
+            } else {
+                chat.classList.remove('fullscreen');
+                btn.innerHTML = '<i class="fas fa-expand"></i>';
+                isFullscreen = false;
+            }
+        };
+
+        // ============================================================
         // EXPORTA FUNÇÕES PARA O GLOBAL
         // ============================================================
         window.toggleChat = window.toggleChat;
+        window.toggleFullscreenChat = window.toggleFullscreenChat;
         window.enviarMensagem = window.enviarMensagem;
         window.apagarMensagem = window.apagarMensagem;
         window.handleWelcomeLogin = window.handleWelcomeLogin;
         window.logout = function() {
-            // Remove dados do usuário
             localStorage.removeItem('kzn_usuario_logado');
-            
-            // Reseta o perfil
+
             if (typeof resetarPerfilPadrao === 'function') {
                 resetarPerfilPadrao();
             }
-            
-            // Mostra a tela de boas-vindas
+
             document.getElementById('welcomeOverlay').classList.remove('hidden');
             document.getElementById('chatToggleBtn').style.display = 'none';
-            
-            // Fecha o chat se estiver aberto
+
             const chat = document.getElementById('chatWindow');
             chat.classList.remove('open');
+            chat.classList.remove('fullscreen');
             chatAberto = false;
-            
-            // Reseta mensagens
+            isFullscreen = false;
+            document.getElementById('fullscreenBtn').innerHTML = '<i class="fas fa-expand"></i>';
+
             const container = document.getElementById('chatMessages');
             container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
-            
+
             alert('👋 Você saiu da sua conta.');
         };
 
@@ -3189,6 +3303,7 @@
         console.log('👑 ADMIN: gabriel6061yt@gmail.com');
         console.log('🔔 Som de notificação ativo!');
         console.log('✍️ Indicador de digitação ativo!');
+        console.log('🖥️ Modo tela cheia disponível!');
     </script>
 
 </body>
