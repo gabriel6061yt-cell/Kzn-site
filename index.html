@@ -1486,6 +1486,18 @@
             color: var(--secondary);
             margin-right: 6px;
         }
+        .chat-header .close-chat-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .chat-header .close-chat-btn:hover {
+            color: var(--text);
+            transform: rotate(90deg);
+        }
 
         .chat-messages {
             flex: 1;
@@ -1506,6 +1518,17 @@
             background: var(--bg);
             border-radius: 8px;
             border-left: 2px solid var(--secondary);
+            animation: msgIn 0.3s ease;
+        }
+        @keyframes msgIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
         .chat-msg strong {
             color: var(--secondary-light);
@@ -1541,6 +1564,23 @@
         .chat-msg .delete-btn:hover {
             color: var(--primary);
             transform: scale(1.1);
+        }
+
+        /* Digitando */
+        .typing-indicator {
+            display: none;
+            padding: 0.3rem 0.6rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .typing-indicator.show {
+            display: block;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .chat-input-area {
@@ -2015,12 +2055,15 @@
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <span><i class="fas fa-comment-dots"></i> Chat Global - KZN</span>
-            <button onclick="toggleChat()" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+            <button class="close-chat-btn" onclick="toggleChat()">✕</button>
         </div>
         <div class="chat-messages" id="chatMessages">
             <div style="text-align:center;color:var(--text-muted);padding:2rem;">
                 <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
                 <p>Carregando mensagens...</p>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <i class="fas fa-pen-fancy"></i> Alguém está digitando...
             </div>
         </div>
         <div class="chat-input-area">
@@ -2758,7 +2801,7 @@
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onChildAdded, remove, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, onChildAdded, onChildRemoved, remove, set, onDisconnect } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         // Configuração do Firebase
         const firebaseConfig = {
@@ -2776,9 +2819,46 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const mensagensRef = ref(db, 'chat');
+        const typingRef = ref(db, 'typing');
 
         // ADMIN - email do administrador
         const ADMIN_EMAIL = 'gabriel6061yt@gmail.com';
+
+        // ============================================================
+        // SOM DE NOTIFICAÇÃO
+        // ============================================================
+        function playNotificationSound() {
+            try {
+                const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.15;
+                oscillator.start();
+                setTimeout(() => { oscillator.stop(); }, 150);
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.frequency.value = 1000;
+                    osc2.type = 'sine';
+                    gain2.gain.value = 0.15;
+                    osc2.start();
+                    setTimeout(() => { osc2.stop(); }, 150);
+                }, 200);
+            } catch (e) {
+                // Fallback: criar um elemento de áudio simples
+                try {
+                    const audio = new Audio('data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YVQAAABCAAAARFVGRUZQAAwAAAAEAAAAIABCTEVTAAwAAAABAAgAZGF0YQAAAAAA');
+                    audio.volume = 0.3;
+                    audio.play().catch(() => {});
+                } catch (e2) {}
+            }
+        }
 
         // ============================================================
         // TELA DE BOAS-VINDAS
@@ -2792,6 +2872,7 @@
                 document.getElementById('welcomeOverlay').classList.add('hidden');
                 document.getElementById('chatToggleBtn').style.display = 'flex';
                 carregarMensagens();
+                carregarTyping();
             }
         }
 
@@ -2807,6 +2888,7 @@
             document.getElementById('welcomeOverlay').classList.add('hidden');
             document.getElementById('chatToggleBtn').style.display = 'flex';
             carregarMensagens();
+            carregarTyping();
             // Atualiza o perfil no site
             if (typeof carregarPerfil === 'function') {
                 carregarPerfil();
@@ -2823,7 +2905,7 @@
         }
 
         // ============================================================
-        // ADMIN - APAGAR MENSAGEM
+        // ADMIN - APAGAR MENSAGEM (ATUALIZA EM TEMPO REAL)
         // ============================================================
         window.apagarMensagem = function(key) {
             const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
@@ -2834,7 +2916,8 @@
             if (confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) {
                 const msgRef = ref(db, 'chat/' + key);
                 remove(msgRef).then(() => {
-                    alert('✅ Mensagem apagada!');
+                    // A remoção é detectada automaticamente pelo onChildRemoved
+                    playNotificationSound();
                 }).catch(() => {
                     alert('❌ Erro ao apagar mensagem.');
                 });
@@ -2866,56 +2949,192 @@
             input.value = '';
             const container = document.getElementById('chatMessages');
             container.scrollTop = container.scrollHeight;
+            
+            // Remove typing indicator quando enviar
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.remove('show');
+            
+            // Mostra que parou de digitar
+            const userEmail = usuario.email || '';
+            const userTypingRef = ref(db, 'typing/' + userEmail);
+            set(userTypingRef, null);
         };
 
         // ============================================================
-        // CHAT - CARREGAR MENSAGENS (COM BOTÃO APAGAR PARA ADMIN)
+        // CHAT - CARREGAR MENSAGENS (COM REMOÇÃO EM TEMPO REAL)
         // ============================================================
         let contadorNaoLidas = 0;
         let chatAberto = false;
+        let mensagensCache = {};
 
         function carregarMensagens() {
             const container = document.getElementById('chatMessages');
-            container.innerHTML = '';
+            container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
 
+            // Limpa cache
+            mensagensCache = {};
+
+            // Listener para novas mensagens
             onChildAdded(mensagensRef, (snapshot) => {
                 const key = snapshot.key;
                 const dados = snapshot.val();
-                const data = new Date(dados.data);
-                const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                mensagensCache[key] = dados;
+                renderizarMensagem(key, dados);
+            });
 
-                // Verifica se o usuário atual é admin
-                const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-                const isAdmin = usuario && usuario.email === ADMIN_EMAIL;
-                const isAdminAuthor = dados.email === ADMIN_EMAIL;
-
-                const div = document.createElement('div');
-                div.className = 'chat-msg';
-
-                div.innerHTML = `
-                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;justify-content:space-between;">
-                                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                                    ${dados.avatar ? `<img src="${dados.avatar}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" />` : ''}
-                                    <strong style="color:var(--secondary-light);font-size:0.85rem;">${dados.nome}</strong>
-                                    ${isAdminAuthor ? '<span class="admin-badge">👑 ADMIN</span>' : ''}
-                                    <span class="msg-time">${hora}</span>
-                                </div>
-                                ${isAdmin ? `<button class="delete-btn" onclick="apagarMensagem('${key}')" title="Apagar mensagem"><i class="fas fa-trash"></i></button>` : ''}
-                            </div>
-                            <p style="color:var(--text);font-size:0.9rem;word-wrap:break-word;margin-left:32px;">${dados.mensagem}</p>
-                        `;
-                container.appendChild(div);
-                container.scrollTop = container.scrollHeight;
-
-                // Notificação se o chat estiver fechado
-                if (!chatAberto) {
-                    contadorNaoLidas++;
-                    const badge = document.getElementById('chatBadge');
-                    badge.textContent = contadorNaoLidas;
-                    badge.classList.add('show');
+            // Listener para mensagens removidas (em tempo real)
+            onChildRemoved(mensagensRef, (snapshot) => {
+                const key = snapshot.key;
+                delete mensagensCache[key];
+                // Remove o elemento da DOM
+                const msgElement = document.getElementById('msg-' + key);
+                if (msgElement) {
+                    msgElement.style.opacity = '0';
+                    msgElement.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        msgElement.remove();
+                    }, 300);
                 }
+                playNotificationSound();
             });
         }
+
+        function renderizarMensagem(key, dados) {
+            const container = document.getElementById('chatMessages');
+            
+            // Remove o loading se existir
+            const loading = container.querySelector('.loading-messages');
+            if (loading) loading.remove();
+
+            const data = new Date(dados.data);
+            const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+            // Verifica se o usuário atual é admin
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            const isAdmin = usuario && usuario.email === ADMIN_EMAIL;
+            const isAdminAuthor = dados.email === ADMIN_EMAIL;
+
+            // Verifica se a mensagem já existe na DOM
+            const existingMsg = document.getElementById('msg-' + key);
+            if (existingMsg) return;
+
+            const div = document.createElement('div');
+            div.className = 'chat-msg';
+            div.id = 'msg-' + key;
+
+            div.innerHTML = `
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;justify-content:space-between;">
+                            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                ${dados.avatar ? `<img src="${dados.avatar}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" />` : ''}
+                                <strong style="color:var(--secondary-light);font-size:0.85rem;">${dados.nome}</strong>
+                                ${isAdminAuthor ? '<span class="admin-badge">👑 ADMIN</span>' : ''}
+                                <span class="msg-time">${hora}</span>
+                            </div>
+                            ${isAdmin ? `<button class="delete-btn" onclick="apagarMensagem('${key}')" title="Apagar mensagem"><i class="fas fa-trash"></i></button>` : ''}
+                        </div>
+                        <p style="color:var(--text);font-size:0.9rem;word-wrap:break-word;margin-left:32px;">${dados.mensagem}</p>
+                    `;
+
+            // Insere no final
+            const typingIndicator = document.getElementById('typingIndicator');
+            container.insertBefore(div, typingIndicator);
+            container.scrollTop = container.scrollHeight;
+
+            // Notificação se o chat estiver fechado
+            if (!chatAberto) {
+                contadorNaoLidas++;
+                const badge = document.getElementById('chatBadge');
+                badge.textContent = contadorNaoLidas;
+                badge.classList.add('show');
+                playNotificationSound();
+            }
+        }
+
+        // ============================================================
+        // SISTEMA DE TYPING (Alguém está digitando)
+        // ============================================================
+        let typingTimeout = null;
+        let isTyping = false;
+
+        function carregarTyping() {
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (!usuario) return;
+
+            const typingIndicator = document.getElementById('typingIndicator');
+
+            // Escuta mudanças no nó de typing
+            onChildAdded(typingRef, (snapshot) => {
+                const email = snapshot.key;
+                const dados = snapshot.val();
+                
+                if (!dados || !dados.nome) return;
+                
+                // Não mostra "digitando" se for o próprio usuário
+                if (email === usuario.email) return;
+                
+                typingIndicator.innerHTML = `<i class="fas fa-pen-fancy"></i> ${dados.nome} está digitando...`;
+                typingIndicator.classList.add('show');
+            });
+
+            onChildRemoved(typingRef, (snapshot) => {
+                const email = snapshot.key;
+                if (email === usuario.email) return;
+                
+                // Verifica se ainda tem alguém digitando
+                const typingContainer = document.getElementById('typingContainer');
+                setTimeout(() => {
+                    // Verifica se tem outros usuários digitando
+                    const hasOtherTyping = false; // Simplificado
+                    if (!hasOtherTyping) {
+                        typingIndicator.classList.remove('show');
+                    }
+                }, 1000);
+            });
+        }
+
+        // Detectar quando o usuário está digitando
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('chatInput');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        window.enviarMensagem();
+                        // Remove typing quando enviar
+                        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                        if (usuario) {
+                            const userTypingRef = ref(db, 'typing/' + usuario.email);
+                            set(userTypingRef, null);
+                        }
+                        return;
+                    }
+                    
+                    // Ativa o typing
+                    const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                    if (usuario) {
+                        const userTypingRef = ref(db, 'typing/' + usuario.email);
+                        set(userTypingRef, {
+                            nome: usuario.nome,
+                            timestamp: Date.now()
+                        });
+                        
+                        // Limpa o typing após 2 segundos de inatividade
+                        clearTimeout(typingTimeout);
+                        typingTimeout = setTimeout(() => {
+                            set(userTypingRef, null);
+                        }, 3000);
+                    }
+                });
+                
+                input.addEventListener('blur', function() {
+                    const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                    if (usuario) {
+                        const userTypingRef = ref(db, 'typing/' + usuario.email);
+                        set(userTypingRef, null);
+                    }
+                });
+            }
+            verificarLogin();
+        });
 
         // ============================================================
         // CHAT - TOGGLE
@@ -2934,21 +3153,42 @@
             }
         };
 
-        // Enviar mensagem com Enter
-        document.addEventListener('DOMContentLoaded', function() {
-            const input = document.getElementById('chatInput');
-            if (input) {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        window.enviarMensagem();
-                    }
-                });
+        // ============================================================
+        // EXPORTA FUNÇÕES PARA O GLOBAL
+        // ============================================================
+        window.toggleChat = window.toggleChat;
+        window.enviarMensagem = window.enviarMensagem;
+        window.apagarMensagem = window.apagarMensagem;
+        window.handleWelcomeLogin = window.handleWelcomeLogin;
+        window.logout = function() {
+            // Remove dados do usuário
+            localStorage.removeItem('kzn_usuario_logado');
+            
+            // Reseta o perfil
+            if (typeof resetarPerfilPadrao === 'function') {
+                resetarPerfilPadrao();
             }
-            verificarLogin();
-        });
+            
+            // Mostra a tela de boas-vindas
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+            document.getElementById('chatToggleBtn').style.display = 'none';
+            
+            // Fecha o chat se estiver aberto
+            const chat = document.getElementById('chatWindow');
+            chat.classList.remove('open');
+            chatAberto = false;
+            
+            // Reseta mensagens
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
+            
+            alert('👋 Você saiu da sua conta.');
+        };
 
         console.log('🔥 Chat KZN MENU conectado ao Firebase!');
         console.log('👑 ADMIN: gabriel6061yt@gmail.com');
+        console.log('🔔 Som de notificação ativo!');
+        console.log('✍️ Indicador de digitação ativo!');
     </script>
 
 </body>
