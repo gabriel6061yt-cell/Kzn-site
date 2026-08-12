@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>KZN MENU - Melhores Mods para Graal Classic &amp; Era</title>
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
@@ -576,967 +576,15 @@
             padding: 1rem 0;
         }
 
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8rem 2rem 4rem;
-            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
-                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
-                        var(--bg);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
-            pointer-events: none;
-            animation: scanlines 20s linear infinite;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at center, rgba(220,38,38,0.03), transparent 70%);
-            pointer-events: none;
-            animation: rotateGlow 30s linear infinite;
-        }
-        @keyframes scanlines { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
-        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .hero-content {
-            flex: 1;
-            max-width: 600px;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            padding: 0.3rem 1.4rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-        .hero h1 .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero h1 .highlight-red { color: var(--primary); -webkit-text-fill-color: var(--primary); }
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 500px;
-        }
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
-        .btn {
-            padding: 0.9rem 2.4rem;
-            border-radius: 14px;
-            text-decoration: none;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
-        }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 50px rgba(220,38,38,0.6); }
-        .btn-secondary {
-            background: var(--glass);
-            color: var(--text);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(8px);
-        }
-        .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
-        .hero-image {
-            flex: 1;
-            max-width: 500px;
-            margin-left: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-image .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 16px;
-            border: 2px solid var(--primary);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            background: #000;
-        }
-        .hero-image .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .hero-image .video-label {
-            text-align: center;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .section {
-            padding: 6rem 2rem;
-            position: relative;
-            max-width: var(--container-max);
-            margin: 0 auto;
-        }
-        .section.dark { background: var(--bg); }
-        .section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0.3;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-        .section-header h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-        }
-        .section-header h2 i { color: var(--primary); }
-        .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
-
-        .tabs-container { max-width: 950px; margin: 0 auto; }
-        .tabs-nav {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            padding: 0.7rem 1.5rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            background: var(--bg-card);
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .tab-btn:hover { border-color: var(--primary); color: var(--text); }
-        .tab-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
-        }
-        .tab-btn.classic { border-color: var(--classic); }
-        .tab-btn.classic.active { background: var(--classic); border-color: var(--classic); }
-        .tab-btn.era { border-color: var(--era); }
-        .tab-btn.era.active { background: var(--era); border-color: var(--era); }
-        .tab-btn.xcore-tab { border-color: var(--secondary); }
-        .tab-btn.xcore-tab.active { background: var(--secondary); border-color: var(--secondary); }
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .plan-card:hover { transform: translateY(-6px); border-color: var(--primary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
-        .plan-card.popular { border-color: var(--secondary); box-shadow: 0 0 60px rgba(124,58,237,0.1); }
-        .plan-card.popular::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-        .plan-card .badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--secondary);
-            color: #fff;
-            padding: 0.1rem 1rem;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-        .plan-card .badge.era-badge { background: var(--era); }
-        .plan-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .plan-card h3 { font-size: 1.2rem; margin-bottom: 0.2rem; }
-        .plan-card .sub-plano { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .plan-card .price {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--primary);
-            margin: 0.8rem 0;
-        }
-        .plan-card .price small { font-size: 0.8rem; font-weight: 400; color: var(--text-muted); }
-        .plan-card .price .parcelamento {
-            font-size: 0.8rem;
-            color: var(--success);
-            display: block;
-            font-weight: 600;
-        }
-        .plan-card .features {
-            list-style: none;
-            text-align: left;
-            margin: 1rem 0;
-        }
-        .plan-card .features li {
-            padding: 0.3rem 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-        .plan-card .features li i { color: var(--success); width: 18px; font-size: 0.7rem; }
-        .btn-buy {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #fff;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            font-size: 0.95rem;
-        }
-        .btn-buy:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
-        .btn-add-cart {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.4rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: 0.3s;
-            width: 100%;
-            margin-top: 0.5rem;
-            font-size: 0.8rem;
-        }
-        .btn-add-cart:hover {
-            border-color: var(--secondary);
-            background: rgba(124,58,237,0.15);
-            color: var(--secondary-light);
-        }
-        .script-image {
-            width: 100%;
-            max-width: 250px;
-            border-radius: 12px;
-            border: 2px solid var(--era);
-            margin: 0.5rem auto;
-            display: block;
-        }
-        .mod-image {
-            width: 100%;
-            max-width: 250px;
-            border-radius: 12px;
-            border: 2px solid var(--primary);
-            margin: 0.5rem auto;
-            display: block;
-        }
-        .script-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.3rem;
-            margin: 0.8rem 0;
-        }
-        .script-features li {
-            list-style: none;
-            padding: 0.2rem 0;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .script-features li i { color: var(--success); font-size: 0.7rem; }
-
-        .xcore-plans {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 950px;
-            margin: 0 auto;
-        }
-        .xcore-plan {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem 1.5rem;
-            text-align: center;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        .xcore-plan:hover { transform: translateY(-6px); border-color: var(--secondary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
-        .xcore-plan .plan-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .xcore-plan .plan-name {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.2rem;
-        }
-        .xcore-plan .plan-sub {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-        }
-        .xcore-plan .plan-price {
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 0.8rem 0;
-        }
-        .xcore-plan .plan-price small {
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: var(--text-muted);
-        }
-        .xcore-plan .plan-features {
-            list-style: none;
-            text-align: left;
-            margin: 1rem 0;
-        }
-        .xcore-plan .plan-features li {
-            padding: 0.3rem 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-        .xcore-plan .plan-features li i { color: var(--success); width: 18px; font-size: 0.7rem; }
-        .xcore-plan .plan-btn {
-            width: 100%;
-            padding: 0.7rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: 0.3s;
-            color: #fff;
-        }
-        .xcore-plan .plan-btn:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
-        .xcore-plan .plan-btn.free { background: var(--success); }
-        .xcore-plan .plan-btn.silver { background: linear-gradient(135deg, #94a3b8, #64748b); }
-        .xcore-plan .plan-btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .xcore-plan.free { border-color: var(--success); }
-        .xcore-plan.silver { border-color: #94a3b8; }
-        .xcore-plan.gold { border-color: var(--warning); }
-        .xcore-plan.free .plan-name { color: var(--success); }
-        .xcore-plan.silver .plan-name { color: #94a3b8; }
-        .xcore-plan.gold .plan-name { color: var(--warning); }
-        .xcore-restrictions {
-            max-width: 800px;
-            margin: 2.5rem auto 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-        .xcore-restrictions h3 {
-            text-align: center;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-        }
-        .xcore-restrictions h3 i { color: var(--warning); margin-right: 8px; }
-        .xcore-restrictions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 0.8rem;
-        }
-        .xcore-restriction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.6rem 1rem;
-            background: var(--bg);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            font-size: 0.85rem;
-        }
-        .xcore-restriction-item .area { color: var(--text); font-weight: 600; }
-        .xcore-restriction-item .level {
-            padding: 0.15rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.7rem;
-        }
-        .level-free { background: var(--success); color: #fff; }
-        .level-silver { background: #64748b; color: #fff; }
-        .level-gold { background: var(--warning); color: #000; }
-        .xcore-restrictions .restriction-note {
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            border-top: 1px solid var(--border);
-            padding-top: 1rem;
-        }
-        .xcore-restrictions .restriction-note i { color: var(--warning); }
-        .xcore-obrigatorio {
-            max-width: 800px;
-            margin: 1.5rem auto 0;
-            background: rgba(220,38,38,0.08);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius);
-            padding: 1.2rem;
-            text-align: center;
-        }
-        .xcore-obrigatorio p {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        .xcore-obrigatorio p i { margin-right: 8px; }
-        .xcore-obrigatorio .discord-link {
-            display: inline-block;
-            margin-top: 0.5rem;
-            padding: 0.5rem 1.5rem;
-            background: #5865f2;
-            color: #fff;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-        .xcore-obrigatorio .discord-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(88,101,242,0.4);
-        }
-
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-        .form-container .form-group { margin-bottom: 0.8rem; }
-        .form-container label {
-            display: block;
-            color: var(--text);
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-            font-size: 0.85rem;
-        }
-        .form-container input, .form-container select, .form-container textarea {
-            width: 100%;
-            padding: 0.7rem 1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text);
-            font-size: 0.9rem;
-            outline: none;
-            transition: 0.3s;
-            font-family: inherit;
-        }
-        .form-container input[type="file"] { padding: 0.5rem; background: var(--bg); }
-        .form-container input:focus, .form-container select:focus, .form-container textarea:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(220,38,38,0.1);
-        }
-        .form-container textarea { resize: vertical; min-height: 70px; }
-        .form-container .btn-submit {
-            width: 100%;
-            padding: 0.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border: none;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .form-container .btn-submit:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(220,38,38,0.4); }
-        .form-container .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-        .form-status {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            border-radius: 8px;
-            display: none;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-        .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
-        .form-status.error { display: block; background: rgba(220,38,38,0.15); border: 1px solid var(--primary); color: var(--primary); }
-        .cupom-area {
-            display: flex;
-            gap: 0.5rem;
-            max-width: 400px;
-            margin: 2rem auto 0;
-        }
-        .cupom-area input {
-            flex: 1;
-            padding: 0.5rem 1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 0.85rem;
-            outline: none;
-            transition: 0.3s;
-        }
-        .cupom-area input:focus { border-color: var(--primary); }
-        .cupom-area .btn-cupom {
-            padding: 0.5rem 1rem;
-            background: var(--secondary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.85rem;
-        }
-        .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
-
-        .profile-section {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-        }
-        .profile-section .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        .profile-section .profile-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-            flex-shrink: 0;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-            border: 3px solid var(--primary);
-            transition: 0.3s;
-        }
-        .profile-section .profile-avatar:hover {
-            border-color: var(--secondary);
-            box-shadow: 0 0 30px rgba(124,58,237,0.3);
-        }
-        .profile-section .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-section .profile-avatar .avatar-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: 0.3s;
-            border-radius: 50%;
-            font-size: 0.65rem;
-            color: #fff;
-            font-weight: 600;
-        }
-        .profile-section .profile-avatar:hover .avatar-overlay { opacity: 1; }
-        .profile-section .profile-avatar .avatar-letter {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .profile-section .profile-info h3 {
-            font-size: 1.2rem;
-            color: var(--text);
-        }
-        .profile-section .profile-info p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .profile-section .profile-info .edit-link {
-            color: var(--secondary-light);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .profile-section .profile-info .edit-link:hover {
-            color: var(--secondary);
-            text-decoration: underline;
-        }
-        .profile-section .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            padding: 0.8rem 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.2rem;
-        }
-        .profile-section .profile-stats .stat {
-            text-align: center;
-        }
-        .profile-section .profile-stats .stat .number {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-        .profile-section .profile-stats .stat .label {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-        }
-        .profile-section .profile-actions {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-        .profile-section .profile-actions .btn-action {
-            flex: 1;
-            min-width: 100px;
-            padding: 0.6rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg);
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-align: center;
-            text-decoration: none;
-            font-size: 0.8rem;
-        }
-        .profile-section .profile-actions .btn-action:hover {
-            border-color: var(--primary);
-            background: rgba(220,38,38,0.1);
-        }
-        .profile-section .profile-actions .btn-action.primary {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .profile-section .profile-actions .btn-action.primary:hover {
-            background: var(--primary-dark);
-        }
-        .hidden-file-input { display: none; }
-
-        .welcome-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg);
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease;
-        }
-        .welcome-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .welcome-content {
-            max-width: 460px;
-            width: 90%;
-            padding: 2.5rem 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            text-align: center;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-            max-height: 95vh;
-            overflow-y: auto;
-        }
-        .welcome-content::-webkit-scrollbar { width: 4px; }
-        .welcome-content::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-        .welcome-content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
-        }
-        .welcome-brand {
-            margin-bottom: 1.2rem;
-        }
-        .welcome-brand img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: 3px solid var(--primary);
-            object-fit: cover;
-            margin-bottom: 0.5rem;
-        }
-        .welcome-brand h1 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.2rem;
-        }
-        .welcome-brand p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-        .welcome-divider {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            margin: 0 auto 1rem;
-            border-radius: 2px;
-        }
-        .welcome-subtitle {
-            color: var(--text);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        .welcome-or {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-        }
-        .welcome-or::before,
-        .welcome-or::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .login-tabs {
-            display: flex;
-            gap: 0.3rem;
-            margin-bottom: 1.2rem;
-            background: var(--bg);
-            border-radius: 10px;
-            padding: 0.3rem;
-        }
-        .login-tab-btn {
-            flex: 1;
-            padding: 0.4rem;
-            border: none;
-            border-radius: 8px;
-            background: transparent;
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .login-tab-btn.active {
-            background: var(--primary);
-            color: #fff;
-        }
-        .login-tab-btn.active.registro-active {
-            background: var(--secondary);
-            color: #fff;
-        }
-        .login-form {
-            text-align: left;
-        }
-        .login-form .form-group {
-            margin-bottom: 0.8rem;
-        }
-        .login-form .form-group label {
-            display: block;
-            color: var(--text);
-            font-weight: 600;
-            margin-bottom: 0.2rem;
-            font-size: 0.8rem;
-        }
-        .login-form .form-group input {
-            width: 100%;
-            padding: 0.6rem 0.8rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 0.85rem;
-            outline: none;
-            transition: 0.3s;
-        }
-        .login-form .form-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(220,38,38,0.1);
-        }
-        .login-form .btn-login {
-            width: 100%;
-            padding: 0.7rem;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border: none;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 0.3rem;
-        }
-        .login-form .btn-login:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
-        }
-        .login-form .btn-register {
-            background: linear-gradient(135deg, var(--secondary), var(--secondary-light));
-        }
-        .login-form .btn-register:hover {
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-        }
-        .google-btn-wrapper {
-            display: flex;
-            justify-content: center;
-            margin: 0.5rem 0;
-        }
-        .welcome-footer {
-            color: var(--text-muted);
-            font-size: 0.65rem;
-            border-top: 1px solid var(--border);
-            padding-top: 0.8rem;
-            margin-top: 0.8rem;
-        }
-
-        .chat-toggle-btn {
-            position: fixed;
-            bottom: 160px;
-            left: 24px;
-            z-index: 9998;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-            transition: 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .chat-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
-        }
-        .chat-toggle-btn .chat-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 700;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg);
-            display: none;
-        }
-        .chat-toggle-btn .chat-badge.show { display: flex; }
-
+        /* ===== CHAT - AUMENTADO 10% ===== */
         .chat-window {
             position: fixed;
             bottom: 230px;
             left: 24px;
             z-index: 9997;
-            width: 420px;
-            max-height: 550px;
-            height: 550px;
+            width: 462px;
+            max-height: 605px;
+            height: 605px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -1547,9 +595,23 @@
         }
         .chat-window.open { display: flex; }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @media (max-width: 768px) {
+            .chat-window {
+                width: 352px;
+                max-height: 462px;
+                height: 462px;
+                bottom: 200px;
+                left: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .chat-window {
+                width: 308px;
+                max-height: 418px;
+                height: 418px;
+                bottom: 180px;
+                left: 10px;
+            }
         }
 
         .chat-header {
@@ -2048,6 +1110,169 @@
             color: var(--text);
         }
 
+        /* ===== HERO E SEÇÕES (COMPACTADAS) ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.15), transparent 60%),
+                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.10), transparent 60%),
+                        var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px);
+            pointer-events: none;
+            animation: scanlines 20s linear infinite;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(220,38,38,0.03), transparent 70%);
+            pointer-events: none;
+            animation: rotateGlow 30s linear infinite;
+        }
+        @keyframes scanlines { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
+        @keyframes rotateGlow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 0.3rem 1.4rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 30px rgba(220,38,38,0.3);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero h1 .highlight-red { color: var(--primary); -webkit-text-fill-color: var(--primary); }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+        .btn {
+            padding: 0.9rem 2.4rem;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(220,38,38,0.4);
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 50px rgba(220,38,38,0.6); }
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(8px);
+        }
+        .btn-secondary:hover { border-color: var(--primary); background: rgba(220,38,38,0.15); transform: translateY(-3px); }
+        .hero-image {
+            flex: 1;
+            max-width: 500px;
+            margin-left: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-image .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            background: #000;
+        }
+        .hero-image .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-image .video-label {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        .section.dark { background: var(--bg); }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.3;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+        .section-header h2 i { color: var(--primary); }
+        .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
+
+        /* ===== FAQ ===== */
         .faq-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -2268,6 +1493,7 @@
         }
         .modal-pix-xcore .modal-content .btn-copy:hover { transform: scale(1.05); }
 
+        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
             .hero-content { max-width: 100%; }
@@ -2352,27 +1578,6 @@
             .script-features { grid-template-columns: 1fr; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
-            .chat-window {
-                width: 320px;
-                max-height: 420px;
-                height: 420px;
-                bottom: 200px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-                bottom: 140px;
-                left: 14px;
-            }
-            .btn-whatsapp-fixo {
-                width: 48px;
-                height: 48px;
-                font-size: 22px;
-                bottom: 80px;
-                left: 14px;
-            }
             .welcome-content {
                 padding: 1.5rem;
                 max-height: 90vh;
@@ -2393,27 +1598,6 @@
             .nav-xcore .xcore-text .team { font-size: 0.3rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
-            .chat-window {
-                width: 280px;
-                max-height: 380px;
-                height: 380px;
-                bottom: 180px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-                bottom: 120px;
-                left: 10px;
-            }
-            .btn-whatsapp-fixo {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
-                bottom: 70px;
-                left: 10px;
-            }
             .welcome-content {
                 padding: 1.2rem;
             }
@@ -2422,15 +1606,18 @@
 </head>
 <body>
 
+    <!-- ===== WHATSAPP FIXO ===== -->
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- ===== BOTÃO DO CHAT ===== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
         <i class="fas fa-comment-dots"></i>
         <span class="chat-badge" id="chatBadge">0</span>
     </button>
 
+    <!-- ===== CHAT GLOBAL ===== -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <div class="chat-title">
@@ -2461,7 +1648,7 @@
         </div>
     </div>
 
-    <!-- ===== USER MENU (MODERAÇÃO) ===== -->
+    <!-- ===== MENU DO USUÁRIO (MODERAÇÃO) ===== -->
     <div class="user-menu-overlay" id="userMenuOverlay" onclick="fecharMenuUsuario(event)">
         <div class="user-menu" onclick="event.stopPropagation()">
             <div class="user-header">
@@ -2506,7 +1693,7 @@
         </div>
     </div>
 
-    <!-- ===== MENU PRINCIPAL ===== -->
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo-wrapper">
@@ -2831,23 +2018,19 @@
                             <input type="hidden" name="_captcha" value="false">
                             <input type="hidden" name="_template" value="table">
                             <input type="hidden" name="_subject" value="📩 COMPRA XCORE EXECUTOR - NOVO PEDIDO!">
-
                             <div class="form-group">
                                 <label><i class="fas fa-user"></i> Seu Nome <span style="color:var(--primary);">*</span></label>
                                 <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
                             </div>
-
                             <div class="form-group">
                                 <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
                                 <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
                                 <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                             </div>
-
                             <div class="form-group">
                                 <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--primary);">*</span></label>
                                 <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
                             </div>
-
                             <div class="form-group">
                                 <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--primary);">*</span></label>
                                 <select name="Plano" required>
@@ -2856,18 +2039,15 @@
                                     <option value="Xcore GOLD - R$ 90,00/mês">🥇 GOLD - R$ 90,00/mês</option>
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label>
                                 <input type="file" name="Comprovante" accept="image/*,.pdf" required>
                                 <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
                             </div>
-
                             <div class="form-group">
                                 <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
                                 <textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea>
                             </div>
-
                             <button type="submit" class="btn-submit" id="formXcoreBtn">
                                 <i class="fas fa-paper-plane"></i> Enviar Pedido Xcore
                             </button>
@@ -3000,13 +2180,11 @@
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
-
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
                         <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
                         <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                     </div>
-
                     <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
                     <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
                     <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
@@ -3186,7 +2364,7 @@
 
     // ====== CONSTANTES ======
     const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
-    const BOT_NOME = '🤖 BOT GUARDIAN';
+    const BOT_NOME = '🤖 KZN BOT';
     const BOT_AVATAR = '🤖';
     const BOT_EMAIL = 'bot@kzn.com';
     const BOT_MESSAGES = [
@@ -3209,9 +2387,10 @@
     let isInitialLoad = true;
     let processedMessageIds = new Set();
     let botEnabled = true;
-    let botInterval = 120000;
+    let botInterval = 600000; // 10 MINUTOS
     let botTimer = null;
     let lastBotMessage = 0;
+    let isUserAtBottom = true;
 
     // ====== CARREGAR USUÁRIOS ======
     function carregarUsuarios() {
@@ -3229,8 +2408,13 @@
 
     // ====== SOM DE NOTIFICAÇÃO ======
     let audioCache = null;
+    let ultimaNotificacaoTocada = 0;
 
     function playNotificationSound() {
+        const agora = Date.now();
+        if (agora - ultimaNotificacaoTocada < 2000) return;
+        ultimaNotificacaoTocada = agora;
+
         try {
             if (audioCache) {
                 audioCache.currentTime = 0;
@@ -3440,6 +2624,61 @@
         });
     };
 
+    window.removerAdmin = function(email) {
+        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return; }
+        if (isProprietario(email)) { alert('❌ Não pode remover o proprietário!'); return; }
+        if (isBot(email)) { alert('❌ BOT não é admin!'); return; }
+
+        adminsRef.once('value', (snapshot) => {
+            const admins = snapshot.val() || {};
+            let encontrou = false;
+            Object.keys(admins).forEach(key => {
+                if (admins[key].email === email && admins[key].ativo === true) {
+                    adminsRef.child(key).update({ ativo: false });
+                    encontrou = true;
+                }
+            });
+            if (encontrou) {
+                registrarModLog('REMOVE_ADMIN', email, email.split('@')[0]);
+                enviarMensagemBot(`👤 Usuário **${email}** foi removido do cargo de administrador por ${usuarioLogado.nome}`);
+                alert(`✅ Usuário ${email} removido do cargo de admin!`);
+            } else {
+                alert(`⚠️ Usuário ${email} não é administrador.`);
+            }
+        });
+    };
+
+    window.tornarAdmin = function(email) {
+        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return; }
+        if (isBot(email)) { alert('❌ BOT não pode ser admin!'); return; }
+
+        adminsRef.once('value', (snapshot) => {
+            const admins = snapshot.val() || {};
+            const jaAdmin = Object.values(admins).some(a => a.email === email && a.ativo === true);
+            if (jaAdmin) {
+                alert(`⚠️ Usuário ${email} já é administrador!`);
+                return;
+            }
+
+            const adminRef = adminsRef.push();
+            adminRef.set({
+                email: email,
+                data: new Date().toISOString(),
+                concedido_por: usuarioLogado.email,
+                concedido_por_nome: usuarioLogado.nome,
+                ativo: true
+            }).then(() => {
+                registrarModLog('ADD_ADMIN', email, email.split('@')[0]);
+                enviarMensagemBot(`👑 Usuário **${email}** foi promovido a administrador por ${usuarioLogado.nome}`);
+                alert(`✅ Usuário ${email} agora é administrador!`);
+            }).catch((err) => {
+                alert(`❌ Erro ao promover: ${err.message}`);
+            });
+        });
+    };
+
     // ====== KZN BOT ======
     function iniciarBot() {
         if (botTimer) clearInterval(botTimer);
@@ -3544,7 +2783,6 @@
         let nomeClass = '';
         let badgeHtml = '';
 
-        // ⚡ VERIFICA SE É ADMIN E MOSTRA O BADGE CORRETAMENTE
         if (isBotMsg) {
             nomeClass = 'bot';
             badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
@@ -3552,18 +2790,25 @@
             nomeClass = 'proprietario';
             badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
         } else {
-            // Verifica se é admin
             verificarAdmin(dados.email, (isAdmin) => {
                 if (isAdmin && !isBotMsg) {
-                    badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
-                    const nomeSpan = div.querySelector('.msg-nome');
-                    if (nomeSpan) nomeSpan.classList.add('admin');
+                    const badgeSpan = div.querySelector('.msg-badge');
+                    if (!badgeSpan) {
+                        const header = div.querySelector('.msg-header');
+                        if (header) {
+                            const badge = document.createElement('span');
+                            badge.className = 'msg-badge admin-badge';
+                            badge.textContent = '⚡ ADMIN';
+                            const horaSpan = header.querySelector('.msg-hora');
+                            if (horaSpan) {
+                                header.insertBefore(badge, horaSpan);
+                            } else {
+                                header.appendChild(badge);
+                            }
+                        }
+                    }
                 }
             });
-            // Define a classe padrão se não for admin
-            if (!badgeHtml) {
-                // Não faz nada, mantém a cor padrão
-            }
         }
 
         const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
@@ -3584,7 +2829,6 @@
         const typingIndicator = document.getElementById('typingIndicator');
         container.insertBefore(div, typingIndicator);
 
-        // ⚡ SÓ TOCA SOM/NOTIFICAÇÃO SE NÃO FOR HISTÓRICO
         if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
             playNotificationSound();
 
@@ -3605,12 +2849,12 @@
             }
         }
 
-        // ⚡ SCROLL AUTOMÁTICO
-        if (!isHistorical && !isInitialLoad) {
+        const isAtBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 50;
+        if (!isHistorical && !isInitialLoad && isAtBottom) {
             setTimeout(() => {
                 container.scrollTop = container.scrollHeight;
             }, 50);
-        } else {
+        } else if (isHistorical && isAtBottom) {
             container.scrollTop = container.scrollHeight;
         }
     }
@@ -3643,10 +2887,13 @@
 
             typingUser.textContent = dados.nome;
             typingIndicator.classList.add('show');
-            
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 50);
+
+            const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 50;
+            if (isAtBottom) {
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 50);
+            }
 
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
@@ -3657,7 +2904,10 @@
                     });
                     if (!hasTyping) {
                         typingIndicator.classList.remove('show');
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                        const isAtBottom2 = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 50;
+                        if (isAtBottom2) {
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
                     }
                 });
             }, 4000);
@@ -3671,7 +2921,10 @@
                 });
                 if (!hasTyping) {
                     typingIndicator.classList.remove('show');
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 50;
+                    if (isAtBottom) {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
                 }
             });
         });
@@ -3680,17 +2933,9 @@
     // ====== MONITORAR SCROLL ======
     function monitorarScrollChat() {
         const chatMessages = document.getElementById('chatMessages');
-        const typingIndicator = document.getElementById('typingIndicator');
-        
         chatMessages.addEventListener('scroll', function() {
-            if (typingIndicator.classList.contains('show')) {
-                const rect = typingIndicator.getBoundingClientRect();
-                const containerRect = chatMessages.getBoundingClientRect();
-                
-                if (rect.bottom > containerRect.bottom || rect.top < containerRect.top) {
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            }
+            const isAtBottom = chatMessages.scrollHeight - chatMessages.scrollTop <= chatMessages.clientHeight + 50;
+            isUserAtBottom = isAtBottom;
         });
     }
 
@@ -3699,7 +2944,10 @@
         usuariosRef.on('value', (snapshot) => {
             const dados = snapshot.val() || {};
             const count = Object.keys(dados).length;
-            document.getElementById('onlineCount').textContent = `👤 ${count} online`;
+            const onlineCount = document.getElementById('onlineCount');
+            if (onlineCount) {
+                onlineCount.textContent = `👤 ${count} online`;
+            }
         });
     }
 
@@ -3791,7 +3039,11 @@
                                     actions.innerHTML += `<button class="success" onclick="dessilenciarUsuario('${email}')"><i class="fas fa-microphone"></i> Desmutar</button>`;
                                 }
 
+                                // ⚡ REMOVER ADMIN (apenas proprietário)
                                 if (isProprietario(usuarioLogado.email)) {
+                                    if (admin && !isProprietario(email)) {
+                                        actions.innerHTML += `<button class="warning" onclick="removerAdmin('${email}')"><i class="fas fa-user-minus"></i> Remover Admin</button>`;
+                                    }
                                     actions.innerHTML += `<button class="primary" onclick="verLogsUsuario('${email}')"><i class="fas fa-history"></i> Ver Logs</button>`;
                                 }
                             }
@@ -4064,59 +3316,6 @@
         });
     };
 
-    window.tornarAdmin = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
-        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return; }
-        if (isBot(email)) { alert('❌ BOT não pode ser admin!'); return; }
-
-        adminsRef.once('value', (snapshot) => {
-            const admins = snapshot.val() || {};
-            const jaAdmin = Object.values(admins).some(a => a.email === email && a.ativo === true);
-            if (jaAdmin) {
-                alert(`⚠️ Usuário ${email} já é administrador!`);
-                return;
-            }
-
-            const adminRef = adminsRef.push();
-            adminRef.set({
-                email: email,
-                data: new Date().toISOString(),
-                concedido_por: usuarioLogado.email,
-                concedido_por_nome: usuarioLogado.nome,
-                ativo: true
-            }).then(() => {
-                enviarMensagemBot(`👑 Usuário **${email}** foi promovido a administrador por ${usuarioLogado.nome}`);
-                alert(`✅ Usuário ${email} agora é administrador!`);
-            }).catch((err) => {
-                alert(`❌ Erro ao promover: ${err.message}`);
-            });
-        });
-    };
-
-    window.removerAdmin = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
-        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return; }
-        if (isProprietario(email)) { alert('❌ Não pode remover o proprietário!'); return; }
-        if (isBot(email)) { alert('❌ BOT não é admin!'); return; }
-
-        adminsRef.once('value', (snapshot) => {
-            const admins = snapshot.val() || {};
-            let encontrou = false;
-            Object.keys(admins).forEach(key => {
-                if (admins[key].email === email && admins[key].ativo === true) {
-                    adminsRef.child(key).update({ ativo: false });
-                    encontrou = true;
-                }
-            });
-            if (encontrou) {
-                enviarMensagemBot(`👤 Usuário **${email}** foi removido do cargo de administrador por ${usuarioLogado.nome}`);
-                alert(`✅ Usuário ${email} removido do cargo de admin!`);
-            } else {
-                alert(`⚠️ Usuário ${email} não é administrador.`);
-            }
-        });
-    };
-
     // ====== ENVIAR MENSAGEM ======
     window.enviarMensagem = function() {
         const input = document.getElementById('chatInput');
@@ -4259,7 +3458,7 @@
             try {
                 const usuario = JSON.parse(dados);
                 usuarioLogado = usuario;
-                
+
                 document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
                 document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
                 document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
@@ -4290,7 +3489,7 @@
                     document.querySelector('.profile-btn .avatar').innerHTML =
                         `<span class="avatar-letter" id="avatarText">${letra}</span>`;
                 }
-                
+
                 return true;
             } catch (e) {
                 console.error('Erro ao carregar perfil:', e);
@@ -4319,14 +3518,14 @@
     window.salvarPerfil = function(nome, avatar) {
         const dados = localStorage.getItem('kzn_usuario_logado');
         if (!dados) return false;
-        
+
         try {
             const usuario = JSON.parse(dados);
             if (nome) usuario.nome = nome;
             if (avatar) usuario.avatar = avatar;
-            
+
             localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-            
+
             const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
             const idx = usuarios.findIndex(u => u.email === usuario.email);
             if (idx !== -1) {
@@ -4334,7 +3533,7 @@
                 if (avatar) usuarios[idx].avatar = avatar;
                 localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
             }
-            
+
             carregarPerfil();
             return true;
         } catch (e) {
@@ -4350,13 +3549,13 @@
             alert('⚠️ Por favor, selecione uma imagem (JPG, PNG, GIF).');
             return;
         }
-        
+
         if (file.size > 2 * 1024 * 1024) {
             alert('⚠️ A imagem deve ter no máximo 2MB.');
             event.target.value = '';
             return;
         }
-        
+
         const reader = new FileReader();
         reader.onload = function(e) {
             const imagem = e.target.result;
@@ -4364,14 +3563,14 @@
             if (usuario) {
                 usuario.avatar = imagem;
                 localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                
+
                 const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
                 const idx = usuarios.findIndex(u => u.email === usuario.email);
                 if (idx !== -1) {
                     usuarios[idx].avatar = imagem;
                     localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
                 }
-                
+
                 carregarPerfil();
                 alert('✅ Foto de perfil atualizada com sucesso!');
             }
@@ -4422,7 +3621,7 @@
         try {
             const usuario = JSON.parse(dados);
             const emailAntigo = usuario.email;
-            
+
             usuario.nome = nome;
             localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
 
@@ -4439,7 +3638,7 @@
 
             document.getElementById('userDisplay').textContent = nome;
             document.getElementById('profileName').textContent = nome;
-            
+
             const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
             if (!usuarioAtual.avatar) {
                 const letra = nome[0].toUpperCase();
@@ -4454,7 +3653,7 @@
             document.getElementById('editEmail').style.opacity = '0.6';
             document.getElementById('editEmail').style.cursor = 'not-allowed';
             document.getElementById('editSenha').value = '';
-            
+
             alert('✅ Perfil atualizado com sucesso!');
         } catch (e) {
             console.error('Erro ao salvar edição:', e);
@@ -4478,9 +3677,9 @@
         document.getElementById('chatToggleBtn').style.display = 'flex';
         document.getElementById('chatWindow').classList.add('open');
         chatAberto = true;
-        
+
         carregarPerfil();
-        
+
         carregarMensagens();
         carregarTyping();
         monitorarScrollChat();
