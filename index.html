@@ -49,12 +49,79 @@
             color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
+        }
+
+        /* ===== TEMA CLARO ===== */
+        body.tema-claro {
+            --bg: #f1f5f9;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --glass: rgba(0,0,0,0.03);
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        body.tema-claro .navbar {
+            background: rgba(255,255,255,0.92);
+            border-bottom-color: #e2e8f0;
+        }
+        body.tema-claro .chat-window,
+        body.tema-claro .dropdown,
+        body.tema-claro .cart-dropdown,
+        body.tema-claro .modal-content,
+        body.tema-claro .user-menu,
+        body.tema-claro .welcome-content {
+            background: #ffffff;
+            border-color: #e2e8f0;
+        }
+        body.tema-claro .chat-messages {
+            background: #f8fafc;
+        }
+        body.tema-claro .chat-msg {
+            background: #ffffff;
+            border-left-color: var(--secondary);
+        }
+        body.tema-claro .plan-card,
+        body.tema-claro .xcore-plan,
+        body.tema-claro .faq-item,
+        body.tema-claro .xcore-restrictions {
+            background: #ffffff;
+            border-color: #e2e8f0;
+        }
+        body.tema-claro .form-container input,
+        body.tema-claro .form-container select,
+        body.tema-claro .form-container textarea,
+        body.tema-claro .chat-input-area input {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            color: #0f172a;
+        }
+        body.tema-claro .profile-btn,
+        body.tema-claro .nav-icon-btn {
+            background: rgba(0,0,0,0.03);
+            border-color: #e2e8f0;
+        }
+        body.tema-claro .footer {
+            background: #ffffff;
+            border-top-color: #e2e8f0;
+        }
+        body.tema-claro .hero {
+            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.08), transparent 60%),
+                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.05), transparent 60%),
+                        #f1f5f9;
+        }
+        body.tema-claro .welcome-content::before {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+        }
+        body.tema-claro .chat-input-area {
+            background: rgba(0,0,0,0.02);
         }
 
         /* ===== ANIMAÇÃO DIGITANDO ===== */
@@ -196,22 +263,18 @@
             border: 2px solid var(--secondary);
             object-fit: cover;
         }
-        .nav-xcore .xcore-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
+        /* ===== TEXTO XCORE EXECUTE AUMENTADO ===== */
+        .nav-xcore .xcore-text .name {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: var(--secondary-light);
+            letter-spacing: 1.5px;
         }
-       .nav-xcore .xcore-text .name {
-    font-size: 1rem;
-    font-weight: 800;
-    color: var(--secondary-light);
-    letter-spacing: 1px;
-}
-.nav-xcore .xcore-text .team {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 600;
-}
+        .nav-xcore .xcore-text .team {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
         .nav-menu {
             display: flex;
             list-style: none;
@@ -567,6 +630,7 @@
                         var(--bg);
             position: relative;
             overflow: hidden;
+            transition: background 0.3s;
         }
         .hero::before {
             content: '';
@@ -1578,6 +1642,14 @@
             background: var(--glass);
         }
 
+        /* ===== BOTÕES DO CHAT ===== */
+        .chat-header .chat-actions .theme-btn:hover,
+        .chat-header .chat-actions .search-btn:hover,
+        .chat-header .chat-actions .stats-btn:hover {
+            color: var(--text);
+            background: var(--glass);
+        }
+
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -1697,6 +1769,14 @@
             background: rgba(124,58,237,0.2);
             color: var(--secondary-light);
         }
+        .chat-msg .msg-badge.fixada-badge {
+            background: rgba(245,158,11,0.2);
+            color: var(--warning);
+        }
+        .chat-msg .msg-badge.editada-badge {
+            background: rgba(124,58,237,0.2);
+            color: var(--secondary-light);
+        }
         .chat-msg .msg-acoes {
             display: flex;
             gap: 4px;
@@ -1722,6 +1802,77 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+        .chat-msg .msg-imagem {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 4px;
+            border: 1px solid var(--border);
+        }
+        .chat-msg .msg-audio {
+            width: 150px;
+            height: 30px;
+            margin-top: 4px;
+            border-radius: 8px;
+        }
+        .chat-msg .msg-fixada {
+            font-size: 0.6rem;
+            color: var(--warning);
+            margin-top: 2px;
+        }
+
+        /* ===== MENSAGEM DESTACADA POR MENÇÃO ===== */
+        .chat-msg.msg-mencao {
+            border-left: 3px solid var(--warning);
+            background: rgba(245,158,11,0.08);
+            animation: pulseMencao 0.5s ease;
+        }
+        @keyframes pulseMencao {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* ===== SEARCH BOX ===== */
+        .search-box {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-card);
+            padding: 8px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            z-index: 100;
+            display: none;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+        }
+        .search-box input {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: var(--text);
+            width: 180px;
+            font-size: 0.8rem;
+            outline: none;
+        }
+        .search-box input:focus {
+            border-color: var(--secondary);
+        }
+        .search-box button {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 12px;
+            margin-left: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            transition: 0.3s;
+        }
+        .search-box button:hover {
+            transform: scale(1.05);
+        }
 
         .chat-input-area {
             display: flex;
@@ -1732,6 +1883,7 @@
             flex-shrink: 0;
             min-height: 52px;
             flex-wrap: wrap;
+            position: relative;
         }
         .chat-input-area input {
             flex: 1;
@@ -1772,6 +1924,50 @@
             opacity: 0.4;
             cursor: not-allowed;
             transform: none;
+        }
+        .chat-input-area .audio-btn {
+            background: var(--primary);
+        }
+        .chat-input-area .audio-btn:hover {
+            box-shadow: 0 4px 20px rgba(220,38,38,0.3);
+        }
+        .chat-input-area .audio-btn.gravando {
+            animation: pulseAudio 1s infinite;
+        }
+        @keyframes pulseAudio {
+            0%, 100% { background: var(--primary); }
+            50% { background: var(--danger); }
+        }
+
+        /* ===== MENTION MENU ===== */
+        .mention-menu {
+            position: absolute;
+            bottom: 60px;
+            left: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 4px 0;
+            max-height: 150px;
+            overflow-y: auto;
+            min-width: 180px;
+            z-index: 999;
+            box-shadow: var(--shadow);
+        }
+        .mention-menu::-webkit-scrollbar { width: 4px; }
+        .mention-menu::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 10px;
+        }
+        .mention-menu .mention-item {
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text);
+            transition: 0.2s;
+        }
+        .mention-menu .mention-item:hover {
+            background: var(--glass);
         }
 
         /* ===== MODAIS ===== */
@@ -2270,8 +2466,8 @@
             .nav-logo .logo-text small { display: none; }
             .nav-divider { display: none; }
             .nav-xcore img { width: 26px; height: 26px; }
-            .nav-xcore .xcore-text .name { font-size: 0.45rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.35rem; }
+            .nav-xcore .xcore-text .name { font-size: 0.8rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.6rem; }
             .nav-menu:not(.mobile-menu) { display: none; }
             .nav-toggle {
                 display: flex !important;
@@ -2353,6 +2549,11 @@
                 padding: 1.5rem;
                 max-height: 90vh;
             }
+            .search-box {
+                width: 200px;
+                right: 0;
+            }
+            .search-box input { width: 120px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -2365,8 +2566,8 @@
             .nav-logo .logo-text span { font-size: 0.65rem; }
             .nav-logo img { width: 26px; height: 26px; }
             .nav-xcore img { width: 22px; height: 22px; }
-            .nav-xcore .xcore-text .name { font-size: 0.4rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.3rem; }
+            .nav-xcore .xcore-text .name { font-size: 0.6rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.5rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
             .chat-window {
@@ -2415,9 +2616,22 @@
                 <span class="online-count" id="onlineCount">👤 0 online</span>
             </div>
             <div class="chat-actions">
+                <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button onclick="toggleSearch()" title="Buscar mensagens" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button onclick="mostrarEstatisticas()" title="Estatísticas" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    <i class="fas fa-chart-bar"></i>
+                </button>
                 <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
                     ✕
                 </button>
+            </div>
+            <div class="search-box" id="searchBox">
+                <input type="text" id="searchInput" placeholder="Buscar mensagens..." />
+                <button onclick="buscarMensagens()"><i class="fas fa-search"></i></button>
             </div>
         </div>
         <div class="chat-messages" id="chatMessages">
@@ -2430,7 +2644,17 @@
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500" />
+            <button onclick="abrirEmojiPicker()" title="Emojis" style="background:var(--glass);border:1px solid var(--border);color:var(--text);font-size:1.2rem;padding:0.2rem 0.5rem;border-radius:8px;">
+                😊
+            </button>
+            <button onclick="document.getElementById('fileInput').click()" title="Enviar imagem" style="background:var(--glass);border:1px solid var(--border);color:var(--text);font-size:1rem;padding:0.2rem 0.5rem;border-radius:8px;">
+                📎
+            </button>
+            <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="enviarImagem(event)" />
+            <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
             <button onclick="enviarMensagem()" id="sendBtn">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -2698,8 +2922,8 @@
                     <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
                         <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:60px;height:60px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
                         <div>
-                            <h3 style="font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
-                            <p style="color:var(--text-muted);font-size:0.8rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
+                            <h3 style="font-size:2rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
+                            <p style="color:var(--text-muted);font-size:0.9rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
                         </div>
                     </div>
                     <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.6rem;">
@@ -3185,6 +3409,9 @@
         let lastBotMessage = 0;
         let userScrolled = false;
         let scrollTimeout = null;
+        let midiaRecorder = null;
+        let audioChunks = [];
+        let temaAtual = localStorage.getItem('kzn_tema') || 'dark';
 
         // ====== CARREGAR USUÁRIOS ======
         function carregarUsuarios() {
@@ -3245,6 +3472,28 @@
                 oscillator.start();
                 oscillator.stop(audioCtx.currentTime + 0.2);
             } catch (e) {}
+        }
+
+        // ====== TEMAS ======
+        function alternarTema() {
+            temaAtual = temaAtual === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('kzn_tema', temaAtual);
+            aplicarTema(temaAtual);
+        }
+
+        function aplicarTema(tema) {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            
+            if (tema === 'light') {
+                body.classList.add('tema-claro');
+                icon.className = 'fas fa-sun';
+                icon.style.color = '#f59e0b';
+            } else {
+                body.classList.remove('tema-claro');
+                icon.className = 'fas fa-moon';
+                icon.style.color = '';
+            }
         }
 
         // ====== PERMISSÕES ======
@@ -3524,7 +3773,6 @@
                 nomeClass = 'proprietario';
                 badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
             } else if (dados.email) {
-                // Verifica se é admin de forma síncrona usando localStorage
                 const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
                 const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
                 
@@ -3534,19 +3782,66 @@
                 }
             }
 
+            const isFixada = dados.fixada === true;
+            const isEditada = dados.editada === true;
+            const podeEditar = usuarioLogado && dados.email === usuarioLogado.email && !isBotMsg;
             const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
+
+            // Verificar se há menção ao usuário
+            const contemMencao = dados.mensagem && usuarioLogado && 
+                dados.mensagem.includes(`@${usuarioLogado.nome}`) && 
+                !isBotMsg && dados.email !== usuarioLogado.email;
+
+            if (contemMencao && !isHistorical && !isInitialLoad) {
+                div.classList.add('msg-mencao');
+                // Notificação especial
+                playNotificationSound();
+                if (Notification.permission === 'granted') {
+                    new Notification(`🔔 Você foi mencionado por ${dados.nome}`, {
+                        body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
+                        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
+                    });
+                }
+            }
+
+            let imagemHtml = '';
+            if (dados.imagem) {
+                imagemHtml = `<img src="${dados.imagem}" class="msg-imagem" />`;
+            }
+
+            let audioHtml = '';
+            if (dados.audio) {
+                audioHtml = `<audio controls src="${dados.audio}" class="msg-audio"></audio>`;
+            }
+
+            let fixadaHtml = '';
+            if (isFixada) {
+                fixadaHtml = '<div class="msg-fixada">📌 Mensagem Fixada</div>';
+            }
 
             div.innerHTML = `
                 <div class="msg-header">
                     <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
                     <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
                     ${badgeHtml}
+                    ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
+                    ${isEditada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
                     <span class="msg-hora">${hora}</span>
                     <div class="msg-acoes">
+                        ${podeEditar ? `<button onclick="editarMensagem('${key}')" title="Editar"><i class="fas fa-edit"></i></button>` : ''}
                         ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
+                        ${usuarioLogado && verificarAdmin(usuarioLogado.email, (isAdmin) => {
+                            if (isAdmin) {
+                                return `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>`;
+                            }
+                            return '';
+                        })}
                     </div>
                 </div>
                 <div class="msg-content">${dados.mensagem}</div>
+                ${imagemHtml}
+                ${audioHtml}
+                ${fixadaHtml}
             `;
 
             const typingIndicator = document.getElementById('typingIndicator');
@@ -3556,7 +3851,7 @@
             if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
                 const msgTime = new Date(dados.data).getTime();
                 const now = Date.now();
-                const isRecent = (now - msgTime) < 10000; // 10 segundos
+                const isRecent = (now - msgTime) < 10000;
                 
                 if (isRecent) {
                     playNotificationSound();
@@ -3589,6 +3884,98 @@
                 container.scrollTop = container.scrollHeight;
             }
         }
+
+        // ====== EDIÇÃO DE MENSAGEM ======
+        window.editarMensagem = function(key) {
+            const msgElement = document.getElementById('msg-' + key);
+            if (!msgElement) return;
+            
+            const content = msgElement.querySelector('.msg-content');
+            const textoAtual = content.textContent;
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = textoAtual;
+            input.className = 'edit-input';
+            input.style.cssText = 'width:100%;padding:4px 8px;background:var(--bg);border:1px solid var(--secondary);border-radius:6px;color:var(--text);font-size:0.85rem;outline:none;';
+            content.replaceWith(input);
+            input.focus();
+            input.select();
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const novoTexto = this.value.trim();
+                    if (novoTexto && novoTexto !== textoAtual) {
+                        mensagensRef.child(key).update({ 
+                            mensagem: novoTexto, 
+                            editada: true,
+                            data_edicao: new Date().toISOString()
+                        });
+                    } else if (!novoTexto) {
+                        const span = document.createElement('span');
+                        span.className = 'msg-content';
+                        span.textContent = textoAtual;
+                        this.replaceWith(span);
+                    } else {
+                        this.blur();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    const span = document.createElement('span');
+                    span.className = 'msg-content';
+                    span.textContent = textoAtual;
+                    this.replaceWith(span);
+                }
+            });
+            
+            input.addEventListener('blur', function() {
+                const novoTexto = this.value.trim();
+                if (novoTexto && novoTexto !== textoAtual) {
+                    mensagensRef.child(key).update({ 
+                        mensagem: novoTexto, 
+                        editada: true,
+                        data_edicao: new Date().toISOString()
+                    });
+                } else if (!novoTexto) {
+                    const span = document.createElement('span');
+                    span.className = 'msg-content';
+                    span.textContent = textoAtual;
+                    this.replaceWith(span);
+                }
+            });
+        };
+
+        // ====== FIXAR MENSAGEM ======
+        window.fixarMensagem = function(key) {
+            if (!usuarioLogado) return;
+            verificarAdmin(usuarioLogado.email, (isAdmin) => {
+                if (!isAdmin) {
+                    alert('⚠️ Apenas administradores podem fixar mensagens!');
+                    return;
+                }
+                
+                // Desfixar todas as outras
+                mensagensRef.once('value', (snapshot) => {
+                    const msgs = snapshot.val() || {};
+                    const updates = {};
+                    Object.keys(msgs).forEach(k => {
+                        if (msgs[k].fixada === true && k !== key) {
+                            updates[k] = { fixada: false };
+                        }
+                    });
+                    
+                    // Fixar a atual
+                    updates[key] = { fixada: true };
+                    
+                    // Aplicar todas as atualizações
+                    Object.keys(updates).forEach(k => {
+                        mensagensRef.child(k).update(updates[k]);
+                    });
+                    
+                    alert('✅ Mensagem fixada com sucesso!');
+                });
+            });
+        };
 
         window.apagarMensagem = function(key) {
             if (!usuarioLogado) return;
@@ -3896,10 +4283,25 @@
                 return true;
             }
 
+            // ✅ CORREÇÃO: COMANDO /online
             if (comando === '/online') {
-                const online = Object.keys(usuariosOnline).length;
-                const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
-                enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
+                usuariosRef.once('value', (snapshot) => {
+                    const dados = snapshot.val() || {};
+                    const onlineUsers = [];
+                    Object.values(dados).forEach(u => {
+                        if (u.online === true || (Date.now() - u.ultimo) < 60000) {
+                            onlineUsers.push(u.nome || u.email.split('@')[0]);
+                        }
+                    });
+                    const count = onlineUsers.length;
+                    let msg = `👥 **USUÁRIOS ONLINE:** ${count}\n\n`;
+                    if (count > 0) {
+                        msg += onlineUsers.map((nome, i) => `${i+1}. ${nome}`).join('\n');
+                    } else {
+                        msg += 'Nenhum usuário online no momento.';
+                    }
+                    enviarMensagemBot(msg);
+                });
                 return true;
             }
 
@@ -4152,6 +4554,193 @@
             });
         };
 
+        // ====== ENVIO DE IMAGEM ======
+        window.enviarImagem = function(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                alert('⚠️ Envie apenas imagens!');
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert('⚠️ Imagem deve ter no máximo 2MB!');
+                return;
+            }
+
+            if (!usuarioLogado) {
+                alert('⚠️ Faça login para enviar imagens!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imagem = e.target.result;
+                const msgRef = mensagensRef.push();
+                msgRef.set({
+                    nome: usuarioLogado.nome,
+                    avatar: usuarioLogado.avatar || '',
+                    email: usuarioLogado.email,
+                    mensagem: `📷 Imagem: ${file.name}`,
+                    imagem: imagem,
+                    data: new Date().toISOString(),
+                    isHistorical: false
+                });
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        };
+
+        // ====== EMOJI PICKER ======
+        window.abrirEmojiPicker = function() {
+            const emojis = ['😊', '😂', '🔥', '❤️', '👍', '👏', '🎉', '✨', '💪', '🤝', '👀', '🙏', '😎', '🤩', '💯', '⚡', '🚀', '💎', '💻', '🎮', '🏆', '⭐', '🌈', '💜', '🖤'];
+            const input = document.getElementById('chatInput');
+            
+            // Remover picker existente
+            const oldPicker = document.querySelector('.emoji-picker');
+            if (oldPicker) oldPicker.remove();
+            
+            const picker = document.createElement('div');
+            picker.className = 'emoji-picker';
+            picker.style.cssText = 'position:absolute;bottom:60px;left:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:4px;max-width:280px;z-index:999;box-shadow:var(--shadow);';
+            
+            emojis.forEach(emoji => {
+                const btn = document.createElement('button');
+                btn.textContent = emoji;
+                btn.style.cssText = 'background:none;border:none;font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:0.2s;';
+                btn.onmouseover = () => btn.style.background = 'var(--glass)';
+                btn.onmouseout = () => btn.style.background = 'none';
+                btn.onclick = () => {
+                    input.value += emoji;
+                    input.focus();
+                    picker.remove();
+                };
+                picker.appendChild(btn);
+            });
+            
+            document.querySelector('.chat-input-area').appendChild(picker);
+            
+            setTimeout(() => {
+                document.addEventListener('click', function removePicker(e) {
+                    if (!picker.contains(e.target) && e.target !== input) {
+                        picker.remove();
+                        document.removeEventListener('click', removePicker);
+                    }
+                });
+            }, 100);
+        };
+
+        // ====== GRAVAÇÃO DE ÁUDIO ======
+        window.iniciarGravacao = function() {
+            const audioBtn = document.getElementById('audioBtn');
+            
+            if (midiaRecorder) {
+                midiaRecorder.stop();
+                midiaRecorder = null;
+                audioBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                audioBtn.classList.remove('gravando');
+                return;
+            }
+            
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(stream => {
+                    midiaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+                    
+                    midiaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    midiaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            const audioData = e.target.result;
+                            if (!usuarioLogado) {
+                                alert('⚠️ Faça login para enviar áudio!');
+                                return;
+                            }
+                            const msgRef = mensagensRef.push();
+                            msgRef.set({
+                                nome: usuarioLogado.nome,
+                                avatar: usuarioLogado.avatar || '',
+                                email: usuarioLogado.email,
+                                mensagem: '🎤 Mensagem de voz',
+                                audio: audioData,
+                                data: new Date().toISOString(),
+                                isHistorical: false
+                            });
+                        };
+                        reader.readAsDataURL(audioBlob);
+                        audioBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                        audioBtn.classList.remove('gravando');
+                    };
+                    
+                    midiaRecorder.start();
+                    audioBtn.innerHTML = '<i class="fas fa-stop" style="color:var(--danger);"></i>';
+                    audioBtn.classList.add('gravando');
+                })
+                .catch(() => alert('⚠️ Permita o acesso ao microfone para gravar áudio!'));
+        };
+
+        // ====== BUSCA DE MENSAGENS ======
+        window.toggleSearch = function() {
+            const box = document.getElementById('searchBox');
+            box.style.display = box.style.display === 'none' ? 'block' : 'none';
+            if (box.style.display === 'block') {
+                document.getElementById('searchInput').focus();
+            }
+        };
+
+        window.buscarMensagens = function() {
+            const termo = document.getElementById('searchInput').value.toLowerCase().trim();
+            if (!termo) return;
+            
+            const messages = document.querySelectorAll('.chat-msg');
+            let encontrou = false;
+            messages.forEach(msg => {
+                const content = msg.querySelector('.msg-content');
+                const text = content?.textContent?.toLowerCase() || '';
+                if (text.includes(termo)) {
+                    msg.style.border = '3px solid var(--secondary)';
+                    msg.style.boxShadow = '0 0 20px rgba(124,58,237,0.2)';
+                    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    encontrou = true;
+                    setTimeout(() => {
+                        msg.style.border = '';
+                        msg.style.boxShadow = '';
+                    }, 4000);
+                }
+            });
+            if (!encontrou) alert('🔍 Nenhuma mensagem encontrada.');
+        };
+
+        // ====== ESTATÍSTICAS DO CHAT ======
+        window.mostrarEstatisticas = function() {
+            mensagensRef.once('value', (snapshot) => {
+                const msgs = snapshot.val() || {};
+                const total = Object.keys(msgs).length;
+                const usuarios = new Set();
+                const usuariosNomes = new Set();
+                Object.values(msgs).forEach(m => {
+                    usuarios.add(m.email);
+                    usuariosNomes.add(m.nome);
+                });
+                const hoje = new Date().toDateString();
+                const hojeMsgs = Object.values(msgs).filter(m => new Date(m.data).toDateString() === hoje);
+                
+                const ultimaMsg = msgs[Object.keys(msgs).pop()];
+                const ultimaData = ultimaMsg ? new Date(ultimaMsg.data).toLocaleString() : 'Nenhuma';
+                
+                const stats = `📊 **ESTATÍSTICAS DO CHAT**\n\n` +
+                              `📝 Total de mensagens: **${total}**\n` +
+                              `👥 Total de usuários: **${usuarios.size}**\n` +
+                              `📅 Mensagens hoje: **${hojeMsgs.length}**\n` +
+                              `🕐 Última mensagem: **${ultimaData}**\n` +
+                              `🤖 BOT ativo: **${botEnabled ? '✅ Sim' : '❌ Não'}**`;
+                alert(stats);
+            });
+        };
+
         // ====== TOGGLE CHAT ======
         window.toggleChat = function() {
             const chat = document.getElementById('chatWindow');
@@ -4244,21 +4833,17 @@
             if (dados) {
                 try {
                     const usuario = JSON.parse(dados);
-                    usuarioLogado = usuario;
                     
                     const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
                     const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
                     
                     if (usuarioCadastrado) {
-                        if (usuarioCadastrado.nome !== usuario.nome) {
-                            usuario.nome = usuarioCadastrado.nome;
-                            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                        }
-                        if (usuarioCadastrado.avatar && usuarioCadastrado.avatar !== usuario.avatar) {
-                            usuario.avatar = usuarioCadastrado.avatar;
-                            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                        }
+                        usuario.nome = usuarioCadastrado.nome;
+                        usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
+                        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
                     }
+                    
+                    usuarioLogado = usuario;
                     
                     document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
                     document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
@@ -4850,10 +5435,71 @@
             input.value = '';
         };
 
+        // ====== EVENTO DE MENÇÃO (@) ======
+        function setupMention() {
+            const input = document.getElementById('chatInput');
+            
+            input.addEventListener('keydown', function(e) {
+                // Detectar @ para mencionar
+                if (e.key === '@') {
+                    e.preventDefault();
+                    
+                    // Mostrar lista de usuários online
+                    usuariosRef.once('value', (snapshot) => {
+                        const dados = snapshot.val() || {};
+                        const usuarios = Object.values(dados).filter(u => u.online === true && u.email !== usuarioLogado?.email);
+                        
+                        if (usuarios.length === 0) {
+                            input.value += '@';
+                            return;
+                        }
+                        
+                        // Remover menu existente
+                        const oldMenu = document.querySelector('.mention-menu');
+                        if (oldMenu) oldMenu.remove();
+                        
+                        // Criar dropdown de menção
+                        const menu = document.createElement('div');
+                        menu.className = 'mention-menu';
+                        
+                        usuarios.forEach(u => {
+                            const item = document.createElement('div');
+                            item.className = 'mention-item';
+                            item.textContent = `@${u.nome}`;
+                            item.onmouseover = () => item.style.background = 'var(--glass)';
+                            item.onmouseout = () => item.style.background = 'none';
+                            item.onclick = () => {
+                                input.value = input.value.slice(0, -1) + `@${u.nome} `;
+                                menu.remove();
+                                input.focus();
+                            };
+                            menu.appendChild(item);
+                        });
+                        
+                        document.querySelector('.chat-input-area').appendChild(menu);
+                        
+                        // Fechar ao clicar fora
+                        setTimeout(() => {
+                            document.addEventListener('click', function closeMention(e) {
+                                if (!menu.contains(e.target) && e.target !== input) {
+                                    menu.remove();
+                                    document.removeEventListener('click', closeMention);
+                                }
+                            });
+                        }, 100);
+                    });
+                    return;
+                }
+            });
+        }
+
         // ====== INICIALIZAÇÃO ======
         document.addEventListener('DOMContentLoaded', function() {
             const mobileToggle = document.getElementById('mobileMenu');
             const navMenuMobile = document.getElementById('navMenuMobile');
+
+            // Aplicar tema
+            aplicarTema(temaAtual);
 
             if (mobileToggle) {
                 mobileToggle.addEventListener('click', function(e) {
@@ -4886,7 +5532,7 @@
                         return;
                     }
 
-                    if (usuarioLogado && e.key !== 'Enter') {
+                    if (usuarioLogado && e.key !== 'Enter' && e.key !== '@') {
                         const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
                         userTypingRef.set({ nome: usuarioLogado.nome, timestamp: Date.now() });
                         clearTimeout(typingTimeout);
@@ -4904,6 +5550,9 @@
                 });
             }
 
+            // Setup de menção
+            setupMention();
+
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     document.getElementById('notifDropdown').classList.remove('open');
@@ -4912,6 +5561,7 @@
                     document.getElementById('modalPixXcore').classList.remove('open');
                     document.getElementById('userMenuOverlay').classList.remove('open');
                     document.getElementById('modalOverlay').classList.remove('open');
+                    document.getElementById('searchBox').style.display = 'none';
                 }
             });
 
@@ -4952,6 +5602,11 @@
             console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
             console.log('🤖 KZN BOT ativo!');
             console.log('💬 Chat Global com moderação!');
+            console.log('🎨 Temas disponíveis: escuro/claro');
+            console.log('🏷️ Menção: use @ para mencionar usuários');
+            console.log('📝 Mensagens editáveis: clique em ✏️');
+            console.log('🎤 Áudio: clique no microfone');
+            console.log('📌 Fixar: administradores podem fixar mensagens');
         });
     </script>
 </body>
