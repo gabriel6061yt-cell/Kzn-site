@@ -186,6 +186,9 @@
             color: var(--text-muted);
         }
 
+        /* ============================================================
+           MENU - SEM PERFIL (SÓ NO CABEÇALHO)
+        ============================================================ */
         .nav-menu {
             display: flex;
             list-style: none;
@@ -384,7 +387,7 @@
             opacity: 0.3;
         }
 
-        /* PERFIL */
+        /* PERFIL - SÓ NO CABEÇALHO */
         .profile-btn {
             display: flex;
             align-items: center;
@@ -705,7 +708,7 @@
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
         /* ============================================================
-           TABS - 3 ABAS
+           TABS - 3 ABAS SEPARADAS
            ============================================================ */
         .tabs-container { max-width: 950px; margin: 0 auto; }
         .tabs-nav {
@@ -1582,7 +1585,7 @@
     </a>
 
     <!-- ============================================================
-    NAVBAR
+    NAVBAR - PERFIL SÓ NO CABEÇALHO
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1604,13 +1607,14 @@
                 </a>
             </div>
 
+            <!-- MENU SEM PERFIL -->
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
-                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <!-- PERFIL REMOVIDO - SÓ NO CABEÇALHO -->
             </ul>
 
             <div class="nav-actions">
@@ -1633,6 +1637,7 @@
                     </div>
                 </div>
 
+                <!-- PERFIL - SÓ AQUI NO CABEÇALHO -->
                 <div style="position: relative;">
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
                         <span class="avatar" id="avatarLetter">
@@ -1700,7 +1705,7 @@
     </section>
 
     <!-- ============================================================
-    MODS - 3 ABAS SEPARADAS
+    MODS - 3 ABAS SEPARADAS (Classic, Era, Xcore)
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
@@ -1764,7 +1769,7 @@
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
-                <!-- FIM DA ABA CLASSIC -->
+                <!-- FIM ABA CLASSIC -->
             </div>
 
             <!-- ===========================================
@@ -1795,7 +1800,7 @@
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
-                <!-- FIM DA ABA ERA -->
+                <!-- FIM ABA ERA -->
             </div>
 
             <!-- ===========================================
@@ -1831,7 +1836,7 @@
 
                 <!-- PLANOS XCORE -->
                 <div class="xcore-plans">
-                    <!-- FREE -->
+                    <!-- FREE - SEM FORMULÁRIO -->
                     <div class="xcore-plan free">
                         <div class="plan-icon">🆓</div>
                         <div class="plan-name">FREE</div>
@@ -1846,7 +1851,7 @@
                         <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
                     </div>
 
-                    <!-- SILVER -->
+                    <!-- SILVER - COM FORMULÁRIO -->
                     <div class="xcore-plan silver">
                         <div class="plan-icon">🥈</div>
                         <div class="plan-name">SILVER</div>
@@ -1858,11 +1863,11 @@
                             <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
                             <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
                         </ul>
-                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
+                        <button class="plan-btn silver" onclick="document.getElementById('formXcore').scrollIntoView({ behavior: 'smooth' })">Assinar R$ 35,00</button>
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
 
-                    <!-- GOLD -->
+                    <!-- GOLD - COM FORMULÁRIO -->
                     <div class="xcore-plan gold">
                         <div class="plan-icon">🥇</div>
                         <div class="plan-name">GOLD</div>
@@ -1875,7 +1880,7 @@
                             <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
                             <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
                         </ul>
-                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
+                        <button class="plan-btn gold" onclick="document.getElementById('formXcore').scrollIntoView({ behavior: 'smooth' })">Assinar R$ 90,00</button>
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
@@ -1912,9 +1917,9 @@
                 </div>
 
                 <!-- =============================================
-                     FORMULÁRIO XCORE (DENTRO DA ABA XCORE)
+                     FORMULÁRIO XCORE (SÓ SILVER E GOLD)
                 ============================================= -->
-                <div style="max-width:600px;margin:2.5rem auto 0;">
+                <div style="max-width:600px;margin:2.5rem auto 0;" id="formXcore">
                     <div style="text-align:center;margin-bottom:1.5rem;">
                         <h3 style="color:var(--secondary);font-size:1.3rem;"><i class="fas fa-paper-plane"></i> Comprar Xcore Executor</h3>
                         <p style="color:var(--text-muted);font-size:0.85rem;">Preencha o formulário abaixo para adquirir seu plano Xcore</p>
@@ -1946,7 +1951,6 @@
                                 <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--primary);">*</span></label>
                                 <select name="Plano" required>
                                     <option value="">Selecione um plano...</option>
-                                    <option value="Xcore FREE - Grátis">🆓 FREE - Grátis</option>
                                     <option value="Xcore SILVER - R$ 35,00/mês">🥈 SILVER - R$ 35,00/mês</option>
                                     <option value="Xcore GOLD - R$ 90,00/mês">🥇 GOLD - R$ 90,00/mês</option>
                                 </select>
@@ -1970,7 +1974,7 @@
                         </form>
                     </div>
                 </div>
-                <!-- FIM DA ABA XCORE -->
+                <!-- FIM ABA XCORE -->
             </div>
             <!-- FIM DAS ABAS -->
 
