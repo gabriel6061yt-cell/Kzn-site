@@ -17,7 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== SEU CSS ORIGINAL AQUI (MANTIDO) ===== */
+        /* ===== CSS ORIGINAL (MANTIDO) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -441,6 +441,13 @@
             position: relative;
             display: inline-flex;
             align-items: center;
+            cursor: pointer;
+            padding: 2px 4px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+        .profile-btn .cart-icon-wrap:hover {
+            background: rgba(124,58,237,0.15);
         }
         .profile-btn .cart-count {
             background: var(--primary);
@@ -2037,6 +2044,10 @@
             position: relative;
             animation: modalIn 0.3s ease;
         }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
         .modal-pix .modal-content .close-modal {
             position: absolute;
             top: 10px;
@@ -2425,7 +2436,7 @@
                             <span class="avatar-letter" id="avatarText">K</span>
                         </span>
                         <span class="user-name" id="userDisplay">Entrar</span>
-                        <span class="cart-icon-wrap">
+                        <span class="cart-icon-wrap" onclick="event.stopPropagation(); toggleCarrinho();">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-count" id="cartCount">0</span>
                         </span>
@@ -3156,13 +3167,24 @@
             return true;
         }
 
-        // 3️⃣ PALAVRAS PROIBIDAS
+        // 3️⃣ PALAVRAS PROIBIDAS (CORRIGIDO - APAGA A MENSAGEM)
         const mensagemLower = mensagem.toLowerCase();
         const palavrasEncontradas = PALAVRAS_PROIBIDAS.filter(palavra => 
             mensagemLower.includes(palavra)
         );
 
         if (palavrasEncontradas.length > 0) {
+            // APAGA A MENSAGEM OFENSIVA DO BANCO
+            mensagensRef.once('value', (snapshot) => {
+                const msgs = snapshot.val() || {};
+                Object.keys(msgs).forEach(key => {
+                    const msg = msgs[key];
+                    if (msg.email === usuario.email && msg.mensagem === mensagem) {
+                        mensagensRef.child(key).remove();
+                    }
+                });
+            });
+            
             aplicarMute(email, `Conteúdo ofensivo detectado: ${palavrasEncontradas.join(', ')}`);
             return true;
         }
@@ -3173,6 +3195,17 @@
         if (urls) {
             for (const url of urls) {
                 if (!url.includes('youtube.com') && !url.includes('discord.gg') && !url.includes('youtu.be')) {
+                    // APAGA O LINK SUSPEITO
+                    mensagensRef.once('value', (snapshot) => {
+                        const msgs = snapshot.val() || {};
+                        Object.keys(msgs).forEach(key => {
+                            const msg = msgs[key];
+                            if (msg.email === usuario.email && msg.mensagem === mensagem) {
+                                mensagensRef.child(key).remove();
+                            }
+                        });
+                    });
+                    
                     aplicarMute(email, `Link suspeito detectado: ${url}`);
                     return true;
                 }
@@ -3903,6 +3936,12 @@
         }
     };
 
+    // ====== CARRINHO TOGGLE ======
+    window.toggleCarrinho = function() {
+        const dropdown = document.getElementById('cartDropdown');
+        dropdown.classList.toggle('open');
+    };
+
     // ====== NOTIFICAÇÕES ======
     function carregarNotificacoes() {
         try {
@@ -4545,7 +4584,7 @@
             if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
                 document.getElementById('notifDropdown').classList.remove('open');
             }
-            if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown')) {
+            if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown') && !e.target.closest('.cart-icon-wrap')) {
                 document.getElementById('cartDropdown').classList.remove('open');
             }
         });
