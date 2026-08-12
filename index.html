@@ -63,18 +63,18 @@
         /* WHATSAPP */
         .btn-whatsapp-fixo {
             position: fixed;
-            bottom: 24px;
+            bottom: 90px;
             left: 24px;
             z-index: 9999;
             background: #25d366;
             color: #fff;
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 28px;
             box-shadow: 0 4px 30px rgba(37,211,102,0.4);
             text-decoration: none;
             transition: 0.3s;
@@ -1358,44 +1358,205 @@
         }
 
         /* ============================================================
-           MODAL LOGIN - SÓ GOOGLE
+           TELA DE BOAS-VINDAS
            ============================================================ */
-        .modal-login {
-            display: none;
+        .welcome-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 9999;
+            background: var(--bg);
+            z-index: 10000;
+            display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.5s ease;
         }
-        .modal-login.open { display: flex; }
-
-        .modal-login-content {
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .welcome-content {
+            max-width: 420px;
+            width: 90%;
+            padding: 2.5rem;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 2.5rem;
-            max-width: 420px;
-            width: 90%;
-            position: relative;
-            animation: modalIn 0.3s ease;
+            text-align: center;
             box-shadow: var(--shadow);
         }
-        .modal-login-content .close-modal-login {
-            position: absolute;
-            top: 12px;
-            right: 16px;
+
+        /* ============================================================
+           CHAT - BOTÃO FLUTUANTE (EM CIMA DO WHATSAPP)
+           ============================================================ */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 160px;
+            left: 24px;
+            z-index: 9998;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
+            transition: 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
+        }
+        .chat-toggle-btn .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+            display: none;
+        }
+        .chat-toggle-btn .chat-badge.show {
+            display: flex;
+        }
+
+        /* ============================================================
+           CHAT - JANELA
+           ============================================================ */
+        .chat-window {
+            position: fixed;
+            bottom: 230px;
+            left: 24px;
+            z-index: 9997;
+            width: 360px;
+            max-height: 480px;
+            height: 480px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.3s ease;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+        }
+        .chat-header span {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .chat-header span i {
+            color: var(--secondary);
+            margin-right: 6px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .chat-messages::-webkit-scrollbar { width: 4px; }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .chat-msg {
+            padding: 0.4rem 0.6rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border-left: 2px solid var(--secondary);
+        }
+        .chat-msg strong {
+            color: var(--secondary-light);
+        }
+        .chat-msg p {
+            color: var(--text);
+            font-size: 0.85rem;
+            word-wrap: break-word;
+        }
+        .chat-msg .msg-time {
             color: var(--text-muted);
+            font-size: 0.55rem;
+            margin-left: 6px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-top: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 0.5rem 0.8rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
             transition: 0.3s;
         }
-        .modal-login-content .close-modal-login:hover { color: var(--text); }
+        .chat-input-area input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px rgba(124,58,237,0.1);
+        }
+        .chat-input-area button {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .chat-input-area button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(124,58,237,0.3);
+        }
 
         /* ============================================================
            MODAL PIX KZN
@@ -1749,12 +1910,33 @@
             .script-features { grid-template-columns: 1fr; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
+            .chat-window {
+                width: 300px;
+                max-height: 400px;
+                height: 400px;
+                bottom: 200px;
+                left: 10px;
+            }
+            .chat-toggle-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+                bottom: 140px;
+                left: 14px;
+            }
+            .btn-whatsapp-fixo {
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                bottom: 80px;
+                left: 14px;
+            }
         }
 
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
-            .modal-pix .modal-content, .modal-pix-xcore .modal-content, .modal-login-content { padding: 1.2rem; }
+            .modal-pix .modal-content, .modal-pix-xcore .modal-content { padding: 1.2rem; }
             .modal-pix .modal-content .pix-key, .modal-pix-xcore .modal-content .pix-key { font-size: 0.75rem; }
             .profile-section .profile-actions { flex-direction: column; }
             .dropdown { width: 230px; right: -30px; }
@@ -1766,6 +1948,27 @@
             .nav-xcore .xcore-text .team { font-size: 0.3rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
+            .chat-window {
+                width: 260px;
+                max-height: 350px;
+                height: 350px;
+                bottom: 180px;
+                left: 10px;
+            }
+            .chat-toggle-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+                bottom: 120px;
+                left: 10px;
+            }
+            .btn-whatsapp-fixo {
+                width: 44px;
+                height: 44px;
+                font-size: 20px;
+                bottom: 70px;
+                left: 10px;
+            }
         }
     </style>
 </head>
@@ -1775,6 +1978,34 @@
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- ============================================================
+    CHAT - BOTÃO FLUTUANTE (EM CIMA DO WHATSAPP)
+    ============================================================ -->
+    <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
+        <i class="fas fa-comment-dots"></i>
+        <span class="chat-badge" id="chatBadge">0</span>
+    </button>
+
+    <!-- ============================================================
+    CHAT - JANELA
+    ============================================================ -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span><i class="fas fa-comment-dots"></i> Chat Global - KZN</span>
+            <button onclick="toggleChat()" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div style="text-align:center;color:var(--text-muted);padding:2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                <p>Carregando mensagens...</p>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500">
+            <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
 
     <!-- ============================================================
     NAVBAR
@@ -2406,24 +2637,23 @@
     </section>
 
     <!-- ============================================================
-    MODAL LOGIN - SÓ GOOGLE
+    TELA DE BOAS-VINDAS
     ============================================================ -->
-    <div class="modal-login" id="modalLogin">
-        <div class="modal-login-content">
-            <span class="close-modal-login" onclick="fecharModalLogin()">✕</span>
-            <div style="text-align:center;margin-bottom:1.5rem;">
-                <h2 style="font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KZN MENU</h2>
-                <p style="color:var(--text-muted);font-size:0.9rem;">Entre com sua conta Google para acessar</p>
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <div style="text-align:center;margin-bottom:2rem;">
+                <div style="font-size:4rem;margin-bottom:1rem;">🚀</div>
+                <h1 style="font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KZN MENU</h1>
+                <p style="color:var(--text-muted);font-size:1.1rem;">Entre com sua conta Google para acessar o chat!</p>
             </div>
 
-            <!-- DIV DO BOTÃO GOOGLE -->
             <div id="g_id_onload"
                  data-client_id="642206758344-ma2e07eu08dokkui9d28cfiqfnrss50v.apps.googleusercontent.com"
-                 data-callback="handleCredentialResponse"
+                 data-callback="handleWelcomeLogin"
                  data-auto_prompt="false">
             </div>
 
-            <div style="display:flex;justify-content:center;margin:1rem 0;">
+            <div style="display:flex;justify-content:center;margin:1.5rem 0;">
                 <div class="g_id_signin"
                      data-type="standard"
                      data-shape="rectangular"
@@ -2434,11 +2664,7 @@
                 </div>
             </div>
 
-            <div style="text-align:center;margin-top:1rem;border-top:1px solid var(--border);padding-top:1rem;">
-                <p style="color:var(--text-muted);font-size:0.75rem;">
-                    Ao continuar, você concorda com os <a href="#" style="color:var(--secondary-light);text-decoration:none;">Termos de Serviço</a>
-                </p>
-            </div>
+            <p style="color:var(--text-muted);font-size:0.8rem;">Faça login para conversar com outros jogadores!</p>
         </div>
     </div>
 
@@ -2504,244 +2730,62 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT
+    FIREBASE + CHAT (JavaScript)
     ============================================================ -->
-    <script>
-        // ============================================================
-        // MENU MOBILE
-        // ============================================================
-        const mobileMenuBtn = document.getElementById('mobileMenu');
-        const navMenuMobile = document.getElementById('navMenuMobile');
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        mobileMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            navMenuMobile.classList.toggle('open');
-        });
+        // Configuração do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
+            authDomain: "chat-kzn.firebaseapp.com",
+            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
+            projectId: "chat-kzn",
+            storageBucket: "chat-kzn.firebasestorage.app",
+            messagingSenderId: "641963268535",
+            appId: "1:641963268535:web:b1f8b26f69840f527a7032",
+            measurementId: "G-JZHCPK3VRP"
+        };
 
-        document.querySelectorAll('#navMenuMobile a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenuMobile.classList.remove('open');
-            });
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
-                navMenuMobile.classList.remove('open');
-            }
-        });
+        // Inicializa Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const mensagensRef = ref(db, 'chat');
 
         // ============================================================
-        // SCROLL ACTIVE
+        // TELA DE BOAS-VINDAS
         // ============================================================
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-menu:not(.mobile-menu) a');
-        const mobileNavLinks = document.querySelectorAll('#navMenuMobile a');
-
-        function updateActiveLinks() {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-
-            mobileNavLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        window.addEventListener('scroll', () => {
-            updateActiveLinks();
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-        });
-
-        // ============================================================
-        // ABAS - 3 ABAS SEPARADAS
-        // ============================================================
-        function trocarAba(aba) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + aba).classList.add('active');
-
-            if (aba === 'classic') {
-                document.querySelector('.tab-btn.classic').classList.add('active');
-            } else if (aba === 'era') {
-                document.querySelector('.tab-btn.era').classList.add('active');
-            } else if (aba === 'xcore') {
-                document.querySelector('.tab-btn.xcore-tab').classList.add('active');
-            }
-        }
-
-        // ============================================================
-        // FAQ - TOGGLE
-        // ============================================================
-        function toggleFaq(el) {
-            el.classList.toggle('open');
-        }
-
-        // ============================================================
-        // CUPOM
-        // ============================================================
-        function aplicarCupom() {
-            const input = document.getElementById('cupomInput');
-            const codigo = input.value.trim();
-            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto em sua compra!'); } else if (codigo === 'KZN20') { alert(
-                    '🎉 Cupom aplicado! 20% de desconto em sua compra!'); } else if (codigo) { alert(
-                    '❌ Código inválido. Tente "KZN10" ou "KZN20".'); } else { alert('⚠️ Digite um código promocional.'); }
-            input.value = '';
-        }
-
-        // ============================================================
-        // SISTEMA DE NOTIFICAÇÕES
-        // ============================================================
-        let notificacoes = [];
-
-        function carregarNotificacoes() {
-            try {
-                const n = localStorage.getItem('kzn_notificacoes');
-                notificacoes = n ? JSON.parse(n) : [];
-            } catch (e) {
-                notificacoes = [];
-            }
-        }
-
-        function salvarNotificacoes() {
-            localStorage.setItem('kzn_notificacoes', JSON.stringify(notificacoes));
-        }
-
-        function adicionarNotificacao(mensagem, tipo = 'info') {
-            const icones = { compra: '🛒', pagamento: '💳', sucesso: '✅', info: '🔔', alerta: '⚠️' };
-            notificacoes.unshift({
-                id: Date.now(),
-                mensagem: `${icones[tipo] || '🔔'} ${mensagem}`,
-                data: new Date().toLocaleString('pt-BR'),
-                lida: false,
-                tipo: tipo
-            });
-            if (notificacoes.length > 50) notificacoes.pop();
-            salvarNotificacoes();
-            atualizarBadgeNotificacoes();
-            renderizarNotificacoes();
-            playNotificationSound();
-        }
-
-        function toggleNotificacoes() {
-            const dropdown = document.getElementById('notifDropdown');
-            dropdown.classList.toggle('open');
-            if (dropdown.classList.contains('open')) {
-                notificacoes.forEach(n => n.lida = true);
-                salvarNotificacoes();
-                atualizarBadgeNotificacoes();
-                renderizarNotificacoes();
-            }
-        }
-
-        function atualizarBadgeNotificacoes() {
-            const naoLidas = notificacoes.filter(n => !n.lida).length;
-            const badge = document.getElementById('notifBadge');
-            if (naoLidas > 0) {
-                badge.textContent = naoLidas;
-                badge.classList.add('show');
+        function verificarLogin() {
+            const usuario = localStorage.getItem('kzn_usuario_logado');
+            if (!usuario) {
+                document.getElementById('welcomeOverlay').classList.remove('hidden');
+                document.getElementById('chatToggleBtn').style.display = 'none';
             } else {
-                badge.classList.remove('show');
+                document.getElementById('welcomeOverlay').classList.add('hidden');
+                document.getElementById('chatToggleBtn').style.display = 'flex';
+                carregarMensagens();
             }
         }
 
-        function renderizarNotificacoes() {
-            const list = document.getElementById('notifList');
-            if (notificacoes.length === 0) {
-                list.innerHTML = `<div class="empty-state"><i class="fas fa-bell-slash"></i>Nenhuma notificação</div>`;
-                return;
-            }
-            list.innerHTML = notificacoes.map(n => `
-                        <div class="dropdown-item ${n.lida ? '' : 'unread'}">
-                            <span class="item-text">${n.mensagem}</span>
-                            <span class="item-time">${n.data}</span>
-                        </div>
-                    `).join('');
-        }
-
-        function marcarTodasNotificacoesLidas() {
-            notificacoes.forEach(n => n.lida = true);
-            salvarNotificacoes();
-            atualizarBadgeNotificacoes();
-            renderizarNotificacoes();
-        }
-
-        function playNotificationSound() {
-            try {
-                const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                gainNode.gain.value = 0.15;
-                oscillator.start();
-                setTimeout(() => { oscillator.stop(); }, 150);
-                setTimeout(() => {
-                    const osc2 = audioCtx.createOscillator();
-                    const gain2 = audioCtx.createGain();
-                    osc2.connect(gain2);
-                    gain2.connect(audioCtx.destination);
-                    osc2.frequency.value = 1000;
-                    osc2.type = 'sine';
-                    gain2.gain.value = 0.15;
-                    osc2.start();
-                    setTimeout(() => { osc2.stop(); }, 150);
-                }, 200);
-            } catch (e) {}
-        }
-
-        // Fechar dropdowns
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
-                document.getElementById('notifDropdown').classList.remove('open');
-            }
-            if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown')) {
-                document.getElementById('cartDropdown').classList.remove('open');
-            }
-        });
-
-        // ============================================================
-        // LOGIN COM GOOGLE
-        // ============================================================
-        function handleCredentialResponse(response) {
-            // Decodifica o token JWT
+        // Callback do login Google (chamado pelo botão)
+        window.handleWelcomeLogin = function(response) {
             const payload = parseJwt(response.credential);
-
-            // Pega os dados do usuário
-            const nome = payload.name;
-            const email = payload.email;
-            const foto = payload.picture;
-
-            // Salva no localStorage
-            usuarioLogado = {
-                nome: nome,
-                email: email,
-                avatar: foto
+            const usuario = {
+                nome: payload.name,
+                email: payload.email,
+                avatar: payload.picture
             };
-            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
-
-            // Atualiza a interface
-            carregarPerfil();
-            fecharModalLogin();
-
-            // Mensagem de boas-vindas
-            alert('✅ Login realizado com sucesso! Bem-vindo ' + nome);
-        }
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+            document.getElementById('chatToggleBtn').style.display = 'flex';
+            carregarMensagens();
+            // Atualiza o perfil no site
+            if (typeof carregarPerfil === 'function') {
+                carregarPerfil();
+            }
+        };
 
         function parseJwt(token) {
             const base64Url = token.split('.')[1];
@@ -2753,373 +2797,100 @@
         }
 
         // ============================================================
-        // SISTEMA DE PERFIL
+        // CHAT - ENVIAR MENSAGEM
         // ============================================================
-        let usuarioLogado = null;
+        window.enviarMensagem = function() {
+            const input = document.getElementById('chatInput');
+            const texto = input.value.trim();
+            if (!texto) return;
 
-        function resetarPerfilPadrao() {
-            usuarioLogado = null;
-            document.getElementById('userDisplay').textContent = 'Entrar';
-            document.getElementById('profileName').textContent = 'KZN Usuário';
-            document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
-            document.getElementById('avatarText').textContent = 'K';
-            document.getElementById('avatarProfileText').textContent = 'K';
-            document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
-            document.getElementById('avatarProfileImage').style.display = 'none';
-            document.getElementById('avatarProfileText').style.display = 'block';
-            document.getElementById('editNome').value = '';
-            document.getElementById('editEmail').value = '';
-        }
-
-        function carregarPerfil() {
-            const dados = localStorage.getItem('kzn_usuario_logado');
-            if (dados) {
-                try {
-                    usuarioLogado = JSON.parse(dados);
-                    document.getElementById('userDisplay').textContent = usuarioLogado.nome || 'Usuário';
-                    document.getElementById('profileName').textContent = usuarioLogado.nome || 'KZN Usuário';
-                    document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
-                    document.getElementById('editNome').value = usuarioLogado.nome || '';
-                    document.getElementById('editEmail').value = usuarioLogado.email || '';
-
-                    if (usuarioLogado.avatar) {
-                        document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
-                        document.getElementById('avatarProfileImage').style.display = 'block';
-                        document.getElementById('avatarProfileText').style.display = 'none';
-                        document.getElementById('avatarText').textContent = '';
-                        document.querySelector('.profile-btn .avatar').innerHTML =
-                            `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-                    } else {
-                        const letra = (usuarioLogado.nome || 'U')[0].toUpperCase();
-                        document.getElementById('avatarProfileText').textContent = letra;
-                        document.getElementById('avatarProfileText').style.display = 'block';
-                        document.getElementById('avatarProfileImage').style.display = 'none';
-                        document.getElementById('avatarText').textContent = letra;
-                    }
-                } catch (e) {
-                    resetarPerfilPadrao();
-                }
-            } else {
-                resetarPerfilPadrao();
-            }
-        }
-
-        function abrirPerfil() {
-            const dados = localStorage.getItem('kzn_usuario_logado');
-            if (dados) {
-                window.location.href = '#perfil';
-            } else {
-                abrirModalLogin();
-            }
-        }
-
-        function uploadAvatar(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imagem = e.target.result;
-                usuarioLogado.avatar = imagem;
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
-                carregarPerfil();
-                alert('✅ Foto de perfil atualizada com sucesso!');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function editarPerfil(event) {
-            if (event) event.preventDefault();
-            document.getElementById('editProfileArea').style.display = 'block';
-            document.getElementById('editNome').value = usuarioLogado.nome || '';
-            document.getElementById('editEmail').value = usuarioLogado.email || '';
-            document.getElementById('editProfileArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function cancelarEdicaoPerfil() {
-            document.getElementById('editProfileArea').style.display = 'none';
-        }
-
-        function salvarEdicaoPerfil() {
-            const nome = document.getElementById('editNome').value.trim();
-            const email = document.getElementById('editEmail').value.trim();
-            const senha = document.getElementById('editSenha').value;
-            if (!nome || !email) {
-                alert('⚠️ Preencha todos os campos obrigatórios.');
-                return;
-            }
-            usuarioLogado.nome = nome;
-            usuarioLogado.email = email;
-            if (senha.length >= 6) {
-                alert('🔐 Senha atualizada com sucesso!');
-            }
-            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
-            carregarPerfil();
-            document.getElementById('editProfileArea').style.display = 'none';
-            alert('✅ Perfil atualizado com sucesso!');
-        }
-
-        // ============================================================
-        // LOGOUT
-        // ============================================================
-        function logout() {
-            localStorage.removeItem('kzn_usuario_logado');
-            resetarPerfilPadrao();
-            abrirModalLogin();
-        }
-
-        // ============================================================
-        // ABRIR/FECHAR MODAL LOGIN
-        // ============================================================
-        function abrirModalLogin() {
-            document.getElementById('modalLogin').classList.add('open');
-        }
-
-        function fecharModalLogin() {
-            document.getElementById('modalLogin').classList.remove('open');
-        }
-
-        // Fechar modal ao clicar fora
-        document.getElementById('modalLogin').addEventListener('click', function(e) {
-            if (e.target === this) fecharModalLogin();
-        });
-
-        // Fechar modal com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                fecharModalLogin();
-                fecharModalPix();
-                fecharModalPixXcore();
-            }
-        });
-
-        // ============================================================
-        // CARRINHO
-        // ============================================================
-        let carrinho = [];
-
-        function carregarCarrinho() {
-            const dados = localStorage.getItem('kzn_carrinho');
-            if (dados) {
-                try { carrinho = JSON.parse(dados); } catch (e) { carrinho = []; }
-            }
-            atualizarCarrinho();
-        }
-
-        function salvarCarrinho() {
-            localStorage.setItem('kzn_carrinho', JSON.stringify(carrinho));
-            atualizarCarrinho();
-        }
-
-        function adicionarAoCarrinho(nome, preco) {
-            const item = carrinho.find(i => i.nome === nome);
-            if (item) {
-                item.quantidade++;
-            } else {
-                carrinho.push({ nome, preco, quantidade: 1 });
-            }
-            salvarCarrinho();
-            alert(`✅ ${nome} adicionado ao carrinho!`);
-        }
-
-        function removerDoCarrinho(index) {
-            carrinho.splice(index, 1);
-            salvarCarrinho();
-        }
-
-        function atualizarCarrinho() {
-            const count = document.getElementById('cartCount');
-            const totalItems = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
-            count.textContent = totalItems;
-
-            const itemsContainer = document.getElementById('cartItems');
-            const totalContainer = document.getElementById('cartTotal');
-
-            if (carrinho.length === 0) {
-                itemsContainer.innerHTML = `<div class="empty-cart">🛒 Carrinho vazio</div>`;
-                totalContainer.textContent = 'R$ 0,00';
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (!usuario) {
+                alert('⚠️ Faça login para enviar mensagens!');
                 return;
             }
 
-            let html = '';
-            let total = 0;
-            carrinho.forEach((item, index) => {
-                const subtotal = item.preco * item.quantidade;
-                total += subtotal;
-                html += `
-                            <div class="cart-item">
-                                <span class="item-name">${item.nome} x${item.quantidade}</span>
-                                <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
-                                <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
+            push(mensagensRef, {
+                nome: usuario.nome,
+                avatar: usuario.avatar || '',
+                mensagem: texto,
+                data: new Date().toISOString()
+            });
+
+            input.value = '';
+            const container = document.getElementById('chatMessages');
+            container.scrollTop = container.scrollHeight;
+        };
+
+        // ============================================================
+        // CHAT - CARREGAR MENSAGENS
+        // ============================================================
+        let contadorNaoLidas = 0;
+        let chatAberto = false;
+
+        function carregarMensagens() {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+
+            onChildAdded(mensagensRef, (snapshot) => {
+                const dados = snapshot.val();
+                const data = new Date(dados.data);
+                const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+                const div = document.createElement('div');
+                div.className = 'chat-msg';
+                div.innerHTML = `
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+                                ${dados.avatar ? `<img src="${dados.avatar}" style="width:24px;height:24px;border-radius:50%;object-fit:cover;" />` : ''}
+                                <strong style="color:var(--secondary-light);font-size:0.85rem;">${dados.nome}</strong>
+                                <span style="color:var(--text-muted);font-size:0.6rem;">${hora}</span>
                             </div>
+                            <p style="color:var(--text);font-size:0.9rem;word-wrap:break-word;margin-left:32px;">${dados.mensagem}</p>
                         `;
-            });
-            itemsContainer.innerHTML = html;
-            totalContainer.textContent = `R$ ${total.toFixed(2)}`;
-        }
+                container.appendChild(div);
+                container.scrollTop = container.scrollHeight;
 
-        function finalizarCompra() {
-            if (carrinho.length === 0) {
-                alert('⚠️ Seu carrinho está vazio!');
-                return;
-            }
-            const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-            if (confirm(`🛒 Finalizar compra de R$ ${total.toFixed(2)}?\n\nClique em OK para gerar o pagamento.`)) {
-                carrinho = [];
-                salvarCarrinho();
-                alert('💳 Pagamento gerado! Copie a chave PIX abaixo:');
-                abrirModalPix();
-                document.getElementById('planInfo').textContent = `Total: R$ ${total.toFixed(2)}`;
-                document.getElementById('cartDropdown').classList.remove('open');
-            }
-        }
-
-        document.getElementById('profileBtn').addEventListener('click', function(e) {
-            if (e.target.closest('.cart-icon-wrap') || e.target.closest('.cart-count')) {
-                e.stopPropagation();
-                e.preventDefault();
-                document.getElementById('cartDropdown').classList.toggle('open');
-            }
-        });
-
-        // ============================================================
-        // MODAL PIX KZN
-        // ============================================================
-        function abrirModalPix() {
-            document.getElementById('modalPix').classList.add('open');
-        }
-
-        function fecharModalPix() {
-            document.getElementById('modalPix').classList.remove('open');
-        }
-
-        function copiarPix() {
-            const key = document.getElementById('pixKey').textContent;
-            navigator.clipboard.writeText(key).then(() => {
-                const btn = document.querySelector('#modalPix .btn-copy');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
+                // Notificação se o chat estiver fechado
+                if (!chatAberto) {
+                    contadorNaoLidas++;
+                    const badge = document.getElementById('chatBadge');
+                    badge.textContent = contadorNaoLidas;
+                    badge.classList.add('show');
+                }
             });
         }
 
         // ============================================================
-        // MODAL PIX XCORE
+        // CHAT - TOGGLE
         // ============================================================
-        function abrirModalPixXcore() {
-            document.getElementById('modalPixXcore').classList.add('open');
-        }
+        window.toggleChat = function() {
+            const chat = document.getElementById('chatWindow');
+            chat.classList.toggle('open');
+            chatAberto = chat.classList.contains('open');
 
-        function fecharModalPixXcore() {
-            document.getElementById('modalPixXcore').classList.remove('open');
-        }
-
-        function copiarPixXcore() {
-            const key = document.getElementById('pixKeyXcore').textContent;
-            navigator.clipboard.writeText(key).then(() => {
-                const btn = document.querySelector('#modalPixXcore .btn-copy');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
-            });
-        }
-
-        // Fechar modais ao clicar fora
-        document.getElementById('modalPix').addEventListener('click', function(e) {
-            if (e.target === this) fecharModalPix();
-        });
-
-        document.getElementById('modalPixXcore').addEventListener('click', function(e) {
-            if (e.target === this) fecharModalPixXcore();
-        });
-
-        // ============================================================
-        // FORMULÁRIO XCORE
-        // ============================================================
-        document.getElementById('formXcore').addEventListener('submit', function(e) {
-            const btn = document.getElementById('formXcoreBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
-            const nome = document.querySelector('#formXcore input[name="Nome"]').value;
-            const email = document.querySelector('#formXcore input[name="Email"]').value;
-            const plano = document.querySelector('#formXcore select[name="Plano"]').value;
-
-            adicionarNotificacao(`⚡ Novo pedido Xcore de ${nome} - ${plano}`, 'compra');
-
-            if (email) {
-                localStorage.setItem('kzn_cliente_email', email);
+            if (chatAberto) {
+                // Reseta contador
+                contadorNaoLidas = 0;
+                document.getElementById('chatBadge').classList.remove('show');
+                const container = document.getElementById('chatMessages');
+                container.scrollTop = container.scrollHeight;
             }
+        };
 
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido Xcore';
-                const status = document.getElementById('formXcoreStatus');
-                status.className = 'form-status success';
-                status.style.display = 'block';
-                status.textContent = '✅ Pedido Xcore enviado com sucesso! Você receberá sua key em breve.';
-                this.reset();
-                adicionarNotificacao(`✅ Pedido Xcore de ${nome} enviado com sucesso!`, 'sucesso');
-            }, 3000);
-        });
-
-        // ============================================================
-        // FORMULÁRIO KZN
-        // ============================================================
-        document.getElementById('formContato').addEventListener('submit', function(e) {
-            const btn = document.getElementById('formSubmitBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-
-            const nome = document.querySelector('#formContato input[name="Nome"]').value;
-            const email = document.querySelector('#formContato input[name="Email"]').value;
-            const plano = document.querySelector('#formContato select[name="Plano"]').value;
-
-            adicionarNotificacao(`📩 Novo pedido KZN de ${nome} - ${plano}`, 'compra');
-
-            if (email) {
-                localStorage.setItem('kzn_cliente_email', email);
+        // Enviar mensagem com Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('chatInput');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        window.enviarMensagem();
+                    }
+                });
             }
-
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido KZN';
-                const status = document.getElementById('formStatus');
-                status.className = 'form-status success';
-                status.style.display = 'block';
-                status.textContent = '✅ Pedido KZN enviado com sucesso! Você receberá sua key em breve.';
-                this.reset();
-                adicionarNotificacao(`✅ Pedido KZN de ${nome} enviado com sucesso!`, 'sucesso');
-            }, 3000);
+            verificarLogin();
         });
 
-        // ============================================================
-        // INICIALIZAÇÃO
-        // ============================================================
-        carregarNotificacoes();
-        carregarPerfil();
-        carregarCarrinho();
-        atualizarBadgeNotificacoes();
-        renderizarNotificacoes();
-
-        if (notificacoes.length === 0) {
-            adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
-            adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
-        }
-
-        // ============================================================
-        // TRADUÇÃO
-        // ============================================================
-        let idiomaAtual = 'pt';
-
-        function mudarIdioma(lang) {
-            idiomaAtual = lang;
-            document.getElementById('langPt').classList.toggle('active', lang === 'pt');
-            document.getElementById('langEn').classList.toggle('active', lang === 'en');
-        }
-
-        console.log('✅ KZN MENU carregado com sucesso!');
-        console.log('🔔 Sistema de notificações ativo!');
-        console.log('⚡ Xcore Executor integrado com formulário próprio!');
-        console.log('🔑 Chave PIX KZN: 6c80021c-957b-49c0-9a5d-98371bf67120');
-        console.log('🔑 Chave PIX Xcore: 7d23dda5-ef7e-430a-b7a3-ed28504e515d');
+        console.log('🔥 Chat KZN MENU conectado ao Firebase!');
     </script>
 
 </body>
