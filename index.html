@@ -13,12 +13,10 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ====== TODO O SEU CSS AQUI ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -57,7 +55,6 @@
             border-radius: 10px;
         }
 
-        /* WHATSAPP */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 90px;
@@ -84,7 +81,6 @@
             100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
 
-        /* ====== NAVBAR ====== */
         .navbar {
             position: fixed;
             top: 0;
@@ -394,7 +390,6 @@
         }
         .empty-state i { font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.3; }
 
-        /* ====== PERFIL ====== */
         .profile-btn {
             display: flex;
             align-items: center;
@@ -541,7 +536,6 @@
             padding: 1rem 0;
         }
 
-        /* ====== HERO ====== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -671,7 +665,6 @@
             color: var(--text-muted);
         }
 
-        /* ====== SECTIONS ====== */
         .section {
             padding: 6rem 2rem;
             position: relative;
@@ -704,7 +697,6 @@
         .section-header h2 i { color: var(--primary); }
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
-        /* ====== TABS ====== */
         .tabs-container { max-width: 950px; margin: 0 auto; }
         .tabs-nav {
             display: flex;
@@ -747,7 +739,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ====== CARDS ====== */
         .plans-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -883,7 +874,6 @@
         }
         .script-features li i { color: var(--success); font-size: 0.7rem; }
 
-        /* ====== XCORE ====== */
         .xcore-plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1039,7 +1029,6 @@
             box-shadow: 0 4px 30px rgba(88,101,242,0.4);
         }
 
-        /* ====== FORMULÁRIO ====== */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -1133,7 +1122,6 @@
         }
         .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
 
-        /* ====== PERFIL ====== */
         .profile-section {
             max-width: 600px;
             margin: 0 auto;
@@ -1269,7 +1257,6 @@
         }
         .hidden-file-input { display: none; }
 
-        /* ====== TELA DE LOGIN ====== */
         .welcome-overlay {
             position: fixed;
             top: 0;
@@ -1368,7 +1355,6 @@
             background: var(--border);
         }
 
-        /* ====== FORMULÁRIO LOGIN/REGISTRO ====== */
         .login-tabs {
             display: flex;
             gap: 0.3rem;
@@ -1461,7 +1447,6 @@
             margin-top: 0.8rem;
         }
 
-        /* ====== CHAT ====== */
         .chat-toggle-btn {
             position: fixed;
             bottom: 160px;
@@ -1804,7 +1789,6 @@
             cursor: not-allowed;
         }
 
-        /* ====== MENU USUÁRIO (OVERLAY) ====== */
         .user-menu-overlay {
             display: none;
             position: fixed;
@@ -1946,7 +1930,6 @@
             color: var(--text);
         }
 
-        /* ====== FAQ ====== */
         .faq-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1975,7 +1958,6 @@
         .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
         .faq-item.open .faq-icon { transform: rotate(180deg); }
 
-        /* ====== FOOTER ====== */
         .footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
@@ -2029,7 +2011,6 @@
             font-size: 0.7rem;
         }
 
-        /* ====== MODAL PIX ====== */
         .modal-pix {
             display: none;
             position: fixed;
@@ -2169,7 +2150,6 @@
         }
         .modal-pix-xcore .modal-content .btn-copy:hover { transform: scale(1.05); }
 
-        /* ====== RESPONSIVE ====== */
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
             .hero-content { max-width: 100%; }
@@ -2330,12 +2310,10 @@
 </head>
 <body>
 
-    <!-- WHATSAPP -->
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ====== CHAT ====== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
         <i class="fas fa-comment-dots"></i>
         <span class="chat-badge" id="chatBadge">0</span>
@@ -2372,7 +2350,6 @@
         </div>
     </div>
 
-    <!-- ====== MENU USUÁRIO (OVERLAY) ====== -->
     <div class="user-menu-overlay" id="userMenuOverlay" onclick="fecharMenuUsuario(event)">
         <div class="user-menu" onclick="event.stopPropagation()">
             <div class="user-menu-header" id="userMenuHeader">
@@ -2383,14 +2360,11 @@
                     <div class="user-status" id="userMenuStatus">👤 Usuário</div>
                 </div>
             </div>
-            <div class="user-menu-actions" id="userMenuActions">
-                <!-- Botões gerados dinamicamente -->
-            </div>
+            <div class="user-menu-actions" id="userMenuActions"></div>
             <button class="close-menu-btn" onclick="fecharMenuUsuario()"><i class="fas fa-times"></i> Fechar</button>
         </div>
     </div>
 
-    <!-- ====== NAVBAR ====== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo-wrapper">
@@ -2411,7 +2385,6 @@
                 </a>
             </div>
 
-            <!-- MENU DESKTOP -->
             <ul class="nav-menu" id="navMenuDesktop">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
@@ -2420,7 +2393,6 @@
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
 
-            <!-- MENU MOBILE -->
             <ul class="nav-menu mobile-menu" id="navMenuMobile">
                 <li><a href="#inicio"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
@@ -2450,7 +2422,6 @@
                     </div>
                 </div>
 
-                <!-- PERFIL + CARRINHO -->
                 <div style="position: relative;">
                     <button class="profile-btn" id="profileBtn" onclick="abrirPerfil()">
                         <span class="avatar" id="avatarLetter">
@@ -2484,7 +2455,6 @@
         </div>
     </nav>
 
-    <!-- ====== HERO ====== -->
     <section id="inicio" class="hero">
         <div class="hero-content">
             <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
@@ -2510,7 +2480,6 @@
         </div>
     </section>
 
-    <!-- ====== MODS ====== -->
     <section id="mods" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2530,7 +2499,6 @@
                 </button>
             </div>
 
-            <!-- ABA CLASSIC -->
             <div class="tab-content active" id="tab-classic">
                 <div class="plans-grid">
                     <div class="plan-card">
@@ -2572,7 +2540,6 @@
                 </div>
             </div>
 
-            <!-- ABA ERA -->
             <div class="tab-content" id="tab-era">
                 <div class="plans-grid">
                     <div class="plan-card popular">
@@ -2600,7 +2567,6 @@
                 </div>
             </div>
 
-            <!-- ABA XCORE -->
             <div class="tab-content" id="tab-xcore">
                 <div style="max-width:700px;margin:0 auto 1.5rem;text-align:center;background:var(--bg-card);border:2px solid #5865f2;border-radius:var(--radius);padding:1.2rem;">
                     <p style="color:var(--text-muted);font-size:0.9rem;">
@@ -2774,7 +2740,6 @@
         </div>
     </section>
 
-    <!-- ====== PERFIL ====== -->
     <section id="perfil" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2851,7 +2816,6 @@
         </div>
     </section>
 
-    <!-- ====== REGRAS ====== -->
     <section id="regras" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2875,7 +2839,6 @@
         </div>
     </section>
 
-    <!-- ====== CONTATO (KZN) ====== -->
     <section id="contato" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2915,7 +2878,6 @@
         </div>
     </section>
 
-    <!-- ====== FAQ ====== -->
     <section id="faq" class="section">
         <div class="container">
             <div class="section-header">
@@ -2959,7 +2921,6 @@
         </div>
     </section>
 
-    <!-- ====== TELA DE LOGIN ====== -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <div class="welcome-brand">
@@ -3001,7 +2962,6 @@
         </div>
     </div>
 
-    <!-- ====== FOOTER ====== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -3020,7 +2980,6 @@
         </div>
     </footer>
 
-    <!-- ====== MODAIS PIX ====== -->
     <div class="modal-pix" id="modalPix">
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModalPix()">✕</span>
@@ -3047,9 +3006,8 @@
         </div>
     </div>
 
-    <!-- ====== JAVASCRIPT COMPLETO ====== -->
     <script>
-        // ====== FIREBASE ======
+        // ====== FIREBASE CONFIG ======
         const firebaseConfig = {
             apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
             authDomain: "chat-kzn.firebaseapp.com",
@@ -3131,7 +3089,7 @@
             } catch (e) {}
         }
 
-        // ====== FUNÇÕES DE USUÁRIO ======
+        // ====== FUNÇÕES DE PERMISSÃO ======
         function isProprietario(email) {
             return email === PROPRIETARIO_EMAIL;
         }
@@ -3166,6 +3124,110 @@
                 resultado = Object.values(bans).some(b => b.email === email && b.ativo === true);
             });
             return resultado;
+        }
+
+        // ====== BOT GUARDIAN ======
+        function enviarMensagemBot(mensagem) {
+            const msgRef = mensagensRef.push();
+            msgRef.set({
+                nome: BOT_NOME,
+                avatar: BOT_AVATAR,
+                email: BOT_EMAIL,
+                mensagem: mensagem,
+                data: new Date().toISOString(),
+                isBot: true
+            });
+        }
+
+        // ====== PROCESSAR COMANDOS ======
+        function processarComando(texto, usuario) {
+            const partes = texto.split(' ');
+            const comando = partes[0].toLowerCase();
+            const alvo = partes.slice(1).join(' ');
+
+            if (comando === '/comandos' || comando === '/ajuda') {
+                let msg = '📋 **COMANDOS DISPONÍVEIS:**\n\n';
+                msg += '🔹 `/comandos` - Mostra esta lista\n';
+                msg += '🔹 `/regras` - Mostra as regras do chat\n';
+                msg += '🔹 `/online` - Mostra usuários online\n';
+                
+                if (isAdmin(usuario.email)) {
+                    msg += '\n⚡ **COMANDOS ADMIN:**\n';
+                    if (isProprietario(usuario.email)) {
+                        msg += '🔸 `/admin [email]` - Conceder admin\n';
+                    }
+                    msg += '🔸 `/ban [email]` - Banir usuário\n';
+                    msg += '🔸 `/unban [email]` - Desbanir usuário\n';
+                    msg += '🔸 `/mute [email]` - Silenciar usuário\n';
+                    msg += '🔸 `/unmute [email]` - Dessilenciar usuário\n';
+                    msg += '🔸 `/limparchat` - Limpar mensagens\n';
+                    msg += '🔸 `/logsban` - Ver banidos\n';
+                    msg += '🔸 `/logsmute` - Ver silenciados\n';
+                }
+                
+                enviarMensagemBot(msg);
+                return true;
+            }
+
+            if (comando === '/regras') {
+                enviarMensagemBot('📜 **REGRAS DO CHAT:**\n\n1️⃣ Respeite todos os usuários\n2️⃣ Não use linguagem ofensiva\n3️⃣ Não compartilhe links suspeitos\n4️⃣ Não faça spam\n5️⃣ Siga as instruções dos administradores\n\n⚠️ Violações podem resultar em banimento!');
+                return true;
+            }
+
+            if (comando === '/online') {
+                const online = Object.keys(usuariosOnline).length;
+                const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
+                enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
+                return true;
+            }
+
+            if (!isAdmin(usuario.email)) {
+                if (comando.startsWith('/')) {
+                    enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
+                }
+                return false;
+            }
+
+            switch (comando) {
+                case '/admin':
+                    if (!isProprietario(usuario.email)) {
+                        enviarMensagemBot('❌ Apenas o proprietário pode conceder admin!');
+                        return true;
+                    }
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/admin [email]`'); return true; }
+                    tornarAdmin(alvo);
+                    return true;
+                case '/ban':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/ban [email]`'); return true; }
+                    banirUsuario(alvo);
+                    return true;
+                case '/unban':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unban [email]`'); return true; }
+                    desbanirUsuario(alvo);
+                    return true;
+                case '/mute':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/mute [email]`'); return true; }
+                    silenciarUsuario(alvo);
+                    return true;
+                case '/unmute':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unmute [email]`'); return true; }
+                    dessilenciarUsuario(alvo);
+                    return true;
+                case '/limparchat':
+                    limparChat();
+                    return true;
+                case '/logsban':
+                    mostrarLogsBan();
+                    return true;
+                case '/logsmute':
+                    mostrarLogsMute();
+                    return true;
+                default:
+                    if (comando.startsWith('/')) {
+                        enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
+                    }
+                    return false;
+            }
         }
 
         // ====== FUNÇÕES DE MODERAÇÃO ======
@@ -3334,175 +3396,7 @@
             });
         };
 
-        // ====== BOT GUARDIAN ======
-        function enviarMensagemBot(mensagem) {
-            const msgRef = mensagensRef.push();
-            msgRef.set({
-                nome: BOT_NOME,
-                avatar: BOT_AVATAR,
-                email: BOT_EMAIL,
-                mensagem: mensagem,
-                data: new Date().toISOString(),
-                isBot: true
-            });
-        }
-
-        function processarComando(texto, usuario) {
-            const partes = texto.split(' ');
-            const comando = partes[0].toLowerCase();
-            const alvo = partes.slice(1).join(' ');
-
-            if (comando === '/comandos' || comando === '/ajuda') {
-                let msg = '📋 **COMANDOS DISPONÍVEIS:**\n\n';
-                msg += '🔹 `/comandos` - Mostra esta lista\n';
-                msg += '🔹 `/regras` - Mostra as regras do chat\n';
-                msg += '🔹 `/online` - Mostra usuários online\n';
-                
-                if (isAdmin(usuario.email)) {
-                    msg += '\n⚡ **COMANDOS ADMIN:**\n';
-                    if (isProprietario(usuario.email)) {
-                        msg += '🔸 `/admin [email]` - Conceder admin\n';
-                    }
-                    msg += '🔸 `/ban [email]` - Banir usuário\n';
-                    msg += '🔸 `/unban [email]` - Desbanir usuário\n';
-                    msg += '🔸 `/mute [email]` - Silenciar usuário\n';
-                    msg += '🔸 `/unmute [email]` - Dessilenciar usuário\n';
-                    msg += '🔸 `/limparchat` - Limpar mensagens\n';
-                    msg += '🔸 `/logsban` - Ver banidos\n';
-                    msg += '🔸 `/logsmute` - Ver silenciados\n';
-                }
-                
-                enviarMensagemBot(msg);
-                return true;
-            }
-
-            if (comando === '/regras') {
-                enviarMensagemBot('📜 **REGRAS DO CHAT:**\n\n1️⃣ Respeite todos os usuários\n2️⃣ Não use linguagem ofensiva\n3️⃣ Não compartilhe links suspeitos\n4️⃣ Não faça spam\n5️⃣ Siga as instruções dos administradores\n\n⚠️ Violações podem resultar em banimento!');
-                return true;
-            }
-
-            if (comando === '/online') {
-                const online = Object.keys(usuariosOnline).length;
-                const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
-                enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
-                return true;
-            }
-
-            if (!isAdmin(usuario.email)) {
-                if (comando.startsWith('/')) {
-                    enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
-                }
-                return false;
-            }
-
-            switch (comando) {
-                case '/admin':
-                    if (!isProprietario(usuario.email)) {
-                        enviarMensagemBot('❌ Apenas o proprietário pode conceder admin!');
-                        return true;
-                    }
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/admin [email]`'); return true; }
-                    window.tornarAdmin(alvo);
-                    return true;
-                case '/ban':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/ban [email]`'); return true; }
-                    window.banirUsuario(alvo);
-                    return true;
-                case '/unban':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unban [email]`'); return true; }
-                    window.desbanirUsuario(alvo);
-                    return true;
-                case '/mute':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/mute [email]`'); return true; }
-                    window.silenciarUsuario(alvo);
-                    return true;
-                case '/unmute':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unmute [email]`'); return true; }
-                    window.dessilenciarUsuario(alvo);
-                    return true;
-                case '/limparchat':
-                    window.limparChat();
-                    return true;
-                case '/logsban':
-                    window.mostrarLogsBan();
-                    return true;
-                case '/logsmute':
-                    window.mostrarLogsMute();
-                    return true;
-                default:
-                    if (comando.startsWith('/')) {
-                        enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
-                    }
-                    return false;
-            }
-        }
-
-        function botResponder(mensagem, usuario) {
-            const texto = mensagem.toLowerCase();
-            
-            if (mensagem.startsWith('/')) {
-                processarComando(mensagem, usuario);
-                return;
-            }
-
-            if (texto.match(/\b(oi|olá|ola|eai|e aí|salve|opa|fala)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`Olá ${usuario.nome}! 👋 Como posso ajudá-lo? Digite /comandos para ver o que posso fazer.`);
-                }, 800);
-                return;
-            }
-
-            if (texto.match(/\b(obrigado|valeu|obg|brigado|vlw)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`De nada, ${usuario.nome}! 😊 Estou aqui para ajudar!`);
-                }, 800);
-                return;
-            }
-
-            if (texto.match(/\b(comprar|preço|mod|menu|kzn)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`💰 Para comprar os mods KZN MENU, acesse a seção "Mods" no site ou entre em contato pelo WhatsApp. 💬`);
-                }, 1000);
-                return;
-            }
-
-            if (texto.match(/\b(regras|regra)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`📜 Digite /regras para ver as regras do chat.`);
-                }, 800);
-                return;
-            }
-
-            if (texto.match(/\b(quem é você|o que é você|bot|guardian)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`🤖 Sou o BOT Guardian, assistente oficial do KZN MENU! Estou aqui para ajudar com informações, moderação e responder suas perguntas. Digite /comandos para ver o que posso fazer!`);
-                }, 1000);
-                return;
-            }
-
-            if (texto.match(/\b(admin|administrador|mod)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`👑 Administradores são identificados com o nome em vermelho. Digite /comandos para ver os comandos administrativos.`);
-                }, 1000);
-                return;
-            }
-
-            if (texto.match(/\b(ban|banido|bloqueado)\b/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`🔒 Se você foi banido, entre em contato com um administrador para resolver a situação.`);
-                }, 1000);
-                return;
-            }
-
-            if (texto.match(/\?/)) {
-                setTimeout(() => {
-                    enviarMensagemBot(`🤔 Desculpe, não entendi completamente sua pergunta. Tente digitar /comandos para ver os comandos disponíveis ou entre em contato com o suporte.`);
-                }, 1500);
-                return;
-            }
-        }
-
-        // ====== FUNÇÕES DO CHAT ======
+        // ====== ENVIAR MENSAGEM ======
         window.enviarMensagem = function() {
             const input = document.getElementById('chatInput');
             const texto = input.value.trim();
@@ -3537,10 +3431,9 @@
             const container = document.getElementById('chatMessages');
             container.scrollTop = container.scrollHeight;
 
+            // SÓ RESPONDE SE FOR COMANDO
             if (texto.startsWith('/')) {
                 processarComando(texto, usuarioLogado);
-            } else {
-                botResponder(texto, usuarioLogado);
             }
 
             const typingIndicator = document.getElementById('typingIndicator');
@@ -3979,7 +3872,7 @@
                 carrinho = [];
                 salvarCarrinho();
                 alert('💳 Pagamento gerado! Copie a chave PIX abaixo:');
-                window.abrirModalPix();
+                abrirModalPix();
                 document.getElementById('planInfo').textContent = `Total: R$ ${total.toFixed(2)}`;
                 document.getElementById('cartDropdown').classList.remove('open');
             }
@@ -4413,7 +4306,6 @@
 
         // ====== INICIALIZAÇÃO ======
         document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu
             const mobileToggle = document.getElementById('mobileMenu');
             const navMenuMobile = document.getElementById('navMenuMobile');
 
@@ -4436,7 +4328,6 @@
                 });
             });
 
-            // Chat input
             const input = document.getElementById('chatInput');
             if (input) {
                 input.addEventListener('keypress', function(e) {
@@ -4464,7 +4355,6 @@
                 });
             }
 
-            // Fechar dropdowns com ESC
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     document.getElementById('notifDropdown').classList.remove('open');
@@ -4474,7 +4364,6 @@
                 }
             });
 
-            // Fechar dropdowns ao clicar fora
             document.addEventListener('click', function(e) {
                 if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
                     document.getElementById('notifDropdown').classList.remove('open');
@@ -4484,7 +4373,6 @@
                 }
             });
 
-            // INICIAR
             carregarUsuarios();
             carregarNotificacoes();
             carregarCarrinho();
@@ -4498,10 +4386,10 @@
                 adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
             }
 
-            // Mensagem de boas-vindas do BOT
             setTimeout(() => {
-                if (usuarioLogado) {
+                if (usuarioLogado && !botBoasVindasEnviado) {
                     enviarMensagemBot(`🤖 **BOT Guardian online!**\n\nOlá, ${usuarioLogado.nome}! 👋\n\nSou o assistente oficial do KZN MENU. Digite **/comandos** para ver todos os comandos disponíveis.\n\n🔹 Para regras, digite **/regras**\n🔹 Para ver quem está online, digite **/online**\n\nDivirta-se e respeite as regras! 🚀`);
+                    botBoasVindasEnviado = true;
                 }
             }, 2000);
 
@@ -4509,7 +4397,6 @@
             console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
             console.log('🤖 BOT Guardian ativo!');
             console.log('💬 Chat em tempo real com moderação!');
-            console.log('📱 Menu mobile funcionando!');
         });
     </script>
 
