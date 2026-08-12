@@ -226,7 +226,7 @@
             flex-shrink: 0;
         }
 
-        /* BOTÃO DE NOTIFICAÇÃO */
+        /* NOTIFICAÇÃO */
         .nav-icon-btn {
             background: var(--glass);
             border: 1px solid var(--border);
@@ -273,7 +273,6 @@
             50% { transform: scale(1.1); }
         }
 
-        /* DROPDOWN NOTIFICAÇÕES */
         .dropdown-container {
             position: relative;
         }
@@ -385,7 +384,7 @@
             opacity: 0.3;
         }
 
-        /* BOTÃO PERFIL */
+        /* PERFIL */
         .profile-btn {
             display: flex;
             align-items: center;
@@ -453,7 +452,6 @@
             right: -8px;
         }
 
-        /* LANG TOGGLE */
         .lang-toggle {
             display: flex;
             gap: 0.15rem;
@@ -476,9 +474,7 @@
             color: #fff;
         }
 
-        /* ============================================================
-           CARRINHO DROPDOWN
-           ============================================================ */
+        /* CARRINHO */
         .cart-dropdown {
             position: absolute;
             top: calc(100% + 8px);
@@ -709,48 +705,9 @@
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
         /* ============================================================
-           PROGRESS BAR
+           TABS - 3 ABAS
            ============================================================ */
-        .progress-bar {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-        .progress-step {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .progress-step .step-num {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            transition: 0.3s;
-        }
-        .progress-step.active .step-num {
-            background: var(--primary);
-            color: #fff;
-            box-shadow: 0 0 25px rgba(220,38,38,0.3);
-        }
-        .progress-step.active { color: var(--text); }
-        .progress-step .step-arrow { color: var(--text-muted); font-size: 1.2rem; }
-
-        /* ============================================================
-           TABS
-           ============================================================ */
-        .tabs-container { max-width: 950px; margin: 0 auto 3rem; }
+        .tabs-container { max-width: 950px; margin: 0 auto; }
         .tabs-nav {
             display: flex;
             gap: 0.5rem;
@@ -1103,31 +1060,6 @@
         }
 
         /* ============================================================
-           CLIENTES
-           ============================================================ */
-        .clientes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.6rem;
-            margin-top: 1.2rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .cliente-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.5rem 0.6rem;
-            text-align: center;
-            transition: 0.3s;
-        }
-        .cliente-item:hover { border-color: var(--primary); transform: translateY(-2px); }
-        .cliente-item .nome { font-weight: 700; color: var(--text); font-size: 0.8rem; }
-        .cliente-item .plano { font-size: 0.6rem; color: var(--text-muted); }
-        .cliente-item .data { font-size: 0.5rem; color: var(--text-muted); opacity: 0.6; }
-
-        /* ============================================================
            FORMULÁRIO
            ============================================================ */
         .form-container {
@@ -1195,98 +1127,13 @@
         .form-status.error { display: block; background: rgba(220,38,38,0.15); border: 1px solid var(--primary); color: var(--primary); }
 
         /* ============================================================
-           REGRAS
-           ============================================================ */
-        .regras-container { max-width: 800px; margin: 0 auto; }
-        .regra-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            transition: 0.3s;
-        }
-        .regra-item:hover { border-color: var(--primary); }
-        .regra-item .regra-numero {
-            background: var(--primary);
-            color: #fff;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-        .regra-item .regra-texto { color: var(--text-muted); font-size: 0.8rem; }
-        .regra-item .regra-texto strong { color: var(--text); }
-        .regra-item .regra-texto .destaque { color: var(--primary); font-weight: 700; }
-
-        /* ============================================================
-           FAQ
-           ============================================================ */
-        .faq-grid { max-width: 800px; margin: 0 auto; }
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .faq-item:hover { border-color: var(--primary); }
-        .faq-item .question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: var(--text);
-            font-size: 0.9rem;
-        }
-        .faq-item .answer {
-            display: none;
-            margin-top: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        .faq-item.open .answer { display: block; }
-        .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
-        .faq-item.open .faq-icon { transform: rotate(180deg); }
-
-        /* ============================================================
-           SELO DE SEGURANÇA
-           ============================================================ */
-        .selo-seguranca {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-        .selo-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        .selo-item i { color: var(--success); font-size: 1.1rem; }
-
-        /* ============================================================
            CUPOM
            ============================================================ */
         .cupom-area {
             display: flex;
             gap: 0.5rem;
             max-width: 400px;
-            margin: 1rem auto;
+            margin: 2rem auto 0;
         }
         .cupom-area input {
             flex: 1;
@@ -1703,13 +1550,8 @@
             .xcore-plans { grid-template-columns: 1fr; }
             .form-container { padding: 1.2rem; }
             .btn-whatsapp-fixo { width: 44px; height: 44px; font-size: 22px; bottom: 14px; left: 14px; }
-            .regra-item { flex-direction: column; align-items: center; text-align: center; }
             .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
             .script-features { grid-template-columns: 1fr; }
-            .clientes-grid { grid-template-columns: 1fr 1fr; }
-            .progress-bar { gap: 0.5rem; font-size: 0.65rem; }
-            .progress-step .step-arrow { display: none; }
-            .profile-section .profile-stats { grid-template-columns: 1fr; gap: 0.5rem; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
         }
@@ -1717,7 +1559,6 @@
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
-            .clientes-grid { grid-template-columns: 1fr; }
             .modal-pix .modal-content { padding: 1.2rem; }
             .modal-pix .modal-content .pix-key { font-size: 0.75rem; }
             .profile-section .profile-actions { flex-direction: column; }
@@ -1766,8 +1607,7 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
-                <li><a href="#xcore"><i class="fas fa-bolt"></i> Xcore</a></li>
-                <li><a href="#como-comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
@@ -1844,7 +1684,6 @@
             </p>
             <div class="hero-buttons">
                 <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
-                <a href="#xcore" class="btn btn-secondary"><i class="fas fa-bolt"></i> Xcore Executor</a>
             </div>
             <div class="selo-seguranca">
                 <span class="selo-item"><i class="fas fa-lock"></i> Pagamento Seguro</span>
@@ -1861,275 +1700,283 @@
     </section>
 
     <!-- ============================================================
-    MODS (KZN MENU - Classic e Era)
+    MODS - 3 ABAS SEPARADAS
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
             <div class="section-header">
-                <h2><i class="fas fa-cubes"></i> Mods KZN MENU</h2>
-                <p>Escolha seu jogo e veja os scripts disponíveis</p>
+                <h2><i class="fas fa-cubes"></i> Nossos Mods</h2>
+                <p>Escolha seu jogo ou executor</p>
             </div>
 
-            <div class="tabs-container">
-                <div class="tabs-nav">
-                    <button class="tab-btn classic active" onclick="trocarAba('classic')">
-                        <i class="fas fa-sword"></i> Graal Classic
-                    </button>
-                    <button class="tab-btn era" onclick="trocarAba('era')">
-                        <i class="fas fa-city"></i> Graal Era
-                    </button>
+            <!-- BOTÕES DAS 3 ABAS -->
+            <div class="tabs-nav">
+                <button class="tab-btn classic active" onclick="trocarAba('classic')">
+                    <i class="fas fa-sword"></i> Graal Classic
+                </button>
+                <button class="tab-btn era" onclick="trocarAba('era')">
+                    <i class="fas fa-city"></i> Graal Era
+                </button>
+                <button class="tab-btn xcore-tab" onclick="trocarAba('xcore')" style="border-color:var(--secondary);">
+                    <i class="fas fa-bolt"></i> Xcore Executor
+                </button>
+            </div>
+
+            <!-- ===========================================
+                 ABA 1: CLASSIC (SÓ CLASSIC)
+            =========================================== -->
+            <div class="tab-content active" id="tab-classic">
+                <div class="plans-grid">
+                    <div class="plan-card">
+                        <div style="text-align:center;margin:0.5rem 0;">
+                            <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                        </div>
+                        <div class="icon">📅</div>
+                        <h3>KZN MENU Classic</h3>
+                        <div class="sub-plano">Plano Mensal</div>
+                        <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
+                        <ul class="features">
+                            <li><i class="fas fa-check"></i> Acesso completo</li>
+                            <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                            <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                            <li><i class="fas fa-check"></i> Atualizações automáticas</li>
+                            <li><i class="fas fa-check"></i> Válido por 35 dias</li>
+                        </ul>
+                        <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+
+                    <div class="plan-card popular">
+                        <span class="badge">🔥 Mais Vantagem</span>
+                        <div style="text-align:center;margin:0.5rem 0;">
+                            <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                        </div>
+                        <h3>KZN MENU Classic</h3>
+                        <div class="sub-plano">Plano Permanente</div>
+                        <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
+                        <ul class="features">
+                            <li><i class="fas fa-check"></i> +50 funcionalidades</li>
+                            <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
+                            <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
+                            <li><i class="fas fa-check"></i> Sem renovação!</li>
+                        </ul>
+                        <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+                </div>
+                <!-- FIM DA ABA CLASSIC -->
+            </div>
+
+            <!-- ===========================================
+                 ABA 2: ERA (SÓ ERA)
+            =========================================== -->
+            <div class="tab-content" id="tab-era">
+                <div class="plans-grid">
+                    <div class="plan-card popular">
+                        <span class="badge era-badge">🔥 Exclusivo Era</span>
+                        <div style="text-align:center;margin:0.5rem 0;">
+                            <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
+                        </div>
+                        <h3>AUTO TRASH AUTOMATIC</h3>
+                        <div class="sub-plano">Graal Era</div>
+                        <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
+                        <ul class="script-features">
+                            <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
+                            <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
+                            <li><i class="fas fa-check"></i> Movimento inteligente</li>
+                            <li><i class="fas fa-check"></i> Coleta automática</li>
+                            <li><i class="fas fa-check"></i> Compatível com Graal Era</li>
+                            <li><i class="fas fa-check"></i> Suporte dedicado</li>
+                        </ul>
+                        <div style="text-align:center;margin:0.6rem 0;padding:0.4rem;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid var(--era);">
+                            <p style="font-size:0.7rem;color:var(--text-muted);"><strong style="color:var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40</p>
+                        </div>
+                        <button class="btn-buy" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+                </div>
+                <!-- FIM DA ABA ERA -->
+            </div>
+
+            <!-- ===========================================
+                 ABA 3: XCORE (SÓ XCORE + FORMULÁRIO)
+            =========================================== -->
+            <div class="tab-content" id="tab-xcore">
+                <!-- DISCORD OFICIAL -->
+                <div style="max-width:700px;margin:0 auto 1.5rem;text-align:center;background:var(--bg-card);border:2px solid #5865f2;border-radius:var(--radius);padding:1.2rem;">
+                    <p style="color:var(--text-muted);font-size:0.9rem;">
+                        <i class="fab fa-discord" style="color:#5865f2;font-size:1.5rem;display:block;margin-bottom:0.3rem;"></i>
+                        <strong style="color:var(--text);">Entre no Discord Oficial da Xcore</strong>
+                    </p>
+                    <a href="https://discord.gg/4tw7kE7rxU" target="_blank" style="display:inline-block;margin-top:0.5rem;padding:0.6rem 2rem;background:#5865f2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;font-size:0.9rem;">
+                        <i class="fab fa-discord"></i> Entrar no Discord
+                    </a>
                 </div>
 
-                <!-- ABA CLASSIC -->
-                <div class="tab-content active" id="tab-classic">
-                    <div class="plans-grid">
-                        <div class="plan-card">
-                            <div style="text-align:center;margin:0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                <!-- BANNER XCORE -->
+                <div style="max-width:700px;margin:0 auto 1.5rem;text-align:center;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;">
+                    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));"></div>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+                        <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:60px;height:60px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
+                        <div>
+                            <h3 style="font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
+                            <p style="color:var(--text-muted);font-size:0.8rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
+                        </div>
+                    </div>
+                    <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.6rem;">
+                        <i class="fas fa-rocket" style="color:var(--secondary);"></i>
+                        Escolha o plano ideal para você e maximize sua experiência no GraalOnline!
+                    </p>
+                </div>
+
+                <!-- PLANOS XCORE -->
+                <div class="xcore-plans">
+                    <!-- FREE -->
+                    <div class="xcore-plan free">
+                        <div class="plan-icon">🆓</div>
+                        <div class="plan-name">FREE</div>
+                        <div class="plan-sub">Grátis • Ideal para começar</div>
+                        <div class="plan-price" style="color:var(--success);">R$ 0,00</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Scripts no mapa principal</li>
+                            <li><i class="fas fa-check"></i> Acesso básico ao runtime</li>
+                            <li><i class="fas fa-check"></i> Permissões limitadas de execução</li>
+                            <li><i class="fas fa-check"></i> 5 horas de uso por dia</li>
+                        </ul>
+                        <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
+                    </div>
+
+                    <!-- SILVER -->
+                    <div class="xcore-plan silver">
+                        <div class="plan-icon">🥈</div>
+                        <div class="plan-name">SILVER</div>
+                        <div class="plan-sub">R$ 35/Mês • Para quem quer ir além</div>
+                        <div class="plan-price" style="color:#94a3b8;">R$ 35,00 <small>/mês</small></div>
+                        <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Tudo do FREE +</strong></li>
+                            <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
+                            <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
+                        </ul>
+                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+
+                    <!-- GOLD -->
+                    <div class="xcore-plan gold">
+                        <div class="plan-icon">🥇</div>
+                        <div class="plan-name">GOLD</div>
+                        <div class="plan-sub">R$ 90/Mês • Experiência completa</div>
+                        <div class="plan-price" style="color:var(--warning);">R$ 90,00 <small>/mês</small></div>
+                        <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Tudo do SILVER +</strong></li>
+                            <li><i class="fas fa-check"></i> Scripts em níveis de trabalho</li>
+                            <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
+                            <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
+                        </ul>
+                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+                </div>
+
+                <!-- RESTRIÇÕES XCORE -->
+                <div class="xcore-restrictions">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Restrições de Runtime</h3>
+                    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Algumas áreas exigem um nível de execução mais alto.</p>
+                    <div class="xcore-restrictions-grid">
+                        <div class="xcore-restriction-item">
+                            <span class="area">🌐 Mapa principal</span>
+                            <span class="level level-free">FREE</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">⚔️ Casas / Bases</span>
+                            <span class="level level-silver">SILVER</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">🏆 Trabalho / Eventos / Spar</span>
+                            <span class="level level-gold">GOLD</span>
+                        </div>
+                    </div>
+                    <div class="restriction-note">
+                        <i class="fas fa-arrow-up"></i> Atualize seu plano para desbloquear mais zonas de execução.
+                    </div>
+                </div>
+
+                <!-- AVISO OBRIGATÓRIO -->
+                <div class="xcore-obrigatorio">
+                    <p><i class="fas fa-exclamation-circle"></i> ⚠️ É obrigatório baixar o <strong>XCORE EXECUTOR</strong> para usar os mods do KZN MENU!</p>
+                    <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link">
+                        <i class="fab fa-discord"></i> Baixar no Discord
+                    </a>
+                </div>
+
+                <!-- =============================================
+                     FORMULÁRIO XCORE (DENTRO DA ABA XCORE)
+                ============================================= -->
+                <div style="max-width:600px;margin:2.5rem auto 0;">
+                    <div style="text-align:center;margin-bottom:1.5rem;">
+                        <h3 style="color:var(--secondary);font-size:1.3rem;"><i class="fas fa-paper-plane"></i> Comprar Xcore Executor</h3>
+                        <p style="color:var(--text-muted);font-size:0.85rem;">Preencha o formulário abaixo para adquirir seu plano Xcore</p>
+                    </div>
+
+                    <div class="form-container">
+                        <form id="formXcore" action="https://formsubmit.co/xcoreexecute@gmail.com" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="_captcha" value="false">
+                            <input type="hidden" name="_template" value="table">
+                            <input type="hidden" name="_subject" value="📩 COMPRA XCORE EXECUTOR - NOVO PEDIDO!">
+
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Seu Nome <span style="color:var(--primary);">*</span></label>
+                                <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
                             </div>
-                            <div class="icon">📅</div>
-                            <h3>KZN MENU Classic</h3>
-                            <div class="sub-plano">Plano Mensal</div>
-                            <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
-                            <ul class="features">
-                                <li><i class="fas fa-check"></i> Acesso completo</li>
-                                <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
-                                <li><i class="fas fa-check"></i> Suporte via Discord</li>
-                                <li><i class="fas fa-check"></i> Atualizações automáticas</li>
-                                <li><i class="fas fa-check"></i> Válido por 35 dias</li>
-                            </ul>
-                            <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)">Comprar R$ 50,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Mensal', 50)"><i class="fas fa-cart-plus"></i> Adicionar</button>
-                        </div>
 
-                        <div class="plan-card popular">
-                            <span class="badge">🔥 Mais Vantagem</span>
-                            <div style="text-align:center;margin:0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
+                            <div class="form-group">
+                                <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
+                                <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
+                                <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                             </div>
-                            <h3>KZN MENU Classic</h3>
-                            <div class="sub-plano">Plano Permanente</div>
-                            <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
-                            <ul class="features">
-                                <li><i class="fas fa-check"></i> +50 funcionalidades</li>
-                                <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
-                                <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
-                                <li><i class="fas fa-check"></i> Sem renovação!</li>
-                            </ul>
-                            <button class="btn-buy" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)">Comprar R$ 200,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- ABA ERA -->
-                <div class="tab-content" id="tab-era">
-                    <div class="plans-grid">
-                        <div class="plan-card popular">
-                            <span class="badge era-badge">🔥 Exclusivo Era</span>
-                            <div style="text-align:center;margin:0.5rem 0;">
-                                <img src="https://yt3.ggpht.com/5nAR2gmp0Do_KMoGwr9_kPhA2uO4eJtX4QBVaG-9mmMU_KU8LHri7Tn1116x6tCDBcS4Toi2fYm0=s900-rw-nd-v1" alt="Auto Trash" class="script-image" />
+                            <div class="form-group">
+                                <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--primary);">*</span></label>
+                                <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
                             </div>
-                            <h3>AUTO TRASH AUTOMATIC</h3>
-                            <div class="sub-plano">Graal Era</div>
-                            <div class="price">R$ 200,00 <small>/ vitalício</small><span class="parcelamento">ou 2x R$ 100,00</span></div>
-                            <ul class="script-features">
-                                <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
-                                <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
-                                <li><i class="fas fa-check"></i> Movimento inteligente</li>
-                                <li><i class="fas fa-check"></i> Coleta automática</li>
-                                <li><i class="fas fa-check"></i> Compatível com Graal Era</li>
-                                <li><i class="fas fa-check"></i> Suporte dedicado</li>
-                            </ul>
-                            <div style="text-align:center;margin:0.6rem 0;padding:0.4rem;background:rgba(245,158,11,0.1);border-radius:8px;border:1px solid var(--era);">
-                                <p style="font-size:0.7rem;color:var(--text-muted);"><strong style="color:var(--era);">💡 Exemplo:</strong> 2.000 trash em ~2h40</p>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--primary);">*</span></label>
+                                <select name="Plano" required>
+                                    <option value="">Selecione um plano...</option>
+                                    <option value="Xcore FREE - Grátis">🆓 FREE - Grátis</option>
+                                    <option value="Xcore SILVER - R$ 35,00/mês">🥈 SILVER - R$ 35,00/mês</option>
+                                    <option value="Xcore GOLD - R$ 90,00/mês">🥇 GOLD - R$ 90,00/mês</option>
+                                </select>
                             </div>
-                            <button class="btn-buy" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)">Comprar R$ 200,00</button>
-                            <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
-                        </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label>
+                                <input type="file" name="Comprovante" accept="image/*,.pdf" required>
+                                <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
+                                <textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="formXcoreBtn">
+                                <i class="fas fa-paper-plane"></i> Enviar Pedido Xcore
+                            </button>
+                            <div class="form-status" id="formXcoreStatus"></div>
+                        </form>
                     </div>
                 </div>
+                <!-- FIM DA ABA XCORE -->
             </div>
-        </div>
-    </section>
+            <!-- FIM DAS ABAS -->
 
-    <!-- ============================================================
-    XCORE EXECUTOR - ABA COMPLETA
-    ============================================================ -->
-    <section id="xcore" class="section dark">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-bolt" style="color:var(--secondary);"></i> XCORE EXECUTOR</h2>
-                <p>⚡ Execute scripts no Graal com o melhor executor do mercado!</p>
-            </div>
-
-            <!-- DISCORD OFICIAL -->
-            <div style="max-width:700px;margin:0 auto 2rem;text-align:center;background:var(--bg-card);border:2px solid #5865f2;border-radius:var(--radius);padding:1.5rem;">
-                <p style="color:var(--text-muted);font-size:0.9rem;">
-                    <i class="fab fa-discord" style="color:#5865f2;font-size:1.5rem;display:block;margin-bottom:0.3rem;"></i>
-                    <strong style="color:var(--text);">Entre no Discord Oficial da Xcore</strong>
-                </p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link" style="display:inline-block;margin-top:0.5rem;padding:0.6rem 2rem;background:#5865f2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;font-size:0.9rem;">
-                    <i class="fab fa-discord"></i> Entrar no Discord
-                </a>
-            </div>
-
-            <!-- BANNER XCORE -->
-            <div style="max-width:700px;margin:0 auto 2rem;text-align:center;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden;">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));"></div>
-                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
-                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:60px;height:60px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
-                    <div>
-                        <h3 style="font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
-                        <p style="color:var(--text-muted);font-size:0.8rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
-                    </div>
-                </div>
-                <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.6rem;">
-                    <i class="fas fa-rocket" style="color:var(--secondary);"></i>
-                    Escolha o plano ideal para você e maximize sua experiência no GraalOnline!
-                </p>
-            </div>
-
-            <!-- PLANOS XCORE -->
-            <div class="xcore-plans">
-                <!-- FREE -->
-                <div class="xcore-plan free">
-                    <div class="plan-icon">🆓</div>
-                    <div class="plan-name">FREE</div>
-                    <div class="plan-sub">Grátis • Ideal para começar</div>
-                    <div class="plan-price" style="color:var(--success);">R$ 0,00</div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> Scripts no mapa principal</li>
-                        <li><i class="fas fa-check"></i> Acesso básico ao runtime</li>
-                        <li><i class="fas fa-check"></i> Permissões limitadas de execução</li>
-                        <li><i class="fas fa-check"></i> 5 horas de uso por dia</li>
-                    </ul>
-                    <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
-                </div>
-
-                <!-- SILVER -->
-                <div class="xcore-plan silver">
-                    <div class="plan-icon">🥈</div>
-                    <div class="plan-name">SILVER</div>
-                    <div class="plan-sub">R$ 35/Mês • Para quem quer ir além</div>
-                    <div class="plan-price" style="color:#94a3b8;">R$ 35,00 <small>/mês</small></div>
-                    <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> <strong>Tudo do FREE +</strong></li>
-                        <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
-                        <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
-                    </ul>
-                    <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
-                    <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar</button>
-                </div>
-
-                <!-- GOLD -->
-                <div class="xcore-plan gold">
-                    <div class="plan-icon">🥇</div>
-                    <div class="plan-name">GOLD</div>
-                    <div class="plan-sub">R$ 90/Mês • Experiência completa</div>
-                    <div class="plan-price" style="color:var(--warning);">R$ 90,00 <small>/mês</small></div>
-                    <div style="font-size:0.6rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
-                    <ul class="plan-features">
-                        <li><i class="fas fa-check"></i> <strong>Tudo do SILVER +</strong></li>
-                        <li><i class="fas fa-check"></i> Scripts em níveis de trabalho</li>
-                        <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
-                        <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
-                    </ul>
-                    <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
-                    <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar</button>
-                </div>
-            </div>
-
-            <!-- RESTRIÇÕES -->
-            <div class="xcore-restrictions">
-                <h3><i class="fas fa-exclamation-triangle"></i> Restrições de Runtime</h3>
-                <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Algumas áreas exigem um nível de execução mais alto.</p>
-                <div class="xcore-restrictions-grid">
-                    <div class="xcore-restriction-item">
-                        <span class="area">🌐 Mapa principal</span>
-                        <span class="level level-free">FREE</span>
-                    </div>
-                    <div class="xcore-restriction-item">
-                        <span class="area">⚔️ Casas / Bases</span>
-                        <span class="level level-silver">SILVER</span>
-                    </div>
-                    <div class="xcore-restriction-item">
-                        <span class="area">🏆 Trabalho / Eventos / Spar</span>
-                        <span class="level level-gold">GOLD</span>
-                    </div>
-                </div>
-                <div class="restriction-note">
-                    <i class="fas fa-arrow-up"></i> Atualize seu plano para desbloquear mais zonas de execução e permissões avançadas de runtime.
-                </div>
-            </div>
-
-            <!-- AVISO OBRIGATÓRIO -->
-            <div class="xcore-obrigatorio">
-                <p><i class="fas fa-exclamation-circle"></i> ⚠️ É obrigatório baixar o <strong>XCORE EXECUTOR</strong> para usar os mods do KZN MENU!</p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link">
-                    <i class="fab fa-discord"></i> Baixar no Discord
-                </a>
-            </div>
-
-            <!-- ============================================================
-            FORMULÁRIO XCORE (SEPARADO)
-            ============================================================ -->
-            <div style="max-width:600px;margin:3rem auto 0;">
-                <div style="text-align:center;margin-bottom:1.5rem;">
-                    <h3 style="color:var(--secondary);font-size:1.3rem;"><i class="fas fa-paper-plane"></i> Comprar Xcore Executor</h3>
-                    <p style="color:var(--text-muted);font-size:0.85rem;">Preencha o formulário abaixo para adquirir seu plano Xcore</p>
-                </div>
-
-                <div class="form-container">
-                    <form id="formXcore" action="https://formsubmit.co/xcoreexecute@gmail.com" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="_captcha" value="false">
-                        <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_subject" value="📩 COMPRA XCORE EXECUTOR - NOVO PEDIDO!">
-
-                        <div class="form-group">
-                            <label><i class="fas fa-user"></i> Seu Nome <span style="color:var(--primary);">*</span></label>
-                            <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
-                            <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
-                            <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--primary);">*</span></label>
-                            <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--primary);">*</span></label>
-                            <select name="Plano" required>
-                                <option value="">Selecione um plano...</option>
-                                <option value="Xcore FREE - Grátis">🆓 FREE - Grátis</option>
-                                <option value="Xcore SILVER - R$ 35,00/mês">🥈 SILVER - R$ 35,00/mês</option>
-                                <option value="Xcore GOLD - R$ 90,00/mês">🥇 GOLD - R$ 90,00/mês</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label>
-                            <input type="file" name="Comprovante" accept="image/*,.pdf" required>
-                            <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
-                            <textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn-submit" id="formXcoreBtn">
-                            <i class="fas fa-paper-plane"></i> Enviar Pedido Xcore
-                        </button>
-                        <div class="form-status" id="formXcoreStatus"></div>
-                    </form>
-                </div>
+            <div class="cupom-area">
+                <input type="text" id="cupomInput" placeholder="Código promocional" />
+                <button class="btn-cupom" onclick="aplicarCupom()">Aplicar</button>
             </div>
         </div>
     </section>
@@ -2177,7 +2024,6 @@
 
                 <div class="profile-actions">
                     <button class="btn-action primary" onclick="window.location.href='#mods'"><i class="fas fa-shopping-cart"></i> Comprar Mods</button>
-                    <button class="btn-action" onclick="window.location.href='#xcore'"><i class="fas fa-bolt"></i> Xcore Executor</button>
                     <button class="btn-action" onclick="window.location.href='#contato'"><i class="fas fa-headset"></i> Suporte</button>
                     <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </div>
@@ -2206,58 +2052,6 @@
     </section>
 
     <!-- ============================================================
-    COMO COMPRAR
-    ============================================================ -->
-    <section id="como-comprar" class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2><i class="fas fa-shopping-cart"></i> Como Comprar</h2>
-                <p>Simples, rápido e seguro. Siga os passos abaixo:</p>
-            </div>
-
-            <div style="max-width:700px;margin:0 auto 3rem;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:2rem;text-align:center;position:relative;overflow:hidden;transition:0.3s;">
-                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary));"></div>
-                <div style="display:flex;align-items:center;justify-content:center;gap:0.8rem;flex-wrap:wrap;margin-bottom:0.5rem;">
-                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Execute" style="width:50px;height:50px;border-radius:50%;border:2px solid var(--secondary);object-fit:cover;" />
-                    <div>
-                        <h3 style="font-size:1.3rem;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">⚡ XCORE EXECUTE</h3>
-                        <div style="color:var(--secondary-light);font-size:0.7rem;letter-spacing:2px;font-weight:600;">FOR GAMERS, BY GAMERS</div>
-                    </div>
-                </div>
-                <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:0.5rem;">A <strong>Xcore Execute</strong> é a ferramenta principal para acessar os mods do <strong>KZN MENU</strong>. Compatível com <strong>Android</strong> e PC, com segurança e estabilidade.</p>
-                <p style="font-size:0.75rem;color:var(--text-muted);background:rgba(220,38,38,0.1);padding:0.4rem;border-radius:8px;border-left:3px solid var(--primary);margin-top:0.5rem;">⚠️ <strong>Usuários iOS:</strong> Disponível apenas para Android e PC.</p>
-                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" style="display:inline-block;margin-top:0.8rem;padding:0.6rem 1.8rem;background:#5865f2;color:#fff;border-radius:10px;text-decoration:none;font-weight:700;transition:0.3s;font-size:0.85rem;">
-                    <i class="fab fa-discord"></i> Entrar no Discord da Xcore
-                </a>
-                <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.5rem;padding:0.4rem;background:rgba(220,38,38,0.1);border-radius:8px;border:1px solid rgba(220,38,38,0.2);">⚠️ É obrigatório ter a Xcore Execute para usar os mods KZN MENU!</div>
-            </div>
-
-            <div class="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;max-width:850px;margin:0 auto;">
-                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
-                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">0</div>
-                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">⚡ Baixe a Xcore</h4>
-                    <p style="color:var(--text-muted);font-size:0.75rem;">Entre no Discord da Xcore e baixe a ferramenta</p>
-                </div>
-                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
-                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">1</div>
-                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">📋 Escolha o Mod</h4>
-                    <p style="color:var(--text-muted);font-size:0.75rem;">Selecione entre Classic, Era ou Xcore</p>
-                </div>
-                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
-                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">2</div>
-                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">💳 Gere o Pagamento</h4>
-                    <p style="color:var(--text-muted);font-size:0.75rem;">Clique em "Comprar" e copie a chave PIX</p>
-                </div>
-                <div class="step-card" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 0.8rem;text-align:center;transition:0.3s;">
-                    <div class="step-number" style="background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-weight:700;font-size:0.8rem;">3</div>
-                    <h4 style="color:var(--text);margin-bottom:0.2rem;font-size:0.8rem;">✅ Confirme no Discord</h4>
-                    <p style="color:var(--text-muted);font-size:0.75rem;">Após o pagamento, entre em contato no Discord para ativação</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ============================================================
     REGRAS
     ============================================================ -->
     <section id="regras" class="section dark">
@@ -2266,10 +2060,19 @@
                 <h2><i class="fas fa-gavel"></i> Regras do KZN MENU</h2>
                 <p>Leia atentamente antes de adquirir</p>
             </div>
-            <div class="regras-container">
-                <div class="regra-item"><div class="regra-numero">1</div><div class="regra-texto"><strong>💰 Renovação / Reset de Key</strong><br />Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span class="destaque">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.</div></div>
-                <div class="regra-item"><div class="regra-numero">2</div><div class="regra-texto"><strong>⚠️ Responsabilidade do Usuário</strong><br />Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.</div></div>
-                <div class="regra-item"><div class="regra-numero">3</div><div class="regra-texto"><strong>🎮 Objetivo do Mod Menu</strong><br />O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.</div></div>
+            <div style="max-width:800px;margin:0 auto;">
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.6rem;display:flex;align-items:flex-start;gap:10px;transition:0.3s;">
+                    <div style="background:var(--primary);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;flex-shrink:0;">1</div>
+                    <div style="color:var(--text-muted);font-size:0.8rem;"><strong style="color:var(--text);">💰 Renovação / Reset de Key</strong><br />Em caso de perda, solicitação de reset ou emissão de nova Key, será cobrada uma taxa de <span style="color:var(--primary);font-weight:700;">R$ 30,00</span> por solicitação. Não nos responsabilizamos por Keys perdidas, excluídas, compartilhadas ou extraviadas. O cliente é totalmente responsável por manter sua Key em segurança.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.6rem;display:flex;align-items:flex-start;gap:10px;transition:0.3s;">
+                    <div style="background:var(--primary);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;flex-shrink:0;">2</div>
+                    <div style="color:var(--text-muted);font-size:0.8rem;"><strong style="color:var(--text);">⚠️ Responsabilidade do Usuário</strong><br />Não nos responsabilizamos por banimentos, punições ou qualquer outra penalidade aplicada à sua conta decorrente do uso do Mod Menu. Se você utilizar o Mod Menu de forma irresponsável, abusar das funções ou utilizá-las para prejudicar outros jogadores, a responsabilidade será exclusivamente do cliente. Recomendamos utilizar as funções com bom senso e evitar comportamentos que possam chamar atenção da administração do jogo.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.6rem;display:flex;align-items:flex-start;gap:10px;transition:0.3s;">
+                    <div style="background:var(--primary);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;flex-shrink:0;">3</div>
+                    <div style="color:var(--text-muted);font-size:0.8rem;"><strong style="color:var(--text);">🎮 Objetivo do Mod Menu</strong><br />O Mod Menu foi desenvolvido principalmente para auxiliar o jogador em atividades dentro do jogo, como: <strong>🐛 Farm de insetos, 🏠 Upar Houses, 🏢 Upar GH, ⚔️ Spar, 🎉 Eventos, 🔧 Outras atividades de farm e gameplay</strong>. O objetivo principal é proporcionar mais praticidade e recursos ao jogador, e não garantir que sua conta esteja protegida contra punições.</div>
+                </div>
             </div>
         </div>
     </section>
@@ -2325,14 +2128,56 @@
                 <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
                 <p>Dúvidas comuns sobre o KZN Menu e Xcore Executor</p>
             </div>
-            <div class="faq-grid">
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>🔒 O KZN Menu é seguro?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>📱 Funciona no celular?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>🔄 O que acontece após a compra?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>📧 Como recebo o mod após o pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>💳 Quais formas de pagamento?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>⚡ O que é Xcore Execute?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div></div>
-                <div class="faq-item" onclick="toggleFaq(this)"><div class="question"><span>💰 Quanto custa o Xcore?</span><span class="faq-icon"><i class="fas fa-chevron-down"></i></span></div><div class="answer">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div></div>
+            <div style="max-width:800px;margin:0 auto;">
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>🔒 O KZN Menu é seguro?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>📱 Funciona no celular?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>🔄 O que acontece após a compra?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>📧 Como recebo o mod após o pagamento?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>💳 Quais formas de pagamento?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>⚡ O que é Xcore Execute?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
+                </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>💰 Quanto custa o Xcore?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div>
+                </div>
             </div>
         </div>
     </section>
@@ -2412,19 +2257,21 @@
         });
 
         // ============================================================
-        // ABAS (KZN MODS)
+        // ABAS - 3 ABAS SEPARADAS
         // ============================================================
         function trocarAba(aba) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + aba).classList.add('active');
-            document.querySelector('.tab-btn.' + aba).classList.add('active');
+            
+            if (aba === 'classic') {
+                document.querySelector('.tab-btn.classic').classList.add('active');
+            } else if (aba === 'era') {
+                document.querySelector('.tab-btn.era').classList.add('active');
+            } else if (aba === 'xcore') {
+                document.querySelector('.tab-btn.xcore-tab').classList.add('active');
+            }
         }
-
-        // ============================================================
-        // FAQ
-        // ============================================================
-        function toggleFaq(el) { el.classList.toggle('open'); }
 
         // ============================================================
         // CUPOM
@@ -2740,7 +2587,7 @@
         });
 
         // ============================================================
-        // FORMULÁRIO XCORE (separado)
+        // FORMULÁRIO XCORE
         // ============================================================
         document.getElementById('formXcore').addEventListener('submit', function(e) {
             const btn = document.getElementById('formXcoreBtn');
