@@ -1355,6 +1355,67 @@
         }
 
         /* ============================================================
+           MODAL LOGIN
+           ============================================================ */
+        .modal-login {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-login.open { display: flex; }
+
+        .modal-login-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            animation: modalIn 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        .modal-login-content .close-modal-login {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+        .modal-login-content .close-modal-login:hover { color: var(--text); }
+
+        .login-tab {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .login-tab.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .login-tab.active.registro-active {
+            background: var(--secondary);
+            color: #fff;
+        }
+
+        /* ============================================================
            MODAL PIX KZN
            ============================================================ */
         .modal-pix {
@@ -1711,7 +1772,7 @@
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
-            .modal-pix .modal-content, .modal-pix-xcore .modal-content { padding: 1.2rem; }
+            .modal-pix .modal-content, .modal-pix-xcore .modal-content, .modal-login-content { padding: 1.2rem; }
             .modal-pix .modal-content .pix-key, .modal-pix-xcore .modal-content .pix-key { font-size: 0.75rem; }
             .profile-section .profile-actions { flex-direction: column; }
             .dropdown { width: 230px; right: -30px; }
@@ -1797,7 +1858,7 @@
 
                 <!-- PERFIL + CARRINHO -->
                 <div style="position: relative;">
-                    <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
+                    <button class="profile-btn" id="profileBtn" onclick="abrirPerfil()">
                         <span class="avatar" id="avatarLetter">
                             <span class="avatar-letter" id="avatarText">K</span>
                         </span>
@@ -2140,7 +2201,7 @@
     </section>
 
     <!-- ============================================================
-    PERFIL - CORRIGIDO (BOTÃO SAIR FUNCIONANDO)
+    PERFIL
     ============================================================ -->
     <section id="perfil" class="section dark">
         <div class="container">
@@ -2361,6 +2422,65 @@
             </div>
         </div>
     </section>
+
+    <!-- ============================================================
+    MODAL LOGIN
+    ============================================================ -->
+    <div class="modal-login" id="modalLogin">
+        <div class="modal-login-content">
+            <span class="close-modal-login" onclick="fecharModalLogin()">✕</span>
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <h2 style="font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">KZN MENU</h2>
+                <p style="color:var(--text-muted);font-size:0.9rem;">Faça login para acessar seu perfil</p>
+            </div>
+
+            <!-- TABS LOGIN / REGISTRO -->
+            <div style="display:flex;gap:0.3rem;margin-bottom:1.5rem;background:var(--bg);border-radius:10px;padding:0.3rem;">
+                <button class="login-tab active" onclick="trocarLoginTab('login')" id="loginTabBtn" style="flex:1;padding:0.5rem;border:none;border-radius:8px;background:var(--primary);color:#fff;font-weight:700;font-size:0.85rem;cursor:pointer;transition:0.3s;">Login</button>
+                <button class="login-tab" onclick="trocarLoginTab('registro')" id="registroTabBtn" style="flex:1;padding:0.5rem;border:none;border-radius:8px;background:transparent;color:var(--text-muted);font-weight:700;font-size:0.85rem;cursor:pointer;transition:0.3s;">Registrar</button>
+            </div>
+
+            <!-- FORMULÁRIO LOGIN -->
+            <div class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="loginEmail" placeholder="Digite seu e-mail" />
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="loginSenha" placeholder="Digite sua senha" />
+                </div>
+                <button class="btn-submit" onclick="fazerLogin()" style="width:100%;padding:0.8rem;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;transition:0.3s;display:flex;align-items:center;justify-content:center;gap:10px;">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+                <div class="form-status" id="loginStatus"></div>
+            </div>
+
+            <!-- FORMULÁRIO REGISTRO -->
+            <div class="login-form" id="registroForm" style="display:none;">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="registroNome" placeholder="Digite seu nome" />
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input type="email" id="registroEmail" placeholder="Digite seu e-mail" />
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="registroSenha" placeholder="Digite sua senha" />
+                </div>
+                <div class="form-group">
+                    <label>Confirmar Senha</label>
+                    <input type="password" id="registroConfirmarSenha" placeholder="Confirme sua senha" />
+                </div>
+                <button class="btn-submit" onclick="fazerRegistro()" style="width:100%;padding:0.8rem;background:linear-gradient(135deg,var(--secondary),var(--secondary-light));border:none;border-radius:12px;color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;transition:0.3s;display:flex;align-items:center;justify-content:center;gap:10px;">
+                    <i class="fas fa-user-plus"></i> Criar Conta
+                </button>
+                <div class="form-status" id="registroStatus"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- ============================================================
     FOOTER
@@ -2636,12 +2756,152 @@
         });
 
         // ============================================================
-        // SISTEMA DE PERFIL - CORRIGIDO (BOTÃO SAIR FUNCIONA)
+        // SISTEMA DE LOGIN / REGISTRO
+        // ============================================================
+        let usuarios = [];
+
+        function carregarUsuarios() {
+            try {
+                const dados = localStorage.getItem('kzn_usuarios');
+                usuarios = dados ? JSON.parse(dados) : [];
+            } catch (e) {
+                usuarios = [];
+            }
+        }
+
+        function salvarUsuarios() {
+            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+        }
+
+        function abrirModalLogin() {
+            document.getElementById('modalLogin').classList.add('open');
+            document.getElementById('loginStatus').className = 'form-status';
+            document.getElementById('loginStatus').style.display = 'none';
+            document.getElementById('registroStatus').className = 'form-status';
+            document.getElementById('registroStatus').style.display = 'none';
+        }
+
+        function fecharModalLogin() {
+            document.getElementById('modalLogin').classList.remove('open');
+        }
+
+        function trocarLoginTab(tab) {
+            const loginTabBtn = document.getElementById('loginTabBtn');
+            const registroTabBtn = document.getElementById('registroTabBtn');
+            const loginForm = document.getElementById('loginForm');
+            const registroForm = document.getElementById('registroForm');
+
+            if (tab === 'login') {
+                loginTabBtn.classList.add('active');
+                loginTabBtn.style.background = 'var(--primary)';
+                loginTabBtn.style.color = '#fff';
+                registroTabBtn.classList.remove('active');
+                registroTabBtn.style.background = 'transparent';
+                registroTabBtn.style.color = 'var(--text-muted)';
+                loginForm.style.display = 'block';
+                registroForm.style.display = 'none';
+            } else {
+                registroTabBtn.classList.add('active');
+                registroTabBtn.style.background = 'var(--secondary)';
+                registroTabBtn.style.color = '#fff';
+                loginTabBtn.classList.remove('active');
+                loginTabBtn.style.background = 'transparent';
+                loginTabBtn.style.color = 'var(--text-muted)';
+                registroForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            }
+        }
+
+        function fazerLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value.trim();
+            const status = document.getElementById('loginStatus');
+
+            if (!email || !senha) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '⚠️ Preencha todos os campos.';
+                return;
+            }
+
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+            if (!usuario) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '❌ E-mail ou senha incorretos.';
+                return;
+            }
+
+            // Salva usuário logado
+            usuarioLogado = { nome: usuario.nome, email: usuario.email, avatar: usuario.avatar || null };
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
+            carregarPerfil();
+            fecharModalLogin();
+            alert('✅ Login realizado com sucesso! Bem-vindo ' + usuario.nome);
+        }
+
+        function fazerRegistro() {
+            const nome = document.getElementById('registroNome').value.trim();
+            const email = document.getElementById('registroEmail').value.trim();
+            const senha = document.getElementById('registroSenha').value.trim();
+            const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
+            const status = document.getElementById('registroStatus');
+
+            if (!nome || !email || !senha || !confirmar) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '⚠️ Preencha todos os campos.';
+                return;
+            }
+
+            if (senha.length < 6) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '⚠️ A senha deve ter no mínimo 6 caracteres.';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '⚠️ As senhas não coincidem.';
+                return;
+            }
+
+            if (usuarios.find(u => u.email === email)) {
+                status.className = 'form-status error';
+                status.style.display = 'block';
+                status.textContent = '❌ Este e-mail já está cadastrado.';
+                return;
+            }
+
+            usuarios.push({ nome, email, senha });
+            salvarUsuarios();
+
+            status.className = 'form-status success';
+            status.style.display = 'block';
+            status.textContent = '✅ Conta criada com sucesso! Faça login.';
+
+            // Limpa campos
+            document.getElementById('registroNome').value = '';
+            document.getElementById('registroEmail').value = '';
+            document.getElementById('registroSenha').value = '';
+            document.getElementById('registroConfirmarSenha').value = '';
+
+            // Volta para o login após 2s
+            setTimeout(() => {
+                trocarLoginTab('login');
+                document.getElementById('loginEmail').value = email;
+            }, 2000);
+        }
+
+        // ============================================================
+        // SISTEMA DE PERFIL - CORRIGIDO COM LOGIN
         // ============================================================
         let usuarioLogado = null;
 
         function resetarPerfilPadrao() {
-            usuarioLogado = { nome: 'KZN Usuário', email: 'usuario@kzn.com' };
+            usuarioLogado = null;
             document.getElementById('userDisplay').textContent = 'Entrar';
             document.getElementById('profileName').textContent = 'KZN Usuário';
             document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
@@ -2687,6 +2947,15 @@
             }
         }
 
+        function abrirPerfil() {
+            const dados = localStorage.getItem('kzn_usuario_logado');
+            if (dados) {
+                window.location.href = '#perfil';
+            } else {
+                abrirModalLogin();
+            }
+        }
+
         function uploadAvatar(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -2724,6 +2993,12 @@
             usuarioLogado.nome = nome;
             usuarioLogado.email = email;
             if (senha.length >= 6) {
+                // Atualiza senha no cadastro
+                const usuario = usuarios.find(u => u.email === usuarioLogado.email);
+                if (usuario) {
+                    usuario.senha = senha;
+                    salvarUsuarios();
+                }
                 alert('🔐 Senha atualizada com sucesso!');
             }
             localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
@@ -2733,20 +3008,12 @@
         }
 
         // ============================================================
-        // LOGOUT - FUNÇÃO CORRIGIDA (BOTÃO SAIR FUNCIONA)
+        // LOGOUT - REDIRECIONA PARA O LOGIN
         // ============================================================
         function logout() {
-            // Remove os dados do usuário
             localStorage.removeItem('kzn_usuario_logado');
-
-            // Reseta o perfil
             resetarPerfilPadrao();
-
-            // Mensagem
-            alert('👋 Você saiu da sua conta.');
-
-            // Volta para o topo
-            window.location.href = '#inicio';
+            abrirModalLogin();
         }
 
         // ============================================================
@@ -2887,6 +3154,19 @@
             if (e.target === this) fecharModalPixXcore();
         });
 
+        document.getElementById('modalLogin').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalLogin();
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                fecharModalLogin();
+                fecharModalPix();
+                fecharModalPixXcore();
+            }
+        });
+
         // ============================================================
         // FORMULÁRIO XCORE
         // ============================================================
@@ -2950,6 +3230,7 @@
         // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
+        carregarUsuarios();
         carregarNotificacoes();
         carregarPerfil();
         carregarCarrinho();
