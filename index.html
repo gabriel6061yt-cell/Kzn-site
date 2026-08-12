@@ -3007,7 +3007,7 @@
     </div>
 
     <script>
-        <script>
+      <script>
     // ====== FIREBASE CONFIG ======
     const firebaseConfig = {
         apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
@@ -3132,7 +3132,7 @@
         });
     }
 
-    // ====== PROCESSAR COMANDOS ======
+    // ====== PROCESSAR COMANDOS (ASSÍNCRONO) ======
     async function processarComando(texto, usuario) {
         const partes = texto.split(' ');
         const comando = partes[0].toLowerCase();
@@ -3236,7 +3236,7 @@
         }
     }
 
-    // ====== FUNÇÕES DE MODERAÇÃO ======
+    // ====== FUNÇÕES DE MODERAÇÃO (ASSÍNCRONAS) ======
     async function banirUsuario(email, motivo = 'Violação das regras') {
         if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
         if (!await isAdmin(usuarioLogado.email)) { alert('⚠️ Apenas administradores podem banir!'); return false; }
@@ -3438,7 +3438,7 @@
         alert(msg);
     }
 
-    // ====== ENVIAR MENSAGEM ======
+    // ====== ENVIAR MENSAGEM (COM VERIFICAÇÕES ASSÍNCRONAS) ======
     window.enviarMensagem = async function() {
         const input = document.getElementById('chatInput');
         const texto = input.value.trim();
@@ -3449,6 +3449,7 @@
             return;
         }
 
+        // VERIFICAÇÕES ASSÍNCRONAS
         const banido = await isBanned(usuarioLogado.email);
         if (banido) {
             alert('🔒 Você está banido do chat!');
@@ -3461,6 +3462,7 @@
             return;
         }
 
+        // Envia a mensagem
         const msgRef = mensagensRef.push();
         await msgRef.set({
             nome: usuarioLogado.nome,
@@ -3475,6 +3477,7 @@
         const container = document.getElementById('chatMessages');
         container.scrollTop = container.scrollHeight;
 
+        // SÓ RESPONDE SE FOR COMANDO
         if (texto.startsWith('/')) {
             await processarComando(texto, usuarioLogado);
         }
@@ -4070,13 +4073,6 @@
             return;
         }
 
-        const usuarioExistente = localStorage.getItem('kzn_usuario_logado');
-        if (usuarioExistente) {
-            loginProcessed = true;
-            setLoggedIn();
-            return;
-        }
-
         isLoggingIn = true;
 
         try {
@@ -4096,7 +4092,6 @@
         } catch (e) {
             console.error('Erro no login:', e);
             alert('❌ Ocorreu um erro ao fazer login. Tente novamente.');
-            isLoggingIn = false;
         } finally {
             setTimeout(() => {
                 isLoggingIn = false;
@@ -4352,14 +4347,6 @@
             isLoggingIn = false;
             document.getElementById('welcomeOverlay').classList.remove('hidden');
             document.getElementById('chatToggleBtn').style.display = 'none';
-            // 🔥 IMPEDE O LOGIN AUTOMÁTICO DO GOOGLE
-            if (window.google && window.google.accounts && window.google.accounts.id) {
-                try {
-                    window.google.accounts.id.disableAutoSelect();
-                } catch (e) {
-                    console.log('Google AutoSelect desabilitado');
-                }
-            }
         }
     }
 
@@ -4445,6 +4432,7 @@
             adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
         }
 
+        // Mensagem de boas-vindas do BOT (1 vez)
         setTimeout(() => {
             if (usuarioLogado && !botBoasVindasEnviado) {
                 enviarMensagemBot(`🤖 **BOT Guardian online!**\n\nOlá, ${usuarioLogado.nome}! 👋\n\nSou o assistente oficial do KZN MENU. Digite **/comandos** para ver todos os comandos disponíveis.\n\n🔹 Para regras, digite **/regras**\n🔹 Para ver quem está online, digite **/online**\n\nDivirta-se e respeite as regras! 🚀`);
@@ -4456,6 +4444,6 @@
         console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
         console.log('🤖 BOT Guardian ativo!');
         console.log('💬 Chat em tempo real com moderação!');
-        console.log('✅ Loop do Google corrigido!');
+        console.log('✅ Todas as funções assíncronas corrigidas!');
     });
 </script>
