@@ -43,7 +43,7 @@
 
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.7;
@@ -57,7 +57,9 @@
             border-radius: 10px;
         }
 
-        /* WHATSAPP */
+        /* ============================================================
+           WHATSAPP
+           ============================================================ */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 24px;
@@ -84,7 +86,9 @@
             100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
 
-        /* NAVBAR */
+        /* ============================================================
+           NAVBAR
+           ============================================================ */
         .navbar {
             position: fixed;
             top: 0;
@@ -226,6 +230,192 @@
             flex-shrink: 0;
         }
 
+        /* ============================================================
+           BOTÕES DE NOTIFICAÇÃO E MENSAGEM
+           ============================================================ */
+        .nav-icon-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        .nav-icon-btn:hover {
+            border-color: var(--primary);
+            color: #fff;
+            background: rgba(220,38,38,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(220,38,38,0.15);
+        }
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.45rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+            box-shadow: 0 2px 8px rgba(220,38,38,0.4);
+            animation: badgePulse 2s infinite;
+        }
+        .nav-icon-btn .badge.show { display: flex; }
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ============================================================
+           DROPDOWNS - NOTIFICAÇÕES E MENSAGENS
+           ============================================================ */
+        .dropdown-container {
+            position: relative;
+        }
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 360px;
+            max-height: 420px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+            animation: dropdownIn 0.25s ease;
+        }
+        .dropdown.open { display: block; }
+        @keyframes dropdownIn {
+            from { opacity: 0; transform: translateY(-10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+        .dropdown-header span {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .dropdown-header span i {
+            margin-right: 6px;
+        }
+        .dropdown-header .btn-clear {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.2rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dropdown-header .btn-clear:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .dropdown-body {
+            padding: 0.3rem 0;
+            max-height: 340px;
+            overflow-y: auto;
+        }
+        .dropdown-body::-webkit-scrollbar { width: 4px; }
+        .dropdown-body::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .dropdown-item {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: 0.2s;
+            cursor: default;
+        }
+        .dropdown-item:hover {
+            background: var(--glass);
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .dropdown-item .item-text {
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+        .dropdown-item .item-text strong {
+            color: var(--primary);
+        }
+        .dropdown-item .item-time {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+        .dropdown-item.unread {
+            border-left: 3px solid var(--primary);
+            background: rgba(220,38,38,0.04);
+        }
+        .dropdown-item.unread .item-text {
+            font-weight: 600;
+        }
+        .dropdown-item .item-actions {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 4px;
+        }
+        .dropdown-item .item-actions button {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.55rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .dropdown-item .item-actions button:hover {
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .empty-state i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            opacity: 0.3;
+        }
+
+        /* ============================================================
+           BOTÃO PERFIL
+           ============================================================ */
         .profile-btn {
             display: flex;
             align-items: center;
@@ -240,6 +430,7 @@
             text-decoration: none;
             font-size: 0.7rem;
             font-weight: 600;
+            position: relative;
         }
         .profile-btn:hover {
             border-color: var(--primary);
@@ -258,7 +449,6 @@
             color: #fff;
             flex-shrink: 0;
             overflow: hidden;
-            object-fit: cover;
         }
         .profile-btn .avatar img {
             width: 100%;
@@ -272,7 +462,30 @@
             white-space: nowrap;
             font-size: 0.7rem;
         }
+        .profile-btn .cart-icon-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .profile-btn .cart-count {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.45rem;
+            font-weight: 700;
+            position: absolute;
+            top: -6px;
+            right: -8px;
+        }
 
+        /* ============================================================
+           LANG TOGGLE
+           ============================================================ */
         .lang-toggle {
             display: flex;
             gap: 0.15rem;
@@ -293,27 +506,6 @@
             background: var(--primary);
             border-color: var(--primary);
             color: #fff;
-        }
-
-        .cart-icon-wrap {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-        }
-        .cart-count {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.45rem;
-            font-weight: 700;
-            position: absolute;
-            top: -6px;
-            right: -8px;
         }
 
         /* ============================================================
@@ -1229,7 +1421,7 @@
            ============================================================ */
         .cart-dropdown {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 8px);
             right: 0;
             width: 300px;
             max-height: 400px;
@@ -1241,6 +1433,7 @@
             padding: 1rem;
             display: none;
             z-index: 999;
+            animation: dropdownIn 0.25s ease;
         }
         .cart-dropdown.open { display: block; }
         .cart-dropdown .cart-item {
@@ -1432,6 +1625,7 @@
             .hero-buttons { justify-content: center; }
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
+            .dropdown { width: 300px; right: -20px; }
         }
 
         @media (max-width: 768px) {
@@ -1476,6 +1670,19 @@
             
             .nav-actions { gap: 4px; flex-shrink: 0; }
             
+            .nav-icon-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            .nav-icon-btn .badge {
+                min-width: 16px;
+                height: 16px;
+                font-size: 0.4rem;
+                top: -3px;
+                right: -3px;
+            }
+            
             .profile-btn {
                 padding: 0.15rem 0.4rem 0.15rem 0.15rem;
                 font-size: 0.6rem;
@@ -1489,7 +1696,7 @@
             .profile-btn .user-name {
                 display: none;
             }
-            .profile-btn .cart-icon-wrap .cart-count {
+            .profile-btn .cart-count {
                 width: 14px;
                 height: 14px;
                 font-size: 0.4rem;
@@ -1502,6 +1709,11 @@
                 font-size: 0.45rem;
             }
             
+            .dropdown {
+                width: 280px;
+                right: -60px;
+                max-height: 350px;
+            }
             .cart-dropdown {
                 width: 260px;
                 right: -40px;
@@ -1530,6 +1742,7 @@
             .modal-pix .modal-content { padding: 1.5rem; }
             .modal-pix .modal-content .pix-key { font-size: 0.8rem; }
             .profile-section .profile-actions { flex-direction: column; }
+            .dropdown { width: 260px; right: -40px; }
             .cart-dropdown { width: 240px; right: -30px; }
             .nav-logo .logo-text span { font-size: 0.7rem; }
             .nav-logo img { width: 30px; height: 30px; }
@@ -1537,6 +1750,7 @@
             .nav-xcore .xcore-text .name { font-size: 0.45rem; }
             .nav-xcore .xcore-text .team { font-size: 0.35rem; }
             .profile-btn .avatar { width: 20px; height: 20px; }
+            .nav-icon-btn { width: 28px; height: 28px; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -1548,7 +1762,7 @@
     </a>
 
     <!-- ============================================================
-    NAVBAR - PERFIL REMOVIDO DO MENU
+    NAVBAR - COM NOTIFICAÇÕES E MENSAGENS
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1570,7 +1784,7 @@
                 </a>
             </div>
 
-            <!-- PERFIL REMOVIDO DAQUI! -->
+            <!-- MENU DE NAVEGAÇÃO (SEM PERFIL) -->
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
@@ -1578,12 +1792,51 @@
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                <!-- PERFIL REMOVIDO - SÓ NO CABEÇALHO -->
             </ul>
 
             <div class="nav-actions">
+                <!-- NOTIFICAÇÕES -->
+                <div class="dropdown-container">
+                    <button class="nav-icon-btn" id="notifBtn" onclick="toggleNotificacoes()" title="Notificações">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notifBadge">0</span>
+                    </button>
+                    <div class="dropdown" id="notifDropdown">
+                        <div class="dropdown-header">
+                            <span><i class="fas fa-bell"></i> Notificações</span>
+                            <button class="btn-clear" onclick="marcarTodasNotificacoesLidas()">Marcar todas</button>
+                        </div>
+                        <div class="dropdown-body" id="notifList">
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                Nenhuma notificação
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MENSAGENS -->
+                <div class="dropdown-container">
+                    <button class="nav-icon-btn" id="msgBtn" onclick="toggleMensagens()" title="Mensagens">
+                        <i class="fas fa-envelope"></i>
+                        <span class="badge" id="msgBadge">0</span>
+                    </button>
+                    <div class="dropdown" id="msgDropdown">
+                        <div class="dropdown-header">
+                            <span><i class="fas fa-envelope"></i> Mensagens</span>
+                            <button class="btn-clear" onclick="marcarTodasMensagensLidas()">Marcar todas</button>
+                        </div>
+                        <div class="dropdown-body" id="msgList">
+                            <div class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                Nenhuma mensagem
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERFIL + CARRINHO -->
                 <div style="position: relative;">
-                    <!-- BOTÃO DE PERFIL NO CABEÇALHO (REDIRECIONA PARA #perfil) -->
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
                         <span class="avatar" id="avatarLetter">
                             <span class="avatar-letter" id="avatarText">K</span>
@@ -1594,6 +1847,7 @@
                             <span class="cart-count" id="cartCount">0</span>
                         </span>
                     </button>
+                    <!-- CARRINHO DROPDOWN -->
                     <div class="cart-dropdown" id="cartDropdown">
                         <div id="cartItems"></div>
                         <div class="cart-total">
@@ -1604,11 +1858,13 @@
                     </div>
                 </div>
 
+                <!-- LANG TOGGLE -->
                 <div class="lang-toggle">
                     <button class="active" onclick="mudarIdioma('pt')" id="langPt">🇧🇷 PT</button>
                     <button onclick="mudarIdioma('en')" id="langEn">🇺🇸 EN</button>
                 </div>
 
+                <!-- MOBILE TOGGLE -->
                 <div class="nav-toggle" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1763,7 +2019,7 @@
     </section>
 
     <!-- ============================================================
-    PERFIL - COM UPLOAD DE FOTO
+    PERFIL
     ============================================================ -->
     <section id="perfil" class="section dark">
         <div class="container">
@@ -1774,7 +2030,6 @@
 
             <div class="profile-section" id="profileSection">
                 <div class="profile-header">
-                    <!-- AVATAR CLICÁVEL PARA UPLOAD -->
                     <div class="profile-avatar" id="profileAvatar" onclick="document.getElementById('avatarUpload').click()">
                         <span class="avatar-letter" id="avatarProfileText">K</span>
                         <img id="avatarProfileImage" style="display:none;width:100%;height:100%;object-fit:cover;" />
@@ -1810,7 +2065,6 @@
                     <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </div>
 
-                <!-- Editar Perfil -->
                 <div id="editProfileArea" style="display:none;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);">
                     <h4 style="margin-bottom:1rem;color:var(--text);">✏️ Editar Perfil</h4>
                     <div class="form-group">
@@ -1881,7 +2135,7 @@
     </section>
 
     <!-- ============================================================
-    CONTATO
+    CONTATO - COM CAMPO DE EMAIL OBRIGATÓRIO
     ============================================================ -->
     <section id="contato" class="section dark">
         <div class="container">
@@ -1894,11 +2148,18 @@
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
+                    
+                    <!-- CAMPO EMAIL OBRIGATÓRIO (usado para notificações) -->
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
+                        <input type="email" name="Email" id="clienteEmail" placeholder="Digite seu e-mail (ex: joao@gmail.com)" required>
+                        <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
+                    </div>
+                    
                     <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
-                    <div class="form-group"><label><i class="fas fa-envelope"></i> Seu E-mail</label><input type="email" name="E-mail" placeholder="Digite seu e-mail..." required></div>
                     <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
                     <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
-                        <select name="Plano" required>
+                        <select name="Plano" id="planoEscolhido" required>
                             <option value="">Selecione um plano...</option>
                             <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
                             <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
@@ -1909,7 +2170,7 @@
                     </div>
                     <div class="form-group"><label><i class="fas fa-image"></i> 📸 Comprovante PIX <span style="color:var(--primary);">*</span></label><input type="file" name="Comprovante" accept="image/*,.pdf" required><p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p></div>
                     <div class="form-group"><label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label><textarea name="Mensagem" rows="4" placeholder="Digite sua mensagem aqui..."></textarea></div>
-                    <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
+                    <button type="submit" class="btn-submit" id="formSubmitBtn"><i class="fas fa-paper-plane"></i> Enviar Mensagem</button>
                     <div class="form-status" id="formStatus"></div>
                 </form>
             </div>
@@ -1970,7 +2231,7 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT
+    JAVASCRIPT - SISTEMA COMPLETO
     ============================================================ -->
     <script>
         // ============================================================
@@ -2032,6 +2293,201 @@
         }
 
         // ============================================================
+        // SISTEMA DE NOTIFICAÇÕES E MENSAGENS
+        // ============================================================
+        let notificacoes = [];
+        let mensagens = [];
+
+        // Carregar dados do localStorage
+        function carregarDados() {
+            try {
+                const n = localStorage.getItem('kzn_notificacoes');
+                const m = localStorage.getItem('kzn_mensagens');
+                notificacoes = n ? JSON.parse(n) : [];
+                mensagens = m ? JSON.parse(m) : [];
+            } catch (e) {
+                notificacoes = [];
+                mensagens = [];
+            }
+        }
+
+        function salvarDados() {
+            localStorage.setItem('kzn_notificacoes', JSON.stringify(notificacoes));
+            localStorage.setItem('kzn_mensagens', JSON.stringify(mensagens));
+        }
+
+        // Adicionar notificação
+        function adicionarNotificacao(mensagem, tipo = 'info') {
+            const icones = {
+                compra: '🛒',
+                pagamento: '💳',
+                sucesso: '✅',
+                info: '🔔',
+                alerta: '⚠️'
+            };
+            notificacoes.unshift({
+                id: Date.now(),
+                mensagem: `${icones[tipo] || '🔔'} ${mensagem}`,
+                data: new Date().toLocaleString('pt-BR'),
+                lida: false,
+                tipo: tipo
+            });
+            if (notificacoes.length > 50) notificacoes.pop();
+            salvarDados();
+            atualizarBadges();
+            renderizarNotificacoes();
+            playNotificationSound();
+        }
+
+        // Adicionar mensagem
+        function adicionarMensagem(texto, remetente = 'VOCÊ') {
+            mensagens.unshift({
+                id: Date.now(),
+                texto: texto,
+                remetente: remetente,
+                data: new Date().toLocaleString('pt-BR'),
+                lida: false
+            });
+            if (mensagens.length > 50) mensagens.pop();
+            salvarDados();
+            atualizarBadges();
+            renderizarMensagens();
+            playNotificationSound();
+        }
+
+        // Toggle dropdowns
+        function toggleNotificacoes() {
+            const dropdown = document.getElementById('notifDropdown');
+            document.getElementById('msgDropdown').classList.remove('open');
+            dropdown.classList.toggle('open');
+            if (dropdown.classList.contains('open')) {
+                notificacoes.forEach(n => n.lida = true);
+                salvarDados();
+                atualizarBadges();
+                renderizarNotificacoes();
+            }
+        }
+
+        function toggleMensagens() {
+            const dropdown = document.getElementById('msgDropdown');
+            document.getElementById('notifDropdown').classList.remove('open');
+            dropdown.classList.toggle('open');
+            if (dropdown.classList.contains('open')) {
+                mensagens.forEach(m => m.lida = true);
+                salvarDados();
+                atualizarBadges();
+                renderizarMensagens();
+            }
+        }
+
+        // Atualizar badges
+        function atualizarBadges() {
+            const notifNaoLidas = notificacoes.filter(n => !n.lida).length;
+            const msgNaoLidas = mensagens.filter(m => !m.lida).length;
+
+            const notifBadge = document.getElementById('notifBadge');
+            const msgBadge = document.getElementById('msgBadge');
+
+            if (notifNaoLidas > 0) {
+                notifBadge.textContent = notifNaoLidas;
+                notifBadge.classList.add('show');
+            } else {
+                notifBadge.classList.remove('show');
+            }
+
+            if (msgNaoLidas > 0) {
+                msgBadge.textContent = msgNaoLidas;
+                msgBadge.classList.add('show');
+            } else {
+                msgBadge.classList.remove('show');
+            }
+        }
+
+        // Renderizar notificações
+        function renderizarNotificacoes() {
+            const list = document.getElementById('notifList');
+            if (notificacoes.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-bell-slash"></i>Nenhuma notificação</div>`;
+                return;
+            }
+            list.innerHTML = notificacoes.map(n => `
+                <div class="dropdown-item ${n.lida ? '' : 'unread'}">
+                    <span class="item-text">${n.mensagem}</span>
+                    <span class="item-time">${n.data}</span>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar mensagens
+        function renderizarMensagens() {
+            const list = document.getElementById('msgList');
+            if (mensagens.length === 0) {
+                list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i>Nenhuma mensagem</div>`;
+                return;
+            }
+            list.innerHTML = mensagens.map(m => `
+                <div class="dropdown-item ${m.lida ? '' : 'unread'}">
+                    <span class="item-text"><strong>${m.remetente}:</strong> ${m.texto}</span>
+                    <span class="item-time">${m.data}</span>
+                </div>
+            `).join('');
+        }
+
+        function marcarTodasNotificacoesLidas() {
+            notificacoes.forEach(n => n.lida = true);
+            salvarDados();
+            atualizarBadges();
+            renderizarNotificacoes();
+        }
+
+        function marcarTodasMensagensLidas() {
+            mensagens.forEach(m => m.lida = true);
+            salvarDados();
+            atualizarBadges();
+            renderizarMensagens();
+        }
+
+        // Som de notificação
+        function playNotificationSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.15;
+                oscillator.start();
+                setTimeout(() => { oscillator.stop(); }, 150);
+                setTimeout(() => {
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(audioCtx.destination);
+                    osc2.frequency.value = 1000;
+                    osc2.type = 'sine';
+                    gain2.gain.value = 0.15;
+                    osc2.start();
+                    setTimeout(() => { osc2.stop(); }, 150);
+                }, 200);
+            } catch (e) {}
+        }
+
+        // Fechar dropdowns ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
+                document.getElementById('notifDropdown').classList.remove('open');
+            }
+            if (!e.target.closest('#msgBtn') && !e.target.closest('#msgDropdown')) {
+                document.getElementById('msgDropdown').classList.remove('open');
+            }
+            if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown')) {
+                document.getElementById('cartDropdown').classList.remove('open');
+            }
+        });
+
+        // ============================================================
         // SISTEMA DE PERFIL + FOTO
         // ============================================================
         let usuarioLogado = null;
@@ -2047,12 +2503,10 @@
                     document.getElementById('editNome').value = usuarioLogado.nome || '';
                     document.getElementById('editEmail').value = usuarioLogado.email || '';
 
-                    // Carregar foto de perfil
                     if (usuarioLogado.avatar) {
                         document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
                         document.getElementById('avatarProfileImage').style.display = 'block';
                         document.getElementById('avatarProfileText').style.display = 'none';
-                        // Atualizar mini avatar no header
                         document.getElementById('avatarText').textContent = '';
                         document.querySelector('.profile-btn .avatar').innerHTML = `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
                     } else {
@@ -2075,7 +2529,6 @@
         function uploadAvatar(event) {
             const file = event.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
             reader.onload = function(e) {
                 const imagem = e.target.result;
@@ -2101,19 +2554,15 @@
             const nome = document.getElementById('editNome').value.trim();
             const email = document.getElementById('editEmail').value.trim();
             const senha = document.getElementById('editSenha').value;
-
             if (!nome || !email) {
                 alert('⚠️ Preencha todos os campos obrigatórios.');
                 return;
             }
-
             usuarioLogado.nome = nome;
             usuarioLogado.email = email;
-
             if (senha.length >= 6) {
                 alert('🔐 Senha atualizada com sucesso!');
             }
-
             localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
             carregarPerfil();
             document.getElementById('editProfileArea').style.display = 'none';
@@ -2198,7 +2647,6 @@
                 alert('⚠️ Seu carrinho está vazio!');
                 return;
             }
-
             const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
             if (confirm(`🛒 Finalizar compra de R$ ${total.toFixed(2)}?\n\nClique em OK para gerar o pagamento.`)) {
                 carrinho = [];
@@ -2212,21 +2660,51 @@
 
         // Toggle carrinho dropdown
         document.getElementById('profileBtn').addEventListener('click', function(e) {
-            // Se clicou no botão perfil, redireciona para #perfil
-            // Mas se clicou no carrinho, abre o dropdown
-            // Vamos manter o comportamento padrão
+            // Se clicou no ícone do carrinho, abre o dropdown
+            if (e.target.closest('.cart-icon-wrap') || e.target.closest('.cart-count')) {
+                e.stopPropagation();
+                e.preventDefault();
+                document.getElementById('cartDropdown').classList.toggle('open');
+            }
         });
 
-        // O clique no perfil já tem onclick="window.location.href='#perfil'"
-        // O carrinho fica no mesmo botão, então vamos separar:
-        document.querySelector('.profile-btn .cart-icon-wrap, .profile-btn .cart-count').addEventListener('click', function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            document.getElementById('cartDropdown').classList.toggle('open');
-        });
+        // ============================================================
+        // FORMULÁRIO - ENVIA NOTIFICAÇÃO
+        // ============================================================
+        document.getElementById('formContato').addEventListener('submit', function(e) {
+            const btn = document.getElementById('formSubmitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-        document.addEventListener('click', function() {
-            document.getElementById('cartDropdown').classList.remove('open');
+            // Pega os dados do formulário
+            const nome = document.querySelector('input[name="Nome"]').value;
+            const email = document.querySelector('input[name="Email"]').value;
+            const plano = document.querySelector('select[name="Plano"]').value;
+
+            // ADICIONA NOTIFICAÇÃO
+            adicionarNotificacao(`📩 Novo pedido de ${nome} - ${plano}`, 'compra');
+
+            // ADICIONA MENSAGEM DE CONFIRMAÇÃO
+            adicionarMensagem(`✅ Pedido recebido! Em breve enviaremos sua key para ${email}`, 'SISTEMA');
+
+            // Salva o email do cliente para notificações futuras
+            if (email) {
+                localStorage.setItem('kzn_cliente_email', email);
+            }
+
+            // Simula envio
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
+                const status = document.getElementById('formStatus');
+                status.className = 'form-status success';
+                status.style.display = 'block';
+                status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
+                this.reset();
+
+                // NOTIFICAÇÃO DE SUCESSO
+                adicionarNotificacao(`✅ Pedido de ${nome} enviado com sucesso!`, 'sucesso');
+            }, 3000);
         });
 
         // ============================================================
@@ -2254,30 +2732,28 @@
         });
 
         // ============================================================
-        // FORMULÁRIO DE CONTATO
+        // SIMULAÇÃO DE NOVAS NOTIFICAÇÕES (DEMONSTRAÇÃO)
         // ============================================================
-        document.getElementById('formContato').addEventListener('submit', function(e) {
-            const btn = this.querySelector('.btn-submit');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
-            }, 5000);
-        });
-
-        if (window.location.search.includes('success')) {
-            const status = document.getElementById('formStatus');
-            status.className = 'form-status success';
-            status.style.display = 'block';
-            status.textContent = '✅ Mensagem enviada com sucesso! Em breve entrarei em contato.';
+        // Adiciona algumas notificações de exemplo ao carregar
+        function adicionarExemplos() {
+            if (notificacoes.length === 0 && mensagens.length === 0) {
+                adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
+                adicionarNotificacao('💡 Dica: Ative as notificações para receber novidades.', 'alerta');
+                adicionarMensagem('🔑 Sua key de teste: KZN-DEMO-2026', 'VOCÊ');
+                adicionarMensagem('💬 Dúvidas? Fale conosco no Discord.', 'VOCÊ');
+            }
         }
 
         // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
+        carregarDados();
         carregarPerfil();
         carregarCarrinho();
+        adicionarExemplos();
+        atualizarBadges();
+        renderizarNotificacoes();
+        renderizarMensagens();
 
         // ============================================================
         // TRADUÇÃO
@@ -2288,6 +2764,26 @@
             document.getElementById('langPt').classList.toggle('active', lang === 'pt');
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
         }
+
+        // ============================================================
+        // VERIFICAR NOVAS NOTIFICAÇÕES A CADA 30 SEGUNDOS
+        // ============================================================
+        setInterval(() => {
+            // Simula verificação de novas notificações
+            // Em produção, isso seria uma chamada para um servidor/Firebase
+            console.log('🔍 Verificando novas notificações...');
+            
+            // Exemplo: se tiver um email salvo, pode verificar no backend
+            const email = localStorage.getItem('kzn_cliente_email');
+            if (email) {
+                // Aqui você faria uma requisição para seu servidor
+                // Verificando se tem novas mensagens para este email
+            }
+        }, 30000);
+
+        console.log('✅ KZN MENU carregado com sucesso!');
+        console.log('🔔 Sistema de notificações ativo!');
+        console.log('💬 Sistema de mensagens ativo!');
     </script>
 
 </body>
