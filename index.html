@@ -792,7 +792,175 @@
         }
 
         /* ============================================================
-           CARDS / PLANOS
+           XCORE EXECUTOR - ABAS DE IDIOMA
+           ============================================================ */
+        .xcore-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .xcore-tab-btn {
+            padding: 0.6rem 2rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            background: var(--bg-card);
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .xcore-tab-btn:hover { border-color: var(--secondary); color: var(--text); }
+        .xcore-tab-btn.active {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(124,58,237,0.3);
+        }
+        .xcore-lang { display: none; animation: fadeIn 0.4s ease; }
+        .xcore-lang.active { display: block; }
+
+        /* ============================================================
+           XCORE - PLANOS
+           ============================================================ */
+        .xcore-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .xcore-plan {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .xcore-plan:hover { transform: translateY(-6px); border-color: var(--secondary); box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .xcore-plan .plan-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .xcore-plan .plan-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+        }
+        .xcore-plan .plan-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .xcore-plan .plan-price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0.8rem 0;
+        }
+        .xcore-plan .plan-price small {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .xcore-plan .plan-features {
+            list-style: none;
+            text-align: left;
+            margin: 1rem 0;
+        }
+        .xcore-plan .plan-features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .xcore-plan .plan-features li i { color: var(--success); width: 18px; font-size: 0.7rem; }
+        .xcore-plan .plan-btn {
+            width: 100%;
+            padding: 0.7rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+        }
+        .xcore-plan .plan-btn:hover { transform: scale(1.02); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .xcore-plan .plan-btn.free { background: var(--success); }
+        .xcore-plan .plan-btn.silver { background: linear-gradient(135deg, #94a3b8, #64748b); }
+        .xcore-plan .plan-btn.gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .xcore-plan.free { border-color: var(--success); }
+        .xcore-plan.silver { border-color: #94a3b8; }
+        .xcore-plan.gold { border-color: var(--warning); }
+        .xcore-plan.free .plan-name { color: var(--success); }
+        .xcore-plan.silver .plan-name { color: #94a3b8; }
+        .xcore-plan.gold .plan-name { color: var(--warning); }
+
+        /* ============================================================
+           XCORE - RESTRIÇÕES
+           ============================================================ */
+        .xcore-restrictions {
+            max-width: 800px;
+            margin: 2.5rem auto 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        .xcore-restrictions h3 {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+        .xcore-restrictions h3 i { color: var(--warning); margin-right: 8px; }
+        .xcore-restrictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.8rem;
+        }
+        .xcore-restriction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .xcore-restriction-item .area { color: var(--text); font-weight: 600; }
+        .xcore-restriction-item .level {
+            padding: 0.15rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.7rem;
+        }
+        .level-free { background: var(--success); color: #fff; }
+        .level-silver { background: #64748b; color: #fff; }
+        .level-gold { background: var(--warning); color: #000; }
+
+        .xcore-restrictions .restriction-note {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+        .xcore-restrictions .restriction-note i { color: var(--warning); }
+
+        /* ============================================================
+           CARDS / PLANOS (KZN)
            ============================================================ */
         .plans-grid {
             display: grid;
@@ -1285,7 +1453,7 @@
         .cupom-area .btn-cupom:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
 
         /* ============================================================
-           PERFIL - COM UPLOAD DE FOTO
+           PERFIL
            ============================================================ */
         .profile-section {
             max-width: 600px;
@@ -1575,6 +1743,7 @@
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
             .dropdown { width: 300px; right: -20px; }
+            .xcore-plans { grid-template-columns: 1fr; max-width: 400px; }
         }
 
         @media (max-width: 768px) {
@@ -1682,6 +1851,8 @@
             .progress-bar { gap: 0.5rem; font-size: 0.7rem; }
             .progress-step .step-arrow { display: none; }
             .profile-section .profile-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+            .xcore-restrictions-grid { grid-template-columns: 1fr; }
+            .xcore-tab-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
         }
 
         @media (max-width: 480px) {
@@ -1700,6 +1871,7 @@
             .nav-xcore .xcore-text .team { font-size: 0.35rem; }
             .profile-btn .avatar { width: 20px; height: 20px; }
             .nav-icon-btn { width: 28px; height: 28px; font-size: 0.7rem; }
+            .xcore-plan .plan-price { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -1711,7 +1883,7 @@
     </a>
 
     <!-- ============================================================
-    NAVBAR - SEM CAIXA DE MENSAGENS
+    NAVBAR
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1733,10 +1905,10 @@
                 </a>
             </div>
 
-            <!-- MENU DE NAVEGAÇÃO (SEM PERFIL) -->
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
+                <li><a href="#xcore"><i class="fas fa-bolt"></i> Xcore</a></li>
                 <li><a href="#como-comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
@@ -1744,7 +1916,6 @@
             </ul>
 
             <div class="nav-actions">
-                <!-- NOTIFICAÇÕES (SEM MENSAGENS) -->
                 <div class="dropdown-container">
                     <button class="nav-icon-btn" id="notifBtn" onclick="toggleNotificacoes()" title="Notificações">
                         <i class="fas fa-bell"></i>
@@ -1764,7 +1935,6 @@
                     </div>
                 </div>
 
-                <!-- PERFIL + CARRINHO -->
                 <div style="position: relative;">
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
                         <span class="avatar" id="avatarLetter">
@@ -1776,7 +1946,6 @@
                             <span class="cart-count" id="cartCount">0</span>
                         </span>
                     </button>
-                    <!-- CARRINHO DROPDOWN -->
                     <div class="cart-dropdown" id="cartDropdown">
                         <div id="cartItems"></div>
                         <div class="cart-total">
@@ -1787,13 +1956,11 @@
                     </div>
                 </div>
 
-                <!-- LANG TOGGLE -->
                 <div class="lang-toggle">
                     <button class="active" onclick="mudarIdioma('pt')" id="langPt">🇧🇷 PT</button>
                     <button onclick="mudarIdioma('en')" id="langEn">🇺🇸 EN</button>
                 </div>
 
-                <!-- MOBILE TOGGLE -->
                 <div class="nav-toggle" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -1819,7 +1986,7 @@
             </p>
             <div class="hero-buttons">
                 <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
-                <a href="#como-comprar" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Como Comprar</a>
+                <a href="#xcore" class="btn btn-secondary"><i class="fas fa-bolt"></i> Xcore Executor</a>
             </div>
             <div class="selo-seguranca">
                 <span class="selo-item"><i class="fas fa-lock"></i> Pagamento Seguro</span>
@@ -1836,7 +2003,7 @@
     </section>
 
     <!-- ============================================================
-    MODS
+    MODS (KZN MENU)
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
@@ -1948,6 +2115,196 @@
     </section>
 
     <!-- ============================================================
+    XCORE EXECUTOR - ABA COMPLETA
+    ============================================================ -->
+    <section id="xcore" class="section dark">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-bolt" style="color:var(--secondary);"></i> XCORE EXECUTOR</h2>
+                <p id="xcoreSubtitle">⚡ Um executor de Graal • A Graal Script Executor</p>
+            </div>
+
+            <!-- BANNER XCORE -->
+            <div style="max-width:700px;margin:0 auto 3rem;text-align:center;background:var(--bg-card);border:2px solid var(--secondary);border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--primary));"></div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+                    <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:80px;height:80px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
+                    <div>
+                        <h2 style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE</h2>
+                        <p style="color:var(--text-muted);font-size:1rem;letter-spacing:2px;">EXECUTOR DE GRAAL • GRAAL SCRIPT EXECUTOR</p>
+                    </div>
+                </div>
+                <p style="color:var(--text-muted);font-size:0.85rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.8rem;">
+                    <i class="fas fa-rocket" style="color:var(--secondary);"></i>
+                    <span id="xcoreTagline">Escolha o plano ideal para você e maximize sua experiência no GraalOnline!</span>
+                </p>
+            </div>
+
+            <!-- TABS DE IDIOMA -->
+            <div class="xcore-tabs">
+                <button class="xcore-tab-btn active" onclick="trocarIdiomaXcore('pt')" id="xcorePtBtn">
+                    🇧🇷 Português
+                </button>
+                <button class="xcore-tab-btn" onclick="trocarIdiomaXcore('en')" id="xcoreEnBtn">
+                    🇺🇸 English
+                </button>
+            </div>
+
+            <!-- PORTUGUÊS -->
+            <div class="xcore-lang active" id="xcorePt">
+                <div class="xcore-plans">
+                    <!-- FREE -->
+                    <div class="xcore-plan free">
+                        <div class="plan-icon">🆓</div>
+                        <div class="plan-name">FREE</div>
+                        <div class="plan-sub">Grátis • Ideal para começar</div>
+                        <div class="plan-price" style="color:var(--success);">R$ 0,00</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Scripts no mapa principal</li>
+                            <li><i class="fas fa-check"></i> Acesso básico ao runtime</li>
+                            <li><i class="fas fa-check"></i> Permissões limitadas de execução</li>
+                            <li><i class="fas fa-check"></i> 5 horas de uso por dia</li>
+                        </ul>
+                        <button class="plan-btn free" onclick="alert('🎉 Plano FREE selecionado! Aproveite!')">Começar Agora</button>
+                    </div>
+
+                    <!-- SILVER -->
+                    <div class="xcore-plan silver">
+                        <div class="plan-icon">🥈</div>
+                        <div class="plan-name">SILVER</div>
+                        <div class="plan-sub">R$ 35/Mês • Para quem quer ir além</div>
+                        <div class="plan-price" style="color:#94a3b8;">R$ 35,00 <small>/mês</small></div>
+                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Tudo do FREE +</strong></li>
+                            <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
+                            <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
+                        </ul>
+                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Assinar R$ 35,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+                    </div>
+
+                    <!-- GOLD -->
+                    <div class="xcore-plan gold">
+                        <div class="plan-icon">🥇</div>
+                        <div class="plan-name">GOLD</div>
+                        <div class="plan-sub">R$ 90/Mês • Experiência completa</div>
+                        <div class="plan-price" style="color:var(--warning);">R$ 90,00 <small>/mês</small></div>
+                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Renovação mensal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Tudo do SILVER +</strong></li>
+                            <li><i class="fas fa-check"></i> Scripts em níveis de trabalho</li>
+                            <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
+                            <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
+                        </ul>
+                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Assinar R$ 90,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar ao Carrinho</button>
+                    </div>
+                </div>
+
+                <!-- RESTRIÇÕES PT -->
+                <div class="xcore-restrictions">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Restrições de Runtime</h3>
+                    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Algumas áreas exigem um nível de execução mais alto.</p>
+                    <div class="xcore-restrictions-grid">
+                        <div class="xcore-restriction-item">
+                            <span class="area">🌐 Mapa principal</span>
+                            <span class="level level-free">FREE</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">⚔️ Casas / Bases</span>
+                            <span class="level level-silver">SILVER</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">🏆 Trabalho / Eventos / Spar</span>
+                            <span class="level level-gold">GOLD</span>
+                        </div>
+                    </div>
+                    <div class="restriction-note">
+                        <i class="fas fa-arrow-up"></i> Atualize seu plano para desbloquear mais zonas de execução e permissões avançadas de runtime.
+                    </div>
+                </div>
+            </div>
+
+            <!-- INGLÊS -->
+            <div class="xcore-lang" id="xcoreEn">
+                <div class="xcore-plans">
+                    <!-- FREE -->
+                    <div class="xcore-plan free">
+                        <div class="plan-icon">🆓</div>
+                        <div class="plan-name">FREE</div>
+                        <div class="plan-sub">Free • Ideal to start</div>
+                        <div class="plan-price" style="color:var(--success);">$0.00</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Execute scripts on the main map</li>
+                            <li><i class="fas fa-check"></i> Basic access to the runtime</li>
+                            <li><i class="fas fa-check"></i> Limited execution permissions</li>
+                            <li><i class="fas fa-check"></i> 5 hours of daily use</li>
+                        </ul>
+                        <button class="plan-btn free" onclick="alert('🎉 FREE plan selected! Enjoy!')">Get Started</button>
+                    </div>
+
+                    <!-- SILVER -->
+                    <div class="xcore-plan silver">
+                        <div class="plan-icon">🥈</div>
+                        <div class="plan-name">SILVER</div>
+                        <div class="plan-sub">$4.99/Month • Go further</div>
+                        <div class="plan-price" style="color:#94a3b8;">$4.99 <small>/month</small></div>
+                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Monthly renewal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Everything in FREE +</strong></li>
+                            <li><i class="fas fa-check"></i> Execute scripts at houses and battle bases</li>
+                            <li><i class="fas fa-check"></i> Extended runtime permissions</li>
+                        </ul>
+                        <button class="plan-btn silver" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)">Subscribe $4.99</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+
+                    <!-- GOLD -->
+                    <div class="xcore-plan gold">
+                        <div class="plan-icon">🥇</div>
+                        <div class="plan-name">GOLD</div>
+                        <div class="plan-sub">$12.99/Month • Full experience</div>
+                        <div class="plan-price" style="color:var(--warning);">$12.99 <small>/month</small></div>
+                        <div style="font-size:0.65rem;color:var(--text-muted);margin-bottom:0.5rem;">🔄 Monthly renewal</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> <strong>Everything in SILVER +</strong></li>
+                            <li><i class="fas fa-check"></i> Execute scripts at work levels</li>
+                            <li><i class="fas fa-check"></i> Execute scripts during events and PvP</li>
+                            <li><i class="fas fa-check"></i> <strong>Full access to runtime</strong></li>
+                        </ul>
+                        <button class="plan-btn gold" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)">Subscribe $12.99</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                    </div>
+                </div>
+
+                <!-- RESTRIÇÕES EN -->
+                <div class="xcore-restrictions">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Runtime Restrictions</h3>
+                    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1rem;">Some areas require a higher execution level.</p>
+                    <div class="xcore-restrictions-grid">
+                        <div class="xcore-restriction-item">
+                            <span class="area">🌐 Main map</span>
+                            <span class="level level-free">FREE</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">⚔️ Houses / Battle Bases</span>
+                            <span class="level level-silver">SILVER</span>
+                        </div>
+                        <div class="xcore-restriction-item">
+                            <span class="area">🏆 Work Levels / Events / PvP</span>
+                            <span class="level level-gold">GOLD</span>
+                        </div>
+                    </div>
+                    <div class="restriction-note">
+                        <i class="fas fa-arrow-up"></i> Upgrade your plan to unlock more execution zones and advanced runtime permissions.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
     PERFIL
     ============================================================ -->
     <section id="perfil" class="section dark">
@@ -1990,6 +2347,7 @@
 
                 <div class="profile-actions">
                     <button class="btn-action primary" onclick="window.location.href='#mods'"><i class="fas fa-shopping-cart"></i> Comprar Mods</button>
+                    <button class="btn-action" onclick="window.location.href='#xcore'"><i class="fas fa-bolt"></i> Xcore Executor</button>
                     <button class="btn-action" onclick="window.location.href='#contato'"><i class="fas fa-headset"></i> Suporte</button>
                     <button class="btn-action" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</button>
                 </div>
@@ -2064,7 +2422,7 @@
     </section>
 
     <!-- ============================================================
-    CONTATO - COM CAMPO DE EMAIL OBRIGATÓRIO
+    CONTATO
     ============================================================ -->
     <section id="contato" class="section dark">
         <div class="container">
@@ -2092,6 +2450,8 @@
                             <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
                             <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
                             <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">♻️ Auto Trash - R$ 200,00 (Graal Era)</option>
+                            <option value="Xcore SILVER - R$ 35,00/mês">🥈 Xcore SILVER - R$ 35,00/mês</option>
+                            <option value="Xcore GOLD - R$ 90,00/mês">🥇 Xcore GOLD - R$ 90,00/mês</option>
                             <option value="Classic - 2x R$ 100,00">⚔️ Classic - 2x R$ 100,00</option>
                             <option value="Era - 2x R$ 100,00">♻️ Era - 2x R$ 100,00</option>
                         </select>
@@ -2193,13 +2553,33 @@
         });
 
         // ============================================================
-        // ABAS
+        // ABAS (KZN MODS)
         // ============================================================
         function trocarAba(aba) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + aba).classList.add('active');
             document.querySelector('.tab-btn.' + aba).classList.add('active');
+        }
+
+        // ============================================================
+        // XCORE - TROCA DE IDIOMA
+        // ============================================================
+        function trocarIdiomaXcore(idioma) {
+            document.querySelectorAll('.xcore-lang').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.xcore-tab-btn').forEach(el => el.classList.remove('active'));
+            
+            if (idioma === 'pt') {
+                document.getElementById('xcorePt').classList.add('active');
+                document.getElementById('xcorePtBtn').classList.add('active');
+                document.getElementById('xcoreSubtitle').textContent = '⚡ Um executor de Graal';
+                document.getElementById('xcoreTagline').textContent = 'Escolha o plano ideal para você e maximize sua experiência no GraalOnline! 🚀';
+            } else {
+                document.getElementById('xcoreEn').classList.add('active');
+                document.getElementById('xcoreEnBtn').classList.add('active');
+                document.getElementById('xcoreSubtitle').textContent = '⚡ A Graal Script Executor';
+                document.getElementById('xcoreTagline').textContent = 'Choose the ideal plan for you and maximize your GraalOnline experience! 🚀';
+            }
         }
 
         // ============================================================
@@ -2329,7 +2709,7 @@
             } catch (e) {}
         }
 
-        // Fechar dropdowns ao clicar fora
+        // Fechar dropdowns
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
                 document.getElementById('notifDropdown').classList.remove('open');
@@ -2340,7 +2720,7 @@
         });
 
         // ============================================================
-        // SISTEMA DE PERFIL + FOTO
+        // SISTEMA DE PERFIL
         // ============================================================
         let usuarioLogado = null;
 
@@ -2392,13 +2772,11 @@
             reader.readAsDataURL(file);
         }
 
-        // FUNÇÃO CORRIGIDA - editarPerfil com event.preventDefault()
         function editarPerfil(event) {
             if (event) event.preventDefault();
             document.getElementById('editProfileArea').style.display = 'block';
             document.getElementById('editNome').value = usuarioLogado.nome || '';
             document.getElementById('editEmail').value = usuarioLogado.email || '';
-            // Rolagem suave até a área de edição
             document.getElementById('editProfileArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
@@ -2434,7 +2812,7 @@
         }
 
         // ============================================================
-        // CARRINHO DE COMPRAS
+        // CARRINHO
         // ============================================================
         let carrinho = [];
 
@@ -2514,7 +2892,6 @@
             }
         }
 
-        // Toggle carrinho dropdown
         document.getElementById('profileBtn').addEventListener('click', function(e) {
             if (e.target.closest('.cart-icon-wrap') || e.target.closest('.cart-count')) {
                 e.stopPropagation();
@@ -2549,7 +2926,6 @@
                 status.style.display = 'block';
                 status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
                 this.reset();
-
                 adicionarNotificacao(`✅ Pedido de ${nome} enviado com sucesso!`, 'sucesso');
             }, 3000);
         });
@@ -2587,10 +2963,9 @@
         atualizarBadgeNotificacoes();
         renderizarNotificacoes();
 
-        // Adicionar notificação de boas-vindas
         if (notificacoes.length === 0) {
             adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
-            adicionarNotificacao('💡 Dica: Ative as notificações para receber novidades.', 'alerta');
+            adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
         }
 
         // ============================================================
@@ -2605,6 +2980,7 @@
 
         console.log('✅ KZN MENU carregado com sucesso!');
         console.log('🔔 Sistema de notificações ativo!');
+        console.log('⚡ Xcore Executor integrado!');
     </script>
 
 </body>
