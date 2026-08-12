@@ -1355,7 +1355,7 @@
         }
 
         /* ============================================================
-           MODAL PIX
+           MODAL PIX KZN
            ============================================================ */
         .modal-pix {
             display: none;
@@ -1436,6 +1436,87 @@
         .modal-pix .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
         /* ============================================================
+           MODAL PIX XCORE
+           ============================================================ */
+        .modal-pix-xcore {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(4px);
+            z-index: 2001;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-pix-xcore.open { display: flex; }
+        .modal-pix-xcore .modal-content {
+            background: var(--bg-card);
+            border: 2px solid var(--secondary);
+            border-radius: var(--radius);
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        .modal-pix-xcore .modal-content .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+        .modal-pix-xcore .modal-content .close-modal:hover { color: var(--text); }
+        .modal-pix-xcore .modal-content h2 { 
+            margin-bottom: 0.8rem; 
+            font-size: 1.3rem;
+            color: var(--secondary-light);
+        }
+        .modal-pix-xcore .modal-content .pix-key {
+            background: var(--bg);
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--secondary);
+            margin: 0.8rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--success);
+            word-break: break-all;
+        }
+        .modal-pix-xcore .modal-content .btn-copy {
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.85rem;
+        }
+        .modal-pix-xcore .modal-content .btn-copy:hover { transform: scale(1.05); }
+        .modal-pix-xcore .modal-content .plan-info { color: var(--text-muted); font-size: 0.8rem; margin-top: 0.8rem; }
+        .modal-pix-xcore .modal-content .discord-link {
+            display: inline-block;
+            margin-top: 0.8rem;
+            padding: 0.5rem 1.2rem;
+            background: #5865f2;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.85rem;
+        }
+        .modal-pix-xcore .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
+
+        /* ============================================================
            FOOTER
            ============================================================ */
         .footer {
@@ -1479,8 +1560,8 @@
         }
         .footer-social a:hover { color: #fff; transform: translateY(-4px); }
         .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
-        .footer-social a.pix:hover { background: var(--success); border-color: var(--success); }
-        .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
+        .footer-social a.pix-kzn:hover { background: var(--primary); border-color: var(--primary); }
+        .footer-social a.pix-xcore:hover { background: var(--secondary); border-color: var(--secondary); }
         .footer-bottom {
             max-width: var(--container-max);
             margin: 1.2rem auto 0;
@@ -1523,7 +1604,6 @@
             .nav-xcore .xcore-text .name { font-size: 0.45rem; }
             .nav-xcore .xcore-text .team { font-size: 0.35rem; }
 
-            /* MENU PRINCIPAL DESAPARECE NO CELULAR */
             .nav-menu:not(.mobile-menu) {
                 display: none;
             }
@@ -1600,8 +1680,8 @@
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .btn { padding: 0.4rem 0.8rem; font-size: 0.8rem; }
-            .modal-pix .modal-content { padding: 1.2rem; }
-            .modal-pix .modal-content .pix-key { font-size: 0.75rem; }
+            .modal-pix .modal-content, .modal-pix-xcore .modal-content { padding: 1.2rem; }
+            .modal-pix .modal-content .pix-key, .modal-pix-xcore .modal-content .pix-key { font-size: 0.75rem; }
             .profile-section .profile-actions { flex-direction: column; }
             .dropdown { width: 230px; right: -30px; }
             .cart-dropdown { width: 210px; right: -20px; }
@@ -1652,17 +1732,16 @@
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                <!-- PERFIL REMOVIDO DAQUI! -->
             </ul>
 
-            <!-- MENU MOBILE - COM PERFIL (escondido por padrão) -->
+            <!-- MENU MOBILE - COM PERFIL -->
             <ul class="nav-menu mobile-menu" id="navMenuMobile">
                 <li><a href="#inicio"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li> <!-- SÓ NO CELULAR -->
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -1685,7 +1764,7 @@
                     </div>
                 </div>
 
-                <!-- PERFIL - SÓ AQUI NO CABEÇALHO -->
+                <!-- PERFIL + CARRINHO -->
                 <div style="position: relative;">
                     <button class="profile-btn" id="profileBtn" onclick="window.location.href='#perfil'">
                         <span class="avatar" id="avatarLetter">
@@ -1903,7 +1982,7 @@
                             <li><i class="fas fa-check"></i> Scripts em casas e bases de batalha</li>
                             <li><i class="fas fa-check"></i> Permissões de runtime estendidas</li>
                         </ul>
-                        <button class="plan-btn silver" onclick="document.getElementById('formXcore').scrollIntoView({ behavior: 'smooth' })">Assinar R$ 35,00</button>
+                        <button class="plan-btn silver" onclick="abrirModalPixXcore(); document.getElementById('planInfoXcore').textContent = 'SILVER - R$ 35,00';">Assinar R$ 35,00</button>
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore SILVER - Mensal', 35)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
 
@@ -1920,7 +1999,7 @@
                             <li><i class="fas fa-check"></i> Scripts em eventos e áreas de spar</li>
                             <li><i class="fas fa-check"></i> <strong>Acesso TOTAL ao runtime</strong></li>
                         </ul>
-                        <button class="plan-btn gold" onclick="document.getElementById('formXcore').scrollIntoView({ behavior: 'smooth' })">Assinar R$ 90,00</button>
+                        <button class="plan-btn gold" onclick="abrirModalPixXcore(); document.getElementById('planInfoXcore').textContent = 'GOLD - R$ 90,00';">Assinar R$ 90,00</button>
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Xcore GOLD - Mensal', 90)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
@@ -1954,6 +2033,14 @@
                     <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link">
                         <i class="fab fa-discord"></i> Baixar no Discord
                     </a>
+                </div>
+
+                <!-- AVISO CHAVE PIX XCORE -->
+                <div style="max-width:600px;margin:1.5rem auto 0;background:rgba(124,58,237,0.08);border:2px solid var(--secondary);border-radius:var(--radius);padding:1rem;text-align:center;">
+                    <p style="color:var(--secondary-light);font-weight:700;font-size:0.85rem;">
+                        <i class="fas fa-qrcode"></i> Chave PIX Xcore: <strong style="color:var(--success);font-family:monospace;font-size:0.9rem;">7d23dda5-ef7e-430a-b7a3-ed28504e515d</strong>
+                    </p>
+                    <p style="color:var(--text-muted);font-size:0.7rem;margin-top:0.2rem;">Envie o comprovante no Discord para ativação</p>
                 </div>
 
                 <!-- FORMULÁRIO XCORE (SÓ SILVER E GOLD) -->
@@ -2218,6 +2305,13 @@
                     </div>
                     <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div>
                 </div>
+                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+                        <span>🔑 Qual a chave PIX do Xcore?</span>
+                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">A chave PIX do Xcore é: <code style="color:var(--secondary-light);">7d23dda5-ef7e-430a-b7a3-ed28504e515d</code></div>
+                </div>
             </div>
         </div>
     </section>
@@ -2235,7 +2329,8 @@
                 <div class="footer-social">
                     <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord" title="Discord KZN"><i class="fab fa-discord"></i></a>
                     <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="xcore" title="Discord Xcore"><i class="fas fa-bolt"></i></a>
-                    <a href="#" class="pix" onclick="abrirModalPix()" title="PIX"><i class="fas fa-qrcode"></i></a>
+                    <a href="#" class="pix-kzn" onclick="abrirModalPix()" title="PIX KZN"><i class="fas fa-qrcode"></i></a>
+                    <a href="#" class="pix-xcore" onclick="abrirModalPixXcore()" title="PIX Xcore" style="border-color:var(--secondary);"><i class="fas fa-bolt" style="color:var(--secondary-light);"></i></a>
                 </div>
             </div>
             <div class="footer-bottom"><p>&copy; 2026 KZN MENU - Todos os direitos reservados</p></div>
@@ -2243,18 +2338,38 @@
     </footer>
 
     <!-- ============================================================
-    MODAL PIX
+    MODAL PIX KZN
     ============================================================ -->
     <div class="modal-pix" id="modalPix">
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModalPix()">✕</span>
-            <h2>💳 Pagamento PIX</h2>
+            <h2>💳 Pagamento PIX - KZN</h2>
             <p style="color:var(--text-muted);margin-bottom:0.5rem;font-size:0.85rem;">Copie a chave abaixo e realize o pagamento</p>
             <div class="pix-key" id="pixKey">6c80021c-957b-49c0-9a5d-98371bf67120</div>
             <button class="btn-copy" onclick="copiarPix()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
             <div class="plan-info" id="planInfo">Plano: - | Valor: -</div>
             <div style="margin-top:0.8rem;">
                 <a href="https://discord.gg/99HDeQsE73" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Entrar em contato no Discord</a>
+            </div>
+            <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--text-muted);">
+                <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    MODAL PIX XCORE
+    ============================================================ -->
+    <div class="modal-pix-xcore" id="modalPixXcore">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModalPixXcore()">✕</span>
+            <h2>⚡ Pagamento PIX - Xcore</h2>
+            <p style="color:var(--text-muted);margin-bottom:0.5rem;font-size:0.85rem;">Copie a chave abaixo e realize o pagamento</p>
+            <div class="pix-key" id="pixKeyXcore">7d23dda5-ef7e-430a-b7a3-ed28504e515d</div>
+            <button class="btn-copy" onclick="copiarPixXcore()"><i class="fas fa-copy"></i> Copiar Chave PIX</button>
+            <div class="plan-info" id="planInfoXcore">Plano: - | Valor: -</div>
+            <div style="margin-top:0.8rem;">
+                <a href="https://discord.gg/4tw7kE7rxU" target="_blank" class="discord-link"><i class="fab fa-discord"></i> Entrar em contato no Discord</a>
             </div>
             <div style="margin-top:0.6rem;font-size:0.75rem;color:var(--text-muted);">
                 <p>Após o pagamento, envie o comprovante no Discord para ativação.</p>
@@ -2277,14 +2392,12 @@
             navMenuMobile.classList.toggle('open');
         });
 
-        // Fechar menu ao clicar em um link
         document.querySelectorAll('#navMenuMobile a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenuMobile.classList.remove('open');
             });
         });
 
-        // Fechar menu ao clicar fora
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
                 navMenuMobile.classList.remove('open');
@@ -2652,6 +2765,55 @@
         });
 
         // ============================================================
+        // MODAL PIX KZN
+        // ============================================================
+        function abrirModalPix() {
+            document.getElementById('modalPix').classList.add('open');
+        }
+
+        function fecharModalPix() {
+            document.getElementById('modalPix').classList.remove('open');
+        }
+
+        function copiarPix() {
+            const key = document.getElementById('pixKey').textContent;
+            navigator.clipboard.writeText(key).then(() => {
+                const btn = document.querySelector('#modalPix .btn-copy');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
+            });
+        }
+
+        // ============================================================
+        // MODAL PIX XCORE
+        // ============================================================
+        function abrirModalPixXcore() {
+            document.getElementById('modalPixXcore').classList.add('open');
+        }
+
+        function fecharModalPixXcore() {
+            document.getElementById('modalPixXcore').classList.remove('open');
+        }
+
+        function copiarPixXcore() {
+            const key = document.getElementById('pixKeyXcore').textContent;
+            navigator.clipboard.writeText(key).then(() => {
+                const btn = document.querySelector('#modalPixXcore .btn-copy');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
+            });
+        }
+
+        // Fechar modais ao clicar fora
+        document.getElementById('modalPix').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPix();
+        });
+
+        document.getElementById('modalPixXcore').addEventListener('click', function(e) {
+            if (e.target === this) fecharModalPixXcore();
+        });
+
+        // ============================================================
         // FORMULÁRIO XCORE
         // ============================================================
         document.getElementById('formXcore').addEventListener('submit', function(e) {
@@ -2712,30 +2874,6 @@
         });
 
         // ============================================================
-        // MODAL PIX
-        // ============================================================
-        function abrirModalPix() {
-            document.getElementById('modalPix').classList.add('open');
-        }
-
-        function fecharModalPix() {
-            document.getElementById('modalPix').classList.remove('open');
-        }
-
-        function copiarPix() {
-            const key = document.getElementById('pixKey').textContent;
-            navigator.clipboard.writeText(key).then(() => {
-                const btn = document.querySelector('.btn-copy');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
-            });
-        }
-
-        document.getElementById('modalPix').addEventListener('click', function(e) {
-            if (e.target === this) fecharModalPix();
-        });
-
-        // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
         carregarNotificacoes();
@@ -2763,6 +2901,8 @@
         console.log('✅ KZN MENU carregado com sucesso!');
         console.log('🔔 Sistema de notificações ativo!');
         console.log('⚡ Xcore Executor integrado com formulário próprio!');
+        console.log('🔑 Chave PIX KZN: 6c80021c-957b-49c0-9a5d-98371bf67120');
+        console.log('🔑 Chave PIX Xcore: 7d23dda5-ef7e-430a-b7a3-ed28504e515d');
     </script>
 
 </body>
