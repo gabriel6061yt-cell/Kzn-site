@@ -187,7 +187,7 @@
         }
 
         /* ============================================================
-           MENU - SEM PERFIL (SÓ NO CABEÇALHO)
+           MENU PRINCIPAL - SEM PERFIL
         ============================================================ */
         .nav-menu {
             display: flex;
@@ -214,12 +214,60 @@
             box-shadow: 0 0 25px rgba(220,38,38,0.3);
         }
 
+        /* MENU MOBILE - COM PERFIL */
+        .nav-menu.mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 72px;
+            left: 0;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            gap: 0.3rem;
+            z-index: 999;
+        }
+        .nav-menu.mobile-menu.open {
+            display: flex;
+        }
+        .nav-menu.mobile-menu a {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            text-transform: none;
+            border: none;
+            border-radius: 8px;
+            transition: 0.3s;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-menu.mobile-menu a:hover,
+        .nav-menu.mobile-menu a.active {
+            color: #fff;
+            background: var(--primary);
+        }
+
         .nav-toggle {
             display: none;
             color: var(--text);
             font-size: 1.3rem;
             cursor: pointer;
             padding: 4px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-toggle:hover {
+            border-color: var(--primary);
+            color: #fff;
+            background: rgba(220,38,38,0.1);
         }
 
         .nav-actions {
@@ -1463,41 +1511,31 @@
                 gap: 4px;
                 padding: 0 2px;
             }
-            
+
             .nav-logo-wrapper { gap: 4px; flex-shrink: 0; }
             .nav-logo img { width: 30px; height: 30px; }
             .nav-logo .logo-text span { font-size: 0.75rem; }
             .nav-logo .logo-text small { display: none; }
-            
+
             .nav-divider { display: none; }
-            
+
             .nav-xcore img { width: 26px; height: 26px; }
             .nav-xcore .xcore-text .name { font-size: 0.45rem; }
             .nav-xcore .xcore-text .team { font-size: 0.35rem; }
-            
-            .nav-menu {
+
+            /* MENU PRINCIPAL DESAPARECE NO CELULAR */
+            .nav-menu:not(.mobile-menu) {
                 display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                left: 0;
-                width: 100%;
-                background: var(--bg-card);
-                padding: 0.8rem 1rem;
-                border-bottom: 1px solid var(--border);
-                gap: 0.2rem;
-                z-index: 999;
             }
-            .nav-menu.open { display: flex; }
-            .nav-menu a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.65rem;
+
+            .nav-toggle {
+                display: flex;
+                font-size: 1.1rem;
+                padding: 2px 6px;
             }
-            
-            .nav-toggle { display: block; font-size: 1.1rem; padding: 2px 6px; }
-            
+
             .nav-actions { gap: 4px; flex-shrink: 0; }
-            
+
             .nav-icon-btn {
                 width: 30px;
                 height: 30px;
@@ -1510,7 +1548,7 @@
                 top: -3px;
                 right: -3px;
             }
-            
+
             .profile-btn {
                 padding: 0.15rem 0.4rem 0.15rem 0.15rem;
                 font-size: 0.55rem;
@@ -1531,12 +1569,12 @@
                 top: -4px;
                 right: -6px;
             }
-            
+
             .lang-toggle button {
                 padding: 0.1rem 0.3rem;
                 font-size: 0.4rem;
             }
-            
+
             .dropdown {
                 width: 260px;
                 right: -50px;
@@ -1546,7 +1584,7 @@
                 width: 240px;
                 right: -30px;
             }
-            
+
             .hero h1 { font-size: 2.2rem; }
             .section-header h2 { font-size: 1.8rem; }
             .plans-grid { grid-template-columns: 1fr; }
@@ -1585,7 +1623,7 @@
     </a>
 
     <!-- ============================================================
-    NAVBAR - PERFIL SÓ NO CABEÇALHO
+    NAVBAR
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1607,14 +1645,24 @@
                 </a>
             </div>
 
-            <!-- MENU SEM PERFIL -->
-            <ul class="nav-menu" id="navMenu">
+            <!-- MENU DESKTOP - SEM PERFIL -->
+            <ul class="nav-menu" id="navMenuDesktop">
                 <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
                 <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
-                <!-- PERFIL REMOVIDO - SÓ NO CABEÇALHO -->
+                <!-- PERFIL REMOVIDO DAQUI! -->
+            </ul>
+
+            <!-- MENU MOBILE - COM PERFIL (escondido por padrão) -->
+            <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                <li><a href="#inicio"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
+                <li><a href="#regras"><i class="fas fa-gavel"></i> Regras</a></li>
+                <li><a href="#contato"><i class="fas fa-envelope"></i> Contato</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li> <!-- SÓ NO CELULAR -->
             </ul>
 
             <div class="nav-actions">
@@ -1705,7 +1753,7 @@
     </section>
 
     <!-- ============================================================
-    MODS - 3 ABAS SEPARADAS (Classic, Era, Xcore)
+    MODS - 3 ABAS SEPARADAS
     ============================================================ -->
     <section id="mods" class="section dark">
         <div class="container">
@@ -1727,9 +1775,7 @@
                 </button>
             </div>
 
-            <!-- ===========================================
-                 ABA 1: CLASSIC (SÓ CLASSIC)
-            =========================================== -->
+            <!-- ABA CLASSIC -->
             <div class="tab-content active" id="tab-classic">
                 <div class="plans-grid">
                     <div class="plan-card">
@@ -1769,12 +1815,9 @@
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('KZN MENU Classic - Permanente', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
-                <!-- FIM ABA CLASSIC -->
             </div>
 
-            <!-- ===========================================
-                 ABA 2: ERA (SÓ ERA)
-            =========================================== -->
+            <!-- ABA ERA -->
             <div class="tab-content" id="tab-era">
                 <div class="plans-grid">
                     <div class="plan-card popular">
@@ -1800,12 +1843,9 @@
                         <button class="btn-add-cart" onclick="adicionarAoCarrinho('Auto Trash Automatic', 200)"><i class="fas fa-cart-plus"></i> Adicionar</button>
                     </div>
                 </div>
-                <!-- FIM ABA ERA -->
             </div>
 
-            <!-- ===========================================
-                 ABA 3: XCORE (SÓ XCORE + FORMULÁRIO)
-            =========================================== -->
+            <!-- ABA XCORE -->
             <div class="tab-content" id="tab-xcore">
                 <!-- DISCORD OFICIAL -->
                 <div style="max-width:700px;margin:0 auto 1.5rem;text-align:center;background:var(--bg-card);border:2px solid #5865f2;border-radius:var(--radius);padding:1.2rem;">
@@ -1916,9 +1956,7 @@
                     </a>
                 </div>
 
-                <!-- =============================================
-                     FORMULÁRIO XCORE (SÓ SILVER E GOLD)
-                ============================================= -->
+                <!-- FORMULÁRIO XCORE (SÓ SILVER E GOLD) -->
                 <div style="max-width:600px;margin:2.5rem auto 0;" id="formXcore">
                     <div style="text-align:center;margin-bottom:1.5rem;">
                         <h3 style="color:var(--secondary);font-size:1.3rem;"><i class="fas fa-paper-plane"></i> Comprar Xcore Executor</h3>
@@ -1974,9 +2012,7 @@
                         </form>
                     </div>
                 </div>
-                <!-- FIM ABA XCORE -->
             </div>
-            <!-- FIM DAS ABAS -->
 
             <div class="cupom-area">
                 <input type="text" id="cupomInput" placeholder="Código promocional" />
@@ -2003,7 +2039,7 @@
                         <div class="avatar-overlay">📷 Trocar</div>
                     </div>
                     <input type="file" id="avatarUpload" class="hidden-file-input" accept="image/*" onchange="uploadAvatar(event)" />
-                    
+
                     <div class="profile-info">
                         <h3 id="profileName">KZN Usuário</h3>
                         <p id="profileEmail">usuario@kzn.com</p>
@@ -2095,13 +2131,13 @@
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
                         <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
                         <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                     </div>
-                    
+
                     <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
                     <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
                     <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
@@ -2233,30 +2269,61 @@
         // ============================================================
         // MENU MOBILE
         // ============================================================
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navMenu = document.getElementById('navMenu');
+        const mobileMenuBtn = document.getElementById('mobileMenu');
+        const navMenuMobile = document.getElementById('navMenuMobile');
 
-        mobileMenu.addEventListener('click', () => { navMenu.classList.toggle('open'); });
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => { navMenu.classList.remove('open'); });
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenuMobile.classList.toggle('open');
+        });
+
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('#navMenuMobile a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenuMobile.classList.remove('open');
+            });
+        });
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
+                navMenuMobile.classList.remove('open');
+            }
         });
 
         // ============================================================
         // SCROLL ACTIVE
         // ============================================================
         const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-menu a');
+        const navLinks = document.querySelectorAll('.nav-menu:not(.mobile-menu) a');
+        const mobileNavLinks = document.querySelectorAll('#navMenuMobile a');
 
-        window.addEventListener('scroll', () => {
+        function updateActiveLinks() {
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) { current = section.getAttribute('id'); }
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
             });
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) { link.classList.add('active'); }
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
             });
+
+            mobileNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            updateActiveLinks();
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
 
@@ -2267,7 +2334,7 @@
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + aba).classList.add('active');
-            
+
             if (aba === 'classic') {
                 document.querySelector('.tab-btn.classic').classList.add('active');
             } else if (aba === 'era') {
@@ -2283,10 +2350,9 @@
         function aplicarCupom() {
             const input = document.getElementById('cupomInput');
             const codigo = input.value.trim();
-            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto em sua compra!'); }
-            else if (codigo === 'KZN20') { alert('🎉 Cupom aplicado! 20% de desconto em sua compra!'); }
-            else if (codigo) { alert('❌ Código inválido. Tente "KZN10" ou "KZN20".'); }
-            else { alert('⚠️ Digite um código promocional.'); }
+            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto em sua compra!'); } else if (codigo === 'KZN20') { alert(
+                    '🎉 Cupom aplicado! 20% de desconto em sua compra!'); } else if (codigo) { alert(
+                    '❌ Código inválido. Tente "KZN10" ou "KZN20".'); } else { alert('⚠️ Digite um código promocional.'); }
             input.value = '';
         }
 
@@ -2309,13 +2375,7 @@
         }
 
         function adicionarNotificacao(mensagem, tipo = 'info') {
-            const icones = {
-                compra: '🛒',
-                pagamento: '💳',
-                sucesso: '✅',
-                info: '🔔',
-                alerta: '⚠️'
-            };
+            const icones = { compra: '🛒', pagamento: '💳', sucesso: '✅', info: '🔔', alerta: '⚠️' };
             notificacoes.unshift({
                 id: Date.now(),
                 mensagem: `${icones[tipo] || '🔔'} ${mensagem}`,
@@ -2359,11 +2419,11 @@
                 return;
             }
             list.innerHTML = notificacoes.map(n => `
-                <div class="dropdown-item ${n.lida ? '' : 'unread'}">
-                    <span class="item-text">${n.mensagem}</span>
-                    <span class="item-time">${n.data}</span>
-                </div>
-            `).join('');
+                        <div class="dropdown-item ${n.lida ? '' : 'unread'}">
+                            <span class="item-text">${n.mensagem}</span>
+                            <span class="item-time">${n.data}</span>
+                        </div>
+                    `).join('');
         }
 
         function marcarTodasNotificacoesLidas() {
@@ -2375,7 +2435,7 @@
 
         function playNotificationSound() {
             try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
                 const oscillator = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 oscillator.connect(gainNode);
@@ -2430,7 +2490,8 @@
                         document.getElementById('avatarProfileImage').style.display = 'block';
                         document.getElementById('avatarProfileText').style.display = 'none';
                         document.getElementById('avatarText').textContent = '';
-                        document.querySelector('.profile-btn .avatar').innerHTML = `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
                     } else {
                         const letra = (usuarioLogado.nome || 'U')[0].toUpperCase();
                         document.getElementById('avatarProfileText').textContent = letra;
@@ -2555,12 +2616,12 @@
                 const subtotal = item.preco * item.quantidade;
                 total += subtotal;
                 html += `
-                    <div class="cart-item">
-                        <span class="item-name">${item.nome} x${item.quantidade}</span>
-                        <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
-                        <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
-                    </div>
-                `;
+                            <div class="cart-item">
+                                <span class="item-name">${item.nome} x${item.quantidade}</span>
+                                <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
+                                <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
+                            </div>
+                        `;
             });
             itemsContainer.innerHTML = html;
             totalContainer.textContent = `R$ ${total.toFixed(2)}`;
@@ -2692,6 +2753,7 @@
         // TRADUÇÃO
         // ============================================================
         let idiomaAtual = 'pt';
+
         function mudarIdioma(lang) {
             idiomaAtual = lang;
             document.getElementById('langPt').classList.toggle('active', lang === 'pt');
