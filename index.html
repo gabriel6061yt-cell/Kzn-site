@@ -1537,36 +1537,9 @@
             display: none;
             flex-direction: column;
             overflow: hidden;
-            animation: slideUp 0.3s ease;
         }
         .chat-window.open { display: flex; }
-        .chat-window.fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            max-height: 100vh;
-            bottom: 0;
-            right: 0;
-            z-index: 9999;
-            border-radius: 0;
-            animation: none;
-            display: flex !important;
-        }
-        .chat-window.fullscreen .chat-messages {
-            flex: 1;
-            max-height: calc(100vh - 130px);
-        }
-        .chat-window.fullscreen .chat-input-area {
-            flex-shrink: 0;
-            position: relative;
-            bottom: 0;
-            background: var(--bg-card);
-        }
-        .chat-window.fullscreen .chat-header {
-            flex-shrink: 0;
-        }
+
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -1639,8 +1612,15 @@
             background: var(--bg-card);
             border-radius: 8px;
             border-left: 2px solid var(--secondary);
-            animation: msgIn 0.3s ease;
-            transition: 0.3s;
+            transition: 0.2s;
+            word-break: break-word;
+        }
+        .chat-msg.msg-new {
+            animation: msgIn 0.25s ease;
+        }
+        .chat-msg.msg-historical {
+            animation: none !important;
+            opacity: 1;
         }
         .chat-msg.deleted {
             opacity: 0.3;
@@ -1650,9 +1630,10 @@
         }
         .chat-msg.deleted .msg-content { opacity: 0.4; }
         @keyframes msgIn {
-            from { opacity: 0; transform: translateX(-10px); }
+            from { opacity: 0; transform: translateX(-8px); }
             to { opacity: 1; transform: translateX(0); }
         }
+
         .chat-msg .msg-header {
             display: flex;
             align-items: center;
@@ -1660,7 +1641,7 @@
             flex-wrap: wrap;
             margin-bottom: 2px;
         }
-        .chat-msg .msg-header .msg-avatar {
+        .chat-msg .msg-avatar {
             width: 24px;
             height: 24px;
             border-radius: 50%;
@@ -1675,107 +1656,84 @@
             overflow: hidden;
             cursor: pointer;
         }
-        .chat-msg .msg-header .msg-avatar img {
+        .chat-msg .msg-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .chat-msg .msg-header .msg-nome {
+        .chat-msg .msg-nome {
             font-weight: 600;
             font-size: 0.8rem;
-            color: var(--secondary-light);
             cursor: pointer;
             transition: 0.2s;
         }
-        .chat-msg .msg-header .msg-nome:hover {
+        .chat-msg .msg-nome:hover {
             text-decoration: underline;
         }
-        .chat-msg .msg-header .msg-nome.admin {
+        .chat-msg .msg-nome.admin {
             color: var(--danger);
         }
-        .chat-msg .msg-header .msg-nome.bot {
+        .chat-msg .msg-nome.bot {
             color: var(--warning);
         }
-        .chat-msg .msg-header .msg-nome.proprietario {
+        .chat-msg .msg-nome.proprietario {
             color: #fbbf24;
         }
-        .chat-msg .msg-header .msg-hora {
+        .chat-msg .msg-nome.moderator {
+            color: var(--secondary-light);
+        }
+        .chat-msg .msg-hora {
             font-size: 0.5rem;
             color: var(--text-muted);
+            margin-left: auto;
         }
-        .chat-msg .msg-header .msg-badge {
+        .chat-msg .msg-badge {
             font-size: 0.45rem;
             font-weight: 700;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
         }
-        .chat-msg .msg-header .msg-badge.admin-badge {
+        .chat-msg .msg-badge.admin-badge {
             background: rgba(239,68,68,0.2);
             color: var(--danger);
         }
-        .chat-msg .msg-header .msg-badge.bot-badge {
+        .chat-msg .msg-badge.bot-badge {
             background: rgba(245,158,11,0.2);
             color: var(--warning);
         }
-        .chat-msg .msg-header .msg-badge.proprietario-badge {
+        .chat-msg .msg-badge.proprietario-badge {
             background: rgba(251,191,36,0.2);
             color: #fbbf24;
         }
-        .chat-msg .msg-header .msg-badge.muted-badge {
-            background: rgba(148,163,184,0.2);
-            color: var(--text-muted);
+        .chat-msg .msg-badge.moderator-badge {
+            background: rgba(124,58,237,0.2);
+            color: var(--secondary-light);
         }
-        .chat-msg .msg-header .msg-acoes {
-            margin-left: auto;
+        .chat-msg .msg-acoes {
             display: flex;
             gap: 4px;
+            margin-left: 4px;
         }
-        .chat-msg .msg-header .msg-acoes button {
+        .chat-msg .msg-acoes button {
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             cursor: pointer;
             transition: 0.3s;
             padding: 0 4px;
             border-radius: 4px;
         }
-        .chat-msg .msg-header .msg-acoes button:hover {
+        .chat-msg .msg-acoes button:hover {
             color: var(--danger);
             background: var(--glass);
         }
         .chat-msg .msg-content {
-            color: var(--text);
             font-size: 0.85rem;
-            word-wrap: break-word;
             margin-left: 30px;
             white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        .chat-msg .msg-content .bot-resposta {
-            background: rgba(124,58,237,0.08);
-            border-left: 2px solid var(--secondary);
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            margin: 0.2rem 0;
-        }
-
-        .typing-indicator {
-            display: none;
-            padding: 0.3rem 0.8rem;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-style: italic;
-            background: rgba(124,58,237,0.08);
-            border-radius: 8px;
-            margin: 0.2rem 0;
-            animation: fadeIn 0.3s ease;
-        }
-        .typing-indicator.show { display: block; }
-        .typing-indicator i {
-            margin-right: 6px;
-            color: var(--secondary-light);
-        }
-        .typing-indicator strong { color: var(--secondary-light); }
 
         .chat-input-area {
             display: flex;
@@ -1785,6 +1743,7 @@
             background: rgba(255,255,255,0.02);
             flex-shrink: 0;
             min-height: 52px;
+            flex-wrap: wrap;
         }
         .chat-input-area input {
             flex: 1;
@@ -1796,7 +1755,7 @@
             font-size: 0.8rem;
             outline: none;
             transition: 0.3s;
-            min-width: 0;
+            min-width: 60px;
         }
         .chat-input-area input:focus {
             border-color: var(--secondary);
@@ -1822,8 +1781,148 @@
             box-shadow: 0 4px 20px rgba(124,58,237,0.3);
         }
         .chat-input-area button:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== MODAIS ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            max-width: 420px;
+            width: 100%;
+            animation: fadeIn 0.25s ease;
+            box-shadow: var(--shadow);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        .modal-content p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .modal-content .modal-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .modal-content .modal-actions button {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.85rem;
+            min-width: 80px;
+        }
+        .modal-content .modal-actions button:hover {
+            border-color: var(--primary);
+            background: rgba(220,38,38,0.1);
+        }
+        .modal-content .modal-actions .btn-danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .modal-content .modal-actions .btn-danger:hover {
+            background: rgba(239,68,68,0.15);
+        }
+        .modal-content .modal-actions .btn-success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .modal-content .modal-actions .btn-success:hover {
+            background: rgba(34,197,94,0.15);
+        }
+        .modal-content .modal-actions .btn-warning {
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+        .modal-content .modal-actions .btn-warning:hover {
+            background: rgba(245,158,11,0.15);
+        }
+        .modal-content .modal-actions .btn-secondary {
+            border-color: var(--secondary);
+            color: var(--secondary-light);
+        }
+        .modal-content .modal-actions .btn-secondary:hover {
+            background: rgba(124,58,237,0.15);
+        }
+        .modal-content .close-modal {
+            margin-top: 0.8rem;
+            padding: 6px;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+        .modal-content .close-modal:hover {
+            border-color: var(--text);
+            color: var(--text);
+        }
+        .modal-content .form-group {
+            margin-bottom: 0.8rem;
+        }
+        .modal-content .form-group label {
+            display: block;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+        .modal-content .form-group select,
+        .modal-content .form-group textarea,
+        .modal-content .form-group input {
+            width: 100%;
+            padding: 6px 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+        .modal-content .form-group select:focus,
+        .modal-content .form-group textarea:focus,
+        .modal-content .form-group input:focus {
+            border-color: var(--secondary);
+        }
+        .modal-content .form-group textarea {
+            resize: vertical;
+            min-height: 50px;
         }
 
         .user-menu-overlay {
@@ -1834,78 +1933,74 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
+            backdrop-filter: blur(4px);
+            z-index: 9999;
             align-items: center;
             justify-content: center;
+            padding: 16px;
         }
         .user-menu-overlay.open { display: flex; }
         .user-menu {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.5rem;
-            max-width: 420px;
-            width: 90%;
-            animation: modalIn 0.3s ease;
+            padding: 1.2rem;
+            max-width: 380px;
+            width: 100%;
+            animation: fadeIn 0.25s ease;
+            box-shadow: var(--shadow);
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: var(--shadow);
         }
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        .user-menu .user-menu-header {
+        .user-menu .user-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
+            gap: 12px;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.8rem;
             border-bottom: 1px solid var(--border);
         }
-        .user-menu .user-menu-header .user-avatar {
-            width: 56px;
-            height: 56px;
+        .user-menu .user-avatar {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #fff;
             flex-shrink: 0;
             overflow: hidden;
         }
-        .user-menu .user-menu-header .user-avatar img {
+        .user-menu .user-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .user-menu .user-menu-header .user-info h4 {
+        .user-menu .user-info h4 {
             color: var(--text);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
-        .user-menu .user-menu-header .user-info p {
+        .user-menu .user-info p {
             color: var(--text-muted);
             font-size: 0.7rem;
+        }
+        .user-menu .user-info .user-status {
+            font-size: 0.6rem;
+            font-weight: 600;
             margin-top: 2px;
         }
-        .user-menu .user-menu-header .user-info .user-status {
-            font-size: 0.65rem;
-            font-weight: 600;
-            margin-top: 4px;
-        }
-        .user-menu .user-menu-actions {
+        .user-menu .menu-actions {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 4px;
         }
-        .user-menu .user-menu-actions button {
-            padding: 0.6rem 1rem;
+        .user-menu .menu-actions button {
+            padding: 8px 12px;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             background: var(--bg);
             color: var(--text);
             font-weight: 600;
@@ -1915,54 +2010,32 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
-        .user-menu .user-menu-actions button:hover {
+        .user-menu .menu-actions button:hover {
             border-color: var(--primary);
-            background: rgba(220,38,38,0.08);
+            background: rgba(220,38,38,0.06);
         }
-        .user-menu .user-menu-actions button.danger {
-            color: var(--danger);
-        }
-        .user-menu .user-menu-actions button.danger:hover {
-            border-color: var(--danger);
-            background: rgba(239,68,68,0.1);
-        }
-        .user-menu .user-menu-actions button.success {
-            color: var(--success);
-        }
-        .user-menu .user-menu-actions button.success:hover {
-            border-color: var(--success);
-            background: rgba(34,197,94,0.1);
-        }
-        .user-menu .user-menu-actions button.warning {
-            color: var(--warning);
-        }
-        .user-menu .user-menu-actions button.warning:hover {
-            border-color: var(--warning);
-            background: rgba(245,158,11,0.1);
-        }
-        .user-menu .user-menu-actions button.primary {
-            color: var(--secondary-light);
-        }
-        .user-menu .user-menu-actions button.primary:hover {
-            border-color: var(--secondary);
-            background: rgba(124,58,237,0.1);
-        }
-        .user-menu .close-menu-btn {
-            margin-top: 0.8rem;
-            padding: 0.6rem;
+        .user-menu .menu-actions .danger { color: var(--danger); }
+        .user-menu .menu-actions .danger:hover { border-color: var(--danger); background: rgba(239,68,68,0.08); }
+        .user-menu .menu-actions .success { color: var(--success); }
+        .user-menu .menu-actions .success:hover { border-color: var(--success); background: rgba(34,197,94,0.08); }
+        .user-menu .menu-actions .warning { color: var(--warning); }
+        .user-menu .menu-actions .warning:hover { border-color: var(--warning); background: rgba(245,158,11,0.08); }
+        .user-menu .close-menu {
+            margin-top: 0.6rem;
+            padding: 6px;
             width: 100%;
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 6px;
             background: var(--bg);
             color: var(--text-muted);
             cursor: pointer;
             transition: 0.3s;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-align: center;
         }
-        .user-menu .close-menu-btn:hover {
+        .user-menu .close-menu:hover {
             border-color: var(--text);
             color: var(--text);
         }
@@ -2072,6 +2145,10 @@
             text-align: center;
             position: relative;
             animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-pix .modal-content .close-modal {
             position: absolute;
@@ -2292,9 +2369,6 @@
                 padding: 1.5rem;
                 max-height: 90vh;
             }
-            .chat-window.fullscreen .chat-messages {
-                max-height: calc(100vh - 120px);
-            }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -2335,9 +2409,6 @@
             .welcome-content {
                 padding: 1.2rem;
             }
-            .chat-window.fullscreen .chat-messages {
-                max-height: calc(100vh - 110px);
-            }
         }
     </style>
 </head>
@@ -2360,9 +2431,6 @@
                 <span class="online-count" id="onlineCount">👤 0 online</span>
             </div>
             <div class="chat-actions">
-                <button onclick="toggleFullscreenChat()" title="Tela cheia" id="fullscreenBtn">
-                    <i class="fas fa-expand"></i>
-                </button>
                 <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
                     ✕
                 </button>
@@ -2374,30 +2442,63 @@
                 <p>Carregando mensagens...</p>
             </div>
             <div class="typing-indicator" id="typingIndicator">
-                <i class="fas fa-pen-fancy"></i> Alguém está digitando...
+                <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500">
-            <button onclick="enviarMensagem()"><i class="fas fa-paper-plane"></i></button>
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500" />
+            <button onclick="enviarMensagem()" id="sendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
     </div>
 
+    <!-- ===== USER MENU (MODERAÇÃO) ===== -->
     <div class="user-menu-overlay" id="userMenuOverlay" onclick="fecharMenuUsuario(event)">
         <div class="user-menu" onclick="event.stopPropagation()">
-            <div class="user-menu-header" id="userMenuHeader">
-                <div class="user-avatar" id="userMenuAvatar">U</div>
+            <div class="user-header">
+                <div class="user-avatar" id="menuAvatar">U</div>
                 <div class="user-info">
-                    <h4 id="userMenuNome">Usuário</h4>
-                    <p id="userMenuEmail">email@exemplo.com</p>
-                    <div class="user-status" id="userMenuStatus">👤 Usuário</div>
+                    <h4 id="menuNome">Usuário</h4>
+                    <p id="menuEmail">email@exemplo.com</p>
+                    <div class="user-status" id="menuStatus">👤 Usuário</div>
                 </div>
             </div>
-            <div class="user-menu-actions" id="userMenuActions"></div>
-            <button class="close-menu-btn" onclick="fecharMenuUsuario()"><i class="fas fa-times"></i> Fechar</button>
+            <div class="menu-actions" id="menuActions"></div>
+            <button class="close-menu" onclick="fecharMenuUsuario()"><i class="fas fa-times"></i> Fechar</button>
         </div>
     </div>
 
+    <!-- ===== MODAL DE MODERAÇÃO ===== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h3 id="modalTitle">Ação de Moderação</h3>
+            <p id="modalDescription">Confirmar ação para este usuário?</p>
+            <div id="modalForm" style="display:none;">
+                <div class="form-group">
+                    <label>Motivo (opcional)</label>
+                    <textarea id="modalReason" placeholder="Digite o motivo..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Duração</label>
+                    <select id="modalDuration">
+                        <option value="5">5 minutos</option>
+                        <option value="15">15 minutos</option>
+                        <option value="60">1 hora</option>
+                        <option value="1440">24 horas</option>
+                        <option value="0">Permanente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-actions" id="modalActions">
+                <button onclick="fecharModal()">Cancelar</button>
+                <button class="btn-danger" id="modalConfirmBtn" onclick="confirmarModal()">Confirmar</button>
+            </div>
+            <button class="close-modal" onclick="fecharModal()"><i class="fas fa-times"></i> Fechar</button>
+        </div>
+    </div>
+
+    <!-- ===== MENU PRINCIPAL ===== -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo-wrapper">
@@ -2488,6 +2589,7 @@
         </div>
     </nav>
 
+    <!-- ===== HERO ===== -->
     <section id="inicio" class="hero">
         <div class="hero-content">
             <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
@@ -2513,6 +2615,7 @@
         </div>
     </section>
 
+    <!-- ===== MODS ===== -->
     <section id="mods" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2773,6 +2876,7 @@
         </div>
     </section>
 
+    <!-- ===== PERFIL ===== -->
     <section id="perfil" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2852,6 +2956,7 @@
         </div>
     </section>
 
+    <!-- ===== REGRAS ===== -->
     <section id="regras" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2875,6 +2980,7 @@
         </div>
     </section>
 
+    <!-- ===== CONTATO ===== -->
     <section id="contato" class="section dark">
         <div class="container">
             <div class="section-header">
@@ -2914,6 +3020,7 @@
         </div>
     </section>
 
+    <!-- ===== FAQ ===== -->
     <section id="faq" class="section">
         <div class="container">
             <div class="section-header">
@@ -2957,6 +3064,7 @@
         </div>
     </section>
 
+    <!-- ===== WELCOME / LOGIN ===== -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <div class="welcome-brand">
@@ -2998,6 +3106,7 @@
         </div>
     </div>
 
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -3016,6 +3125,7 @@
         </div>
     </footer>
 
+    <!-- ===== MODAIS PIX ===== -->
     <div class="modal-pix" id="modalPix">
         <div class="modal-content">
             <span class="close-modal" onclick="fecharModalPix()">✕</span>
@@ -3042,6 +3152,7 @@
         </div>
     </div>
 
+    <!-- ===== SCRIPTS ===== -->
     <script>
     // ====== FIREBASE CONFIG ======
     const firebaseConfig = {
@@ -3062,29 +3173,37 @@
     const bansRef = db.ref('chat/bans');
     const mutesRef = db.ref('chat/mutes');
     const adminsRef = db.ref('chat/admins');
+    const modLogRef = db.ref('chat/mod_log');
     const typingRef = db.ref('chat/typing');
 
     // ====== CONSTANTES ======
     const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
-    const BOT_NOME = 'BOT Guardian';
+    const BOT_NOME = '🤖 KZN BOT';
     const BOT_AVATAR = '🤖';
-    const BOT_EMAIL = 'bot@guardian.com';
-
-    // ====== CHAVE VAPID ======
-    const PUBLIC_VAPID_KEY = 'BKkLDp3zTSicLCK9FUf1rBnFa5bLBXIQgCgQDu3GL4QOp5SvtVPQH172Al5sxMyX1qGFBk765PV3s13HY-C15xw';
+    const BOT_EMAIL = 'bot@kzn.com';
+    const BOT_MESSAGES = [
+        '🚀 Conheça o **KZN Mod Menu**! O melhor mod para Graal Classic e Era. Acesse o site oficial!',
+        '⚡ Quer farmar mais rápido? O **KZN Script Auto Trash** é a solução! Confira no site.',
+        '🔥 KZN MENU: scripts exclusivos, suporte VIP e atualizações vitalícias. Visite nosso site!',
+        '💎 Não perca tempo! Adquira o KZN Mod Menu e domine o jogo. Acesse já!'
+    ];
 
     // ====== VARIÁVEIS ======
     let usuarioLogado = null;
     let usuariosCadastrados = [];
     let notificacoes = [];
     let chatAberto = false;
-    let isFullscreen = false;
     let contadorNaoLidas = 0;
     let typingTimeout = null;
     let usuariosOnline = {};
     let isLoggingIn = false;
     let loginProcessed = false;
-    let botBoasVindasEnviado = false;
+    let isInitialLoad = true;
+    let processedMessageIds = new Set();
+    let botEnabled = true;
+    let botInterval = 120000;
+    let botTimer = null;
+    let lastBotMessage = 0;
 
     // ====== CARREGAR USUÁRIOS ======
     function carregarUsuarios() {
@@ -3100,7 +3219,7 @@
         localStorage.setItem('kzn_usuarios', JSON.stringify(usuariosCadastrados));
     }
 
-    // ====== SOM DE NOTIFICAÇÃO PERSONALIZADO ======
+    // ====== SOM DE NOTIFICAÇÃO ======
     let audioCache = null;
 
     function playNotificationSound() {
@@ -3147,7 +3266,7 @@
         } catch (e) {}
     }
 
-    // ====== FUNÇÕES DE PERMISSÃO ======
+    // ====== PERMISSÕES ======
     function isProprietario(email) {
         return email === PROPRIETARIO_EMAIL;
     }
@@ -3156,387 +3275,6 @@
         return email === BOT_EMAIL;
     }
 
-    // ====== SISTEMA ANTI-SPAM E ANTI-FLOOD ======
-    const spamCache = {};
-    const PALAVRAS_PROIBIDAS = [
-        'porn', 'sexo', 'puta', 'merda', 'caralho', 'foda', 'buceta', 'pau', 'cu',
-        'vagina', 'pênis', 'punheta', 'boquete', 'tarado', 'pedof', 'estupro',
-        'violência', 'morte', 'suicídio', 'facada', 'tiro', 'sangue', 'assassinato',
-        'racismo', 'nazista', 'kkk', 'discriminação', 'homofobia', 'transfobia',
-        'nigger', 'macaco', 'preto', 'viado', 'bixa', 'traveco', 'morte', 'morrer'
-    ];
-
-    const CONFIG_ANTI_SPAM = {
-        limiteMensagens: 5,
-        janelaTempo: 10,
-        tempoMute: 60,
-        limiteSimilares: 3,
-        tempoAlerta: 30
-    };
-
-    function verificarSpam(usuario, mensagem) {
-        // ⚡ Ignora proprietário
-        if (isProprietario(usuario.email)) {
-            return false;
-        }
-
-        const email = usuario.email;
-        const agora = Date.now();
-        const janelaMs = CONFIG_ANTI_SPAM.janelaTempo * 1000;
-
-        if (!spamCache[email]) {
-            spamCache[email] = { mensagens: [], timestamps: [], ultimoAlerta: 0 };
-        }
-
-        const cache = spamCache[email];
-
-        const limite = agora - janelaMs;
-        cache.timestamps = cache.timestamps.filter(t => t > limite);
-        cache.mensagens = cache.mensagens.filter((_, i) => cache.timestamps[i] > limite);
-
-        cache.timestamps.push(agora);
-        cache.mensagens.push(mensagem.toLowerCase().trim());
-
-        if (cache.timestamps.length > 50) {
-            cache.timestamps.shift();
-            cache.mensagens.shift();
-        }
-
-        // 1️⃣ FLOOD
-        if (cache.timestamps.length > CONFIG_ANTI_SPAM.limiteMensagens) {
-            aplicarMute(email, `Flood detectado: ${cache.timestamps.length} mensagens em ${CONFIG_ANTI_SPAM.janelaTempo}s`);
-            cache.timestamps = [];
-            cache.mensagens = [];
-            return true;
-        }
-
-        // 2️⃣ MENSAGENS REPETIDAS
-        const mensagensRecentes = cache.mensagens.slice(-CONFIG_ANTI_SPAM.limiteSimilares);
-        const todasIguais = mensagensRecentes.every(m => m === mensagensRecentes[0]);
-        
-        if (mensagensRecentes.length >= CONFIG_ANTI_SPAM.limiteSimilares && todasIguais) {
-            aplicarMute(email, `Spam de mensagens repetidas: "${mensagensRecentes[0]}"`);
-            cache.mensagens = [];
-            cache.timestamps = [];
-            return true;
-        }
-
-        // 3️⃣ PALAVRAS PROIBIDAS
-        const mensagemLower = mensagem.toLowerCase();
-        const palavrasEncontradas = PALAVRAS_PROIBIDAS.filter(palavra => 
-            mensagemLower.includes(palavra)
-        );
-
-        if (palavrasEncontradas.length > 0) {
-            mensagensRef.once('value', (snapshot) => {
-                const msgs = snapshot.val() || {};
-                Object.keys(msgs).forEach(key => {
-                    const msg = msgs[key];
-                    if (msg.email === usuario.email && msg.mensagem === mensagem) {
-                        mensagensRef.child(key).remove();
-                    }
-                });
-            });
-            
-            aplicarMute(email, `Conteúdo ofensivo detectado: ${palavrasEncontradas.join(', ')}`);
-            return true;
-        }
-
-        // 4️⃣ LINKS SUSPEITOS
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const urls = mensagem.match(urlRegex);
-        if (urls) {
-            for (const url of urls) {
-                if (!url.includes('youtube.com') && !url.includes('discord.gg') && !url.includes('youtu.be')) {
-                    mensagensRef.once('value', (snapshot) => {
-                        const msgs = snapshot.val() || {};
-                        Object.keys(msgs).forEach(key => {
-                            const msg = msgs[key];
-                            if (msg.email === usuario.email && msg.mensagem === mensagem) {
-                                mensagensRef.child(key).remove();
-                            }
-                        });
-                    });
-                    
-                    aplicarMute(email, `Link suspeito detectado: ${url}`);
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    function aplicarMute(email, motivo) {
-        mutesRef.once('value', (snapshot) => {
-            const mutes = snapshot.val() || {};
-            const jaSilenciado = Object.values(mutes).some(m => m.email === email && m.ativo === true);
-            
-            if (jaSilenciado) {
-                mutesRef.once('value', (snap) => {
-                    const allMutes = snap.val() || {};
-                    Object.keys(allMutes).forEach(key => {
-                        if (allMutes[key].email === email && allMutes[key].ativo === true) {
-                            mutesRef.child(key).update({ 
-                                renovado: true,
-                                ultimoMotivo: motivo,
-                                dataRenovacao: new Date().toISOString()
-                            });
-                        }
-                    });
-                });
-                return;
-            }
-
-            const muteRef = mutesRef.push();
-            muteRef.set({
-                email: email,
-                data: new Date().toISOString(),
-                motivo: motivo,
-                admin: 'BOT Guardian',
-                adminNome: 'BOT Guardian',
-                ativo: true,
-                automatico: true
-            });
-
-            const usuario = Object.values(usuariosOnline).find(u => u.email === email);
-            const nome = usuario ? usuario.nome : email.split('@')[0];
-            enviarMensagemBot(`🔇 **${nome}** foi silenciado automaticamente.\nMotivo: ${motivo}\nDuração: ${CONFIG_ANTI_SPAM.tempoMute}s`);
-
-            setTimeout(() => {
-                dessilenciarUsuario(email);
-                enviarMensagemBot(`🔊 **${nome}** foi desmutado automaticamente.`);
-            }, CONFIG_ANTI_SPAM.tempoMute * 1000);
-
-            if (email !== PROPRIETARIO_EMAIL) {
-                adicionarNotificacao(`⚠️ BOT mutou ${nome} - ${motivo}`, 'alerta');
-            }
-        });
-    }
-
-    // ====== FUNÇÕES DE MODERAÇÃO ======
-    window.banirUsuario = function(email, motivo = 'Violação das regras') {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) { alert('⚠️ Apenas administradores podem banir!'); return false; }
-            if (isProprietario(email)) { alert('❌ Não pode banir o proprietário!'); return false; }
-            if (isBot(email)) { alert('❌ Não pode banir o BOT!'); return false; }
-
-            const banRef = bansRef.push();
-            banRef.set({
-                email: email,
-                data: new Date().toISOString(),
-                motivo: motivo,
-                admin: usuarioLogado.email,
-                adminNome: usuarioLogado.nome,
-                ativo: true
-            });
-
-            enviarMensagemBot(`🔒 Usuário **${email}** foi banido por ${usuarioLogado.nome}. Motivo: ${motivo}`);
-            alert(`✅ Usuário ${email} banido com sucesso!`);
-        });
-        return true;
-    };
-
-    window.desbanirUsuario = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) { alert('⚠️ Apenas administradores podem desbanir!'); return false; }
-
-            bansRef.once('value', (snapshot) => {
-                const bans = snapshot.val() || {};
-                let encontrou = false;
-                Object.keys(bans).forEach(key => {
-                    if (bans[key].email === email && bans[key].ativo === true) {
-                        bansRef.child(key).update({ ativo: false });
-                        encontrou = true;
-                    }
-                });
-                if (encontrou) {
-                    enviarMensagemBot(`🔓 Usuário **${email}** foi desbanido por ${usuarioLogado.nome}`);
-                    alert(`✅ Usuário ${email} desbanido com sucesso!`);
-                } else {
-                    alert(`⚠️ Usuário ${email} não está banido.`);
-                }
-            });
-        });
-        return true;
-    };
-
-    window.silenciarUsuario = function(email, motivo = 'Comportamento inadequado') {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) { alert('⚠️ Apenas administradores podem silenciar!'); return false; }
-            if (isProprietario(email)) { alert('❌ Não pode silenciar o proprietário!'); return false; }
-            if (isBot(email)) { alert('❌ Não pode silenciar o BOT!'); return false; }
-
-            mutesRef.once('value', (snapshot) => {
-                const mutes = snapshot.val() || {};
-                const jaSilenciado = Object.values(mutes).some(m => m.email === email && m.ativo === true);
-                if (jaSilenciado) {
-                    alert(`⚠️ Usuário ${email} já está silenciado!`);
-                    return;
-                }
-
-                const muteRef = mutesRef.push();
-                muteRef.set({
-                    email: email,
-                    data: new Date().toISOString(),
-                    motivo: motivo,
-                    admin: usuarioLogado.email,
-                    adminNome: usuarioLogado.nome,
-                    ativo: true
-                });
-
-                enviarMensagemBot(`🔇 Usuário **${email}** foi silenciado por ${usuarioLogado.nome}. Motivo: ${motivo}`);
-                alert(`✅ Usuário ${email} silenciado com sucesso!`);
-            });
-        });
-        return true;
-    };
-
-    window.dessilenciarUsuario = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) { alert('⚠️ Apenas administradores podem dessilenciar!'); return false; }
-
-            mutesRef.once('value', (snapshot) => {
-                const mutes = snapshot.val() || {};
-                let encontrou = false;
-                Object.keys(mutes).forEach(key => {
-                    if (mutes[key].email === email && mutes[key].ativo === true) {
-                        mutesRef.child(key).update({ ativo: false });
-                        encontrou = true;
-                    }
-                });
-                if (encontrou) {
-                    enviarMensagemBot(`🔊 Usuário **${email}** foi dessilenciado por ${usuarioLogado.nome}`);
-                    alert(`✅ Usuário ${email} dessilenciado com sucesso!`);
-                } else {
-                    alert(`⚠️ Usuário ${email} não está silenciado.`);
-                }
-            });
-        });
-        return true;
-    };
-
-    window.tornarAdmin = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return false; }
-        if (isBot(email)) { alert('❌ BOT não pode ser admin!'); return false; }
-
-        adminsRef.once('value', (snapshot) => {
-            const admins = snapshot.val() || {};
-            const jaAdmin = Object.values(admins).some(a => a.email === email && a.ativo === true);
-            if (jaAdmin) {
-                alert(`⚠️ Usuário ${email} já é administrador!`);
-                return;
-            }
-
-            const adminRef = adminsRef.push();
-            adminRef.set({
-                email: email,
-                data: new Date().toISOString(),
-                concedido_por: usuarioLogado.email,
-                concedido_por_nome: usuarioLogado.nome,
-                ativo: true
-            }).then(() => {
-                enviarMensagemBot(`👑 Usuário **${email}** foi promovido a administrador por ${usuarioLogado.nome}`);
-                alert(`✅ Usuário ${email} agora é administrador!`);
-            }).catch((err) => {
-                alert(`❌ Erro ao promover: ${err.message}`);
-            });
-        });
-        return true;
-    };
-
-    window.removerAdmin = function(email) {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return false; }
-        if (isProprietario(email)) { alert('❌ Não pode remover o proprietário!'); return false; }
-        if (isBot(email)) { alert('❌ BOT não é admin!'); return false; }
-
-        adminsRef.once('value', (snapshot) => {
-            const admins = snapshot.val() || {};
-            let encontrou = false;
-            Object.keys(admins).forEach(key => {
-                if (admins[key].email === email && admins[key].ativo === true) {
-                    adminsRef.child(key).update({ ativo: false });
-                    encontrou = true;
-                }
-            });
-            if (encontrou) {
-                enviarMensagemBot(`👤 Usuário **${email}** foi removido do cargo de administrador por ${usuarioLogado.nome}`);
-                alert(`✅ Usuário ${email} removido do cargo de admin!`);
-            } else {
-                alert(`⚠️ Usuário ${email} não é administrador.`);
-            }
-        });
-        return true;
-    };
-
-    window.limparChat = function() {
-        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return false; }
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) { alert('⚠️ Apenas administradores podem limpar o chat!'); return false; }
-            if (!confirm('🧹 Tem certeza que deseja limpar TODAS as mensagens?')) return false;
-
-            mensagensRef.remove();
-            enviarMensagemBot(`🧹 O chat foi limpo por ${usuarioLogado.nome}`);
-            alert('✅ Chat limpo com sucesso!');
-        });
-        return true;
-    };
-
-    window.mostrarLogsBan = function() {
-        if (!usuarioLogado) return;
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) {
-                alert('⚠️ Apenas administradores podem ver os logs!');
-                return;
-            }
-
-            bansRef.once('value', (snapshot) => {
-                const bans = snapshot.val() || {};
-                const ativos = Object.values(bans).filter(b => b.ativo === true);
-                if (ativos.length === 0) {
-                    alert('📋 Nenhum usuário banido no momento.');
-                    return;
-                }
-                let msg = `📋 USUÁRIOS BANIDOS (${ativos.length}):\n\n`;
-                ativos.forEach((b, i) => {
-                    msg += `${i+1}. ${b.email}\n   Motivo: ${b.motivo}\n   Por: ${b.adminNome || b.admin}\n   Data: ${new Date(b.data).toLocaleString()}\n\n`;
-                });
-                alert(msg);
-            });
-        });
-    };
-
-    window.mostrarLogsMute = function() {
-        if (!usuarioLogado) return;
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) {
-                alert('⚠️ Apenas administradores podem ver os logs!');
-                return;
-            }
-
-            mutesRef.once('value', (snapshot) => {
-                const mutes = snapshot.val() || {};
-                const ativos = Object.values(mutes).filter(m => m.ativo === true);
-                if (ativos.length === 0) {
-                    alert('📋 Nenhum usuário silenciado no momento.');
-                    return;
-                }
-                let msg = `📋 USUÁRIOS SILENCIADOS (${ativos.length}):\n\n`;
-                ativos.forEach((m, i) => {
-                    msg += `${i+1}. ${m.email}\n   Motivo: ${m.motivo}\n   Por: ${m.adminNome || m.admin}\n   Data: ${new Date(m.data).toLocaleString()}\n\n`;
-                });
-                alert(msg);
-            });
-        });
-    };
-
-    // ====== FUNÇÃO VERIFICAR ADMIN (ASSÍNCRONA) ======
     function verificarAdmin(email, callback) {
         if (isProprietario(email)) {
             callback(true);
@@ -3549,7 +3287,168 @@
         });
     }
 
-    // ====== BOT GUARDIAN ======
+    function isMuted(email, callback) {
+        mutesRef.once('value', (snapshot) => {
+            const mutes = snapshot.val() || {};
+            const muted = Object.values(mutes).some(m => m.email === email && m.ativo === true);
+            callback(muted);
+        });
+    }
+
+    function isBanned(email, callback) {
+        bansRef.once('value', (snapshot) => {
+            const bans = snapshot.val() || {};
+            const banned = Object.values(bans).some(b => b.email === email && b.ativo === true);
+            callback(banned);
+        });
+    }
+
+    // ====== REGISTRAR LOG DE MODERAÇÃO ======
+    function registrarModLog(action, targetEmail, targetName, motivo = '', duracao = '') {
+        const logRef = modLogRef.push();
+        logRef.set({
+            adminId: usuarioLogado?.email || 'sistema',
+            adminName: usuarioLogado?.nome || 'Sistema',
+            action: action,
+            targetUserId: targetEmail,
+            targetUserName: targetName || targetEmail.split('@')[0],
+            timestamp: new Date().toISOString(),
+            motivo: motivo || '',
+            duracao: duracao || ''
+        });
+    }
+
+    // ====== FUNÇÕES DE MODERAÇÃO ======
+    window.banirUsuario = function(email, motivo = '') {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (temPermissao) => {
+            if (!temPermissao) { alert('⚠️ Você não tem permissão para banir!'); return; }
+            if (isBot(email)) { alert('❌ Não pode banir o BOT!'); return; }
+            if (isProprietario(email)) { alert('❌ Não pode banir o proprietário!'); return; }
+
+            const banRef = bansRef.push();
+            banRef.set({
+                email: email,
+                data: new Date().toISOString(),
+                motivo: motivo || 'Banido por administrador',
+                admin: usuarioLogado.email,
+                adminNome: usuarioLogado.nome,
+                ativo: true
+            });
+
+            registrarModLog('BAN', email, email.split('@')[0], motivo);
+            alert(`✅ Usuário ${email} banido com sucesso!`);
+            fecharModal();
+        });
+    };
+
+    window.desbanirUsuario = function(email) {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (temPermissao) => {
+            if (!temPermissao) { alert('⚠️ Você não tem permissão para desbanir!'); return; }
+
+            bansRef.once('value', (snapshot) => {
+                const bans = snapshot.val() || {};
+                let encontrou = false;
+                Object.keys(bans).forEach(key => {
+                    if (bans[key].email === email && bans[key].ativo === true) {
+                        bansRef.child(key).update({ ativo: false });
+                        encontrou = true;
+                    }
+                });
+                if (encontrou) {
+                    registrarModLog('UNBAN', email, email.split('@')[0]);
+                    alert(`✅ Usuário ${email} desbanido com sucesso!`);
+                } else {
+                    alert(`⚠️ Usuário ${email} não está banido.`);
+                }
+                fecharModal();
+            });
+        });
+    };
+
+    window.mutarUsuario = function(email, motivo = '', duracao = 5) {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (temPermissao) => {
+            if (!temPermissao) { alert('⚠️ Você não tem permissão para mutar!'); return; }
+            if (isBot(email)) { alert('❌ Não pode mutar o BOT!'); return; }
+            if (isProprietario(email)) { alert('❌ Não pode mutar o proprietário!'); return; }
+
+            mutesRef.once('value', (snapshot) => {
+                const mutes = snapshot.val() || {};
+                const jaMutado = Object.values(mutes).some(m => m.email === email && m.ativo === true);
+                if (jaMutado) {
+                    alert(`⚠️ Usuário ${email} já está mutado!`);
+                    return;
+                }
+
+                const muteRef = mutesRef.push();
+                muteRef.set({
+                    email: email,
+                    data: new Date().toISOString(),
+                    motivo: motivo || 'Mutado por administrador',
+                    admin: usuarioLogado.email,
+                    adminNome: usuarioLogado.nome,
+                    duracao: duracao,
+                    ativo: true
+                });
+
+                registrarModLog('MUTE', email, email.split('@')[0], motivo, duracao + 'min');
+
+                if (duracao > 0) {
+                    setTimeout(() => {
+                        window.dessilenciarUsuario(email);
+                    }, duracao * 60 * 1000);
+                }
+
+                alert(`✅ Usuário ${email} mutado por ${duracao} minutos!`);
+                fecharModal();
+            });
+        });
+    };
+
+    window.dessilenciarUsuario = function(email) {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (temPermissao) => {
+            if (!temPermissao) { alert('⚠️ Você não tem permissão para desmutar!'); return; }
+
+            mutesRef.once('value', (snapshot) => {
+                const mutes = snapshot.val() || {};
+                let encontrou = false;
+                Object.keys(mutes).forEach(key => {
+                    if (mutes[key].email === email && mutes[key].ativo === true) {
+                        mutesRef.child(key).update({ ativo: false });
+                        encontrou = true;
+                    }
+                });
+                if (encontrou) {
+                    registrarModLog('UNMUTE', email, email.split('@')[0]);
+                    alert(`✅ Usuário ${email} desmutado com sucesso!`);
+                } else {
+                    alert(`⚠️ Usuário ${email} não está mutado.`);
+                }
+                fecharModal();
+            });
+        });
+    };
+
+    // ====== KZN BOT ======
+    function iniciarBot() {
+        if (botTimer) clearInterval(botTimer);
+        if (!botEnabled) return;
+
+        botTimer = setInterval(() => {
+            if (!usuarioLogado) return;
+            const agora = Date.now();
+            if (agora - lastBotMessage < botInterval) return;
+
+            const msgIndex = Math.floor(Math.random() * BOT_MESSAGES.length);
+            const msg = BOT_MESSAGES[msgIndex];
+            enviarMensagemBot(msg);
+            lastBotMessage = agora;
+        }, botInterval);
+    }
+
     function enviarMensagemBot(mensagem) {
         const msgRef = mensagensRef.push();
         msgRef.set({
@@ -3558,305 +3457,53 @@
             email: BOT_EMAIL,
             mensagem: mensagem,
             data: new Date().toISOString(),
-            isBot: true
+            isBot: true,
+            isHistorical: false
         });
     }
 
-    // ====== PROCESSAR COMANDOS ======
-    function processarComando(texto, usuario) {
-        const partes = texto.split(' ');
-        const comando = partes[0].toLowerCase();
-        const alvo = partes.slice(1).join(' ');
-
-        if (comando === '/comandos' || comando === '/ajuda') {
-            let msg = '📋 **COMANDOS DISPONÍVEIS:**\n\n';
-            msg += '🔹 `/comandos` - Mostra esta lista\n';
-            msg += '🔹 `/regras` - Mostra as regras do chat\n';
-            msg += '🔹 `/online` - Mostra usuários online\n';
-            
-            verificarAdmin(usuario.email, (isAdminUser) => {
-                if (isAdminUser) {
-                    const isProprietarioUser = isProprietario(usuario.email);
-                    msg += '\n⚡ **COMANDOS ADMIN:**\n';
-                    if (isProprietarioUser) {
-                        msg += '🔸 `/admin [email]` - Conceder admin\n';
-                    }
-                    msg += '🔸 `/ban [email]` - Banir usuário\n';
-                    msg += '🔸 `/unban [email]` - Desbanir usuário\n';
-                    msg += '🔸 `/mute [email]` - Silenciar usuário\n';
-                    msg += '🔸 `/unmute [email]` - Dessilenciar usuário\n';
-                    msg += '🔸 `/limparchat` - Limpar mensagens\n';
-                    msg += '🔸 `/logsban` - Ver banidos\n';
-                    msg += '🔸 `/logsmute` - Ver silenciados\n';
-                }
-                enviarMensagemBot(msg);
-            });
-            return true;
-        }
-
-        if (comando === '/regras') {
-            enviarMensagemBot('📜 **REGRAS DO CHAT:**\n\n1️⃣ Respeite todos os usuários\n2️⃣ Não use linguagem ofensiva\n3️⃣ Não compartilhe links suspeitos\n4️⃣ Não faça spam\n5️⃣ Siga as instruções dos administradores\n\n⚠️ Violações podem resultar em banimento!');
-            return true;
-        }
-
-        if (comando === '/online') {
-            const online = Object.keys(usuariosOnline).length;
-            const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
-            enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
-            return true;
-        }
-
-        verificarAdmin(usuario.email, (isAdminUser) => {
-            if (!isAdminUser) {
-                if (comando.startsWith('/')) {
-                    enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
-                }
-                return;
-            }
-
-            switch (comando) {
-                case '/admin':
-                    if (!isProprietario(usuario.email)) {
-                        enviarMensagemBot('❌ Apenas o proprietário pode conceder admin!');
-                        return;
-                    }
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/admin [email]`'); return; }
-                    tornarAdmin(alvo);
-                    break;
-                case '/ban':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/ban [email]`'); return; }
-                    banirUsuario(alvo);
-                    break;
-                case '/unban':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unban [email]`'); return; }
-                    desbanirUsuario(alvo);
-                    break;
-                case '/mute':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/mute [email]`'); return; }
-                    silenciarUsuario(alvo);
-                    break;
-                case '/unmute':
-                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unmute [email]`'); return; }
-                    dessilenciarUsuario(alvo);
-                    break;
-                case '/limparchat':
-                    limparChat();
-                    break;
-                case '/logsban':
-                    mostrarLogsBan();
-                    break;
-                case '/logsmute':
-                    mostrarLogsMute();
-                    break;
-                default:
-                    if (comando.startsWith('/')) {
-                        enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
-                    }
-                    break;
-            }
-        });
-        return true;
-    }
-
-    // ====== NOTIFICAÇÕES PUSH ======
-    async function registrarServiceWorker() {
-        try {
-            if (!('serviceWorker' in navigator)) {
-                console.warn('⚠️ Service Worker não suportado neste navegador.');
-                return false;
-            }
-
-            const registration = await navigator.serviceWorker.register('/sw.js', { 
-                scope: '/' 
-            });
-            console.log('✅ Service Worker registrado com sucesso!');
-            return registration;
-        } catch (error) {
-            console.error('❌ Erro ao registrar Service Worker:', error);
-            return false;
-        }
-    }
-
-    async function inscreverNotificacoes() {
-        try {
-            if (!('PushManager' in window)) {
-                alert('⚠️ Seu navegador não suporta notificações push.');
-                return false;
-            }
-
-            const registration = await registrarServiceWorker();
-            if (!registration) {
-                alert('⚠️ Erro ao registrar o Service Worker.');
-                return false;
-            }
-
-            const permission = await Notification.requestPermission();
-            if (permission !== 'granted') {
-                alert('⚠️ Você precisa permitir notificações nas configurações do navegador.');
-                return false;
-            }
-
-            const subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
-            });
-
-            if (usuarioLogado) {
-                const inscricoesRef = db.ref('push_inscricoes/' + usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                await inscricoesRef.set({
-                    endpoint: subscription.endpoint,
-                    keys: subscription.toJSON().keys,
-                    data: new Date().toISOString()
-                });
-            }
-
-            alert('✅ Notificações ativadas com sucesso! Você receberá alertas mesmo com o site fechado.');
-            return true;
-        } catch (error) {
-            console.error('❌ Erro ao ativar notificações:', error);
-            alert('❌ Erro ao ativar notificações. Tente novamente.');
-            return false;
-        }
-    }
-
-    function urlBase64ToUint8Array(base64String) {
-        const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-        const rawData = window.atob(base64);
-        const outputArray = new Uint8Array(rawData.length);
-        for (let i = 0; i < rawData.length; ++i) {
-            outputArray[i] = rawData.charCodeAt(i);
-        }
-        return outputArray;
-    }
-
-    function enviarNotificacaoComSom(titulo, corpo, url = '/') {
-        playNotificationSound();
-        
-        if (Notification.permission === 'granted') {
-            try {
-                new Notification(titulo, {
-                    body: corpo,
-                    icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1',
-                    vibrate: [200, 100, 200],
-                    sound: 'https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3'
-                });
-            } catch (e) {
-                console.warn('Erro ao mostrar notificação:', e);
-            }
-        }
-    }
-
-    // ====== ENVIAR MENSAGEM (COM ANTI-SPAM) ======
-    window.enviarMensagem = function() {
-        const input = document.getElementById('chatInput');
-        const texto = input.value.trim();
-        if (!texto) return;
-
-        if (!usuarioLogado) {
-            alert('⚠️ Faça login para enviar mensagens!');
-            return;
-        }
-
-        bansRef.once('value', (snapshot) => {
-            const bans = snapshot.val() || {};
-            const banido = Object.values(bans).some(b => b.email === usuarioLogado.email && b.ativo === true);
-            
-            if (banido) {
-                alert('🔒 Você está banido do chat!');
-                return;
-            }
-
-            mutesRef.once('value', (snapshot) => {
-                const mutes = snapshot.val() || {};
-                const silenciado = Object.values(mutes).some(m => m.email === usuarioLogado.email && m.ativo === true);
-                
-                if (silenciado) {
-                    alert('🔇 Você está silenciado!');
-                    return;
-                }
-
-                function enviarMensagemFinal() {
-                    const msgRef = mensagensRef.push();
-                    msgRef.set({
-                        nome: usuarioLogado.nome,
-                        avatar: usuarioLogado.avatar || '',
-                        email: usuarioLogado.email,
-                        mensagem: texto,
-                        data: new Date().toISOString(),
-                        isBot: false
-                    });
-
-                    input.value = '';
-                    const container = document.getElementById('chatMessages');
-                    container.scrollTop = container.scrollHeight;
-
-                    if (texto.startsWith('/')) {
-                        processarComando(texto, usuarioLogado);
-                    }
-
-                    const typingIndicator = document.getElementById('typingIndicator');
-                    typingIndicator.classList.remove('show');
-                    const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                    userTypingRef.remove();
-                }
-
-                verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-                    if (isAdminUser) {
-                        enviarMensagemFinal();
-                    } else {
-                        if (verificarSpam(usuarioLogado, texto)) {
-                            alert('⚠️ Mensagem bloqueada pelo sistema anti-spam!');
-                            input.value = '';
-                            return;
-                        }
-                        enviarMensagemFinal();
-                    }
-                });
-            });
-        });
-    };
-
-    // ====== APAGAR MENSAGEM ======
-    window.apagarMensagem = function(key) {
-        if (!usuarioLogado) return;
-        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser) {
-                alert('⚠️ Apenas administradores podem apagar mensagens!');
-                return;
-            }
-            if (!confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) return;
-
-            mensagensRef.child(key).remove();
-            enviarMensagemBot(`🗑️ Uma mensagem foi apagada por ${usuarioLogado.nome}`);
-        });
-    };
-
-    // ====== RENDERIZAR MENSAGENS ======
+    // ====== MENSAGENS ======
     function carregarMensagens() {
         const container = document.getElementById('chatMessages');
-        
+        isInitialLoad = true;
+        let mensagensCarregadas = 0;
+
         mensagensRef.orderByChild('data').limitToLast(100).on('child_added', (snapshot) => {
             const key = snapshot.key;
             const dados = snapshot.val();
-            renderizarMensagem(key, dados);
+
+            if (processedMessageIds.has(key)) return;
+            processedMessageIds.add(key);
+
+            const isHistorical = isInitialLoad;
+            renderizarMensagem(key, dados, isHistorical);
+
+            if (isInitialLoad) {
+                mensagensCarregadas++;
+                if (mensagensCarregadas >= 100) {
+                    isInitialLoad = false;
+                }
+            }
         });
+
+        setTimeout(() => {
+            isInitialLoad = false;
+            const loading = container.querySelector('.empty-state');
+            if (loading) loading.remove();
+        }, 2000);
 
         mensagensRef.on('child_removed', (snapshot) => {
             const key = snapshot.key;
             const msgElement = document.getElementById('msg-' + key);
             if (msgElement) {
                 msgElement.classList.add('deleted');
-                setTimeout(() => msgElement.remove(), 500);
+                setTimeout(() => msgElement.remove(), 400);
             }
         });
     }
 
-    function renderizarMensagem(key, dados) {
+    function renderizarMensagem(key, dados, isHistorical = false) {
         const container = document.getElementById('chatMessages');
-        const loading = container.querySelector('.loading-messages');
-        if (loading) loading.remove();
-
         if (document.getElementById('msg-' + key)) return;
 
         const data = new Date(dados.data);
@@ -3866,69 +3513,137 @@
         const isProprietarioUser = dados.email && isProprietario(dados.email);
         const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
 
-        verificarAdmin(dados.email, (isAdminUser) => {
-            const podeApagar = usuarioLogado && (isAdminUser || isCurrentUser);
+        const div = document.createElement('div');
+        div.className = 'chat-msg';
+        if (!isHistorical && !isInitialLoad) {
+            div.classList.add('msg-new');
+        } else {
+            div.classList.add('msg-historical');
+        }
+        div.id = 'msg-' + key;
 
-            const div = document.createElement('div');
-            div.className = 'chat-msg';
-            div.id = 'msg-' + key;
+        let avatarHtml = '';
+        if (dados.avatar && dados.avatar.startsWith('http')) {
+            avatarHtml = `<img src="${dados.avatar}" />`;
+        } else if (dados.avatar && dados.avatar.includes('data:image')) {
+            avatarHtml = `<img src="${dados.avatar}" />`;
+        } else if (isBotMsg) {
+            avatarHtml = `<span style="font-size:0.9rem;">${BOT_AVATAR}</span>`;
+        } else {
+            avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
+        }
 
-            let avatarHtml = '';
-            if (dados.avatar && dados.avatar.startsWith('http')) {
-                avatarHtml = `<img src="${dados.avatar}" />`;
-            } else if (dados.avatar && dados.avatar.includes('data:image')) {
-                avatarHtml = `<img src="${dados.avatar}" />`;
-            } else if (isBotMsg) {
-                avatarHtml = `<span style="font-size:1rem;">${BOT_AVATAR}</span>`;
-            } else {
-                avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
-            }
+        let nomeClass = '';
+        let badgeHtml = '';
+        if (isBotMsg) {
+            nomeClass = 'bot';
+            badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
+        } else if (isProprietarioUser) {
+            nomeClass = 'proprietario';
+            badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
+        } else {
+            verificarAdmin(dados.email, (admin) => {
+                if (admin && !isBotMsg) {
+                    badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
+                    div.querySelector('.msg-nome')?.classList.add('admin');
+                }
+            });
+        }
 
-            let nomeClass = '';
-            let badgeHtml = '';
-            if (isBotMsg) {
-                nomeClass = 'bot';
-                badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
-            } else if (isProprietarioUser) {
-                nomeClass = 'proprietario';
-                badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
-            } else if (isAdminUser) {
-                nomeClass = 'admin';
-                badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
-            }
+        const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
 
-            div.innerHTML = `
-                <div class="msg-header">
-                    <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
-                    <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
-                    ${badgeHtml}
-                    <span class="msg-hora">${hora}</span>
-                    <div class="msg-acoes">
-                        ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar mensagem"><i class="fas fa-trash"></i></button>` : ''}
-                    </div>
+        div.innerHTML = `
+            <div class="msg-header">
+                <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
+                <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
+                ${badgeHtml}
+                <span class="msg-hora">${hora}</span>
+                <div class="msg-acoes">
+                    ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
                 </div>
-                <div class="msg-content">${dados.mensagem}</div>
-            `;
+            </div>
+            <div class="msg-content">${dados.mensagem}</div>
+        `;
 
-            const typingIndicator = document.getElementById('typingIndicator');
-            container.insertBefore(div, typingIndicator);
-            container.scrollTop = container.scrollHeight;
+        const typingIndicator = document.getElementById('typingIndicator');
+        container.insertBefore(div, typingIndicator);
 
-            // ====== NOTIFICAÇÃO E SOM ======
-            if (!isBotMsg && dados.email !== usuarioLogado?.email) {
-                enviarNotificacaoComSom(
-                    `💬 ${dados.nome}`,
-                    dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
-                    window.location.href
-                );
+        // ⚡ SÓ TOCA SOM/NOTIFICAÇÃO SE NÃO FOR HISTÓRICO
+        if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
+            playNotificationSound();
+
+            if (Notification.permission === 'granted') {
+                try {
+                    new Notification(`💬 ${dados.nome}`, {
+                        body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
+                        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
+                    });
+                } catch (e) {}
             }
 
-            if (!chatAberto && !isBotMsg && dados.email !== usuarioLogado?.email) {
+            if (!chatAberto) {
                 contadorNaoLidas++;
                 const badge = document.getElementById('chatBadge');
                 badge.textContent = contadorNaoLidas;
                 badge.classList.add('show');
             }
+        }
+
+        container.scrollTop = container.scrollHeight;
+    }
+
+    window.apagarMensagem = function(key) {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+            if (!isAdminUser && !isProprietario(usuarioLogado.email)) {
+                alert('⚠️ Apenas administradores podem apagar mensagens!');
+                return;
+            }
+            if (!confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) return;
+            mensagensRef.child(key).remove();
+        });
+    };
+
+    // ====== TYPING ======
+    function carregarTyping() {
+        const typingIndicator = document.getElementById('typingIndicator');
+        const typingUser = document.getElementById('typingUser');
+        let timeoutId = null;
+
+        typingRef.on('child_added', (snapshot) => {
+            const email = snapshot.key;
+            const dados = snapshot.val();
+
+            if (!dados || !dados.nome) return;
+            if (email === usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_')) return;
+
+            typingUser.textContent = dados.nome;
+            typingIndicator.classList.add('show');
+
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                typingRef.once('value', (snap) => {
+                    const typingUsers = snap.val() || {};
+                    const hasTyping = Object.keys(typingUsers).some(key => {
+                        return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
+                    });
+                    if (!hasTyping) {
+                        typingIndicator.classList.remove('show');
+                    }
+                });
+            }, 4000);
+        });
+
+        typingRef.on('child_removed', () => {
+            typingRef.once('value', (snap) => {
+                const typingUsers = snap.val() || {};
+                const hasTyping = Object.keys(typingUsers).some(key => {
+                    return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
+                });
+                if (!hasTyping) {
+                    typingIndicator.classList.remove('show');
+                }
+            });
         });
     }
 
@@ -3936,7 +3651,6 @@
     function carregarUsuariosOnline() {
         usuariosRef.on('value', (snapshot) => {
             const dados = snapshot.val() || {};
-            usuariosOnline = dados;
             const count = Object.keys(dados).length;
             document.getElementById('onlineCount').textContent = `👤 ${count} online`;
         });
@@ -3965,59 +3679,7 @@
         }, 30000);
     }
 
-    // ====== TYPING ======
-    function carregarTyping() {
-        const typingIndicator = document.getElementById('typingIndicator');
-        let timeoutId = null;
-
-        typingRef.on('child_added', (snapshot) => {
-            const email = snapshot.key;
-            const dados = snapshot.val();
-            
-            if (!dados || !dados.nome) return;
-            if (email === usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_')) return;
-            
-            typingIndicator.innerHTML = `<i class="fas fa-pen-fancy" style="animation: pulse 1s infinite;"></i> <strong>${dados.nome}</strong> está digitando...`;
-            typingIndicator.classList.add('show');
-            
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                typingRef.once('value', (snap) => {
-                    const typingUsers = snap.val() || {};
-                    const hasTyping = Object.keys(typingUsers).some(key => {
-                        return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
-                    });
-                    if (!hasTyping) {
-                        typingIndicator.classList.remove('show');
-                    }
-                });
-            }, 3500);
-        });
-
-        typingRef.on('child_removed', (snapshot) => {
-            const email = snapshot.key;
-            if (email === usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_')) return;
-            
-            typingRef.once('value', (snap) => {
-                const typingUsers = snap.val() || {};
-                const hasTyping = Object.keys(typingUsers).some(key => {
-                    return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
-                });
-                if (!hasTyping) {
-                    typingIndicator.classList.remove('show');
-                }
-            });
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && usuarioLogado) {
-                const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                userTypingRef.remove();
-            }
-        });
-    }
-
-    // ====== MENU USUÁRIO ======
+    // ====== MENU USUÁRIO (MODERAÇÃO) ======
     window.abrirMenuUsuario = function(email) {
         if (!usuarioLogado) {
             alert('⚠️ Faça login primeiro!');
@@ -4027,13 +3689,17 @@
             alert('ℹ️ Este é você!');
             return;
         }
+        if (isBot(email)) {
+            alert('🤖 Este é o BOT oficial da KZN!');
+            return;
+        }
 
         const overlay = document.getElementById('userMenuOverlay');
-        const avatar = document.getElementById('userMenuAvatar');
-        const nome = document.getElementById('userMenuNome');
-        const emailEl = document.getElementById('userMenuEmail');
-        const status = document.getElementById('userMenuStatus');
-        const actions = document.getElementById('userMenuActions');
+        const avatar = document.getElementById('menuAvatar');
+        const nome = document.getElementById('menuNome');
+        const emailEl = document.getElementById('menuEmail');
+        const status = document.getElementById('menuStatus');
+        const actions = document.getElementById('menuActions');
 
         usuariosRef.once('value', (snapshot) => {
             const usuarios = snapshot.val() || {};
@@ -4047,45 +3713,49 @@
             } else {
                 avatar.innerHTML = (userData?.nome || email[0] || 'U').toUpperCase();
             }
-            nome.textContent = userData?.nome || email.split('@')[0] || 'Usuário';
+            const userName = userData?.nome || email.split('@')[0] || 'Usuário';
+            nome.textContent = userName;
             emailEl.textContent = email;
 
-            verificarAdmin(email, (isAdminUser) => {
-                const isProprietarioUser = isProprietario(email);
-                const isBotUser = isBot(email);
+            isBanned(email, (banido) => {
+                isMuted(email, (mutado) => {
+                    verificarAdmin(email, (admin) => {
+                        let statusText = '👤 Usuário';
+                        let statusColor = 'var(--text-muted)';
+                        if (banido) { statusText = '🔒 Banido'; statusColor = 'var(--danger)'; }
+                        else if (mutado) { statusText = '🔇 Mutado'; statusColor = 'var(--warning)'; }
+                        else if (admin) { statusText = '⚡ Administrador'; statusColor = 'var(--danger)'; }
+                        status.textContent = statusText;
+                        status.style.color = statusColor;
 
-                let statusText = '👤 Usuário';
-                let statusColor = 'var(--text-muted)';
-                if (isBotUser) { statusText = '🤖 BOT Guardian'; statusColor = 'var(--warning)'; }
-                else if (isProprietarioUser) { statusText = '👑 Proprietário'; statusColor = '#fbbf24'; }
-                else if (isAdminUser) { statusText = '⚡ Administrador'; statusColor = 'var(--danger)'; }
-                status.textContent = statusText;
-                status.style.color = statusColor;
+                        verificarAdmin(usuarioLogado.email, (temPermissao) => {
+                            actions.innerHTML = '';
 
-                actions.innerHTML = '';
-                verificarAdmin(usuarioLogado.email, (isAdminLogado) => {
-                    const isProprietarioLogado = isProprietario(usuarioLogado.email);
+                            if (temPermissao) {
+                                if (!banido) {
+                                    actions.innerHTML += `<button class="danger" onclick="abrirModalBan('${email}','${userName}')"><i class="fas fa-gavel"></i> Banir</button>`;
+                                } else {
+                                    actions.innerHTML += `<button class="success" onclick="desbanirUsuario('${email}')"><i class="fas fa-check"></i> Desbanir</button>`;
+                                }
 
-                    if (isProprietarioLogado) {
-                        if (!isBotUser && !isProprietarioUser) {
-                            if (!isAdminUser) {
-                                actions.innerHTML += `<button class="success" onclick="tornarAdmin('${email}'); fecharMenuUsuario();"><i class="fas fa-crown"></i> Conceder Admin</button>`;
-                            } else {
-                                actions.innerHTML += `<button class="warning" onclick="removerAdmin('${email}'); fecharMenuUsuario();"><i class="fas fa-user-slash"></i> Remover Admin</button>`;
+                                if (!mutado) {
+                                    actions.innerHTML += `<button class="warning" onclick="abrirModalMute('${email}','${userName}')"><i class="fas fa-microphone-slash"></i> Mutar</button>`;
+                                } else {
+                                    actions.innerHTML += `<button class="success" onclick="dessilenciarUsuario('${email}')"><i class="fas fa-microphone"></i> Desmutar</button>`;
+                                }
+
+                                if (isProprietario(usuarioLogado.email)) {
+                                    actions.innerHTML += `<button class="primary" onclick="verLogsUsuario('${email}')"><i class="fas fa-history"></i> Ver Logs</button>`;
+                                }
                             }
-                        }
-                    } else if (isAdminLogado) {
-                        if (!isBotUser && !isProprietarioUser && !isAdminUser) {
-                            actions.innerHTML += `<button class="danger" onclick="banirUsuario('${email}'); fecharMenuUsuario();"><i class="fas fa-gavel"></i> Banir</button>`;
-                            actions.innerHTML += `<button class="warning" onclick="silenciarUsuario('${email}'); fecharMenuUsuario();"><i class="fas fa-microphone-slash"></i> Silenciar</button>`;
-                        }
-                    }
 
-                    if (actions.innerHTML === '') {
-                        actions.innerHTML = `<p style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:1rem 0;">Nenhuma ação disponível para este usuário.</p>`;
-                    }
+                            if (actions.innerHTML === '') {
+                                actions.innerHTML = `<p style="color:var(--text-muted);font-size:0.8rem;text-align:center;padding:0.5rem 0;">Nenhuma ação disponível.</p>`;
+                            }
 
-                    overlay.classList.add('open');
+                            overlay.classList.add('open');
+                        });
+                    });
                 });
             });
         });
@@ -4096,7 +3766,111 @@
         document.getElementById('userMenuOverlay').classList.remove('open');
     };
 
-    // ====== CHAT TOGGLE ======
+    // ====== MODAIS DE MODERAÇÃO ======
+    let modalAction = null;
+    let modalTarget = null;
+
+    window.abrirModalBan = function(email, nome) {
+        modalAction = 'ban';
+        modalTarget = email;
+        document.getElementById('modalTitle').textContent = '🚫 Banir Usuário';
+        document.getElementById('modalDescription').textContent = `Banir ${nome} permanentemente? Esta ação é irreversível.`;
+        document.getElementById('modalForm').style.display = 'block';
+        document.getElementById('modalDuration').style.display = 'none';
+        document.getElementById('modalConfirmBtn').textContent = 'Confirmar Banimento';
+        document.getElementById('modalConfirmBtn').className = 'btn-danger';
+        document.getElementById('modalOverlay').classList.add('open');
+        document.getElementById('modalReason').value = '';
+    };
+
+    window.abrirModalMute = function(email, nome) {
+        modalAction = 'mute';
+        modalTarget = email;
+        document.getElementById('modalTitle').textContent = '🔇 Mutar Usuário';
+        document.getElementById('modalDescription').textContent = `Mutar ${nome} por quanto tempo?`;
+        document.getElementById('modalForm').style.display = 'block';
+        document.getElementById('modalDuration').style.display = 'block';
+        document.getElementById('modalConfirmBtn').textContent = 'Confirmar Mute';
+        document.getElementById('modalConfirmBtn').className = 'btn-warning';
+        document.getElementById('modalOverlay').classList.add('open');
+        document.getElementById('modalReason').value = '';
+    };
+
+    window.confirmarModal = function() {
+        const motivo = document.getElementById('modalReason').value.trim();
+        if (modalAction === 'ban') {
+            banirUsuario(modalTarget, motivo);
+        } else if (modalAction === 'mute') {
+            const duracao = parseInt(document.getElementById('modalDuration').value);
+            mutarUsuario(modalTarget, motivo, duracao);
+        }
+    };
+
+    window.fecharModal = function(event) {
+        if (event && event.target !== event.currentTarget) return;
+        document.getElementById('modalOverlay').classList.remove('open');
+        modalAction = null;
+        modalTarget = null;
+    };
+
+    window.verLogsUsuario = function(email) {
+        modLogRef.orderByChild('targetUserId').equalTo(email).limitToLast(20).once('value', (snapshot) => {
+            const logs = snapshot.val() || {};
+            let msg = `📋 LOGS DE ${email}:\n\n`;
+            Object.values(logs).forEach(log => {
+                msg += `📌 ${log.action} - ${log.adminName} - ${new Date(log.timestamp).toLocaleString()}\n`;
+                if (log.motivo) msg += `   Motivo: ${log.motivo}\n`;
+            });
+            alert(msg || 'Nenhum log encontrado.');
+        });
+    };
+
+    // ====== ENVIAR MENSAGEM ======
+    window.enviarMensagem = function() {
+        const input = document.getElementById('chatInput');
+        const texto = input.value.trim();
+        if (!texto) return;
+
+        if (!usuarioLogado) {
+            alert('⚠️ Faça login para enviar mensagens!');
+            return;
+        }
+
+        isBanned(usuarioLogado.email, (banido) => {
+            if (banido) {
+                alert('🔒 Você está banido do chat!');
+                return;
+            }
+
+            isMuted(usuarioLogado.email, (mutado) => {
+                if (mutado) {
+                    alert('🔇 Você está mutado e não pode enviar mensagens!');
+                    return;
+                }
+
+                const msgRef = mensagensRef.push();
+                msgRef.set({
+                    nome: usuarioLogado.nome,
+                    avatar: usuarioLogado.avatar || '',
+                    email: usuarioLogado.email,
+                    mensagem: texto,
+                    data: new Date().toISOString(),
+                    isHistorical: false
+                });
+
+                input.value = '';
+                const container = document.getElementById('chatMessages');
+                container.scrollTop = container.scrollHeight;
+
+                const typingIndicator = document.getElementById('typingIndicator');
+                typingIndicator.classList.remove('show');
+                const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+                userTypingRef.remove();
+            });
+        });
+    };
+
+    // ====== TOGGLE CHAT ======
     window.toggleChat = function() {
         const chat = document.getElementById('chatWindow');
         chat.classList.toggle('open');
@@ -4110,26 +3884,436 @@
         }
     };
 
-    window.toggleFullscreenChat = function() {
-        const chat = document.getElementById('chatWindow');
-        const btn = document.getElementById('fullscreenBtn');
-        if (!isFullscreen) {
-            chat.classList.add('fullscreen');
-            chat.style.display = 'flex';
-            btn.innerHTML = '<i class="fas fa-compress"></i>';
-            isFullscreen = true;
+    // ====== NOTIFICAÇÕES PUSH ======
+    const PUBLIC_VAPID_KEY = 'BKkLDp3zTSicLCK9FUf1rBnFa5bLBXIQgCgQDu3GL4QOp5SvtVPQH172Al5sxMyX1qGFBk765PV3s13HY-C15xw';
+
+    async function registrarServiceWorker() {
+        try {
+            if (!('serviceWorker' in navigator)) {
+                console.warn('⚠️ Service Worker não suportado.');
+                return false;
+            }
+
+            const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+            console.log('✅ Service Worker registrado!');
+            return registration;
+        } catch (error) {
+            console.error('❌ Erro ao registrar Service Worker:', error);
+            return false;
+        }
+    }
+
+    async function inscreverNotificacoes() {
+        try {
+            if (!('PushManager' in window)) {
+                alert('⚠️ Seu navegador não suporta notificações push.');
+                return false;
+            }
+
+            const registration = await registrarServiceWorker();
+            if (!registration) {
+                alert('⚠️ Erro ao registrar o Service Worker.');
+                return false;
+            }
+
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                alert('⚠️ Você precisa permitir notificações.');
+                return false;
+            }
+
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
+            });
+
+            if (usuarioLogado) {
+                const inscricoesRef = db.ref('push_inscricoes/' + usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+                await inscricoesRef.set({
+                    endpoint: subscription.endpoint,
+                    keys: subscription.toJSON().keys,
+                    data: new Date().toISOString()
+                });
+            }
+
+            alert('✅ Notificações ativadas com sucesso!');
+            return true;
+        } catch (error) {
+            console.error('❌ Erro ao ativar notificações:', error);
+            alert('❌ Erro ao ativar notificações. Tente novamente.');
+            return false;
+        }
+    }
+
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+
+    // ====== LOGIN / REGISTRO ======
+    function setLoggedIn() {
+        document.getElementById('welcomeOverlay').classList.add('hidden');
+        document.getElementById('chatToggleBtn').style.display = 'flex';
+        document.getElementById('chatWindow').classList.add('open');
+        chatAberto = true;
+        carregarMensagens();
+        carregarTyping();
+        carregarUsuariosOnline();
+        atualizarStatusOnline();
+        iniciarBot();
+        registrarServiceWorker();
+    }
+
+    window.fazerLogin = function() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const senha = document.getElementById('loginSenha').value.trim();
+        const status = document.getElementById('loginStatus');
+
+        if (!email || !senha) {
+            status.className = 'form-status error';
+            status.textContent = '⚠️ Preencha todos os campos.';
+            return;
+        }
+
+        isBanned(email, (banido) => {
+            if (banido) {
+                status.className = 'form-status error';
+                status.textContent = '🔒 Esta conta está banida!';
+                return;
+            }
+
+            const usuario = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
+            if (!usuario) {
+                status.className = 'form-status error';
+                status.textContent = '❌ E-mail ou senha incorretos.';
+                return;
+            }
+
+            usuarioLogado = { nome: usuario.nome, email: usuario.email, avatar: usuario.avatar || null };
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
+            setLoggedIn();
+            status.className = 'form-status success';
+            status.textContent = '✅ Login realizado! Bem-vindo ' + usuario.nome;
+        });
+    };
+
+    window.fazerRegistro = function() {
+        const nome = document.getElementById('registroNome').value.trim();
+        const email = document.getElementById('registroEmail').value.trim();
+        const senha = document.getElementById('registroSenha').value.trim();
+        const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
+        const status = document.getElementById('registroStatus');
+
+        if (!nome || !email || !senha || !confirmar) {
+            status.className = 'form-status error';
+            status.textContent = '⚠️ Preencha todos os campos.';
+            return;
+        }
+
+        if (senha.length < 6) {
+            status.className = 'form-status error';
+            status.textContent = '⚠️ A senha deve ter no mínimo 6 caracteres.';
+            return;
+        }
+
+        if (senha !== confirmar) {
+            status.className = 'form-status error';
+            status.textContent = '⚠️ As senhas não coincidem.';
+            return;
+        }
+
+        if (usuariosCadastrados.find(u => u.email === email)) {
+            status.className = 'form-status error';
+            status.textContent = '❌ Este e-mail já está cadastrado.';
+            return;
+        }
+
+        usuariosCadastrados.push({ nome, email, senha });
+        salvarUsuarios();
+
+        status.className = 'form-status success';
+        status.textContent = '✅ Conta criada! Faça login.';
+
+        document.getElementById('registroNome').value = '';
+        document.getElementById('registroEmail').value = '';
+        document.getElementById('registroSenha').value = '';
+        document.getElementById('registroConfirmarSenha').value = '';
+
+        setTimeout(() => {
+            trocarLoginTab('login');
+            document.getElementById('loginEmail').value = email;
+            status.style.display = 'none';
+        }, 1500);
+    };
+
+    window.trocarLoginTab = function(tab) {
+        const loginBtn = document.getElementById('loginTabBtn');
+        const registroBtn = document.getElementById('registroTabBtn');
+        const loginForm = document.getElementById('loginForm');
+        const registroForm = document.getElementById('registroForm');
+
+        if (tab === 'login') {
+            loginBtn.classList.add('active');
+            registroBtn.classList.remove('active');
+            loginForm.style.display = 'block';
+            registroForm.style.display = 'none';
         } else {
-            chat.classList.remove('fullscreen');
-            chat.style.display = '';
-            btn.innerHTML = '<i class="fas fa-expand"></i>';
-            isFullscreen = false;
+            registroBtn.classList.add('active');
+            loginBtn.classList.remove('active');
+            registroForm.style.display = 'block';
+            loginForm.style.display = 'none';
         }
     };
 
-    // ====== CARRINHO TOGGLE ======
+    window.handleWelcomeLogin = function(response) {
+        try {
+            const payload = parseJwt(response.credential);
+            const usuario = { nome: payload.name, email: payload.email, avatar: payload.picture };
+            usuarioLogado = usuario;
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+            setLoggedIn();
+        } catch (e) {
+            alert('❌ Erro ao fazer login com Google.');
+        }
+    };
+
+    function parseJwt(token) {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+    }
+
+    window.logout = function() {
+        if (!confirm('Tem certeza que deseja sair?')) return;
+        if (usuarioLogado) {
+            const userRef = usuariosRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+            userRef.remove();
+        }
+        localStorage.removeItem('kzn_usuario_logado');
+        document.getElementById('welcomeOverlay').classList.remove('hidden');
+        document.getElementById('chatToggleBtn').style.display = 'none';
+        document.getElementById('chatWindow').classList.remove('open');
+        chatAberto = false;
+        usuarioLogado = null;
+        alert('👋 Você saiu da sua conta.');
+    };
+
+    // ====== CARRINHO ======
+    let carrinho = [];
+
+    function carregarCarrinho() {
+        const dados = localStorage.getItem('kzn_carrinho');
+        if (dados) {
+            try { carrinho = JSON.parse(dados); } catch (e) { carrinho = []; }
+        }
+        atualizarCarrinho();
+    }
+
+    function salvarCarrinho() {
+        localStorage.setItem('kzn_carrinho', JSON.stringify(carrinho));
+        atualizarCarrinho();
+    }
+
+    window.adicionarAoCarrinho = function(nome, preco) {
+        const item = carrinho.find(i => i.nome === nome);
+        if (item) {
+            item.quantidade++;
+        } else {
+            carrinho.push({ nome, preco, quantidade: 1 });
+        }
+        salvarCarrinho();
+        alert(`✅ ${nome} adicionado ao carrinho!`);
+    };
+
+    function removerDoCarrinho(index) {
+        carrinho.splice(index, 1);
+        salvarCarrinho();
+    }
+
+    function atualizarCarrinho() {
+        const count = document.getElementById('cartCount');
+        const totalItems = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
+        count.textContent = totalItems;
+
+        const itemsContainer = document.getElementById('cartItems');
+        const totalContainer = document.getElementById('cartTotal');
+
+        if (carrinho.length === 0) {
+            itemsContainer.innerHTML = `<div class="empty-cart">🛒 Carrinho vazio</div>`;
+            totalContainer.textContent = 'R$ 0,00';
+            return;
+        }
+
+        let html = '';
+        let total = 0;
+        carrinho.forEach((item, index) => {
+            const subtotal = item.preco * item.quantidade;
+            total += subtotal;
+            html += `
+                <div class="cart-item">
+                    <span class="item-name">${item.nome} x${item.quantidade}</span>
+                    <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
+                    <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
+                </div>
+            `;
+        });
+        itemsContainer.innerHTML = html;
+        totalContainer.textContent = `R$ ${total.toFixed(2)}`;
+    }
+
+    window.finalizarCompra = function() {
+        if (carrinho.length === 0) {
+            alert('⚠️ Seu carrinho está vazio!');
+            return;
+        }
+        const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+        if (confirm(`🛒 Finalizar compra de R$ ${total.toFixed(2)}?`)) {
+            carrinho = [];
+            salvarCarrinho();
+            alert('💳 Pagamento gerado!');
+            abrirModalPix();
+            document.getElementById('planInfo').textContent = `Total: R$ ${total.toFixed(2)}`;
+            document.getElementById('cartDropdown').classList.remove('open');
+        }
+    };
+
     window.toggleCarrinho = function() {
-        const dropdown = document.getElementById('cartDropdown');
-        dropdown.classList.toggle('open');
+        document.getElementById('cartDropdown').classList.toggle('open');
+    };
+
+    // ====== PERFIL ======
+    function carregarPerfil() {
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (dados) {
+            try {
+                usuarioLogado = JSON.parse(dados);
+                document.getElementById('userDisplay').textContent = usuarioLogado.nome || 'Usuário';
+                document.getElementById('profileName').textContent = usuarioLogado.nome || 'KZN Usuário';
+                document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
+                document.getElementById('editNome').value = usuarioLogado.nome || '';
+                document.getElementById('editEmail').value = usuarioLogado.email || '';
+                document.getElementById('editEmail').disabled = true;
+
+                if (usuarioLogado.avatar) {
+                    document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
+                    document.getElementById('avatarProfileImage').style.display = 'block';
+                    document.getElementById('avatarProfileText').style.display = 'none';
+                    document.getElementById('avatarText').textContent = '';
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                } else {
+                    const letra = (usuarioLogado.nome || 'U')[0].toUpperCase();
+                    document.getElementById('avatarProfileText').textContent = letra;
+                    document.getElementById('avatarProfileText').style.display = 'block';
+                    document.getElementById('avatarProfileImage').style.display = 'none';
+                    document.getElementById('avatarText').textContent = letra;
+                }
+            } catch (e) {
+                resetarPerfilPadrao();
+            }
+        } else {
+            resetarPerfilPadrao();
+        }
+    }
+
+    function resetarPerfilPadrao() {
+        document.getElementById('userDisplay').textContent = 'Entrar';
+        document.getElementById('profileName').textContent = 'KZN Usuário';
+        document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
+        document.getElementById('avatarText').textContent = 'K';
+        document.getElementById('avatarProfileText').textContent = 'K';
+        document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
+        document.getElementById('avatarProfileImage').style.display = 'none';
+        document.getElementById('avatarProfileText').style.display = 'block';
+    }
+
+    window.abrirPerfil = function() {
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (dados) {
+            window.location.href = '#perfil';
+        } else {
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+        }
+    };
+
+    window.uploadAvatar = function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('⚠️ Por favor, selecione uma imagem.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imagem = e.target.result;
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (usuario) {
+                usuario.avatar = imagem;
+                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+                const idx = usuarios.findIndex(u => u.email === usuario.email);
+                if (idx !== -1) {
+                    usuarios[idx].avatar = imagem;
+                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+                }
+                carregarPerfil();
+                alert('✅ Foto de perfil atualizada!');
+            }
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    };
+
+    window.editarPerfil = function(event) {
+        if (event) event.preventDefault();
+        document.getElementById('editProfileArea').style.display = 'block';
+        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+        if (usuario) {
+            document.getElementById('editNome').value = usuario.nome || '';
+            document.getElementById('editEmail').value = usuario.email || '';
+            document.getElementById('editEmail').disabled = true;
+        }
+    };
+
+    window.cancelarEdicaoPerfil = function() {
+        document.getElementById('editProfileArea').style.display = 'none';
+    };
+
+    window.salvarEdicaoPerfil = function() {
+        const nome = document.getElementById('editNome').value.trim();
+        const senha = document.getElementById('editSenha').value;
+        if (!nome) { alert('⚠️ Digite um nome válido.'); return; }
+
+        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+        if (!usuario) { alert('❌ Nenhum usuário logado.'); return; }
+
+        usuario.nome = nome;
+        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+
+        const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+        const idx = usuarios.findIndex(u => u.email === usuario.email);
+        if (idx !== -1) {
+            usuarios[idx].nome = nome;
+            if (senha && senha.length >= 6) {
+                usuarios[idx].senha = senha;
+                alert('🔐 Senha atualizada!');
+            }
+            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+        }
+
+        document.getElementById('userDisplay').textContent = nome;
+        document.getElementById('profileName').textContent = nome;
+        document.getElementById('editProfileArea').style.display = 'none';
+        alert('✅ Perfil atualizado!');
     };
 
     // ====== NOTIFICAÇÕES ======
@@ -4205,85 +4389,6 @@
         renderizarNotificacoes();
     };
 
-    // ====== CARRINHO ======
-    let carrinho = [];
-
-    function carregarCarrinho() {
-        const dados = localStorage.getItem('kzn_carrinho');
-        if (dados) {
-            try { carrinho = JSON.parse(dados); } catch (e) { carrinho = []; }
-        }
-        atualizarCarrinho();
-    }
-
-    function salvarCarrinho() {
-        localStorage.setItem('kzn_carrinho', JSON.stringify(carrinho));
-        atualizarCarrinho();
-    }
-
-    window.adicionarAoCarrinho = function(nome, preco) {
-        const item = carrinho.find(i => i.nome === nome);
-        if (item) {
-            item.quantidade++;
-        } else {
-            carrinho.push({ nome, preco, quantidade: 1 });
-        }
-        salvarCarrinho();
-        alert(`✅ ${nome} adicionado ao carrinho!`);
-    };
-
-    function removerDoCarrinho(index) {
-        carrinho.splice(index, 1);
-        salvarCarrinho();
-    }
-
-    function atualizarCarrinho() {
-        const count = document.getElementById('cartCount');
-        const totalItems = carrinho.reduce((sum, item) => sum + item.quantidade, 0);
-        count.textContent = totalItems;
-
-        const itemsContainer = document.getElementById('cartItems');
-        const totalContainer = document.getElementById('cartTotal');
-
-        if (carrinho.length === 0) {
-            itemsContainer.innerHTML = `<div class="empty-cart">🛒 Carrinho vazio</div>`;
-            totalContainer.textContent = 'R$ 0,00';
-            return;
-        }
-
-        let html = '';
-        let total = 0;
-        carrinho.forEach((item, index) => {
-            const subtotal = item.preco * item.quantidade;
-            total += subtotal;
-            html += `
-                <div class="cart-item">
-                    <span class="item-name">${item.nome} x${item.quantidade}</span>
-                    <span class="item-price">R$ ${subtotal.toFixed(2)}</span>
-                    <span class="item-remove" onclick="removerDoCarrinho(${index})"><i class="fas fa-trash"></i></span>
-                </div>
-            `;
-        });
-        itemsContainer.innerHTML = html;
-        totalContainer.textContent = `R$ ${total.toFixed(2)}`;
-    }
-
-    window.finalizarCompra = function() {
-        if (carrinho.length === 0) {
-            alert('⚠️ Seu carrinho está vazio!');
-            return;
-        }
-        const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-        if (confirm(`🛒 Finalizar compra de R$ ${total.toFixed(2)}?\n\nClique em OK para gerar o pagamento.`)) {
-            carrinho = [];
-            salvarCarrinho();
-            alert('💳 Pagamento gerado! Copie a chave PIX abaixo:');
-            abrirModalPix();
-            document.getElementById('planInfo').textContent = `Total: R$ ${total.toFixed(2)}`;
-            document.getElementById('cartDropdown').classList.remove('open');
-        }
-    };
-
     // ====== MODAIS PIX ======
     window.abrirModalPix = function() {
         document.getElementById('modalPix').classList.add('open');
@@ -4319,343 +4424,6 @@
         });
     };
 
-    // ====== LOGIN ======
-    window.fazerLogin = function() {
-        const email = document.getElementById('loginEmail').value.trim();
-        const senha = document.getElementById('loginSenha').value.trim();
-        const status = document.getElementById('loginStatus');
-
-        if (!email || !senha) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '⚠️ Preencha todos os campos.';
-            return;
-        }
-
-        const usuario = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
-        if (!usuario) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '❌ E-mail ou senha incorretos.';
-            return;
-        }
-
-        localStorage.setItem('kzn_usuario_logado', JSON.stringify({
-            nome: usuario.nome,
-            email: usuario.email,
-            avatar: usuario.avatar || null
-        }));
-        loginProcessed = true;
-        setLoggedIn();
-        status.className = 'form-status success';
-        status.style.display = 'block';
-        status.textContent = '✅ Login realizado! Bem-vindo ' + usuario.nome;
-    };
-
-    window.fazerRegistro = function() {
-        const nome = document.getElementById('registroNome').value.trim();
-        const email = document.getElementById('registroEmail').value.trim();
-        const senha = document.getElementById('registroSenha').value.trim();
-        const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
-        const status = document.getElementById('registroStatus');
-
-        if (!nome || !email || !senha || !confirmar) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '⚠️ Preencha todos os campos.';
-            return;
-        }
-
-        if (senha.length < 6) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '⚠️ A senha deve ter no mínimo 6 caracteres.';
-            return;
-        }
-
-        if (senha !== confirmar) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '⚠️ As senhas não coincidem.';
-            return;
-        }
-
-        if (usuariosCadastrados.find(u => u.email === email)) {
-            status.className = 'form-status error';
-            status.style.display = 'block';
-            status.textContent = '❌ Este e-mail já está cadastrado.';
-            return;
-        }
-
-        usuariosCadastrados.push({ nome, email, senha });
-        salvarUsuarios();
-
-        status.className = 'form-status success';
-        status.style.display = 'block';
-        status.textContent = '✅ Conta criada com sucesso! Faça login.';
-
-        document.getElementById('registroNome').value = '';
-        document.getElementById('registroEmail').value = '';
-        document.getElementById('registroSenha').value = '';
-        document.getElementById('registroConfirmarSenha').value = '';
-
-        setTimeout(() => {
-            window.trocarLoginTab('login');
-            document.getElementById('loginEmail').value = email;
-            status.style.display = 'none';
-        }, 2000);
-    };
-
-    window.trocarLoginTab = function(tab) {
-        const loginBtn = document.getElementById('loginTabBtn');
-        const registroBtn = document.getElementById('registroTabBtn');
-        const loginForm = document.getElementById('loginForm');
-        const registroForm = document.getElementById('registroForm');
-
-        if (tab === 'login') {
-            loginBtn.classList.add('active');
-            loginBtn.classList.remove('registro-active');
-            registroBtn.classList.remove('active');
-            loginForm.style.display = 'block';
-            registroForm.style.display = 'none';
-        } else {
-            registroBtn.classList.add('active');
-            registroBtn.classList.add('registro-active');
-            loginBtn.classList.remove('active');
-            registroForm.style.display = 'block';
-            loginForm.style.display = 'none';
-        }
-    };
-
-    window.handleWelcomeLogin = function(response) {
-        if (isLoggingIn || loginProcessed) {
-            console.log('⏳ Login já processado, ignorando...');
-            return;
-        }
-
-        isLoggingIn = true;
-
-        try {
-            const payload = parseJwt(response.credential);
-            const usuario = {
-                nome: payload.name,
-                email: payload.email,
-                avatar: payload.picture
-            };
-
-            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-            loginProcessed = true;
-            setLoggedIn();
-
-            console.log('✅ Login realizado com sucesso! Bem-vindo ' + usuario.nome);
-
-        } catch (e) {
-            console.error('Erro no login:', e);
-            alert('❌ Ocorreu um erro ao fazer login. Tente novamente.');
-        } finally {
-            setTimeout(() => {
-                isLoggingIn = false;
-            }, 1000);
-        }
-    };
-
-    function parseJwt(token) {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    }
-
-    // ====== PERFIL ======
-    function resetarPerfilPadrao() {
-        document.getElementById('userDisplay').textContent = 'Entrar';
-        document.getElementById('profileName').textContent = 'KZN Usuário';
-        document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
-        document.getElementById('avatarText').textContent = 'K';
-        document.getElementById('avatarProfileText').textContent = 'K';
-        document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
-        document.getElementById('avatarProfileImage').style.display = 'none';
-        document.getElementById('avatarProfileText').style.display = 'block';
-        document.getElementById('editNome').value = '';
-        document.getElementById('editEmail').value = '';
-    }
-
-    function carregarPerfil() {
-        const dados = localStorage.getItem('kzn_usuario_logado');
-        if (dados) {
-            try {
-                usuarioLogado = JSON.parse(dados);
-                document.getElementById('userDisplay').textContent = usuarioLogado.nome || 'Usuário';
-                document.getElementById('profileName').textContent = usuarioLogado.nome || 'KZN Usuário';
-                document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
-                document.getElementById('editNome').value = usuarioLogado.nome || '';
-                document.getElementById('editEmail').value = usuarioLogado.email || '';
-                document.getElementById('editEmail').disabled = true;
-                document.getElementById('editEmail').style.opacity = '0.6';
-                document.getElementById('editEmail').style.cursor = 'not-allowed';
-
-                if (usuarioLogado.avatar) {
-                    document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
-                    document.getElementById('avatarProfileImage').style.display = 'block';
-                    document.getElementById('avatarProfileText').style.display = 'none';
-                    document.getElementById('avatarText').textContent = '';
-                    document.querySelector('.profile-btn .avatar').innerHTML =
-                        `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-                } else {
-                    const letra = (usuarioLogado.nome || 'U')[0].toUpperCase();
-                    document.getElementById('avatarProfileText').textContent = letra;
-                    document.getElementById('avatarProfileText').style.display = 'block';
-                    document.getElementById('avatarProfileImage').style.display = 'none';
-                    document.getElementById('avatarText').textContent = letra;
-                }
-            } catch (e) {
-                resetarPerfilPadrao();
-            }
-        } else {
-            resetarPerfilPadrao();
-        }
-    }
-
-    window.abrirPerfil = function() {
-        const dados = localStorage.getItem('kzn_usuario_logado');
-        if (dados) {
-            window.location.href = '#perfil';
-        } else {
-            document.getElementById('welcomeOverlay').classList.remove('hidden');
-        }
-    };
-
-    window.uploadAvatar = function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith('image/')) {
-            alert('⚠️ Por favor, selecione uma imagem (JPG, PNG, GIF).');
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imagem = e.target.result;
-            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-            if (usuario) {
-                usuario.avatar = imagem;
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-                const idx = usuarios.findIndex(u => u.email === usuario.email);
-                if (idx !== -1) {
-                    usuarios[idx].avatar = imagem;
-                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-                }
-                carregarPerfil();
-                alert('✅ Foto de perfil atualizada com sucesso!');
-            }
-        };
-        reader.readAsDataURL(file);
-        event.target.value = '';
-    };
-
-    window.editarPerfil = function(event) {
-        if (event) event.preventDefault();
-        const area = document.getElementById('editProfileArea');
-        area.style.display = 'block';
-        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-        if (usuario) {
-            document.getElementById('editNome').value = usuario.nome || '';
-            document.getElementById('editEmail').value = usuario.email || '';
-            document.getElementById('editEmail').disabled = true;
-            document.getElementById('editEmail').style.opacity = '0.6';
-            document.getElementById('editEmail').style.cursor = 'not-allowed';
-        }
-        setTimeout(() => {
-            area.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-    };
-
-    window.cancelarEdicaoPerfil = function() {
-        document.getElementById('editProfileArea').style.display = 'none';
-        document.getElementById('editEmail').disabled = true;
-        document.getElementById('editEmail').style.opacity = '0.6';
-        document.getElementById('editEmail').style.cursor = 'not-allowed';
-    };
-
-    window.salvarEdicaoPerfil = function() {
-        const nome = document.getElementById('editNome').value.trim();
-        const senha = document.getElementById('editSenha').value;
-
-        if (!nome) {
-            alert('⚠️ Digite um nome válido.');
-            return;
-        }
-
-        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-        if (!usuario) {
-            alert('❌ Nenhum usuário logado.');
-            return;
-        }
-
-        usuario.nome = nome;
-        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-
-        const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-        const idx = usuarios.findIndex(u => u.email === usuario.email);
-        if (idx !== -1) {
-            usuarios[idx].nome = nome;
-            if (senha && senha.length >= 6) {
-                usuarios[idx].senha = senha;
-                alert('🔐 Senha atualizada com sucesso!');
-            }
-            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-        }
-
-        document.getElementById('userDisplay').textContent = nome;
-        document.getElementById('profileName').textContent = nome;
-        
-        if (!usuario.avatar) {
-            const letra = nome[0].toUpperCase();
-            document.getElementById('avatarText').textContent = letra;
-            document.getElementById('avatarProfileText').textContent = letra;
-        }
-
-        document.getElementById('editProfileArea').style.display = 'none';
-        document.getElementById('editEmail').disabled = true;
-        document.getElementById('editEmail').style.opacity = '0.6';
-        document.getElementById('editEmail').style.cursor = 'not-allowed';
-        
-        alert('✅ Perfil atualizado com sucesso!');
-    };
-
-    // ====== LOGOUT ======
-    window.logout = function() {
-        if (!confirm('Tem certeza que deseja sair?')) return;
-        
-        if (usuarioLogado) {
-            const userRef = usuariosRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-            userRef.remove();
-        }
-        
-        localStorage.removeItem('kzn_usuario_logado');
-        window.chatLoaded = false;
-        loginProcessed = false;
-        isLoggingIn = false;
-
-        document.getElementById('welcomeOverlay').classList.remove('hidden');
-        document.getElementById('chatToggleBtn').style.display = 'none';
-
-        const chat = document.getElementById('chatWindow');
-        chat.classList.remove('open');
-        chat.classList.remove('fullscreen');
-        chatAberto = false;
-        isFullscreen = false;
-        document.getElementById('fullscreenBtn').innerHTML = '<i class="fas fa-expand"></i>';
-
-        const container = document.getElementById('chatMessages');
-        container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
-
-        resetarPerfilPadrao();
-        alert('👋 Você saiu da sua conta.');
-    };
-
     // ====== OUTRAS FUNÇÕES ======
     window.trocarAba = function(aba) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -4682,34 +4450,6 @@
         document.getElementById('langPt').classList.toggle('active', lang === 'pt');
         document.getElementById('langEn').classList.toggle('active', lang === 'en');
     };
-
-    // ====== SET LOGGED IN ======
-    function setLoggedIn() {
-        document.getElementById('welcomeOverlay').classList.add('hidden');
-        document.getElementById('chatToggleBtn').style.display = 'flex';
-        if (!window.chatLoaded) {
-            carregarMensagens();
-            carregarTyping();
-            window.chatLoaded = true;
-        }
-        carregarPerfil();
-        atualizarStatusOnline();
-        registrarServiceWorker();
-    }
-
-    function verificarLogin() {
-        const usuario = localStorage.getItem('kzn_usuario_logado');
-        if (usuario) {
-            loginProcessed = true;
-            usuarioLogado = JSON.parse(usuario);
-            setLoggedIn();
-        } else {
-            loginProcessed = false;
-            isLoggingIn = false;
-            document.getElementById('welcomeOverlay').classList.remove('hidden');
-            document.getElementById('chatToggleBtn').style.display = 'none';
-        }
-    }
 
     // ====== INICIALIZAÇÃO ======
     document.addEventListener('DOMContentLoaded', function() {
@@ -4746,14 +4486,10 @@
                     }
                     return;
                 }
-                
+
                 if (usuarioLogado && e.key !== 'Enter') {
                     const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                    userTypingRef.set({ 
-                        nome: usuarioLogado.nome, 
-                        timestamp: Date.now() 
-                    });
-                    
+                    userTypingRef.set({ nome: usuarioLogado.nome, timestamp: Date.now() });
                     clearTimeout(typingTimeout);
                     typingTimeout = setTimeout(() => {
                         userTypingRef.remove();
@@ -4775,6 +4511,8 @@
                 document.getElementById('cartDropdown').classList.remove('open');
                 document.getElementById('modalPix').classList.remove('open');
                 document.getElementById('modalPixXcore').classList.remove('open');
+                document.getElementById('userMenuOverlay').classList.remove('open');
+                document.getElementById('modalOverlay').classList.remove('open');
             }
         });
 
@@ -4791,26 +4529,25 @@
         carregarNotificacoes();
         carregarCarrinho();
         carregarUsuariosOnline();
-        verificarLogin();
-        atualizarBadgeNotificacoes();
-        renderizarNotificacoes();
+
+        const usuario = localStorage.getItem('kzn_usuario_logado');
+        if (usuario) {
+            usuarioLogado = JSON.parse(usuario);
+            setLoggedIn();
+        } else {
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+            document.getElementById('chatWindow').classList.remove('open');
+        }
 
         if (notificacoes.length === 0) {
             adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
             adicionarNotificacao('⚡ Conheça o Xcore Executor!', 'alerta');
         }
 
-        setTimeout(() => {
-            if (usuarioLogado && !botBoasVindasEnviado) {
-                enviarMensagemBot(`🤖 **BOT Guardian online!**\n\nOlá, ${usuarioLogado.nome}! 👋\n\nSou o assistente oficial do KZN MENU. Digite **/comandos** para ver todos os comandos disponíveis.\n\n🔹 Para regras, digite **/regras**\n🔹 Para ver quem está online, digite **/online**\n\nDivirta-se e respeite as regras! 🚀`);
-                botBoasVindasEnviado = true;
-            }
-        }, 2000);
-
         console.log('🔥 KZN MENU carregado com sucesso!');
         console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
-        console.log('🤖 BOT Guardian ativo!');
-        console.log('💬 Chat em tempo real com moderação!');
+        console.log('🤖 KZN BOT ativo!');
+        console.log('💬 Chat Global com moderação!');
     });
     </script>
 </body>
