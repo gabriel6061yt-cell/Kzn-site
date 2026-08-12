@@ -3543,6 +3543,8 @@
 
         let nomeClass = '';
         let badgeHtml = '';
+
+        // ⚡ VERIFICA SE É ADMIN E MOSTRA O BADGE CORRETAMENTE
         if (isBotMsg) {
             nomeClass = 'bot';
             badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
@@ -3550,12 +3552,18 @@
             nomeClass = 'proprietario';
             badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
         } else {
-            verificarAdmin(dados.email, (admin) => {
-                if (admin && !isBotMsg) {
+            // Verifica se é admin
+            verificarAdmin(dados.email, (isAdmin) => {
+                if (isAdmin && !isBotMsg) {
                     badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
-                    div.querySelector('.msg-nome')?.classList.add('admin');
+                    const nomeSpan = div.querySelector('.msg-nome');
+                    if (nomeSpan) nomeSpan.classList.add('admin');
                 }
             });
+            // Define a classe padrão se não for admin
+            if (!badgeHtml) {
+                // Não faz nada, mantém a cor padrão
+            }
         }
 
         const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
@@ -3619,7 +3627,7 @@
         });
     };
 
-    // ====== TYPING (CORRIGIDO COM SCROLL AUTOMÁTICO) ======
+    // ====== TYPING ======
     function carregarTyping() {
         const typingIndicator = document.getElementById('typingIndicator');
         const typingUser = document.getElementById('typingUser');
@@ -3636,7 +3644,6 @@
             typingUser.textContent = dados.nome;
             typingIndicator.classList.add('show');
             
-            // ⚡ FORÇA O SCROLL PARA O FINAL QUANDO ALGUÉM COMEÇA A DIGITAR
             setTimeout(() => {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }, 50);
@@ -3670,7 +3677,7 @@
         });
     }
 
-    // ====== MONITORAR SCROLL PARA O INDICADOR DE DIGITAÇÃO ======
+    // ====== MONITORAR SCROLL ======
     function monitorarScrollChat() {
         const chatMessages = document.getElementById('chatMessages');
         const typingIndicator = document.getElementById('typingIndicator');
@@ -3865,7 +3872,7 @@
         });
     };
 
-    // ====== PROCESSAR COMANDOS (COMPLETO) ======
+    // ====== PROCESSAR COMANDOS ======
     function processarComando(texto, usuario) {
         const partes = texto.split(' ');
         const comando = partes[0].toLowerCase();
@@ -4245,12 +4252,235 @@
         return outputArray;
     }
 
+    // ====== PERFIL ======
+    function carregarPerfil() {
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (dados) {
+            try {
+                const usuario = JSON.parse(dados);
+                usuarioLogado = usuario;
+                
+                document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
+                document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
+                document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
+                document.getElementById('editNome').value = usuario.nome || '';
+                document.getElementById('editEmail').value = usuario.email || '';
+                document.getElementById('editEmail').disabled = true;
+
+                if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
+                    document.getElementById('avatarProfileImage').src = usuario.avatar;
+                    document.getElementById('avatarProfileImage').style.display = 'block';
+                    document.getElementById('avatarProfileText').style.display = 'none';
+                    document.getElementById('avatarText').textContent = '';
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                } else if (usuario.avatar && usuario.avatar.startsWith('http')) {
+                    document.getElementById('avatarProfileImage').src = usuario.avatar;
+                    document.getElementById('avatarProfileImage').style.display = 'block';
+                    document.getElementById('avatarProfileText').style.display = 'none';
+                    document.getElementById('avatarText').textContent = '';
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                } else {
+                    const letra = (usuario.nome || 'U')[0].toUpperCase();
+                    document.getElementById('avatarProfileText').textContent = letra;
+                    document.getElementById('avatarProfileText').style.display = 'block';
+                    document.getElementById('avatarProfileImage').style.display = 'none';
+                    document.getElementById('avatarText').textContent = letra;
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                }
+                
+                return true;
+            } catch (e) {
+                console.error('Erro ao carregar perfil:', e);
+                resetarPerfilPadrao();
+                return false;
+            }
+        } else {
+            resetarPerfilPadrao();
+            return false;
+        }
+    }
+
+    function resetarPerfilPadrao() {
+        document.getElementById('userDisplay').textContent = 'Entrar';
+        document.getElementById('profileName').textContent = 'KZN Usuário';
+        document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
+        document.getElementById('avatarText').textContent = 'K';
+        document.getElementById('avatarProfileText').textContent = 'K';
+        document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
+        document.getElementById('avatarProfileImage').style.display = 'none';
+        document.getElementById('avatarProfileText').style.display = 'block';
+        document.getElementById('editNome').value = '';
+        document.getElementById('editEmail').value = '';
+    }
+
+    window.salvarPerfil = function(nome, avatar) {
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (!dados) return false;
+        
+        try {
+            const usuario = JSON.parse(dados);
+            if (nome) usuario.nome = nome;
+            if (avatar) usuario.avatar = avatar;
+            
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+            
+            const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+            const idx = usuarios.findIndex(u => u.email === usuario.email);
+            if (idx !== -1) {
+                usuarios[idx].nome = usuario.nome;
+                if (avatar) usuarios[idx].avatar = avatar;
+                localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+            }
+            
+            carregarPerfil();
+            return true;
+        } catch (e) {
+            console.error('Erro ao salvar perfil:', e);
+            return false;
+        }
+    };
+
+    window.uploadAvatar = function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('⚠️ Por favor, selecione uma imagem (JPG, PNG, GIF).');
+            return;
+        }
+        
+        if (file.size > 2 * 1024 * 1024) {
+            alert('⚠️ A imagem deve ter no máximo 2MB.');
+            event.target.value = '';
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imagem = e.target.result;
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (usuario) {
+                usuario.avatar = imagem;
+                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                
+                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+                const idx = usuarios.findIndex(u => u.email === usuario.email);
+                if (idx !== -1) {
+                    usuarios[idx].avatar = imagem;
+                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+                }
+                
+                carregarPerfil();
+                alert('✅ Foto de perfil atualizada com sucesso!');
+            }
+        };
+        reader.readAsDataURL(file);
+        event.target.value = '';
+    };
+
+    window.editarPerfil = function(event) {
+        if (event) event.preventDefault();
+        const area = document.getElementById('editProfileArea');
+        area.style.display = 'block';
+        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+        if (usuario) {
+            document.getElementById('editNome').value = usuario.nome || '';
+            document.getElementById('editEmail').value = usuario.email || '';
+            document.getElementById('editEmail').disabled = true;
+            document.getElementById('editEmail').style.opacity = '0.6';
+            document.getElementById('editEmail').style.cursor = 'not-allowed';
+        }
+        setTimeout(() => {
+            area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    };
+
+    window.cancelarEdicaoPerfil = function() {
+        document.getElementById('editProfileArea').style.display = 'none';
+        document.getElementById('editEmail').disabled = true;
+        document.getElementById('editEmail').style.opacity = '0.6';
+        document.getElementById('editEmail').style.cursor = 'not-allowed';
+    };
+
+    window.salvarEdicaoPerfil = function() {
+        const nome = document.getElementById('editNome').value.trim();
+        const senha = document.getElementById('editSenha').value;
+
+        if (!nome) {
+            alert('⚠️ Digite um nome válido.');
+            return;
+        }
+
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (!dados) {
+            alert('❌ Nenhum usuário logado.');
+            return;
+        }
+
+        try {
+            const usuario = JSON.parse(dados);
+            const emailAntigo = usuario.email;
+            
+            usuario.nome = nome;
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+
+            const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+            const idx = usuarios.findIndex(u => u.email === emailAntigo);
+            if (idx !== -1) {
+                usuarios[idx].nome = nome;
+                if (senha && senha.length >= 6) {
+                    usuarios[idx].senha = senha;
+                    alert('🔐 Senha atualizada com sucesso!');
+                }
+                localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+            }
+
+            document.getElementById('userDisplay').textContent = nome;
+            document.getElementById('profileName').textContent = nome;
+            
+            const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (!usuarioAtual.avatar) {
+                const letra = nome[0].toUpperCase();
+                document.getElementById('avatarText').textContent = letra;
+                document.getElementById('avatarProfileText').textContent = letra;
+                document.querySelector('.profile-btn .avatar').innerHTML =
+                    `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+            }
+
+            document.getElementById('editProfileArea').style.display = 'none';
+            document.getElementById('editEmail').disabled = true;
+            document.getElementById('editEmail').style.opacity = '0.6';
+            document.getElementById('editEmail').style.cursor = 'not-allowed';
+            document.getElementById('editSenha').value = '';
+            
+            alert('✅ Perfil atualizado com sucesso!');
+        } catch (e) {
+            console.error('Erro ao salvar edição:', e);
+            alert('❌ Erro ao salvar perfil. Tente novamente.');
+        }
+    };
+
+    window.abrirPerfil = function() {
+        const dados = localStorage.getItem('kzn_usuario_logado');
+        if (dados) {
+            window.location.href = '#perfil';
+            setTimeout(carregarPerfil, 100);
+        } else {
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+        }
+    };
+
     // ====== LOGIN / REGISTRO ======
     function setLoggedIn() {
         document.getElementById('welcomeOverlay').classList.add('hidden');
         document.getElementById('chatToggleBtn').style.display = 'flex';
         document.getElementById('chatWindow').classList.add('open');
         chatAberto = true;
+        
+        carregarPerfil();
+        
         carregarMensagens();
         carregarTyping();
         monitorarScrollChat();
@@ -4389,11 +4619,12 @@
             userRef.remove();
         }
         localStorage.removeItem('kzn_usuario_logado');
+        usuarioLogado = null;
         document.getElementById('welcomeOverlay').classList.remove('hidden');
         document.getElementById('chatToggleBtn').style.display = 'none';
         document.getElementById('chatWindow').classList.remove('open');
         chatAberto = false;
-        usuarioLogado = null;
+        resetarPerfilPadrao();
         alert('👋 Você saiu da sua conta.');
     };
 
@@ -4478,132 +4709,6 @@
 
     window.toggleCarrinho = function() {
         document.getElementById('cartDropdown').classList.toggle('open');
-    };
-
-    // ====== PERFIL ======
-    function carregarPerfil() {
-        const dados = localStorage.getItem('kzn_usuario_logado');
-        if (dados) {
-            try {
-                usuarioLogado = JSON.parse(dados);
-                document.getElementById('userDisplay').textContent = usuarioLogado.nome || 'Usuário';
-                document.getElementById('profileName').textContent = usuarioLogado.nome || 'KZN Usuário';
-                document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
-                document.getElementById('editNome').value = usuarioLogado.nome || '';
-                document.getElementById('editEmail').value = usuarioLogado.email || '';
-                document.getElementById('editEmail').disabled = true;
-
-                if (usuarioLogado.avatar) {
-                    document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
-                    document.getElementById('avatarProfileImage').style.display = 'block';
-                    document.getElementById('avatarProfileText').style.display = 'none';
-                    document.getElementById('avatarText').textContent = '';
-                    document.querySelector('.profile-btn .avatar').innerHTML =
-                        `<img src="${usuarioLogado.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-                } else {
-                    const letra = (usuarioLogado.nome || 'U')[0].toUpperCase();
-                    document.getElementById('avatarProfileText').textContent = letra;
-                    document.getElementById('avatarProfileText').style.display = 'block';
-                    document.getElementById('avatarProfileImage').style.display = 'none';
-                    document.getElementById('avatarText').textContent = letra;
-                }
-            } catch (e) {
-                resetarPerfilPadrao();
-            }
-        } else {
-            resetarPerfilPadrao();
-        }
-    }
-
-    function resetarPerfilPadrao() {
-        document.getElementById('userDisplay').textContent = 'Entrar';
-        document.getElementById('profileName').textContent = 'KZN Usuário';
-        document.getElementById('profileEmail').textContent = 'usuario@kzn.com';
-        document.getElementById('avatarText').textContent = 'K';
-        document.getElementById('avatarProfileText').textContent = 'K';
-        document.querySelector('.profile-btn .avatar').innerHTML = '<span class="avatar-letter" id="avatarText">K</span>';
-        document.getElementById('avatarProfileImage').style.display = 'none';
-        document.getElementById('avatarProfileText').style.display = 'block';
-    }
-
-    window.abrirPerfil = function() {
-        const dados = localStorage.getItem('kzn_usuario_logado');
-        if (dados) {
-            window.location.href = '#perfil';
-        } else {
-            document.getElementById('welcomeOverlay').classList.remove('hidden');
-        }
-    };
-
-    window.uploadAvatar = function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith('image/')) {
-            alert('⚠️ Por favor, selecione uma imagem.');
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imagem = e.target.result;
-            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-            if (usuario) {
-                usuario.avatar = imagem;
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-                const idx = usuarios.findIndex(u => u.email === usuario.email);
-                if (idx !== -1) {
-                    usuarios[idx].avatar = imagem;
-                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-                }
-                carregarPerfil();
-                alert('✅ Foto de perfil atualizada!');
-            }
-        };
-        reader.readAsDataURL(file);
-        event.target.value = '';
-    };
-
-    window.editarPerfil = function(event) {
-        if (event) event.preventDefault();
-        document.getElementById('editProfileArea').style.display = 'block';
-        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-        if (usuario) {
-            document.getElementById('editNome').value = usuario.nome || '';
-            document.getElementById('editEmail').value = usuario.email || '';
-            document.getElementById('editEmail').disabled = true;
-        }
-    };
-
-    window.cancelarEdicaoPerfil = function() {
-        document.getElementById('editProfileArea').style.display = 'none';
-    };
-
-    window.salvarEdicaoPerfil = function() {
-        const nome = document.getElementById('editNome').value.trim();
-        const senha = document.getElementById('editSenha').value;
-        if (!nome) { alert('⚠️ Digite um nome válido.'); return; }
-
-        const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-        if (!usuario) { alert('❌ Nenhum usuário logado.'); return; }
-
-        usuario.nome = nome;
-        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-
-        const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-        const idx = usuarios.findIndex(u => u.email === usuario.email);
-        if (idx !== -1) {
-            usuarios[idx].nome = nome;
-            if (senha && senha.length >= 6) {
-                usuarios[idx].senha = senha;
-                alert('🔐 Senha atualizada!');
-            }
-            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-        }
-
-        document.getElementById('userDisplay').textContent = nome;
-        document.getElementById('profileName').textContent = nome;
-        document.getElementById('editProfileArea').style.display = 'none';
-        alert('✅ Perfil atualizado!');
     };
 
     // ====== NOTIFICAÇÕES ======
@@ -4824,9 +4929,13 @@
         if (usuario) {
             usuarioLogado = JSON.parse(usuario);
             setLoggedIn();
+            carregarPerfil();
         } else {
+            loginProcessed = false;
+            isLoggingIn = false;
             document.getElementById('welcomeOverlay').classList.remove('hidden');
             document.getElementById('chatWindow').classList.remove('open');
+            document.getElementById('chatToggleBtn').style.display = 'none';
         }
 
         if (notificacoes.length === 0) {
