@@ -73,8 +73,15 @@
             border-radius: 8px;
             margin: 0.2rem 0;
             animation: fadeIn 0.3s ease;
+            flex-shrink: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
-        .typing-indicator.show { display: block; }
+        .typing-indicator.show { 
+            display: block !important; 
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
         .typing-indicator i {
             margin-right: 6px;
             color: var(--secondary-light);
@@ -1614,6 +1621,7 @@
             border-left: 2px solid var(--secondary);
             transition: 0.2s;
             word-break: break-word;
+            flex-shrink: 0;
         }
         .chat-msg.msg-new {
             animation: msgIn 0.25s ease;
@@ -3589,7 +3597,14 @@
             }
         }
 
-        container.scrollTop = container.scrollHeight;
+        // ⚡ SCROLL AUTOMÁTICO
+        if (!isHistorical && !isInitialLoad) {
+            setTimeout(() => {
+                container.scrollTop = container.scrollHeight;
+            }, 50);
+        } else {
+            container.scrollTop = container.scrollHeight;
+        }
     }
 
     window.apagarMensagem = function(key) {
@@ -3604,10 +3619,11 @@
         });
     };
 
-    // ====== TYPING ======
+    // ====== TYPING (CORRIGIDO COM SCROLL AUTOMÁTICO) ======
     function carregarTyping() {
         const typingIndicator = document.getElementById('typingIndicator');
         const typingUser = document.getElementById('typingUser');
+        const chatMessages = document.getElementById('chatMessages');
         let timeoutId = null;
 
         typingRef.on('child_added', (snapshot) => {
@@ -3619,6 +3635,11 @@
 
             typingUser.textContent = dados.nome;
             typingIndicator.classList.add('show');
+            
+            // ⚡ FORÇA O SCROLL PARA O FINAL QUANDO ALGUÉM COMEÇA A DIGITAR
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 50);
 
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
@@ -3629,6 +3650,7 @@
                     });
                     if (!hasTyping) {
                         typingIndicator.classList.remove('show');
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
                     }
                 });
             }, 4000);
@@ -3642,8 +3664,26 @@
                 });
                 if (!hasTyping) {
                     typingIndicator.classList.remove('show');
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             });
+        });
+    }
+
+    // ====== MONITORAR SCROLL PARA O INDICADOR DE DIGITAÇÃO ======
+    function monitorarScrollChat() {
+        const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+        
+        chatMessages.addEventListener('scroll', function() {
+            if (typingIndicator.classList.contains('show')) {
+                const rect = typingIndicator.getBoundingClientRect();
+                const containerRect = chatMessages.getBoundingClientRect();
+                
+                if (rect.bottom > containerRect.bottom || rect.top < containerRect.top) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
         });
     }
 
@@ -3825,6 +3865,251 @@
         });
     };
 
+    // ====== PROCESSAR COMANDOS (COMPLETO) ======
+    function processarComando(texto, usuario) {
+        const partes = texto.split(' ');
+        const comando = partes[0].toLowerCase();
+        const alvo = partes.slice(1).join(' ');
+
+        if (comando === '/comandos' || comando === '/ajuda') {
+            let msg = '📋 **COMANDOS DISPONÍVEIS:**\n\n';
+            msg += '🔹 `/comandos` - Mostra esta lista\n';
+            msg += '🔹 `/regras` - Mostra as regras do chat\n';
+            msg += '🔹 `/online` - Mostra usuários online\n';
+            
+            verificarAdmin(usuario.email, (isAdminUser) => {
+                if (isAdminUser) {
+                    const isProprietarioUser = isProprietario(usuario.email);
+                    msg += '\n⚡ **COMANDOS ADMIN:**\n';
+                    if (isProprietarioUser) {
+                        msg += '🔸 `/admin [email]` - Conceder admin\n';
+                        msg += '🔸 `/removeadmin [email]` - Remover admin\n';
+                    }
+                    msg += '🔸 `/ban [email]` - Banir usuário\n';
+                    msg += '🔸 `/unban [email]` - Desbanir usuário\n';
+                    msg += '🔸 `/mute [email]` - Silenciar usuário\n';
+                    msg += '🔸 `/unmute [email]` - Dessilenciar usuário\n';
+                    msg += '🔸 `/limparchat` - Limpar mensagens\n';
+                    msg += '🔸 `/logsban` - Ver banidos\n';
+                    msg += '🔸 `/logsmute` - Ver silenciados\n';
+                }
+                enviarMensagemBot(msg);
+            });
+            return true;
+        }
+
+        if (comando === '/regras') {
+            enviarMensagemBot('📜 **REGRAS DO CHAT:**\n\n1️⃣ Respeite todos os usuários\n2️⃣ Não use linguagem ofensiva\n3️⃣ Não compartilhe links suspeitos\n4️⃣ Não faça spam\n5️⃣ Siga as instruções dos administradores\n\n⚠️ Violações podem resultar em banimento!');
+            return true;
+        }
+
+        if (comando === '/online') {
+            const online = Object.keys(usuariosOnline).length;
+            const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
+            enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
+            return true;
+        }
+
+        verificarAdmin(usuario.email, (isAdminUser) => {
+            if (!isAdminUser) {
+                if (comando.startsWith('/')) {
+                    enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
+                }
+                return;
+            }
+
+            switch (comando) {
+                case '/admin':
+                    if (!isProprietario(usuario.email)) {
+                        enviarMensagemBot('❌ Apenas o proprietário pode conceder admin!');
+                        return;
+                    }
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/admin [email]`'); return; }
+                    tornarAdmin(alvo);
+                    break;
+
+                case '/removeadmin':
+                    if (!isProprietario(usuario.email)) {
+                        enviarMensagemBot('❌ Apenas o proprietário pode remover admin!');
+                        return;
+                    }
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/removeadmin [email]`'); return; }
+                    removerAdmin(alvo);
+                    break;
+
+                case '/ban':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/ban [email]`'); return; }
+                    banirUsuario(alvo);
+                    break;
+
+                case '/unban':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unban [email]`'); return; }
+                    desbanirUsuario(alvo);
+                    break;
+
+                case '/mute':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/mute [email]`'); return; }
+                    enviarMensagemBot(`🔇 Para mutar ${alvo}, use: /mutar [email] [minutos] (ex: /mutar usuario@email.com 5)`);
+                    break;
+
+                case '/mutar':
+                    const partesMute = texto.split(' ');
+                    const emailMute = partesMute[1];
+                    const duracaoMute = parseInt(partesMute[2]) || 5;
+                    if (!emailMute) { enviarMensagemBot('❌ Uso: `/mutar [email] [minutos]`'); return; }
+                    mutarUsuario(emailMute, '', duracaoMute);
+                    break;
+
+                case '/unmute':
+                    if (!alvo) { enviarMensagemBot('❌ Uso: `/unmute [email]`'); return; }
+                    dessilenciarUsuario(alvo);
+                    break;
+
+                case '/limparchat':
+                    limparChat();
+                    break;
+
+                case '/logsban':
+                    mostrarLogsBan();
+                    break;
+
+                case '/logsmute':
+                    mostrarLogsMute();
+                    break;
+
+                default:
+                    if (comando.startsWith('/')) {
+                        enviarMensagemBot(`❌ Comando não reconhecido. Digite /comandos para ver a lista.`);
+                    }
+                    break;
+            }
+        });
+        return true;
+    }
+
+    // ====== COMANDOS ADMIN ======
+    window.limparChat = function() {
+        if (!usuarioLogado) {
+            alert('⚠️ Faça login primeiro!');
+            return;
+        }
+        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+            if (!isAdminUser) {
+                alert('⚠️ Apenas administradores podem limpar o chat!');
+                return;
+            }
+            if (!confirm('🧹 Tem certeza que deseja limpar TODAS as mensagens?')) return;
+
+            mensagensRef.remove().then(() => {
+                enviarMensagemBot(`🧹 O chat foi limpo por ${usuarioLogado.nome}`);
+                alert('✅ Chat limpo com sucesso!');
+            }).catch((err) => {
+                alert('❌ Erro ao limpar o chat: ' + err.message);
+            });
+        });
+    };
+
+    window.mostrarLogsBan = function() {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+            if (!isAdminUser) {
+                alert('⚠️ Apenas administradores podem ver os logs!');
+                return;
+            }
+
+            bansRef.once('value', (snapshot) => {
+                const bans = snapshot.val() || {};
+                const ativos = Object.values(bans).filter(b => b.ativo === true);
+                if (ativos.length === 0) {
+                    alert('📋 Nenhum usuário banido no momento.');
+                    return;
+                }
+                let msg = `📋 USUÁRIOS BANIDOS (${ativos.length}):\n\n`;
+                ativos.forEach((b, i) => {
+                    msg += `${i+1}. ${b.email}\n   Motivo: ${b.motivo}\n   Por: ${b.adminNome || b.admin}\n   Data: ${new Date(b.data).toLocaleString()}\n\n`;
+                });
+                alert(msg);
+            });
+        });
+    };
+
+    window.mostrarLogsMute = function() {
+        if (!usuarioLogado) return;
+        verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+            if (!isAdminUser) {
+                alert('⚠️ Apenas administradores podem ver os logs!');
+                return;
+            }
+
+            mutesRef.once('value', (snapshot) => {
+                const mutes = snapshot.val() || {};
+                const ativos = Object.values(mutes).filter(m => m.ativo === true);
+                if (ativos.length === 0) {
+                    alert('📋 Nenhum usuário silenciado no momento.');
+                    return;
+                }
+                let msg = `📋 USUÁRIOS SILENCIADOS (${ativos.length}):\n\n`;
+                ativos.forEach((m, i) => {
+                    msg += `${i+1}. ${m.email}\n   Motivo: ${m.motivo}\n   Por: ${m.adminNome || m.admin}\n   Data: ${new Date(m.data).toLocaleString()}\n\n`;
+                });
+                alert(msg);
+            });
+        });
+    };
+
+    window.tornarAdmin = function(email) {
+        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return; }
+        if (isBot(email)) { alert('❌ BOT não pode ser admin!'); return; }
+
+        adminsRef.once('value', (snapshot) => {
+            const admins = snapshot.val() || {};
+            const jaAdmin = Object.values(admins).some(a => a.email === email && a.ativo === true);
+            if (jaAdmin) {
+                alert(`⚠️ Usuário ${email} já é administrador!`);
+                return;
+            }
+
+            const adminRef = adminsRef.push();
+            adminRef.set({
+                email: email,
+                data: new Date().toISOString(),
+                concedido_por: usuarioLogado.email,
+                concedido_por_nome: usuarioLogado.nome,
+                ativo: true
+            }).then(() => {
+                enviarMensagemBot(`👑 Usuário **${email}** foi promovido a administrador por ${usuarioLogado.nome}`);
+                alert(`✅ Usuário ${email} agora é administrador!`);
+            }).catch((err) => {
+                alert(`❌ Erro ao promover: ${err.message}`);
+            });
+        });
+    };
+
+    window.removerAdmin = function(email) {
+        if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return; }
+        if (isProprietario(email)) { alert('❌ Não pode remover o proprietário!'); return; }
+        if (isBot(email)) { alert('❌ BOT não é admin!'); return; }
+
+        adminsRef.once('value', (snapshot) => {
+            const admins = snapshot.val() || {};
+            let encontrou = false;
+            Object.keys(admins).forEach(key => {
+                if (admins[key].email === email && admins[key].ativo === true) {
+                    adminsRef.child(key).update({ ativo: false });
+                    encontrou = true;
+                }
+            });
+            if (encontrou) {
+                enviarMensagemBot(`👤 Usuário **${email}** foi removido do cargo de administrador por ${usuarioLogado.nome}`);
+                alert(`✅ Usuário ${email} removido do cargo de admin!`);
+            } else {
+                alert(`⚠️ Usuário ${email} não é administrador.`);
+            }
+        });
+    };
+
     // ====== ENVIAR MENSAGEM ======
     window.enviarMensagem = function() {
         const input = document.getElementById('chatInput');
@@ -3866,6 +4151,10 @@
                 typingIndicator.classList.remove('show');
                 const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
                 userTypingRef.remove();
+
+                if (texto.startsWith('/')) {
+                    processarComando(texto, usuarioLogado);
+                }
             });
         });
     };
@@ -3964,6 +4253,7 @@
         chatAberto = true;
         carregarMensagens();
         carregarTyping();
+        monitorarScrollChat();
         carregarUsuariosOnline();
         atualizarStatusOnline();
         iniciarBot();
