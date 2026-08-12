@@ -1299,7 +1299,7 @@
 
         .hidden-file-input { display: none; }
 
-        /* ====== TELA DE BOAS-VINDAS (LOGIN) ====== */
+        /* ====== TELA DE LOGIN (BOAS-VINDAS) ====== */
         .welcome-overlay {
             position: fixed;
             top: 0;
@@ -1566,12 +1566,19 @@
             z-index: 9999;
             border-radius: 0;
             animation: none;
+            display: flex !important;
         }
         .chat-window.fullscreen .chat-messages {
             flex: 1;
             max-height: calc(100vh - 130px);
         }
         .chat-window.fullscreen .chat-input-area {
+            flex-shrink: 0;
+            position: relative;
+            bottom: 0;
+            background: var(--bg-card);
+        }
+        .chat-window.fullscreen .chat-header {
             flex-shrink: 0;
         }
         @keyframes slideUp {
@@ -1587,6 +1594,7 @@
             background: rgba(255,255,255,0.03);
             border-bottom: 1px solid var(--border);
             flex-shrink: 0;
+            min-height: 48px;
         }
         .chat-header span {
             font-weight: 700;
@@ -1624,6 +1632,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.4rem;
+            min-height: 200px;
         }
         .chat-messages::-webkit-scrollbar { width: 4px; }
         .chat-messages::-webkit-scrollbar-thumb {
@@ -1700,6 +1709,7 @@
             border-top: 1px solid var(--border);
             background: rgba(255,255,255,0.02);
             flex-shrink: 0;
+            min-height: 52px;
         }
         .chat-input-area input {
             flex: 1;
@@ -1711,6 +1721,7 @@
             font-size: 0.8rem;
             outline: none;
             transition: 0.3s;
+            min-width: 0;
         }
         .chat-input-area input:focus {
             border-color: var(--secondary);
@@ -1725,6 +1736,7 @@
             cursor: pointer;
             transition: 0.3s;
             font-size: 0.9rem;
+            flex-shrink: 0;
         }
         .chat-input-area button:hover {
             transform: scale(1.05);
@@ -2062,6 +2074,9 @@
                 padding: 1.5rem;
                 max-height: 90vh;
             }
+            .chat-window.fullscreen .chat-messages {
+                max-height: calc(100vh - 120px);
+            }
         }
 
         @media (max-width: 480px) {
@@ -2102,6 +2117,9 @@
             }
             .welcome-content {
                 padding: 1.2rem;
+            }
+            .chat-window.fullscreen .chat-messages {
+                max-height: calc(100vh - 110px);
             }
         }
     </style>
@@ -2589,6 +2607,7 @@
 
                 <div id="editProfileArea" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
                     <h4 style="margin-bottom:0.8rem;color:var(--text);font-size:1rem;">✏️ Editar Perfil</h4>
+                    <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:1rem;">Usuários do Google também podem alterar o nome!</p>
                     <div class="form-group">
                         <label>Nome</label>
                         <input type="text" id="editNome" value="KZN Usuário" />
@@ -2914,6 +2933,10 @@
 
         const ADMIN_EMAIL = 'gabriel6061yt@gmail.com';
 
+        // ====== FLAGS PARA EVITAR LOOP DO GOOGLE ======
+        let isLoggingIn = false;
+        let loginProcessed = false;
+
         // ====== VARIÁVEIS ======
         let notificacoes = [];
         let chatAberto = false;
@@ -2936,38 +2959,33 @@
             localStorage.setItem('kzn_usuarios', JSON.stringify(usuariosCadastrados));
         }
 
-        // ====== SOM DE NOTIFICAÇÃO (SUAVE E AGRADÁVEL) ======
+        // ====== SOM DE NOTIFICAÇÃO (SUAVE) ======
         function playNotificationSound() {
             try {
                 const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-                // Som suave estilo "pop" agradável
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
-                osc.frequency.value = 523.25; // Dó5
+                osc.frequency.value = 523.25;
                 osc.type = 'sine';
-                gain.gain.value = 0.15;
+                gain.gain.value = 0.12;
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.3);
-
-                // Segundo tom mais suave
                 setTimeout(() => {
                     const osc2 = audioCtx.createOscillator();
                     const gain2 = audioCtx.createGain();
                     osc2.connect(gain2);
                     gain2.connect(audioCtx.destination);
-                    osc2.frequency.value = 659.25; // Mi5
+                    osc2.frequency.value = 659.25;
                     osc2.type = 'sine';
-                    gain2.gain.value = 0.1;
+                    gain2.gain.value = 0.08;
                     gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
                     osc2.start();
                     osc2.stop(audioCtx.currentTime + 0.25);
                 }, 150);
-            } catch (e) {
-                console.log('Som não disponível');
-            }
+            } catch (e) {}
         }
 
         // ====== SISTEMA DE LOGIN ======
@@ -2987,8 +3005,11 @@
         function verificarLogin() {
             const usuario = localStorage.getItem('kzn_usuario_logado');
             if (usuario) {
+                loginProcessed = true;
                 setLoggedIn();
             } else {
+                loginProcessed = false;
+                isLoggingIn = false;
                 document.getElementById('welcomeOverlay').classList.remove('hidden');
                 document.getElementById('chatToggleBtn').style.display = 'none';
             }
@@ -3020,6 +3041,7 @@
                 email: usuario.email,
                 avatar: usuario.avatar || null
             }));
+            loginProcessed = true;
             setLoggedIn();
             status.className = 'form-status success';
             status.style.display = 'block';
@@ -3069,7 +3091,6 @@
             status.style.display = 'block';
             status.textContent = '✅ Conta criada com sucesso! Faça login.';
 
-            // Limpa campos
             document.getElementById('registroNome').value = '';
             document.getElementById('registroEmail').value = '';
             document.getElementById('registroSenha').value = '';
@@ -3104,8 +3125,15 @@
             }
         };
 
-        // ====== LOGIN GOOGLE ======
+        // ====== LOGIN GOOGLE (CORRIGIDO - SEM LOOP) ======
         window.handleWelcomeLogin = function(response) {
+            if (isLoggingIn || loginProcessed) {
+                console.log('⏳ Login já processado, ignorando...');
+                return;
+            }
+
+            isLoggingIn = true;
+
             try {
                 const payload = parseJwt(response.credential);
                 const usuario = {
@@ -3113,11 +3141,20 @@
                     email: payload.email,
                     avatar: payload.picture
                 };
+
                 localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                loginProcessed = true;
                 setLoggedIn();
+
+                console.log('✅ Login realizado com sucesso! Bem-vindo ' + usuario.nome);
+
             } catch (e) {
                 console.error('Erro no login:', e);
                 alert('❌ Ocorreu um erro ao fazer login. Tente novamente.');
+            } finally {
+                setTimeout(() => {
+                    isLoggingIn = false;
+                }, 1000);
             }
         };
 
@@ -3130,20 +3167,26 @@
             return JSON.parse(jsonPayload);
         }
 
-        // ====== LOGOUT ======
+        // ====== LOGOUT (RESETA OS FLAGS) ======
         window.logout = function() {
             localStorage.removeItem('kzn_usuario_logado');
             window.chatLoaded = false;
+            loginProcessed = false;
+            isLoggingIn = false;
+
             document.getElementById('welcomeOverlay').classList.remove('hidden');
             document.getElementById('chatToggleBtn').style.display = 'none';
+
             const chat = document.getElementById('chatWindow');
             chat.classList.remove('open');
             chat.classList.remove('fullscreen');
             chatAberto = false;
             isFullscreen = false;
             document.getElementById('fullscreenBtn').innerHTML = '<i class="fas fa-expand"></i>';
+
             const container = document.getElementById('chatMessages');
             container.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i><p>Carregando mensagens...</p></div>';
+
             if (typeof resetarPerfilPadrao === 'function') resetarPerfilPadrao();
             alert('👋 Você saiu da sua conta.');
         };
@@ -3227,8 +3270,10 @@
             area.style.display = 'block';
             document.getElementById('editNome').value = usuarioLogado ? usuarioLogado.nome || '' : '';
             document.getElementById('editEmail').value = usuarioLogado ? usuarioLogado.email || '' : '';
-            // Rola suavemente até a área de edição
-            area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Rola suavemente até a área de edição, sem subir demais
+            setTimeout(() => {
+                area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         };
 
         window.cancelarEdicaoPerfil = function() {
@@ -3408,10 +3453,17 @@
             const btn = document.getElementById('fullscreenBtn');
             if (!isFullscreen) {
                 chat.classList.add('fullscreen');
+                chat.style.display = 'flex';
                 btn.innerHTML = '<i class="fas fa-compress"></i>';
                 isFullscreen = true;
+                // Garante que o input apareça
+                setTimeout(() => {
+                    const input = document.getElementById('chatInput');
+                    if (input) input.focus();
+                }, 100);
             } else {
                 chat.classList.remove('fullscreen');
+                chat.style.display = '';
                 btn.innerHTML = '<i class="fas fa-expand"></i>';
                 isFullscreen = false;
             }
@@ -3691,18 +3743,15 @@
                 if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown')) {
                     document.getElementById('cartDropdown').classList.remove('open');
                 }
-                if (!e.target.closest('#modalPix') && !e.target.closest('#modalPix .modal-content')) {
-                    // Não fechar automaticamente para não atrapalhar
-                }
-                if (!e.target.closest('#modalPixXcore') && !e.target.closest('#modalPixXcore .modal-content')) {
-                    // Não fechar automaticamente
-                }
             });
 
             console.log('🔥 KZN MENU carregado com sucesso!');
             console.log('👑 ADMIN: gabriel6061yt@gmail.com');
             console.log('🔔 Sistema de notificações ativo!');
             console.log('⚡ Xcore Executor integrado!');
+            console.log('🔄 Login Google corrigido (sem loop)!');
+            console.log('📱 Tela cheia do chat corrigida!');
+            console.log('✏️ Usuários Google podem editar o nome!');
         });
     </script>
 
