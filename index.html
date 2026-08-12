@@ -1517,6 +1517,37 @@
         .modal-pix-xcore .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
 
         /* ============================================================
+           FAQ - CORRIGIDA
+           ============================================================ */
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .faq-item:hover { border-color: var(--primary); }
+        .faq-item .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        .faq-item .answer {
+            display: none;
+            margin-top: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .faq-item.open .answer { display: block; }
+        .faq-item .faq-icon { transition: 0.3s; font-size: 0.9rem; }
+        .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+        /* ============================================================
            FOOTER
            ============================================================ */
         .footer {
@@ -2247,7 +2278,7 @@
     </section>
 
     <!-- ============================================================
-    FAQ
+    FAQ - CORRIGIDA
     ============================================================ -->
     <section id="faq" class="section">
         <div class="container">
@@ -2256,62 +2287,71 @@
                 <p>Dúvidas comuns sobre o KZN Menu e Xcore Executor</p>
             </div>
             <div style="max-width:800px;margin:0 auto;">
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>🔒 O KZN Menu é seguro?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
+                    <div class="answer">Sim! O KZN Menu é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>📱 Funciona no celular?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
+                    <div class="answer">Sim! O KZN Menu é 100% compatível com Graal Mobile (Android e iOS), usando a Xcore Execute.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>🔄 O que acontece após a compra?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
+                    <div class="answer">Ambos os mods são vitalícios! Você recebe a key e instruções via Discord. Sem renovação.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>📧 Como recebo o mod após o pagamento?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
+                    <div class="answer">Após confirmar o pagamento, você receberá a key e instruções de ativação via Discord e/ou e-mail.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>💳 Quais formas de pagamento?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
+                    <div class="answer">Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>). Parcelamento em 2x R$ 100,00.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>⚡ O que é Xcore Execute?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
+                    <div class="answer">A Xcore Execute é a ferramenta oficial para executar os mods KZN MENU. Você precisa baixá-la no Discord da Xcore para usar.</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>💰 Quanto custa o Xcore?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div>
+                    <div class="answer">O Xcore tem 3 planos: FREE (Grátis), SILVER (R$ 35/mês) e GOLD (R$ 90/mês).</div>
                 </div>
-                <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:0.8rem 1rem;margin-bottom:0.8rem;cursor:pointer;transition:0.3s;" onclick="this.classList.toggle('open')">
-                    <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--text);font-size:0.9rem;">
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="question">
                         <span>🔑 Qual a chave PIX do Xcore?</span>
-                        <span style="transition:0.3s;font-size:0.9rem;"><i class="fas fa-chevron-down"></i></span>
+                        <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                     </div>
-                    <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">A chave PIX do Xcore é: <code style="color:var(--secondary-light);">7d23dda5-ef7e-430a-b7a3-ed28504e515d</code></div>
+                    <div class="answer">A chave PIX do Xcore é: <code style="color:var(--secondary-light);">7d23dda5-ef7e-430a-b7a3-ed28504e515d</code></div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -2455,6 +2495,13 @@
             } else if (aba === 'xcore') {
                 document.querySelector('.tab-btn.xcore-tab').classList.add('active');
             }
+        }
+
+        // ============================================================
+        // FAQ - TOGGLE CORRIGIDO
+        // ============================================================
+        function toggleFaq(el) {
+            el.classList.toggle('open');
         }
 
         // ============================================================
