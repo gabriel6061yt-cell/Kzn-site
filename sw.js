@@ -1,57 +1,54 @@
-// ====== SERVICE WORKER PARA NOTIFICAÇÕES PUSH ======
-self.addEventListener('install', (event) => {
+// ====== SERVICE WORKER SIMPLES E FUNCIONAL ======
+self.addEventListener('install', function(event) {
     console.log('✅ Service Worker instalado!');
-    event.waitUntil(self.skipWaiting());
+    self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', function(event) {
     console.log('✅ Service Worker ativado!');
-    event.waitUntil(self.clients.claim());
+    return self.clients.claim();
 });
 
-self.addEventListener('push', (event) => {
+self.addEventListener('push', function(event) {
     console.log('📨 Push recebido!', event);
-    
-    let data = {};
-    try {
-        data = event.data ? event.data.json() : {};
-    } catch (e) {
-        data = { title: 'KZN MENU', body: 'Nova mensagem!' };
+
+    let data = {
+        title: 'KZN MENU',
+        body: 'Nova mensagem!',
+        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
+    };
+
+    if (event.data) {
+        try {
+            const parsed = event.data.json();
+            data.title = parsed.title || data.title;
+            data.body = parsed.body || data.body;
+            data.icon = parsed.icon || data.icon;
+        } catch (e) {
+            console.warn('Erro ao parsear dados:', e);
+        }
     }
-    
-    const title = data.title || '🔔 KZN MENU';
+
     const options = {
-        body: data.body || 'Nova mensagem no chat!',
-        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1',
-        badge: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1',
+        body: data.body,
+        icon: data.icon,
+        badge: data.icon,
         vibrate: [200, 100, 200],
         data: {
-            url: data.url || '/'
+            url: '/'
         }
     };
-    
+
     event.waitUntil(
-        self.registration.showNotification(title, options)
+        self.registration.showNotification(data.title, options)
     );
 });
 
-self.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', function(event) {
     console.log('🔔 Notificação clicada!');
     event.notification.close();
     
-    const urlToOpen = event.notification.data?.url || '/';
-    
     event.waitUntil(
-        clients.matchAll({ type: 'window', includeUncontrolled: true })
-            .then((clientList) => {
-                for (const client of clientList) {
-                    if (client.url === urlToOpen && 'focus' in client) {
-                        return client.focus();
-                    }
-                }
-                if (clients.openWindow) {
-                    return clients.openWindow(urlToOpen);
-                }
-            })
+        clients.openWindow('/')
     );
 });
