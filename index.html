@@ -57,9 +57,7 @@
             border-radius: 10px;
         }
 
-        /* ============================================================
-           WHATSAPP
-           ============================================================ */
+        /* WHATSAPP */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 24px;
@@ -86,9 +84,7 @@
             100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
 
-        /* ============================================================
-           NAVBAR
-           ============================================================ */
+        /* NAVBAR */
         .navbar {
             position: fixed;
             top: 0;
@@ -230,9 +226,7 @@
             flex-shrink: 0;
         }
 
-        /* ============================================================
-           BOTÕES DE NOTIFICAÇÃO E MENSAGEM
-           ============================================================ */
+        /* BOTÃO DE NOTIFICAÇÃO */
         .nav-icon-btn {
             background: var(--glass);
             border: 1px solid var(--border);
@@ -279,9 +273,7 @@
             50% { transform: scale(1.1); }
         }
 
-        /* ============================================================
-           DROPDOWNS - NOTIFICAÇÕES E MENSAGENS
-           ============================================================ */
+        /* DROPDOWN NOTIFICAÇÕES */
         .dropdown-container {
             position: relative;
         }
@@ -380,26 +372,6 @@
         .dropdown-item.unread .item-text {
             font-weight: 600;
         }
-        .dropdown-item .item-actions {
-            display: flex;
-            gap: 0.3rem;
-            margin-top: 4px;
-        }
-        .dropdown-item .item-actions button {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 0.1rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.55rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .dropdown-item .item-actions button:hover {
-            border-color: var(--primary);
-            color: #fff;
-        }
-
         .empty-state {
             text-align: center;
             padding: 2rem 1rem;
@@ -413,9 +385,7 @@
             opacity: 0.3;
         }
 
-        /* ============================================================
-           BOTÃO PERFIL
-           ============================================================ */
+        /* BOTÃO PERFIL */
         .profile-btn {
             display: flex;
             align-items: center;
@@ -483,9 +453,7 @@
             right: -8px;
         }
 
-        /* ============================================================
-           LANG TOGGLE
-           ============================================================ */
+        /* LANG TOGGLE */
         .lang-toggle {
             display: flex;
             gap: 0.15rem;
@@ -506,6 +474,68 @@
             background: var(--primary);
             border-color: var(--primary);
             color: #fff;
+        }
+
+        /* ============================================================
+           CARRINHO DROPDOWN
+           ============================================================ */
+        .cart-dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1rem;
+            display: none;
+            z-index: 999;
+            animation: dropdownIn 0.25s ease;
+        }
+        .cart-dropdown.open { display: block; }
+        .cart-dropdown .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .cart-dropdown .cart-item:last-child { border-bottom: none; }
+        .cart-dropdown .cart-item .item-name { font-size: 0.85rem; color: var(--text); }
+        .cart-dropdown .cart-item .item-price { font-size: 0.85rem; color: var(--primary); font-weight: 700; }
+        .cart-dropdown .cart-item .item-remove {
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cart-dropdown .cart-item .item-remove:hover { color: var(--primary); }
+        .cart-dropdown .cart-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            font-weight: 700;
+            border-top: 2px solid var(--border);
+            margin-top: 0.5rem;
+        }
+        .cart-dropdown .btn-checkout {
+            width: 100%;
+            padding: 0.7rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cart-dropdown .btn-checkout:hover { background: var(--primary-dark); }
+        .cart-dropdown .empty-cart {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 1rem 0;
         }
 
         /* ============================================================
@@ -1069,25 +1099,6 @@
         .depoimento-card .estrelas { color: var(--warning); font-size: 0.75rem; margin-bottom: 0.2rem; }
         .depoimento-card .info { font-size: 0.6rem; color: var(--text-muted); }
 
-        .counter-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-align: center;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        .counter-section .number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: block;
-        }
-        .counter-section .label { font-size: 1rem; color: var(--text-muted); }
-
         /* ============================================================
            FORMULÁRIO
            ============================================================ */
@@ -1417,124 +1428,6 @@
         }
 
         /* ============================================================
-           CARRINHO DROPDOWN
-           ============================================================ */
-        .cart-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            width: 300px;
-            max-height: 400px;
-            overflow-y: auto;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1rem;
-            display: none;
-            z-index: 999;
-            animation: dropdownIn 0.25s ease;
-        }
-        .cart-dropdown.open { display: block; }
-        .cart-dropdown .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid var(--border);
-        }
-        .cart-dropdown .cart-item:last-child { border-bottom: none; }
-        .cart-dropdown .cart-item .item-name { font-size: 0.85rem; color: var(--text); }
-        .cart-dropdown .cart-item .item-price { font-size: 0.85rem; color: var(--primary); font-weight: 700; }
-        .cart-dropdown .cart-item .item-remove {
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .cart-dropdown .cart-item .item-remove:hover { color: var(--primary); }
-        .cart-dropdown .cart-total {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            font-weight: 700;
-            border-top: 2px solid var(--border);
-            margin-top: 0.5rem;
-        }
-        .cart-dropdown .btn-checkout {
-            width: 100%;
-            padding: 0.7rem;
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .cart-dropdown .btn-checkout:hover { background: var(--primary-dark); }
-        .cart-dropdown .empty-cart {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 1rem 0;
-        }
-
-        /* ============================================================
-           FOOTER
-           ============================================================ */
-        .footer {
-            background: var(--bg);
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem 1.5rem;
-        }
-        .footer-content {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        .footer-brand span {
-            font-size: 1.1rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .footer-brand p { color: var(--text-muted); font-size: 0.85rem; }
-        .footer-social {
-            display: flex;
-            gap: 0.8rem;
-            align-items: center;
-        }
-        .footer-social a {
-            color: var(--text-muted);
-            font-size: 1.3rem;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-        }
-        .footer-social a:hover { color: #fff; transform: translateY(-4px); }
-        .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
-        .footer-social a.pix:hover { background: var(--success); border-color: var(--success); }
-        .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
-        .footer-bottom {
-            max-width: var(--container-max);
-            margin: 1.5rem auto 0;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-        }
-
-        /* ============================================================
            MODAL PIX
            ============================================================ */
         .modal-pix {
@@ -1614,6 +1507,62 @@
             font-size: 0.9rem;
         }
         .modal-pix .modal-content .discord-link:hover { transform: scale(1.05); box-shadow: 0 4px 30px rgba(88,101,242,0.4); }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 1.5rem;
+        }
+        .footer-content {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p { color: var(--text-muted); font-size: 0.85rem; }
+        .footer-social {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+        .footer-social a {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+        .footer-social a:hover { color: #fff; transform: translateY(-4px); }
+        .footer-social a.discord:hover { background: #5865f2; border-color: #5865f2; }
+        .footer-social a.pix:hover { background: var(--success); border-color: var(--success); }
+        .footer-social a.xcore:hover { background: var(--secondary); border-color: var(--secondary); }
+        .footer-bottom {
+            max-width: var(--container-max);
+            margin: 1.5rem auto 0;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
 
         /* ============================================================
            RESPONSIVE
@@ -1762,7 +1711,7 @@
     </a>
 
     <!-- ============================================================
-    NAVBAR - COM NOTIFICAÇÕES E MENSAGENS
+    NAVBAR - SEM CAIXA DE MENSAGENS
     ============================================================ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -1795,7 +1744,7 @@
             </ul>
 
             <div class="nav-actions">
-                <!-- NOTIFICAÇÕES -->
+                <!-- NOTIFICAÇÕES (SEM MENSAGENS) -->
                 <div class="dropdown-container">
                     <button class="nav-icon-btn" id="notifBtn" onclick="toggleNotificacoes()" title="Notificações">
                         <i class="fas fa-bell"></i>
@@ -1810,26 +1759,6 @@
                             <div class="empty-state">
                                 <i class="fas fa-bell-slash"></i>
                                 Nenhuma notificação
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MENSAGENS -->
-                <div class="dropdown-container">
-                    <button class="nav-icon-btn" id="msgBtn" onclick="toggleMensagens()" title="Mensagens">
-                        <i class="fas fa-envelope"></i>
-                        <span class="badge" id="msgBadge">0</span>
-                    </button>
-                    <div class="dropdown" id="msgDropdown">
-                        <div class="dropdown-header">
-                            <span><i class="fas fa-envelope"></i> Mensagens</span>
-                            <button class="btn-clear" onclick="marcarTodasMensagensLidas()">Marcar todas</button>
-                        </div>
-                        <div class="dropdown-body" id="msgList">
-                            <div class="empty-state">
-                                <i class="fas fa-inbox"></i>
-                                Nenhuma mensagem
                             </div>
                         </div>
                     </div>
@@ -2040,7 +1969,7 @@
                     <div class="profile-info">
                         <h3 id="profileName">KZN Usuário</h3>
                         <p id="profileEmail">usuario@kzn.com</p>
-                        <a href="#" class="edit-link" onclick="editarPerfil()"><i class="fas fa-edit"></i> Editar perfil</a>
+                        <a href="#" class="edit-link" onclick="editarPerfil(event)"><i class="fas fa-edit"></i> Editar perfil</a>
                     </div>
                 </div>
 
@@ -2149,7 +2078,6 @@
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="📩 NOVO PEDIDO DO SITE KZN MENU!">
                     
-                    <!-- CAMPO EMAIL OBRIGATÓRIO (usado para notificações) -->
                     <div class="form-group">
                         <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
                         <input type="email" name="Email" id="clienteEmail" placeholder="Digite seu e-mail (ex: joao@gmail.com)" required>
@@ -2231,7 +2159,7 @@
     </div>
 
     <!-- ============================================================
-    JAVASCRIPT - SISTEMA COMPLETO
+    JAVASCRIPT
     ============================================================ -->
     <script>
         // ============================================================
@@ -2293,30 +2221,23 @@
         }
 
         // ============================================================
-        // SISTEMA DE NOTIFICAÇÕES E MENSAGENS
+        // SISTEMA DE NOTIFICAÇÕES
         // ============================================================
         let notificacoes = [];
-        let mensagens = [];
 
-        // Carregar dados do localStorage
-        function carregarDados() {
+        function carregarNotificacoes() {
             try {
                 const n = localStorage.getItem('kzn_notificacoes');
-                const m = localStorage.getItem('kzn_mensagens');
                 notificacoes = n ? JSON.parse(n) : [];
-                mensagens = m ? JSON.parse(m) : [];
             } catch (e) {
                 notificacoes = [];
-                mensagens = [];
             }
         }
 
-        function salvarDados() {
+        function salvarNotificacoes() {
             localStorage.setItem('kzn_notificacoes', JSON.stringify(notificacoes));
-            localStorage.setItem('kzn_mensagens', JSON.stringify(mensagens));
         }
 
-        // Adicionar notificação
         function adicionarNotificacao(mensagem, tipo = 'info') {
             const icones = {
                 compra: '🛒',
@@ -2333,77 +2254,34 @@
                 tipo: tipo
             });
             if (notificacoes.length > 50) notificacoes.pop();
-            salvarDados();
-            atualizarBadges();
+            salvarNotificacoes();
+            atualizarBadgeNotificacoes();
             renderizarNotificacoes();
             playNotificationSound();
         }
 
-        // Adicionar mensagem
-        function adicionarMensagem(texto, remetente = 'VOCÊ') {
-            mensagens.unshift({
-                id: Date.now(),
-                texto: texto,
-                remetente: remetente,
-                data: new Date().toLocaleString('pt-BR'),
-                lida: false
-            });
-            if (mensagens.length > 50) mensagens.pop();
-            salvarDados();
-            atualizarBadges();
-            renderizarMensagens();
-            playNotificationSound();
-        }
-
-        // Toggle dropdowns
         function toggleNotificacoes() {
             const dropdown = document.getElementById('notifDropdown');
-            document.getElementById('msgDropdown').classList.remove('open');
             dropdown.classList.toggle('open');
             if (dropdown.classList.contains('open')) {
                 notificacoes.forEach(n => n.lida = true);
-                salvarDados();
-                atualizarBadges();
+                salvarNotificacoes();
+                atualizarBadgeNotificacoes();
                 renderizarNotificacoes();
             }
         }
 
-        function toggleMensagens() {
-            const dropdown = document.getElementById('msgDropdown');
-            document.getElementById('notifDropdown').classList.remove('open');
-            dropdown.classList.toggle('open');
-            if (dropdown.classList.contains('open')) {
-                mensagens.forEach(m => m.lida = true);
-                salvarDados();
-                atualizarBadges();
-                renderizarMensagens();
+        function atualizarBadgeNotificacoes() {
+            const naoLidas = notificacoes.filter(n => !n.lida).length;
+            const badge = document.getElementById('notifBadge');
+            if (naoLidas > 0) {
+                badge.textContent = naoLidas;
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
             }
         }
 
-        // Atualizar badges
-        function atualizarBadges() {
-            const notifNaoLidas = notificacoes.filter(n => !n.lida).length;
-            const msgNaoLidas = mensagens.filter(m => !m.lida).length;
-
-            const notifBadge = document.getElementById('notifBadge');
-            const msgBadge = document.getElementById('msgBadge');
-
-            if (notifNaoLidas > 0) {
-                notifBadge.textContent = notifNaoLidas;
-                notifBadge.classList.add('show');
-            } else {
-                notifBadge.classList.remove('show');
-            }
-
-            if (msgNaoLidas > 0) {
-                msgBadge.textContent = msgNaoLidas;
-                msgBadge.classList.add('show');
-            } else {
-                msgBadge.classList.remove('show');
-            }
-        }
-
-        // Renderizar notificações
         function renderizarNotificacoes() {
             const list = document.getElementById('notifList');
             if (notificacoes.length === 0) {
@@ -2418,36 +2296,13 @@
             `).join('');
         }
 
-        // Renderizar mensagens
-        function renderizarMensagens() {
-            const list = document.getElementById('msgList');
-            if (mensagens.length === 0) {
-                list.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i>Nenhuma mensagem</div>`;
-                return;
-            }
-            list.innerHTML = mensagens.map(m => `
-                <div class="dropdown-item ${m.lida ? '' : 'unread'}">
-                    <span class="item-text"><strong>${m.remetente}:</strong> ${m.texto}</span>
-                    <span class="item-time">${m.data}</span>
-                </div>
-            `).join('');
-        }
-
         function marcarTodasNotificacoesLidas() {
             notificacoes.forEach(n => n.lida = true);
-            salvarDados();
-            atualizarBadges();
+            salvarNotificacoes();
+            atualizarBadgeNotificacoes();
             renderizarNotificacoes();
         }
 
-        function marcarTodasMensagensLidas() {
-            mensagens.forEach(m => m.lida = true);
-            salvarDados();
-            atualizarBadges();
-            renderizarMensagens();
-        }
-
-        // Som de notificação
         function playNotificationSound() {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2478,9 +2333,6 @@
         document.addEventListener('click', function(e) {
             if (!e.target.closest('#notifBtn') && !e.target.closest('#notifDropdown')) {
                 document.getElementById('notifDropdown').classList.remove('open');
-            }
-            if (!e.target.closest('#msgBtn') && !e.target.closest('#msgDropdown')) {
-                document.getElementById('msgDropdown').classList.remove('open');
             }
             if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown')) {
                 document.getElementById('cartDropdown').classList.remove('open');
@@ -2540,10 +2392,14 @@
             reader.readAsDataURL(file);
         }
 
-        function editarPerfil() {
+        // FUNÇÃO CORRIGIDA - editarPerfil com event.preventDefault()
+        function editarPerfil(event) {
+            if (event) event.preventDefault();
             document.getElementById('editProfileArea').style.display = 'block';
             document.getElementById('editNome').value = usuarioLogado.nome || '';
             document.getElementById('editEmail').value = usuarioLogado.email || '';
+            // Rolagem suave até a área de edição
+            document.getElementById('editProfileArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function cancelarEdicaoPerfil() {
@@ -2660,7 +2516,6 @@
 
         // Toggle carrinho dropdown
         document.getElementById('profileBtn').addEventListener('click', function(e) {
-            // Se clicou no ícone do carrinho, abre o dropdown
             if (e.target.closest('.cart-icon-wrap') || e.target.closest('.cart-count')) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -2669,30 +2524,23 @@
         });
 
         // ============================================================
-        // FORMULÁRIO - ENVIA NOTIFICAÇÃO
+        // FORMULÁRIO
         // ============================================================
         document.getElementById('formContato').addEventListener('submit', function(e) {
             const btn = document.getElementById('formSubmitBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
 
-            // Pega os dados do formulário
             const nome = document.querySelector('input[name="Nome"]').value;
             const email = document.querySelector('input[name="Email"]').value;
             const plano = document.querySelector('select[name="Plano"]').value;
 
-            // ADICIONA NOTIFICAÇÃO
             adicionarNotificacao(`📩 Novo pedido de ${nome} - ${plano}`, 'compra');
 
-            // ADICIONA MENSAGEM DE CONFIRMAÇÃO
-            adicionarMensagem(`✅ Pedido recebido! Em breve enviaremos sua key para ${email}`, 'SISTEMA');
-
-            // Salva o email do cliente para notificações futuras
             if (email) {
                 localStorage.setItem('kzn_cliente_email', email);
             }
 
-            // Simula envio
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Mensagem';
@@ -2702,7 +2550,6 @@
                 status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
                 this.reset();
 
-                // NOTIFICAÇÃO DE SUCESSO
                 adicionarNotificacao(`✅ Pedido de ${nome} enviado com sucesso!`, 'sucesso');
             }, 3000);
         });
@@ -2732,28 +2579,19 @@
         });
 
         // ============================================================
-        // SIMULAÇÃO DE NOVAS NOTIFICAÇÕES (DEMONSTRAÇÃO)
-        // ============================================================
-        // Adiciona algumas notificações de exemplo ao carregar
-        function adicionarExemplos() {
-            if (notificacoes.length === 0 && mensagens.length === 0) {
-                adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
-                adicionarNotificacao('💡 Dica: Ative as notificações para receber novidades.', 'alerta');
-                adicionarMensagem('🔑 Sua key de teste: KZN-DEMO-2026', 'VOCÊ');
-                adicionarMensagem('💬 Dúvidas? Fale conosco no Discord.', 'VOCÊ');
-            }
-        }
-
-        // ============================================================
         // INICIALIZAÇÃO
         // ============================================================
-        carregarDados();
+        carregarNotificacoes();
         carregarPerfil();
         carregarCarrinho();
-        adicionarExemplos();
-        atualizarBadges();
+        atualizarBadgeNotificacoes();
         renderizarNotificacoes();
-        renderizarMensagens();
+
+        // Adicionar notificação de boas-vindas
+        if (notificacoes.length === 0) {
+            adicionarNotificacao('🚀 Bem-vindo ao KZN MENU! Confira nossos mods.', 'info');
+            adicionarNotificacao('💡 Dica: Ative as notificações para receber novidades.', 'alerta');
+        }
 
         // ============================================================
         // TRADUÇÃO
@@ -2765,25 +2603,8 @@
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
         }
 
-        // ============================================================
-        // VERIFICAR NOVAS NOTIFICAÇÕES A CADA 30 SEGUNDOS
-        // ============================================================
-        setInterval(() => {
-            // Simula verificação de novas notificações
-            // Em produção, isso seria uma chamada para um servidor/Firebase
-            console.log('🔍 Verificando novas notificações...');
-            
-            // Exemplo: se tiver um email salvo, pode verificar no backend
-            const email = localStorage.getItem('kzn_cliente_email');
-            if (email) {
-                // Aqui você faria uma requisição para seu servidor
-                // Verificando se tem novas mensagens para este email
-            }
-        }, 30000);
-
         console.log('✅ KZN MENU carregado com sucesso!');
         console.log('🔔 Sistema de notificações ativo!');
-        console.log('💬 Sistema de mensagens ativo!');
     </script>
 
 </body>
