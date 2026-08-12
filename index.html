@@ -214,6 +214,7 @@
             box-shadow: 0 0 25px rgba(220,38,38,0.3);
         }
 
+        /* MENU MOBILE - COM PERFIL */
         .nav-menu.mobile-menu {
             display: none;
             flex-direction: column;
@@ -227,7 +228,9 @@
             gap: 0.3rem;
             z-index: 999;
         }
-        .nav-menu.mobile-menu.open { display: flex; }
+        .nav-menu.mobile-menu.open {
+            display: flex;
+        }
         .nav-menu.mobile-menu a {
             padding: 0.5rem 0.8rem;
             font-size: 0.8rem;
@@ -260,6 +263,7 @@
             height: 38px;
             align-items: center;
             justify-content: center;
+            z-index: 1001;
         }
         .nav-toggle:hover {
             border-color: var(--primary);
@@ -1994,7 +1998,11 @@
             .nav-xcore .xcore-text .name { font-size: 0.45rem; }
             .nav-xcore .xcore-text .team { font-size: 0.35rem; }
             .nav-menu:not(.mobile-menu) { display: none; }
-            .nav-toggle { display: flex; font-size: 1.1rem; padding: 2px 6px; }
+            .nav-toggle {
+                display: flex !important;
+                font-size: 1.1rem;
+                padding: 2px 6px;
+            }
             .nav-actions { gap: 4px; flex-shrink: 0; }
             .nav-icon-btn {
                 width: 30px;
@@ -2131,13 +2139,12 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ====== CHAT - BOTÃO FLUTUANTE ====== -->
+    <!-- ====== CHAT ====== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
         <i class="fas fa-comment-dots"></i>
         <span class="chat-badge" id="chatBadge">0</span>
     </button>
 
-    <!-- ====== CHAT - JANELA ====== -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <span><i class="fas fa-comment-dots"></i> Chat Global - KZN</span>
@@ -2605,20 +2612,23 @@
                     </button>
                 </div>
 
+                <!-- EDITAR PERFIL - CORRIGIDO (EMAIL FIXO) -->
                 <div id="editProfileArea" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
                     <h4 style="margin-bottom:0.8rem;color:var(--text);font-size:1rem;">✏️ Editar Perfil</h4>
-                    <p style="color:var(--text-muted);font-size:0.8rem;margin-bottom:1rem;">Usuários do Google também podem alterar o nome!</p>
+                    <p style="color:var(--text-muted);font-size:0.75rem;margin-bottom:0.8rem;">Altere apenas o nome. O e-mail não pode ser alterado.</p>
                     <div class="form-group">
                         <label>Nome</label>
-                        <input type="text" id="editNome" value="KZN Usuário" />
+                        <input type="text" id="editNome" placeholder="Digite seu novo nome" />
                     </div>
                     <div class="form-group">
-                        <label>E-mail</label>
-                        <input type="email" id="editEmail" value="usuario@kzn.com" />
+                        <label>E-mail (fixo)</label>
+                        <input type="email" id="editEmail" disabled style="opacity:0.6;cursor:not-allowed;" />
+                        <small style="color:var(--text-muted);font-size:0.65rem;">O e-mail não pode ser alterado</small>
                     </div>
                     <div class="form-group">
-                        <label>Nova senha</label>
-                        <input type="password" id="editSenha" placeholder="Deixe em branco para manter" />
+                        <label>Nova senha (opcional)</label>
+                        <input type="password" id="editSenha" placeholder="Digite para alterar" />
+                        <small style="color:var(--text-muted);font-size:0.65rem;">Deixe em branco para manter a atual</small>
                     </div>
                     <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.8rem;">
                         <button class="btn-action primary" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
@@ -2770,7 +2780,7 @@
         </div>
     </section>
 
-    <!-- ====== TELA DE LOGIN (BOAS-VINDAS) ====== -->
+    <!-- ====== TELA DE LOGIN ====== -->
     <div class="welcome-overlay" id="welcomeOverlay">
         <div class="welcome-content">
             <div class="welcome-brand">
@@ -3167,7 +3177,7 @@
             return JSON.parse(jsonPayload);
         }
 
-        // ====== LOGOUT (RESETA OS FLAGS) ======
+        // ====== LOGOUT ======
         window.logout = function() {
             localStorage.removeItem('kzn_usuario_logado');
             window.chatLoaded = false;
@@ -3218,6 +3228,9 @@
                     document.getElementById('profileEmail').textContent = usuarioLogado.email || 'usuario@kzn.com';
                     document.getElementById('editNome').value = usuarioLogado.nome || '';
                     document.getElementById('editEmail').value = usuarioLogado.email || '';
+                    document.getElementById('editEmail').disabled = true;
+                    document.getElementById('editEmail').style.opacity = '0.6';
+                    document.getElementById('editEmail').style.cursor = 'not-allowed';
 
                     if (usuarioLogado.avatar) {
                         document.getElementById('avatarProfileImage').src = usuarioLogado.avatar;
@@ -3253,24 +3266,43 @@
         window.uploadAvatar = function(event) {
             const file = event.target.files[0];
             if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                alert('⚠️ Por favor, selecione uma imagem (JPG, PNG, GIF).');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 const imagem = e.target.result;
-                usuarioLogado.avatar = imagem;
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
-                carregarPerfil();
-                alert('✅ Foto de perfil atualizada com sucesso!');
+                const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                if (usuario) {
+                    usuario.avatar = imagem;
+                    localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                    const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+                    const idx = usuarios.findIndex(u => u.email === usuario.email);
+                    if (idx !== -1) {
+                        usuarios[idx].avatar = imagem;
+                        localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+                    }
+                    carregarPerfil();
+                    alert('✅ Foto de perfil atualizada com sucesso!');
+                }
             };
             reader.readAsDataURL(file);
+            event.target.value = '';
         };
 
         window.editarPerfil = function(event) {
             if (event) event.preventDefault();
             const area = document.getElementById('editProfileArea');
             area.style.display = 'block';
-            document.getElementById('editNome').value = usuarioLogado ? usuarioLogado.nome || '' : '';
-            document.getElementById('editEmail').value = usuarioLogado ? usuarioLogado.email || '' : '';
-            // Rola suavemente até a área de edição, sem subir demais
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (usuario) {
+                document.getElementById('editNome').value = usuario.nome || '';
+                document.getElementById('editEmail').value = usuario.email || '';
+                document.getElementById('editEmail').disabled = true;
+                document.getElementById('editEmail').style.opacity = '0.6';
+                document.getElementById('editEmail').style.cursor = 'not-allowed';
+            }
             setTimeout(() => {
                 area.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
@@ -3278,30 +3310,46 @@
 
         window.cancelarEdicaoPerfil = function() {
             document.getElementById('editProfileArea').style.display = 'none';
+            document.getElementById('editEmail').disabled = true;
+            document.getElementById('editEmail').style.opacity = '0.6';
+            document.getElementById('editEmail').style.cursor = 'not-allowed';
         };
 
         window.salvarEdicaoPerfil = function() {
             const nome = document.getElementById('editNome').value.trim();
-            const email = document.getElementById('editEmail').value.trim();
             const senha = document.getElementById('editSenha').value;
-            if (!nome || !email) {
-                alert('⚠️ Preencha todos os campos obrigatórios.');
+
+            if (!nome) {
+                alert('⚠️ Digite um nome válido.');
                 return;
             }
-            usuarioLogado.nome = nome;
-            usuarioLogado.email = email;
-            if (senha.length >= 6) {
-                const usuario = usuariosCadastrados.find(u => u.email === usuarioLogado.email);
-                if (usuario) {
-                    usuario.senha = senha;
-                    salvarUsuarios();
-                }
-                alert('🔐 Senha atualizada com sucesso!');
+
+            const usuario = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+            if (!usuario) {
+                alert('❌ Nenhum usuário logado.');
+                return;
             }
-            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuarioLogado));
+
+            usuario.nome = nome;
+            localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+
+            const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+            const idx = usuarios.findIndex(u => u.email === usuario.email);
+            if (idx !== -1) {
+                usuarios[idx].nome = nome;
+                if (senha && senha.length >= 6) {
+                    usuarios[idx].senha = senha;
+                    alert('🔐 Senha atualizada com sucesso!');
+                }
+                localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+            }
+
             carregarPerfil();
             document.getElementById('editProfileArea').style.display = 'none';
-            alert('✅ Perfil atualizado com sucesso!');
+            document.getElementById('editEmail').disabled = true;
+            document.getElementById('editEmail').style.opacity = '0.6';
+            document.getElementById('editEmail').style.cursor = 'not-allowed';
+            alert('✅ Nome atualizado com sucesso!');
         };
 
         // ====== CHAT ======
@@ -3456,7 +3504,6 @@
                 chat.style.display = 'flex';
                 btn.innerHTML = '<i class="fas fa-compress"></i>';
                 isFullscreen = true;
-                // Garante que o input apareça
                 setTimeout(() => {
                     const input = document.getElementById('chatInput');
                     if (input) input.focus();
@@ -3680,8 +3727,34 @@
             document.getElementById('langEn').classList.toggle('active', lang === 'en');
         };
 
-        // ====== DETECTAR TYPING ======
+        // ====== MENU MOBILE - CORRIGIDO ======
         document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileMenu');
+            const navMenuMobile = document.getElementById('navMenuMobile');
+
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navMenuMobile.classList.toggle('open');
+                    console.log('📱 Menu mobile clicado!');
+                });
+            }
+
+            // Fechar menu ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (navMenuMobile && !e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
+                    navMenuMobile.classList.remove('open');
+                }
+            });
+
+            // Fechar menu ao clicar em um link
+            document.querySelectorAll('#navMenuMobile a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenuMobile.classList.remove('open');
+                });
+            });
+
+            // ====== INPUT DO CHAT ======
             const input = document.getElementById('chatInput');
             if (input) {
                 input.addEventListener('keypress', function(e) {
@@ -3712,6 +3785,7 @@
                 });
             }
 
+            // ====== INICIALIZAÇÃO ======
             carregarUsuarios();
             carregarNotificacoes();
             carregarPerfil();
@@ -3751,7 +3825,8 @@
             console.log('⚡ Xcore Executor integrado!');
             console.log('🔄 Login Google corrigido (sem loop)!');
             console.log('📱 Tela cheia do chat corrigida!');
-            console.log('✏️ Usuários Google podem editar o nome!');
+            console.log('✏️ Editar perfil corrigido (email fixo)!');
+            console.log('📱 Menu mobile funcionando!');
         });
     </script>
 
