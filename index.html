@@ -11,13 +11,14 @@
     <meta property="og:image" content="https://yt3.ggpht.com/b-FUWQT1qNLkpuLu-wnp074rpBUdJJz4iEbtNiOQ1FjCyqyw-GH1YsBMZtDAwQe5txKk5fn_tVxLVtU=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://accounts.google.com/gsi/client" async></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS ORIGINAL (MANTIDO) ===== */
+        /* ===== CSS COMPLETO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -55,6 +56,30 @@
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
         }
+
+        /* ===== ANIMAÇÃO DIGITANDO ===== */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 0.3rem 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+            background: rgba(124,58,237,0.08);
+            border-radius: 8px;
+            margin: 0.2rem 0;
+            animation: fadeIn 0.3s ease;
+        }
+        .typing-indicator.show { display: block; }
+        .typing-indicator i {
+            margin-right: 6px;
+            color: var(--secondary-light);
+        }
+        .typing-indicator strong { color: var(--secondary-light); }
 
         .btn-whatsapp-fixo {
             position: fixed;
@@ -1736,17 +1761,21 @@
 
         .typing-indicator {
             display: none;
-            padding: 0.2rem 0.5rem;
+            padding: 0.3rem 0.8rem;
             color: var(--text-muted);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-style: italic;
-            animation: pulse 1.5s ease-in-out infinite;
+            background: rgba(124,58,237,0.08);
+            border-radius: 8px;
+            margin: 0.2rem 0;
+            animation: fadeIn 0.3s ease;
         }
         .typing-indicator.show { display: block; }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+        .typing-indicator i {
+            margin-right: 6px;
+            color: var(--secondary-light);
         }
+        .typing-indicator strong { color: var(--secondary-light); }
 
         .chat-input-area {
             display: flex;
@@ -2043,10 +2072,6 @@
             text-align: center;
             position: relative;
             animation: modalIn 0.3s ease;
-        }
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         .modal-pix .modal-content .close-modal {
             position: absolute;
@@ -2793,6 +2818,9 @@
                     <button class="btn-action" onclick="window.location.href='#contato'">
                         <i class="fas fa-headset"></i> Suporte
                     </button>
+                    <button class="btn-action" onclick="inscreverNotificacoes()" style="border-color: var(--secondary);">
+                        <i class="fas fa-bell"></i> Ativar Notificações
+                    </button>
                     <button class="btn-action" onclick="logout()">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -3042,6 +3070,9 @@
     const BOT_AVATAR = '🤖';
     const BOT_EMAIL = 'bot@guardian.com';
 
+    // ====== CHAVE VAPID ======
+    const PUBLIC_VAPID_KEY = 'BKkLDp3zTSicLCK9FUf1rBnFa5bLBXIQgCgQDu3GL4QOp5SvtVPQH172Al5sxMyX1qGFBk765PV3s13HY-C15xw';
+
     // ====== VARIÁVEIS ======
     let usuarioLogado = null;
     let usuariosCadastrados = [];
@@ -3069,32 +3100,50 @@
         localStorage.setItem('kzn_usuarios', JSON.stringify(usuariosCadastrados));
     }
 
-    // ====== SOM DE NOTIFICAÇÃO ======
+    // ====== SOM DE NOTIFICAÇÃO PERSONALIZADO ======
+    let audioCache = null;
+
     function playNotificationSound() {
         try {
-            const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
+            if (audioCache) {
+                audioCache.currentTime = 0;
+                audioCache.play().catch(() => {});
+                return;
+            }
+
+            const audio = new Audio('https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3');
+            audio.preload = 'auto';
+            audio.volume = 1.0;
+            
+            audio.addEventListener('canplaythrough', () => {
+                audioCache = audio;
+                audio.play().catch(() => {});
+            });
+
+            audio.addEventListener('error', () => {
+                console.warn('Áudio personalizado não carregou, usando som padrão.');
+                playDefaultNotificationSound();
+            });
+
+        } catch (e) {
+            console.warn('Erro ao tocar áudio:', e);
+            playDefaultNotificationSound();
+        }
+    }
+
+    function playDefaultNotificationSound() {
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            osc.connect(gain);
+            oscillator.connect(gain);
             gain.connect(audioCtx.destination);
-            osc.frequency.value = 523.25;
-            osc.type = 'sine';
-            gain.gain.value = 0.12;
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
-            setTimeout(() => {
-                const osc2 = audioCtx.createOscillator();
-                const gain2 = audioCtx.createGain();
-                osc2.connect(gain2);
-                gain2.connect(audioCtx.destination);
-                osc2.frequency.value = 659.25;
-                osc2.type = 'sine';
-                gain2.gain.value = 0.08;
-                gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
-                osc2.start();
-                osc2.stop(audioCtx.currentTime + 0.25);
-            }, 150);
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.2);
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 0.2);
         } catch (e) {}
     }
 
@@ -3126,6 +3175,11 @@
     };
 
     function verificarSpam(usuario, mensagem) {
+        // ⚡ Ignora proprietário
+        if (isProprietario(usuario.email)) {
+            return false;
+        }
+
         const email = usuario.email;
         const agora = Date.now();
         const janelaMs = CONFIG_ANTI_SPAM.janelaTempo * 1000;
@@ -3167,14 +3221,13 @@
             return true;
         }
 
-        // 3️⃣ PALAVRAS PROIBIDAS (CORRIGIDO - APAGA A MENSAGEM)
+        // 3️⃣ PALAVRAS PROIBIDAS
         const mensagemLower = mensagem.toLowerCase();
         const palavrasEncontradas = PALAVRAS_PROIBIDAS.filter(palavra => 
             mensagemLower.includes(palavra)
         );
 
         if (palavrasEncontradas.length > 0) {
-            // APAGA A MENSAGEM OFENSIVA DO BANCO
             mensagensRef.once('value', (snapshot) => {
                 const msgs = snapshot.val() || {};
                 Object.keys(msgs).forEach(key => {
@@ -3195,7 +3248,6 @@
         if (urls) {
             for (const url of urls) {
                 if (!url.includes('youtube.com') && !url.includes('discord.gg') && !url.includes('youtu.be')) {
-                    // APAGA O LINK SUSPEITO
                     mensagensRef.once('value', (snapshot) => {
                         const msgs = snapshot.val() || {};
                         Object.keys(msgs).forEach(key => {
@@ -3606,6 +3658,95 @@
         return true;
     }
 
+    // ====== NOTIFICAÇÕES PUSH ======
+    async function registrarServiceWorker() {
+        try {
+            if (!('serviceWorker' in navigator)) {
+                console.warn('⚠️ Service Worker não suportado neste navegador.');
+                return false;
+            }
+
+            const registration = await navigator.serviceWorker.register('/sw.js', { 
+                scope: '/' 
+            });
+            console.log('✅ Service Worker registrado com sucesso!');
+            return registration;
+        } catch (error) {
+            console.error('❌ Erro ao registrar Service Worker:', error);
+            return false;
+        }
+    }
+
+    async function inscreverNotificacoes() {
+        try {
+            if (!('PushManager' in window)) {
+                alert('⚠️ Seu navegador não suporta notificações push.');
+                return false;
+            }
+
+            const registration = await registrarServiceWorker();
+            if (!registration) {
+                alert('⚠️ Erro ao registrar o Service Worker.');
+                return false;
+            }
+
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                alert('⚠️ Você precisa permitir notificações nas configurações do navegador.');
+                return false;
+            }
+
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
+            });
+
+            if (usuarioLogado) {
+                const inscricoesRef = db.ref('push_inscricoes/' + usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+                await inscricoesRef.set({
+                    endpoint: subscription.endpoint,
+                    keys: subscription.toJSON().keys,
+                    data: new Date().toISOString()
+                });
+            }
+
+            alert('✅ Notificações ativadas com sucesso! Você receberá alertas mesmo com o site fechado.');
+            return true;
+        } catch (error) {
+            console.error('❌ Erro ao ativar notificações:', error);
+            alert('❌ Erro ao ativar notificações. Tente novamente.');
+            return false;
+        }
+    }
+
+    function urlBase64ToUint8Array(base64String) {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    }
+
+    function enviarNotificacaoComSom(titulo, corpo, url = '/') {
+        playNotificationSound();
+        
+        if (Notification.permission === 'granted') {
+            try {
+                new Notification(titulo, {
+                    body: corpo,
+                    icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1',
+                    vibrate: [200, 100, 200],
+                    sound: 'https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3'
+                });
+            } catch (e) {
+                console.warn('Erro ao mostrar notificação:', e);
+            }
+        }
+    }
+
     // ====== ENVIAR MENSAGEM (COM ANTI-SPAM) ======
     window.enviarMensagem = function() {
         const input = document.getElementById('chatInput');
@@ -3635,35 +3776,43 @@
                     return;
                 }
 
-                // ⚡ ANTI-SPAM
-                if (verificarSpam(usuarioLogado, texto)) {
-                    alert('⚠️ Mensagem bloqueada pelo sistema anti-spam!');
+                function enviarMensagemFinal() {
+                    const msgRef = mensagensRef.push();
+                    msgRef.set({
+                        nome: usuarioLogado.nome,
+                        avatar: usuarioLogado.avatar || '',
+                        email: usuarioLogado.email,
+                        mensagem: texto,
+                        data: new Date().toISOString(),
+                        isBot: false
+                    });
+
                     input.value = '';
-                    return;
+                    const container = document.getElementById('chatMessages');
+                    container.scrollTop = container.scrollHeight;
+
+                    if (texto.startsWith('/')) {
+                        processarComando(texto, usuarioLogado);
+                    }
+
+                    const typingIndicator = document.getElementById('typingIndicator');
+                    typingIndicator.classList.remove('show');
+                    const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+                    userTypingRef.remove();
                 }
 
-                const msgRef = mensagensRef.push();
-                msgRef.set({
-                    nome: usuarioLogado.nome,
-                    avatar: usuarioLogado.avatar || '',
-                    email: usuarioLogado.email,
-                    mensagem: texto,
-                    data: new Date().toISOString(),
-                    isBot: false
+                verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+                    if (isAdminUser) {
+                        enviarMensagemFinal();
+                    } else {
+                        if (verificarSpam(usuarioLogado, texto)) {
+                            alert('⚠️ Mensagem bloqueada pelo sistema anti-spam!');
+                            input.value = '';
+                            return;
+                        }
+                        enviarMensagemFinal();
+                    }
                 });
-
-                input.value = '';
-                const container = document.getElementById('chatMessages');
-                container.scrollTop = container.scrollHeight;
-
-                if (texto.startsWith('/')) {
-                    processarComando(texto, usuarioLogado);
-                }
-
-                const typingIndicator = document.getElementById('typingIndicator');
-                typingIndicator.classList.remove('show');
-                const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                userTypingRef.remove();
             });
         });
     };
@@ -3717,7 +3866,6 @@
         const isProprietarioUser = dados.email && isProprietario(dados.email);
         const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
 
-        // Verifica admin de forma assíncrona
         verificarAdmin(dados.email, (isAdminUser) => {
             const podeApagar = usuarioLogado && (isAdminUser || isCurrentUser);
 
@@ -3766,6 +3914,15 @@
             container.insertBefore(div, typingIndicator);
             container.scrollTop = container.scrollHeight;
 
+            // ====== NOTIFICAÇÃO E SOM ======
+            if (!isBotMsg && dados.email !== usuarioLogado?.email) {
+                enviarNotificacaoComSom(
+                    `💬 ${dados.nome}`,
+                    dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
+                    window.location.href
+                );
+            }
+
             if (!chatAberto && !isBotMsg && dados.email !== usuarioLogado?.email) {
                 contadorNaoLidas++;
                 const badge = document.getElementById('chatBadge');
@@ -3811,19 +3968,52 @@
     // ====== TYPING ======
     function carregarTyping() {
         const typingIndicator = document.getElementById('typingIndicator');
+        let timeoutId = null;
 
         typingRef.on('child_added', (snapshot) => {
             const email = snapshot.key;
             const dados = snapshot.val();
-            if (!dados || !dados.nome || email === usuarioLogado?.email) return;
-            typingIndicator.innerHTML = `<i class="fas fa-pen-fancy"></i> ${dados.nome} está digitando...`;
+            
+            if (!dados || !dados.nome) return;
+            if (email === usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_')) return;
+            
+            typingIndicator.innerHTML = `<i class="fas fa-pen-fancy" style="animation: pulse 1s infinite;"></i> <strong>${dados.nome}</strong> está digitando...`;
             typingIndicator.classList.add('show');
+            
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                typingRef.once('value', (snap) => {
+                    const typingUsers = snap.val() || {};
+                    const hasTyping = Object.keys(typingUsers).some(key => {
+                        return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
+                    });
+                    if (!hasTyping) {
+                        typingIndicator.classList.remove('show');
+                    }
+                });
+            }, 3500);
         });
 
         typingRef.on('child_removed', (snapshot) => {
-            setTimeout(() => {
-                typingIndicator.classList.remove('show');
-            }, 500);
+            const email = snapshot.key;
+            if (email === usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_')) return;
+            
+            typingRef.once('value', (snap) => {
+                const typingUsers = snap.val() || {};
+                const hasTyping = Object.keys(typingUsers).some(key => {
+                    return key !== usuarioLogado?.email.replace(/[.#$\/\[\]]/g, '_');
+                });
+                if (!hasTyping) {
+                    typingIndicator.classList.remove('show');
+                }
+            });
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && usuarioLogado) {
+                const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
+                userTypingRef.remove();
+            }
         });
     }
 
@@ -4504,6 +4694,7 @@
         }
         carregarPerfil();
         atualizarStatusOnline();
+        registrarServiceWorker();
     }
 
     function verificarLogin() {
@@ -4546,7 +4737,7 @@
 
         const input = document.getElementById('chatInput');
         if (input) {
-            input.addEventListener('keypress', function(e) {
+            input.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter') {
                     window.enviarMensagem();
                     if (usuarioLogado) {
@@ -4555,11 +4746,18 @@
                     }
                     return;
                 }
-                if (usuarioLogado) {
+                
+                if (usuarioLogado && e.key !== 'Enter') {
                     const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
-                    userTypingRef.set({ nome: usuarioLogado.nome, timestamp: Date.now() });
+                    userTypingRef.set({ 
+                        nome: usuarioLogado.nome, 
+                        timestamp: Date.now() 
+                    });
+                    
                     clearTimeout(typingTimeout);
-                    typingTimeout = setTimeout(() => userTypingRef.remove(), 3000);
+                    typingTimeout = setTimeout(() => {
+                        userTypingRef.remove();
+                    }, 3000);
                 }
             });
 
