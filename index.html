@@ -18,7 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS COMPLETO ===== */
+        /* ===== CSS COMPLETO (mantido o original para não quebrar o layout) ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -226,6 +226,172 @@
             100% { box-shadow: 0 4px 30px rgba(124,58,237,0.4); }
         }
 
+        /* ===== BOTÃO MINHAS COMPRAS ===== */
+        .btn-minhas-compras {
+            position: fixed;
+            bottom: 225px;
+            left: 24px;
+            z-index: 9997;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 30px rgba(37,99,235,0.4);
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: pulse-compras 2s infinite;
+        }
+        .btn-minhas-compras:hover { transform: scale(1.1); box-shadow: 0 8px 50px rgba(37,99,235,0.6); }
+        .btn-minhas-compras .compra-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.5rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+        }
+        .btn-minhas-compras .compra-badge.show { display: flex; }
+        @keyframes pulse-compras {
+            0% { box-shadow: 0 4px 30px rgba(37,99,235,0.4); }
+            50% { box-shadow: 0 4px 50px rgba(37,99,235,0.8); }
+            100% { box-shadow: 0 4px 30px rgba(37,99,235,0.4); }
+        }
+
+        /* ===== PAINEL DE COMPRAS (EXPANSÍVEL) ===== */
+        .painel-compras-usuario {
+            position: fixed;
+            bottom: 290px;
+            left: 24px;
+            z-index: 9996;
+            width: 420px;
+            max-height: 450px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            animation: slideUp 0.25s ease;
+        }
+        .painel-compras-usuario.open { display: flex; }
+
+        .painel-compras-usuario .painel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+        .painel-compras-usuario .painel-header h3 {
+            font-size: 0.9rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .painel-compras-usuario .painel-header .btn-fechar-painel {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+        .painel-compras-usuario .painel-header .btn-fechar-painel:hover {
+            color: var(--text);
+        }
+        .painel-compras-usuario .painel-body {
+            padding: 0.5rem 0.8rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .painel-compras-usuario .painel-body::-webkit-scrollbar { width: 4px; }
+        .painel-compras-usuario .painel-body::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        .painel-compras-usuario .compra-item {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem;
+        }
+        .painel-compras-usuario .compra-item:last-child { border-bottom: none; }
+        .painel-compras-usuario .compra-item .produto {
+            font-weight: 600;
+            color: var(--text);
+        }
+        .painel-compras-usuario .compra-item .detalhes {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 2px;
+        }
+        .painel-compras-usuario .compra-item .detalhes .status {
+            padding: 0.1rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.6rem;
+        }
+        .status-pendente { background: var(--warning); color: #000; }
+        .status-aprovado { background: var(--success); color: #000; }
+        .status-enviado { background: var(--secondary); color: #fff; }
+        .status-cancelado { background: var(--danger); color: #fff; }
+        .painel-compras-usuario .empty-painel {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 2rem 0;
+            font-size: 0.85rem;
+        }
+        .painel-compras-usuario .empty-painel i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            opacity: 0.3;
+        }
+        .painel-compras-usuario .notificacao-item {
+            background: rgba(37,99,235,0.08);
+            border-left: 3px solid var(--secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            margin-bottom: 0.3rem;
+            font-size: 0.75rem;
+            color: var(--text);
+        }
+        .painel-compras-usuario .notificacao-item strong {
+            color: var(--secondary-light);
+        }
+        .painel-compras-usuario .notificacao-item .data {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ===== NAVBAR (mantida igual) ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -663,6 +829,7 @@
             padding: 1rem 0;
         }
 
+        /* ===== HERO (mantida igual) ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -1577,7 +1744,7 @@
 
         .chat-toggle-btn {
             position: fixed;
-            bottom: 220px;
+            bottom: 295px;
             left: 24px;
             z-index: 9998;
             width: 56px;
@@ -1618,7 +1785,7 @@
 
         .chat-window {
             position: fixed;
-            bottom: 290px;
+            bottom: 365px;
             left: 24px;
             z-index: 9997;
             width: 420px;
@@ -1633,11 +1800,6 @@
             overflow: hidden;
         }
         .chat-window.open { display: flex; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
 
         .chat-header {
             display: flex;
@@ -1681,14 +1843,6 @@
             border-radius: 4px;
         }
         .chat-header .chat-actions button:hover {
-            color: var(--text);
-            background: var(--glass);
-        }
-
-        /* ===== BOTÕES DO CHAT ===== */
-        .chat-header .chat-actions .theme-btn:hover,
-        .chat-header .chat-actions .search-btn:hover,
-        .chat-header .chat-actions .stats-btn:hover {
             color: var(--text);
             background: var(--glass);
         }
@@ -1864,7 +2018,6 @@
             margin-top: 2px;
         }
 
-        /* ===== MENSAGEM DESTACADA POR MENÇÃO ===== */
         .chat-msg.msg-mencao {
             border-left: 3px solid var(--warning);
             background: rgba(245,158,11,0.08);
@@ -1875,7 +2028,6 @@
             50% { transform: scale(1.02); }
         }
 
-        /* ===== SEARCH BOX ===== */
         .search-box {
             position: absolute;
             top: 100%;
@@ -1982,7 +2134,6 @@
             50% { background: var(--danger); }
         }
 
-        /* ===== MENTION MENU ===== */
         .mention-menu {
             position: absolute;
             bottom: 60px;
@@ -2013,7 +2164,6 @@
             background: var(--glass);
         }
 
-        /* ===== MODAIS ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -2487,7 +2637,6 @@
         }
         .modal-pix-xcore .modal-content .btn-copy:hover { transform: scale(1.05); }
 
-        /* ===== MODAL KEY ===== */
         .modal-key-overlay {
             display: none;
             position: fixed;
@@ -2613,7 +2762,6 @@
             padding-top: 0.8rem;
         }
 
-        /* ===== MODAL ENVIAR KEY ===== */
         .modal-key-envio-overlay {
             display: none;
             position: fixed;
@@ -2691,122 +2839,8 @@
         }
         .modal-key-envio-content .modal-actions .btn-cancel:hover { border-color: var(--primary); }
 
-        /* ===== PAINEL DE COMPRAS ===== */
-        .painel-compras {
-            display: none;
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: var(--bg-card);
-            border: 2px solid var(--primary);
-            border-radius: var(--radius);
-        }
-        .painel-compras.visible { display: block; }
-        .painel-compras .painel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .painel-compras .painel-header h2 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .painel-compras .painel-header .total-compras {
-            background: var(--secondary);
-            padding: 0.3rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #fff;
-        }
-        .painel-compras .filtros {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        .painel-compras .filtros input,
-        .painel-compras .filtros select {
-            padding: 0.4rem 0.8rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 0.8rem;
-            outline: none;
-        }
-        .painel-compras .filtros input:focus,
-        .painel-compras .filtros select:focus { border-color: var(--secondary); }
-        .painel-compras .table-wrapper { overflow-x: auto; }
-        .painel-compras table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-        }
-        .painel-compras table th {
-            background: var(--bg);
-            padding: 0.6rem 0.8rem;
-            text-align: left;
-            color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--border);
-        }
-        .painel-compras table td {
-            padding: 0.6rem 0.8rem;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-        }
-        .painel-compras table tr:hover td { background: rgba(124,58,237,0.05); }
-        .painel-compras .status-badge {
-            padding: 0.15rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 700;
-        }
-        .status-badge.pendente { background: var(--warning); color: #000; }
-        .status-badge.aprovado { background: var(--success); color: #000; }
-        .status-badge.enviado { background: var(--secondary); color: #fff; }
-        .status-badge.cancelado { background: var(--danger); color: #fff; }
-        .btn-enviar-key {
-            background: var(--secondary);
-            color: #fff;
-            border: none;
-            padding: 0.2rem 0.8rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .btn-enviar-key:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(124,58,237,0.3); }
-        .btn-ver-comprovante {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 0.2rem 0.6rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.65rem;
-            transition: 0.3s;
-        }
-        .btn-ver-comprovante:hover { transform: scale(1.05); }
-        .empty-painel {
-            text-align: center;
-            color: var(--text-muted);
-            padding: 3rem 0;
-        }
-        .empty-painel i { font-size: 3rem; display: block; margin-bottom: 1rem; opacity: 0.3; }
+        /* PAINEL DE COMPRAS (PROPRIETÁRIO) - removido do topo, agora só existe o do usuário */
+        /* O painel do proprietário foi substituído pelo painel do usuário */
 
         @media (max-width: 1024px) {
             .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
@@ -2816,6 +2850,12 @@
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
             .dropdown { width: 300px; right: -20px; }
+            .painel-compras-usuario { width: 340px; left: 10px; max-height: 400px; }
+            .btn-minhas-compras { left: 14px; bottom: 200px; width: 48px; height: 48px; font-size: 1.2rem; }
+            .btn-key-fixo { left: 14px; bottom: 140px; width: 48px; height: 48px; font-size: 1.2rem; }
+            .chat-toggle-btn { left: 14px; bottom: 270px; width: 48px; height: 48px; font-size: 1.2rem; }
+            .chat-window { left: 10px; width: 340px; max-height: 420px; height: 420px; bottom: 330px; }
+            .btn-whatsapp-fixo { left: 14px; bottom: 80px; width: 48px; height: 48px; font-size: 22px; }
         }
         @media (max-width: 768px) {
             .navbar { padding: 0 0.5rem; }
@@ -2883,48 +2923,16 @@
             .plans-grid { grid-template-columns: 1fr; }
             .xcore-plans { grid-template-columns: 1fr; }
             .form-container { padding: 1.2rem; }
-            .btn-whatsapp-fixo { width: 44px; height: 44px; font-size: 22px; bottom: 14px; left: 14px; }
             .tab-btn { padding: 0.4rem 0.8rem; font-size: 0.7rem; }
             .script-features { grid-template-columns: 1fr; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
-            .chat-window {
-                width: 320px;
-                max-height: 420px;
-                height: 420px;
-                bottom: 200px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-                bottom: 140px;
-                left: 14px;
-            }
-            .btn-key-fixo {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-                bottom: 190px;
-                left: 14px;
-            }
-            .btn-whatsapp-fixo {
-                width: 48px;
-                height: 48px;
-                font-size: 22px;
-                bottom: 80px;
-                left: 14px;
-            }
-            .welcome-content {
-                padding: 1.5rem;
-                max-height: 90vh;
-            }
-            .search-box {
-                width: 200px;
-                right: 0;
-            }
-            .search-box input { width: 120px; }
+            .painel-compras-usuario { width: 300px; left: 10px; max-height: 350px; bottom: 260px; }
+            .btn-minhas-compras { left: 10px; bottom: 170px; width: 44px; height: 44px; font-size: 1rem; }
+            .btn-key-fixo { left: 10px; bottom: 120px; width: 44px; height: 44px; font-size: 1rem; }
+            .chat-toggle-btn { left: 10px; bottom: 240px; width: 44px; height: 44px; font-size: 1rem; }
+            .chat-window { width: 300px; max-height: 380px; height: 380px; bottom: 290px; left: 10px; }
+            .btn-whatsapp-fixo { width: 44px; height: 44px; font-size: 20px; bottom: 70px; left: 10px; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -2941,37 +2949,13 @@
             .nav-xcore .xcore-text .team { font-size: 0.5rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
-            .chat-window {
-                width: 340px;
-                max-height: 450px;
-                height: 450px;
-                bottom: 180px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-                bottom: 120px;
-                left: 10px;
-            }
-            .btn-key-fixo {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-                bottom: 170px;
-                left: 10px;
-            }
-            .btn-whatsapp-fixo {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
-                bottom: 70px;
-                left: 10px;
-            }
-            .welcome-content {
-                padding: 1.2rem;
-            }
+            .painel-compras-usuario { width: 280px; left: 8px; max-height: 320px; bottom: 220px; }
+            .btn-minhas-compras { left: 8px; bottom: 150px; width: 40px; height: 40px; font-size: 0.9rem; }
+            .btn-key-fixo { left: 8px; bottom: 105px; width: 40px; height: 40px; font-size: 0.9rem; }
+            .chat-toggle-btn { left: 8px; bottom: 210px; width: 40px; height: 40px; font-size: 0.9rem; }
+            .chat-window { width: 280px; max-height: 350px; height: 350px; bottom: 260px; left: 8px; }
+            .btn-whatsapp-fixo { width: 40px; height: 40px; font-size: 18px; bottom: 60px; left: 8px; }
+            .welcome-content { padding: 1.2rem; }
         }
     </style>
 </head>
@@ -2981,6 +2965,12 @@
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- ===== BOTÃO MINHAS COMPRAS ===== -->
+    <button class="btn-minhas-compras" id="btnMinhasCompras" onclick="togglePainelCompras()" style="display:none;">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="compra-badge" id="compraBadge">0</span>
+    </button>
 
     <!-- ===== BOTÃO KEY ===== -->
     <button class="btn-key-fixo" id="btnKey" onclick="abrirPainelKey()" style="display:none;">
@@ -2993,6 +2983,20 @@
         <i class="fas fa-comment-dots"></i>
         <span class="chat-badge" id="chatBadge">0</span>
     </button>
+
+    <!-- ===== PAINEL DE COMPRAS DO USUÁRIO ===== -->
+    <div class="painel-compras-usuario" id="painelComprasUsuario">
+        <div class="painel-header">
+            <h3><i class="fas fa-shopping-bag"></i> Minhas Compras</h3>
+            <button class="btn-fechar-painel" onclick="togglePainelCompras()">&times;</button>
+        </div>
+        <div class="painel-body" id="painelBodyUsuario">
+            <div class="empty-painel">
+                <i class="fas fa-inbox"></i>
+                Você ainda não possui compras.
+            </div>
+        </div>
+    </div>
 
     <!-- ===== CHAT ===== -->
     <div class="chat-window" id="chatWindow">
@@ -3074,48 +3078,6 @@
         </div>
     </div>
 
-    <!-- ===== PAINEL DE COMPRAS (APENAS PROPRIETÁRIO) ===== -->
-    <div class="painel-compras" id="painelCompras">
-        <div class="painel-header">
-            <h2><i class="fas fa-shopping-cart"></i> Painel de Compras</h2>
-            <span class="total-compras" id="totalCompras">0 compras</span>
-        </div>
-        <div class="filtros">
-            <input type="text" id="filtroNome" placeholder="Filtrar por nome..." oninput="filtrarCompras()">
-            <input type="text" id="filtroEmail" placeholder="Filtrar por e-mail..." oninput="filtrarCompras()">
-            <select id="filtroStatus" onchange="filtrarCompras()">
-                <option value="">Todos os status</option>
-                <option value="pendente">Pendente</option>
-                <option value="aprovado">Aprovado</option>
-                <option value="enviado">Key Enviada</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
-            <button onclick="exportarCompras()" style="background:var(--success);color:#fff;border:none;padding:0.3rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;font-size:0.8rem;">
-                <i class="fas fa-file-export"></i> Exportar
-            </button>
-        </div>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Data</th>
-                        <th>Nome</th>
-                        <th>WhatsApp</th>
-                        <th>E-mail</th>
-                        <th>Produto</th>
-                        <th>Comprovante</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelaCompras">
-                    <tr><td colspan="9"><div class="empty-painel"><i class="fas fa-inbox"></i>Nenhuma compra registrada</div></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
     <!-- ===== MODAL SOLICITAR KEY ===== -->
     <div class="modal-key-overlay" id="modalKey">
         <div class="modal-key-content">
@@ -3132,10 +3094,7 @@
                     <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--primary);">*</span></label>
                     <input type="text" id="keyWhatsApp" placeholder="(DDD) 9 9999-9999" required>
                 </div>
-                <div class="form-group">
-                    <label><i class="fas fa-envelope"></i> E-mail <span style="color:var(--primary);">*</span></label>
-                    <input type="email" id="keyEmail" placeholder="Digite seu e-mail..." required>
-                </div>
+                <!-- E-mail removido do formulário - será obtido da sessão -->
                 <div class="form-group">
                     <label><i class="fas fa-image"></i> Comprovante PIX <span style="color:var(--primary);">*</span></label>
                     <input type="file" id="keyComprovante" accept="image/*,.pdf" required>
@@ -3147,6 +3106,7 @@
                         <option value="KZN MENU Classic - Mensal">KZN MENU Classic - Mensal (R$ 50,00)</option>
                         <option value="KZN MENU Classic - Permanente">KZN MENU Classic - Permanente (R$ 200,00)</option>
                         <option value="Auto Trash Automatic - Graal Era">Auto Trash Automatic - Graal Era (R$ 200,00)</option>
+                        <option value="MOD MENU BETA CLASSIC - TESTE 7h">MOD MENU BETA CLASSIC - TESTE 7h (R$ 10,00)</option>
                         <option value="Xcore SILVER - Mensal">Xcore SILVER - Mensal (R$ 35,00)</option>
                         <option value="Xcore GOLD - Mensal">Xcore GOLD - Mensal (R$ 90,00)</option>
                     </select>
@@ -3312,6 +3272,27 @@
 
             <div class="tab-content active" id="tab-classic">
                 <div class="plans-grid">
+                    <!-- NOVO PLANO BETA -->
+                    <div class="plan-card popular">
+                        <span class="badge" style="background:var(--warning);color:#000;">🧪 BETA DE TESTE</span>
+                        <div style="text-align:center;margin:0.5rem 0;">
+                            <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="MOD MENU BETA" class="mod-image" />
+                        </div>
+                        <div class="icon">🧪</div>
+                        <h3>MOD MENU BETA CLASSIC</h3>
+                        <div class="sub-plano">TESTE • 7 HORAS</div>
+                        <div class="price" style="color:var(--warning);">R$ 10,00 <small>/ 7h</small></div>
+                        <ul class="features">
+                            <li><i class="fas fa-check"></i> Versão de teste do Mod Menu</li>
+                            <li><i class="fas fa-check"></i> Funcionalidades limitadas</li>
+                            <li><i class="fas fa-check"></i> Ideal para conhecer o produto</li>
+                            <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                            <li><i class="fas fa-check"></i> Validade: 7 horas</li>
+                        </ul>
+                        <button class="btn-buy" onclick="adicionarAoCarrinho('MOD MENU BETA CLASSIC - TESTE 7h', 10)">Comprar R$ 10,00</button>
+                        <button class="btn-add-cart" onclick="adicionarAoCarrinho('MOD MENU BETA CLASSIC - TESTE 7h', 10)"><i class="fas fa-cart-plus"></i> Adicionar</button>
+                    </div>
+
                     <div class="plan-card">
                         <div style="text-align:center;margin:0.5rem 0;">
                             <img src="https://yt3.ggpht.com/oYAWnZbDYE_qwmC3hZLpA3dOlsPfzlJxALD3WrRyXItZCw5oUOfuFH4zwt-lc-VNElQHN9UO5ugLyQ=s800-rw-nd-v1" alt="KZN MENU Classic" class="mod-image" />
@@ -3498,16 +3479,12 @@
                             <input type="hidden" name="_captcha" value="false">
                             <input type="hidden" name="_template" value="table">
                             <input type="hidden" name="_subject" value="🛒 COMPRA XCORE EXECUTOR - NOVO PEDIDO!">
+                            <!-- E-mail oculto com o e-mail do usuário logado -->
+                            <input type="hidden" name="Email" id="xcoreEmailHidden" value="">
 
                             <div class="form-group">
                                 <label><i class="fas fa-user"></i> Seu Nome <span style="color:var(--primary);">*</span></label>
                                 <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
-                            </div>
-
-                            <div class="form-group">
-                                <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
-                                <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
-                                <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
                             </div>
 
                             <div class="form-group">
@@ -3667,18 +3644,15 @@
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
                     <input type="hidden" name="_subject" value="🛒 NOVO PEDIDO DO SITE KZN MENU!">
-
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Seu E-mail <span style="color:var(--primary);">*</span></label>
-                        <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
-                        <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
-                    </div>
+                    <!-- E-mail oculto com o e-mail do usuário logado -->
+                    <input type="hidden" name="Email" id="contatoEmailHidden" value="">
 
                     <div class="form-group"><label><i class="fas fa-user"></i> Seu Nome</label><input type="text" name="Nome" placeholder="Digite seu nome completo..." required></div>
                     <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required></div>
                     <div class="form-group"><label><i class="fas fa-crown"></i> Plano Escolhido</label>
                         <select name="Plano" required>
                             <option value="">Selecione um plano...</option>
+                            <option value="MOD MENU BETA CLASSIC - TESTE 7h - R$ 10,00">🧪 BETA - R$ 10,00 (7h)</option>
                             <option value="KZN MENU Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00 (35 dias)</option>
                             <option value="KZN MENU Classic - Permanente R$ 200,00">⚔️ Classic - Permanente R$ 200,00</option>
                             <option value="Auto Trash Automatic - R$ 200,00 (Graal Era)">🗑️ Auto Trash - R$ 200,00 (Graal Era)</option>
@@ -3884,6 +3858,7 @@
         let carrinho = [];
         let compras = [];
         let enviandoKeyPara = null;
+        let painelComprasAberto = false;
 
         // ====== CARREGAR USUÁRIOS ======
         function carregarUsuarios() {
@@ -5250,6 +5225,12 @@
                     document.getElementById('editEmail').value = usuario.email || '';
                     document.getElementById('editEmail').disabled = true;
 
+                    // Preencher e-mails ocultos nos formulários
+                    const contatoEmailHidden = document.getElementById('contatoEmailHidden');
+                    if (contatoEmailHidden) contatoEmailHidden.value = usuario.email || '';
+                    const xcoreEmailHidden = document.getElementById('xcoreEmailHidden');
+                    if (xcoreEmailHidden) xcoreEmailHidden.value = usuario.email || '';
+
                     if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
                         document.getElementById('avatarProfileImage').src = usuario.avatar;
                         document.getElementById('avatarProfileImage').style.display = 'block';
@@ -5468,6 +5449,7 @@
             document.getElementById('welcomeOverlay').classList.add('hidden');
             document.getElementById('chatToggleBtn').style.display = 'flex';
             document.getElementById('btnKey').style.display = 'flex';
+            document.getElementById('btnMinhasCompras').style.display = 'flex';
             document.getElementById('chatWindow').classList.add('open');
             chatAberto = true;
             
@@ -5485,6 +5467,7 @@
             atualizarBadgeKey();
             carregarCarrinho();
             carregarNotificacoes();
+            renderizarPainelComprasUsuario();
         }
 
         window.fazerLogin = function() {
@@ -5620,8 +5603,8 @@
             document.getElementById('welcomeOverlay').classList.remove('hidden');
             document.getElementById('chatToggleBtn').style.display = 'none';
             document.getElementById('btnKey').style.display = 'none';
+            document.getElementById('btnMinhasCompras').style.display = 'none';
             document.getElementById('chatWindow').classList.remove('open');
-            document.getElementById('painelCompras').classList.remove('visible');
             chatAberto = false;
             resetarPerfilPadrao();
             alert('👋 Você saiu da sua conta.');
@@ -5787,105 +5770,87 @@
                 const dados = snapshot.val() || {};
                 compras = Object.keys(dados).map(key => ({ id: key, ...dados[key] }));
                 compras.sort((a, b) => new Date(b.data) - new Date(a.data));
-                renderizarPainelCompras();
+                renderizarPainelComprasUsuario();
                 atualizarBadgeKey();
+                atualizarBadgeCompra();
             });
         }
 
-        function renderizarPainelCompras() {
-            const tbody = document.getElementById('tabelaCompras');
-            const total = document.getElementById('totalCompras');
-            const isOwner = usuarioLogado && usuarioLogado.email === PROPRIETARIO_EMAIL;
-            const painel = document.getElementById('painelCompras');
+        function renderizarPainelComprasUsuario() {
+            const body = document.getElementById('painelBodyUsuario');
+            if (!body) return;
 
-            if (isOwner) painel.classList.add('visible');
-            else painel.classList.remove('visible');
-
-            total.textContent = `${compras.length} compras`;
-
-            if (compras.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9"><div class="empty-painel"><i class="fas fa-inbox"></i>Nenhuma compra registrada</div></td></tr>`;
+            if (!usuarioLogado) {
+                body.innerHTML = `<div class="empty-painel"><i class="fas fa-lock"></i>Faça login para ver suas compras.</div>`;
                 return;
             }
 
-            const filtroNome = document.getElementById('filtroNome').value.toLowerCase();
-            const filtroEmail = document.getElementById('filtroEmail').value.toLowerCase();
-            const filtroStatus = document.getElementById('filtroStatus').value;
+            const minhasCompras = compras.filter(c => c.email === usuarioLogado.email);
 
-            let filtered = compras.filter(c => {
-                return (c.nome || '').toLowerCase().includes(filtroNome) &&
-                       (c.email || '').toLowerCase().includes(filtroEmail) &&
-                       (filtroStatus === '' || c.status === filtroStatus);
+            if (minhasCompras.length === 0) {
+                body.innerHTML = `<div class="empty-painel"><i class="fas fa-inbox"></i>Você ainda não possui compras.</div>`;
+                return;
+            }
+
+            let html = '';
+            minhasCompras.forEach(c => {
+                const statusClass = c.status === 'enviado' ? 'status-enviado' : 
+                                   c.status === 'aprovado' ? 'status-aprovado' :
+                                   c.status === 'cancelado' ? 'status-cancelado' : 'status-pendente';
+                const statusLabel = c.status || 'Pendente';
+                html += `
+                    <div class="compra-item">
+                        <div class="produto">${c.produto || 'Produto'}</div>
+                        <div class="detalhes">
+                            <span>📅 ${new Date(c.data).toLocaleString('pt-BR')}</span>
+                            <span class="status ${statusClass}">${statusLabel}</span>
+                            ${c.key ? `<span style="color:var(--success);">🔑 Key: ${c.key}</span>` : ''}
+                            ${c.validade ? `<span style="color:var(--text-muted);">⏳ ${c.validade}</span>` : ''}
+                        </div>
+                        ${c.notificacao ? `<div class="notificacao-item"><strong>📢</strong> ${c.notificacao} <span class="data">${new Date(c.data).toLocaleString('pt-BR')}</span></div>` : ''}
+                    </div>
+                `;
             });
-
-            tbody.innerHTML = filtered.map((c, index) => `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${new Date(c.data).toLocaleString('pt-BR')}</td>
-                    <td><strong>${c.nome || 'N/A'}</strong></td>
-                    <td>${c.whatsapp || 'N/A'}</td>
-                    <td>${c.email || 'N/A'}</td>
-                    <td>${c.produto || 'N/A'}</td>
-                    <td>
-                        ${c.comprovante ? 
-                            `<button class="btn-ver-comprovante" onclick="verComprovante('${c.comprovante}')">
-                                <i class="fas fa-eye"></i> Ver
-                            </button>` : 
-                            '<span style="color:var(--text-muted);font-size:0.65rem;">N/A</span>'
-                        }
-                    </td>
-                    <td>
-                        <span class="status-badge ${c.status || 'pendente'}">${c.status || 'Pendente'}</span>
-                    </td>
-                    <td>
-                        ${c.status !== 'enviado' ? 
-                            `<button class="btn-enviar-key" onclick="abrirModalEnviarKey('${c.id}')">
-                                <i class="fas fa-key"></i> Enviar Key
-                            </button>` :
-                            '<span style="color:var(--success);font-size:0.7rem;">✓ Key enviada</span>'
-                        }
-                    </td>
-                </tr>
-            `).join('');
+            body.innerHTML = html;
         }
 
-        window.filtrarCompras = function() { renderizarPainelCompras(); };
-
-        window.verComprovante = function(base64) {
-            if (base64 && base64.startsWith('data:image')) {
-                const win = window.open('', '_blank');
-                win.document.write(`<img src="${base64}" style="max-width:100%;max-height:100vh;" />`);
-                win.document.title = 'Comprovante';
-            } else {
-                alert('Comprovante não disponível para visualização direta.');
-            }
-        };
-
-        window.exportarCompras = function() {
-            if (compras.length === 0) { alert('Nenhuma compra para exportar.'); return; }
-            let csv = 'Data,Nome,WhatsApp,E-mail,Produto,Status\n';
-            compras.forEach(c => {
-                const data = new Date(c.data).toLocaleString('pt-BR');
-                csv += `"${data}","${c.nome || ''}","${c.whatsapp || ''}","${c.email || ''}","${c.produto || ''}","${c.status || 'Pendente'}"\n`;
-            });
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `compras_${new Date().toISOString().slice(0,10)}.csv`;
-            link.click();
-            URL.revokeObjectURL(link.href);
-        };
-
-        function atualizarBadgeKey() {
-            const pendentes = compras.filter(c => c.status === 'pendente').length;
-            const badge = document.getElementById('keyBadge');
-            if (pendentes > 0) {
-                badge.textContent = pendentes;
+        function atualizarBadgeCompra() {
+            if (!usuarioLogado) return;
+            const minhasCompras = compras.filter(c => c.email === usuarioLogado.email && c.status === 'enviado');
+            const badge = document.getElementById('compraBadge');
+            if (minhasCompras.length > 0) {
+                badge.textContent = minhasCompras.length;
                 badge.classList.add('show');
             } else {
                 badge.classList.remove('show');
             }
         }
+
+        function atualizarBadgeKey() {
+            if (!usuarioLogado) return;
+            const pendentes = compras.filter(c => c.email === usuarioLogado.email && c.status === 'pendente');
+            const badge = document.getElementById('keyBadge');
+            if (pendentes.length > 0) {
+                badge.textContent = pendentes.length;
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+
+        // ====== PAINEL DE COMPRAS (TOGGLE) ======
+        window.togglePainelCompras = function() {
+            const painel = document.getElementById('painelComprasUsuario');
+            painelComprasAberto = !painelComprasAberto;
+            if (painelComprasAberto) {
+                painel.classList.add('open');
+                renderizarPainelComprasUsuario();
+                // Reset badge ao abrir
+                document.getElementById('compraBadge').classList.remove('show');
+            } else {
+                painel.classList.remove('open');
+            }
+        };
 
         // ====== SOLICITAR KEY ======
         window.abrirPainelKey = function() {
@@ -5894,8 +5859,8 @@
                 return;
             }
             document.getElementById('modalKey').classList.add('open');
-            document.getElementById('keyEmail').value = usuarioLogado.email || '';
             document.getElementById('keyNome').value = usuarioLogado.nome || '';
+            // E-mail removido do formulário
         };
 
         window.fecharPainelKey = function() {
@@ -5905,14 +5870,19 @@
         };
 
         window.enviarSolicitacaoKey = function() {
+            if (!usuarioLogado) {
+                alert('🔒 Você precisa estar logado para solicitar uma Key.');
+                return;
+            }
+
             const nome = document.getElementById('keyNome').value.trim();
             const whatsapp = document.getElementById('keyWhatsApp').value.trim();
-            const email = document.getElementById('keyEmail').value.trim();
             const produto = document.getElementById('keyProduto').value;
             const comprovanteFile = document.getElementById('keyComprovante').files[0];
             const status = document.getElementById('keyStatus');
+            const email = usuarioLogado.email; // Obtido da sessão
 
-            if (!nome || !whatsapp || !email || !comprovanteFile) {
+            if (!nome || !whatsapp || !comprovanteFile) {
                 status.className = 'form-status error';
                 status.textContent = '⚠️ Preencha todos os campos e selecione o comprovante.';
                 status.style.display = 'block';
@@ -5938,12 +5908,12 @@
                 compraRef.set({
                     nome: nome,
                     whatsapp: whatsapp,
-                    email: email,
+                    email: email, // Associado ao usuário logado
                     produto: produto,
                     comprovante: comprovanteBase64,
                     data: new Date().toISOString(),
                     status: 'pendente',
-                    usuarioId: usuarioLogado?.email || email
+                    usuarioId: email
                 }).then(() => {
                     const formData = new FormData();
                     formData.append('_captcha', 'false');
@@ -5951,7 +5921,7 @@
                     formData.append('_subject', `🔑 NOVA SOLICITAÇÃO DE KEY - ${nome}`);
                     formData.append('Nome', nome);
                     formData.append('WhatsApp', whatsapp);
-                    formData.append('E-mail', email);
+                    formData.append('E-mail', email); // Envia o e-mail da sessão
                     formData.append('Produto', produto);
                     formData.append('Data', new Date().toLocaleString('pt-BR'));
                     formData.append('_to', 'gabriel6061yt@gmail.com');
@@ -5970,6 +5940,12 @@
                         document.getElementById('keyComprovante').value = '';
                         btn.disabled = false;
                         btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Solicitação';
+                        
+                        // Notificação local
+                        adicionarNotificacao(`📦 Solicitação de Key para "${produto}" enviada. Aguarde!`, 'compra');
+                        renderizarPainelComprasUsuario();
+                        atualizarBadgeKey();
+                        
                         setTimeout(() => fecharPainelKey(), 3000);
                     }).catch((err) => {
                         status.className = 'form-status error';
@@ -5999,8 +5975,12 @@
             return new Blob([u8arr], { type: mime });
         }
 
-        // ====== ENVIAR KEY ======
+        // ====== ENVIAR KEY (PROPRIETÁRIO) ======
         window.abrirModalEnviarKey = function(compraId) {
+            if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
+                alert('⛔ Apenas o proprietário pode enviar Keys.');
+                return;
+            }
             const compra = compras.find(c => c.id === compraId);
             if (!compra) return;
             enviandoKeyPara = compraId;
@@ -6022,36 +6002,37 @@
             const compra = compras.find(c => c.id === enviandoKeyPara);
             if (!compra) { alert('❌ Compra não encontrada.'); return; }
 
-            comprasRef.child(enviandoKeyPara).update({
+            const compraRef = comprasRef.child(enviandoKeyPara);
+            compraRef.update({
                 status: 'enviado',
                 key: key,
-                keyEnviadaEm: new Date().toISOString()
+                keyEnviadaEm: new Date().toISOString(),
+                notificacao: `🔑 Sua key foi enviada! Verifique seu e-mail: ${compra.email}`
             }).then(() => {
-                criarNotificacao(`🔑 Sua key foi enviada! Verifique seu e-mail: ${compra.email}`, compra.email);
+                // Notificação para o usuário
+                const notificacaoDestino = compra.email;
+                // Salvar notificação no localStorage do usuário
+                try {
+                    const nots = JSON.parse(localStorage.getItem('kzn_notificacoes') || '[]');
+                    nots.unshift({
+                        id: Date.now(),
+                        mensagem: `🔑 Sua key para "${compra.produto}" foi enviada!`,
+                        data: new Date().toLocaleString('pt-BR'),
+                        lida: false,
+                        tipo: 'key'
+                    });
+                    localStorage.setItem('kzn_notificacoes', JSON.stringify(nots));
+                } catch (e) {}
+                
                 fecharModalEnviarKey();
-                renderizarPainelCompras();
+                renderizarPainelComprasUsuario();
+                atualizarBadgeKey();
+                atualizarBadgeCompra();
                 alert(`✅ Key enviada com sucesso para ${compra.nome}!`);
             }).catch((err) => {
                 alert('❌ Erro ao enviar key: ' + err.message);
             });
         };
-
-        function criarNotificacao(mensagem, paraEmail = null) {
-            if (paraEmail) {
-                try {
-                    const notificacoesLocal = JSON.parse(localStorage.getItem('kzn_notificacoes') || '[]');
-                    notificacoesLocal.unshift({
-                        id: Date.now(),
-                        mensagem: '🔑 ' + mensagem,
-                        data: new Date().toLocaleString('pt-BR'),
-                        lida: false,
-                        tipo: 'key'
-                    });
-                    localStorage.setItem('kzn_notificacoes', JSON.stringify(notificacoesLocal));
-                } catch (e) {}
-                alert('🔑 ' + mensagem);
-            }
-        }
 
         // ====== MODAIS PIX ======
         window.abrirModalPix = function() {
@@ -6175,6 +6156,9 @@
                     document.getElementById('userMenuOverlay').classList.remove('open');
                     document.getElementById('modalOverlay').classList.remove('open');
                     document.getElementById('searchBox').style.display = 'none';
+                    if (painelComprasAberto) {
+                        togglePainelCompras();
+                    }
                 }
             });
 
@@ -6184,6 +6168,11 @@
                 }
                 if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown') && !e.target.closest('.cart-icon-wrap')) {
                     document.getElementById('cartDropdown').classList.remove('open');
+                }
+                if (!e.target.closest('#btnMinhasCompras') && !e.target.closest('#painelComprasUsuario')) {
+                    if (painelComprasAberto) {
+                        togglePainelCompras();
+                    }
                 }
             });
 
@@ -6204,6 +6193,7 @@
                 document.getElementById('chatWindow').classList.remove('open');
                 document.getElementById('chatToggleBtn').style.display = 'none';
                 document.getElementById('btnKey').style.display = 'none';
+                document.getElementById('btnMinhasCompras').style.display = 'none';
             }
 
             if (notificacoes.length === 0) {
@@ -6217,6 +6207,7 @@
             console.log('💬 Chat Global com moderação!');
             console.log('🔑 Sistema de Keys ativo!');
             console.log('🎨 Temas disponíveis: escuro/claro');
+            console.log('📋 Painel de compras do usuário implementado!');
         });
     </script>
 </body>
