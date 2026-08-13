@@ -7,33 +7,18 @@
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta property="og:title" content="KZN MENU - Mods para Graal" />
-    <meta property="og:description" content="ACESSE O NOSSO SITE E GARANTA SEU MOD MENU" />
-    <meta property="og:image" content="https://yt3.ggpht.com/Jn6QaxEthwP5GOcKdRxg38b_pJzUQdfJjmaGqFe0hqTaPQ3XOM8xqTFYCXhbkRynlX6uU4zcqCkuG1I=s800-rw-nd-v1" />
+    <meta property="og:description" content="Os melhores mods para farm e gameplay no Graal Classic e Era." />
+    <meta property="og:image" content="https://yt3.ggpht.com/b-FUWQT1qNLkpuLu-wnp074rpBUdJJz4iEbtNiOQ1FjCyqyw-GH1YsBMZtDAwQe5txKk5fn_tVxLVtU=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://accounts.google.com/gsi/client" async></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <!-- ===== FIREBASE CONFIG ===== -->
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
-            authDomain: "chat-kzn.firebaseapp.com",
-            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
-            projectId: "chat-kzn",
-            storageBucket: "chat-kzn.firebasestorage.app",
-            messagingSenderId: "641963268535",
-            appId: "1:641963268535:web:b1f8b26f69840f527a7032",
-            measurementId: "G-JZHCPK3VRP"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-    </script>
-
     <style>
-        /* ===== CSS COMPLETO DO SEU SITE ===== */
+        /* ===== CSS COMPLETO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -64,79 +49,12 @@
             color: var(--text);
             line-height: 1.7;
             overflow-x: hidden;
-            transition: background 0.3s, color 0.3s;
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
-        }
-
-        /* ===== TEMA CLARO ===== */
-        body.tema-claro {
-            --bg: #f1f5f9;
-            --bg-card: #ffffff;
-            --border: #e2e8f0;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --glass: rgba(0,0,0,0.03);
-            --shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        body.tema-claro .navbar {
-            background: rgba(255,255,255,0.92);
-            border-bottom-color: #e2e8f0;
-        }
-        body.tema-claro .chat-window,
-        body.tema-claro .dropdown,
-        body.tema-claro .cart-dropdown,
-        body.tema-claro .modal-content,
-        body.tema-claro .user-menu,
-        body.tema-claro .welcome-content {
-            background: #ffffff;
-            border-color: #e2e8f0;
-        }
-        body.tema-claro .chat-messages {
-            background: #f8fafc;
-        }
-        body.tema-claro .chat-msg {
-            background: #ffffff;
-            border-left-color: var(--secondary);
-        }
-        body.tema-claro .plan-card,
-        body.tema-claro .xcore-plan,
-        body.tema-claro .faq-item,
-        body.tema-claro .xcore-restrictions {
-            background: #ffffff;
-            border-color: #e2e8f0;
-        }
-        body.tema-claro .form-container input,
-        body.tema-claro .form-container select,
-        body.tema-claro .form-container textarea,
-        body.tema-claro .chat-input-area input {
-            background: #f8fafc;
-            border-color: #e2e8f0;
-            color: #0f172a;
-        }
-        body.tema-claro .profile-btn,
-        body.tema-claro .nav-icon-btn {
-            background: rgba(0,0,0,0.03);
-            border-color: #e2e8f0;
-        }
-        body.tema-claro .footer {
-            background: #ffffff;
-            border-top-color: #e2e8f0;
-        }
-        body.tema-claro .hero {
-            background: radial-gradient(ellipse at 20% 30%, rgba(220,38,38,0.08), transparent 60%),
-                        radial-gradient(ellipse at 80% 70%, rgba(124,58,237,0.05), transparent 60%),
-                        #f1f5f9;
-        }
-        body.tema-claro .welcome-content::before {
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
-        }
-        body.tema-claro .chat-input-area {
-            background: rgba(0,0,0,0.02);
         }
 
         /* ===== ANIMAÇÃO DIGITANDO ===== */
@@ -195,376 +113,6 @@
             50% { box-shadow: 0 4px 50px rgba(37,211,102,0.8); }
             100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
-
-        /* ===== BOTÃO PAINEL DE KEYS (EM CIMA DO CHAT - LADO DIREITO) ===== */
-        .btn-keys-fixo {
-            position: fixed;
-            bottom: 230px;
-            right: 20px;
-            z-index: 9999;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #7c3aed, #a78bfa);
-            color: #fff;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(124,58,237,0.4);
-            transition: transform 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-keys-fixo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(124,58,237,0.6);
-        }
-
-        /* ===== BOTÃO INFORMAÇÕES ===== */
-        .btn-info-fixo {
-            position: fixed;
-            bottom: 290px;
-            right: 20px;
-            z-index: 9999;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            color: #fff;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(245,158,11,0.4);
-            transition: transform 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-info-fixo:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 30px rgba(245,158,11,0.6);
-        }
-
-        /* ===== PAINEL ADMIN ===== */
-        .painel-keys-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .painel-keys-overlay.open { display: flex; }
-        
-        .painel-keys {
-            background: #1a1a2e;
-            border: 1px solid #7c3aed;
-            border-radius: 16px;
-            padding: 25px;
-            max-width: 950px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
-        }
-        .painel-keys::-webkit-scrollbar { width: 6px; }
-        .painel-keys::-webkit-scrollbar-thumb {
-            background: #7c3aed;
-            border-radius: 10px;
-        }
-        
-        .painel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #333;
-        }
-        .painel-header h2 {
-            color: #a78bfa;
-            font-size: 1.5rem;
-        }
-        .painel-header .btn-fechar {
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .painel-header .btn-fechar:hover {
-            color: #ef4444;
-            transform: rotate(90deg);
-        }
-        
-        .painel-body {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        /* ===== CARDS INFO ===== */
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .info-card {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-        }
-        .info-card .numero {
-            font-size: 2rem;
-            font-weight: 900;
-            color: #a78bfa;
-        }
-        .info-card .label {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 5px;
-        }
-        .info-card.total .numero { color: #a78bfa; }
-        .info-card.ativas .numero { color: #22c55e; }
-        .info-card.usadas .numero { color: #f59e0b; }
-        .info-card.expiradas .numero { color: #ef4444; }
-        .info-card.vendas .numero { color: #10b981; }
-        
-        /* ===== FORMULÁRIO ===== */
-        .form-key {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            background: #111;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            align-items: flex-end;
-        }
-        .form-key .campo {
-            flex: 1;
-            min-width: 150px;
-        }
-        .form-key label {
-            display: block;
-            font-size: 0.75rem;
-            color: #888;
-            margin-bottom: 4px;
-        }
-        .form-key input {
-            width: 100%;
-            padding: 8px 12px;
-            background: #0a0a0a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-            transition: 0.3s;
-        }
-        .form-key input:focus {
-            border-color: #7c3aed;
-            box-shadow: 0 0 20px rgba(124,58,237,0.1);
-        }
-        .form-key .btn-gerar {
-            padding: 9px 24px;
-            background: linear-gradient(135deg, #7c3aed, #a78bfa);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-        .form-key .btn-gerar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-        }
-        .form-key .btn-30keys {
-            padding: 9px 20px;
-            background: linear-gradient(135deg, #f59e0b, #fbbf24);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.9rem;
-        }
-        .form-key .btn-30keys:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(245,158,11,0.4);
-        }
-        
-        .key-display {
-            background: #0a0a0a;
-            border: 1px solid #10b981;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 10px;
-            display: none;
-            word-break: break-all;
-        }
-        .key-status {
-            font-size: 0.85rem;
-            margin-top: 5px;
-            padding: 8px;
-            border-radius: 6px;
-            background: #111;
-            display: none;
-        }
-        
-        /* ===== LINK MP ===== */
-        .mp-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #009ee3;
-            color: #fff;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.3s;
-            text-align: center;
-        }
-        .mp-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(0,158,227,0.4);
-        }
-        
-        /* ===== TABELA ===== */
-        .tabela-keys {
-            overflow-x: auto;
-            margin-top: 15px;
-        }
-        .tabela-keys table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.8rem;
-        }
-        .tabela-keys th {
-            background: #111;
-            color: #888;
-            padding: 10px 8px;
-            text-align: left;
-            border-bottom: 2px solid #333;
-            font-weight: 600;
-        }
-        .tabela-keys td {
-            padding: 8px;
-            border-bottom: 1px solid #1a1a2e;
-            color: #ccc;
-        }
-        .tabela-keys tr:hover td {
-            background: rgba(124,58,237,0.05);
-        }
-        .tabela-keys .status-ativa { color: #22c55e; font-weight: 700; }
-        .tabela-keys .status-usada { color: #f59e0b; font-weight: 700; }
-        .tabela-keys .status-expirada { color: #ef4444; font-weight: 700; }
-        .tabela-keys .btn-apagar {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-        .tabela-keys .btn-apagar:hover {
-            transform: scale(1.2);
-            color: #ff0000;
-        }
-        .tabela-keys .btn-atualizar {
-            padding: 6px 16px;
-            background: #333;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.8rem;
-        }
-        .tabela-keys .btn-atualizar:hover {
-            background: #7c3aed;
-        }
-        
-        .no-keys {
-            text-align: center;
-            color: #888;
-            padding: 30px;
-        }
-
-        /* ===== AJUSTE DO BOTÃO DO CHAT ===== */
-        .chat-toggle-btn {
-            position: fixed;
-            bottom: 160px;
-            left: 24px;
-            z-index: 9998;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-            transition: 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .chat-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
-        }
-        .chat-toggle-btn .chat-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 700;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg);
-            display: none;
-        }
-        .chat-toggle-btn .chat-badge.show { display: flex; }
-
-        .chat-window {
-            position: fixed;
-            bottom: 230px;
-            left: 24px;
-            z-index: 9997;
-            width: 420px;
-            max-height: 550px;
-            height: 550px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-window.open { display: flex; }
 
         .navbar {
             position: fixed;
@@ -648,15 +196,19 @@
             border: 2px solid var(--secondary);
             object-fit: cover;
         }
+        .nav-xcore .xcore-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
         .nav-xcore .xcore-text .name {
-            font-size: 1.2rem;
-            font-weight: 900;
+            font-size: 0.7rem;
+            font-weight: 700;
             color: var(--secondary-light);
-            letter-spacing: 1.5px;
+            letter-spacing: 0.5px;
         }
         .nav-xcore .xcore-text .team {
-            font-size: 0.9rem;
-            font-weight: 700;
+            font-size: 0.5rem;
             color: var(--text-muted);
         }
         .nav-menu {
@@ -944,6 +496,27 @@
             top: -6px;
             right: -8px;
         }
+        .lang-toggle {
+            display: flex;
+            gap: 0.15rem;
+            align-items: center;
+        }
+        .lang-toggle button {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.55rem;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .lang-toggle button:hover, .lang-toggle button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
         .cart-dropdown {
             position: absolute;
             top: calc(100% + 8px);
@@ -1014,7 +587,6 @@
                         var(--bg);
             position: relative;
             overflow: hidden;
-            transition: background 0.3s;
         }
         .hero::before {
             content: '';
@@ -1915,6 +1487,71 @@
             margin-top: 0.8rem;
         }
 
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 160px;
+            left: 24px;
+            z-index: 9998;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
+            transition: 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
+        }
+        .chat-toggle-btn .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+            display: none;
+        }
+        .chat-toggle-btn .chat-badge.show { display: flex; }
+
+        .chat-window {
+            position: fixed;
+            bottom: 230px;
+            left: 24px;
+            z-index: 9997;
+            width: 420px;
+            max-height: 550px;
+            height: 550px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-window.open { display: flex; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .chat-header {
             display: flex;
             justify-content: space-between;
@@ -2080,14 +1717,6 @@
             background: rgba(124,58,237,0.2);
             color: var(--secondary-light);
         }
-        .chat-msg .msg-badge.fixada-badge {
-            background: rgba(245,158,11,0.2);
-            color: var(--warning);
-        }
-        .chat-msg .msg-badge.editada-badge {
-            background: rgba(124,58,237,0.2);
-            color: var(--secondary-light);
-        }
         .chat-msg .msg-acoes {
             display: flex;
             gap: 4px;
@@ -2113,75 +1742,6 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
-        .chat-msg .msg-imagem {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 8px;
-            margin-top: 4px;
-            border: 1px solid var(--border);
-        }
-        .chat-msg .msg-audio {
-            width: 150px;
-            height: 30px;
-            margin-top: 4px;
-            border-radius: 8px;
-        }
-        .chat-msg .msg-fixada {
-            font-size: 0.6rem;
-            color: var(--warning);
-            margin-top: 2px;
-        }
-
-        .chat-msg.msg-mencao {
-            border-left: 3px solid var(--warning);
-            background: rgba(245,158,11,0.08);
-            animation: pulseMencao 0.5s ease;
-        }
-        @keyframes pulseMencao {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        .search-box {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--bg-card);
-            padding: 8px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            z-index: 100;
-            display: none;
-            min-width: 220px;
-            box-shadow: var(--shadow);
-        }
-        .search-box input {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 4px 8px;
-            color: var(--text);
-            width: 180px;
-            font-size: 0.8rem;
-            outline: none;
-        }
-        .search-box input:focus {
-            border-color: var(--secondary);
-        }
-        .search-box button {
-            background: var(--secondary);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 4px 12px;
-            margin-left: 4px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            transition: 0.3s;
-        }
-        .search-box button:hover {
-            transform: scale(1.05);
-        }
 
         .chat-input-area {
             display: flex;
@@ -2192,7 +1752,6 @@
             flex-shrink: 0;
             min-height: 52px;
             flex-wrap: wrap;
-            position: relative;
         }
         .chat-input-area input {
             flex: 1;
@@ -2234,50 +1793,8 @@
             cursor: not-allowed;
             transform: none;
         }
-        .chat-input-area .audio-btn {
-            background: var(--primary);
-        }
-        .chat-input-area .audio-btn:hover {
-            box-shadow: 0 4px 20px rgba(220,38,38,0.3);
-        }
-        .chat-input-area .audio-btn.gravando {
-            animation: pulseAudio 1s infinite;
-        }
-        @keyframes pulseAudio {
-            0%, 100% { background: var(--primary); }
-            50% { background: var(--danger); }
-        }
 
-        .mention-menu {
-            position: absolute;
-            bottom: 60px;
-            left: 10px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 4px 0;
-            max-height: 150px;
-            overflow-y: auto;
-            min-width: 180px;
-            z-index: 999;
-            box-shadow: var(--shadow);
-        }
-        .mention-menu::-webkit-scrollbar { width: 4px; }
-        .mention-menu::-webkit-scrollbar-thumb {
-            background: var(--secondary);
-            border-radius: 10px;
-        }
-        .mention-menu .mention-item {
-            padding: 6px 12px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            color: var(--text);
-            transition: 0.2s;
-        }
-        .mention-menu .mention-item:hover {
-            background: var(--glass);
-        }
-
+        /* ===== MODAIS ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -2759,8 +2276,6 @@
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
             .dropdown { width: 300px; right: -20px; }
-            .btn-keys-fixo { bottom: 200px; right: 15px; width: 45px; height: 45px; font-size: 1.2rem; }
-            .btn-info-fixo { bottom: 260px; right: 15px; width: 45px; height: 45px; font-size: 1.2rem; }
         }
         @media (max-width: 768px) {
             .navbar { padding: 0 0.5rem; }
@@ -2775,8 +2290,8 @@
             .nav-logo .logo-text small { display: none; }
             .nav-divider { display: none; }
             .nav-xcore img { width: 26px; height: 26px; }
-            .nav-xcore .xcore-text .name { font-size: 0.8rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.6rem; }
+            .nav-xcore .xcore-text .name { font-size: 0.45rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.35rem; }
             .nav-menu:not(.mobile-menu) { display: none; }
             .nav-toggle {
                 display: flex !important;
@@ -2813,6 +2328,10 @@
                 font-size: 0.35rem;
                 top: -4px;
                 right: -6px;
+            }
+            .lang-toggle button {
+                padding: 0.1rem 0.3rem;
+                font-size: 0.4rem;
             }
             .dropdown {
                 width: 260px;
@@ -2858,17 +2377,6 @@
                 padding: 1.5rem;
                 max-height: 90vh;
             }
-            .search-box {
-                width: 200px;
-                right: 0;
-            }
-            .search-box input { width: 120px; }
-            .btn-keys-fixo { bottom: 180px; right: 10px; width: 40px; height: 40px; font-size: 1rem; }
-            .btn-info-fixo { bottom: 230px; right: 10px; width: 40px; height: 40px; font-size: 1rem; }
-            .painel-keys { padding: 15px; }
-            .form-key { flex-direction: column; }
-            .form-key .campo { min-width: 100%; }
-            .info-cards { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -2881,14 +2389,14 @@
             .nav-logo .logo-text span { font-size: 0.65rem; }
             .nav-logo img { width: 26px; height: 26px; }
             .nav-xcore img { width: 22px; height: 22px; }
-            .nav-xcore .xcore-text .name { font-size: 0.6rem; }
-            .nav-xcore .xcore-text .team { font-size: 0.5rem; }
+            .nav-xcore .xcore-text .name { font-size: 0.4rem; }
+            .nav-xcore .xcore-text .team { font-size: 0.3rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
             .chat-window {
-                width: 340px;
-                max-height: 450px;
-                height: 450px;
+                width: 280px;
+                max-height: 380px;
+                height: 380px;
                 bottom: 180px;
                 left: 10px;
             }
@@ -2909,129 +2417,33 @@
             .welcome-content {
                 padding: 1.2rem;
             }
-            .btn-keys-fixo { bottom: 160px; right: 10px; width: 36px; height: 36px; font-size: 0.9rem; }
-            .btn-info-fixo { bottom: 210px; right: 10px; width: 36px; height: 36px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== BOTÃO WHATSAPP ===== -->
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ===== BOTÃO PAINEL DE KEYS (PROPRIETÁRIO) ===== -->
-    <button class="btn-keys-fixo" id="btnKeysProprietario" onclick="abrirPainelKeys()" title="Painel de Keys">
-        🔑
-    </button>
-    <button class="btn-info-fixo" id="btnInfoProprietario" onclick="abrirInfoProprietario()" title="Informações">
-        📊
-    </button>
-
-    <!-- ===== PAINEL ADMIN ===== -->
-    <div class="painel-keys-overlay" id="painelKeysOverlay">
-        <div class="painel-keys">
-            <div class="painel-header">
-                <h2>🔑 PAINEL DE KEYS - KZN MENU</h2>
-                <button class="btn-fechar" onclick="fecharPainelKeys()">✕</button>
-            </div>
-            
-            <div class="painel-body" id="painelBody">
-                <div id="conteudoProprietario">
-                    <div class="info-cards" id="infoCards">
-                        <div class="info-card total">
-                            <div class="numero" id="totalKeys">0</div>
-                            <div class="label">📦 TOTAL</div>
-                        </div>
-                        <div class="info-card ativas">
-                            <div class="numero" id="ativasKeys">0</div>
-                            <div class="label">🟢 ATIVAS</div>
-                        </div>
-                        <div class="info-card usadas">
-                            <div class="numero" id="usadasKeys">0</div>
-                            <div class="label">✅ USADAS</div>
-                        </div>
-                        <div class="info-card expiradas">
-                            <div class="numero" id="expiradasKeys">0</div>
-                            <div class="label">🔴 EXPIRADAS</div>
-                        </div>
-                        <div class="info-card vendas">
-                            <div class="numero" id="vendasKeys">R$ 0</div>
-                            <div class="label">💰 VENDAS</div>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align:center;margin-bottom:15px;">
-                        <a href="https://mpago.la/2JY6ZUe" target="_blank" class="mp-link">
-                            💳 Link de Pagamento - Mercado Pago
-                        </a>
-                    </div>
-                    
-                    <div class="form-key">
-                        <div class="campo">
-                            <label>📧 E-mail do Cliente</label>
-                            <input type="email" id="emailKey" placeholder="cliente@email.com" />
-                        </div>
-                        <div class="campo">
-                            <label>⏰ Horas (padrão: 7)</label>
-                            <input type="number" id="duracaoKey" value="7" min="1" max="720" />
-                        </div>
-                        <div class="campo">
-                            <label>💰 Valor (R$)</label>
-                            <input type="number" id="valorKey" value="10" min="1" step="0.01" />
-                        </div>
-                        <button class="btn-gerar" onclick="gerarKeyBeta()">🚀 GERAR KEY</button>
-                        <button class="btn-30keys" onclick="adicionarTrintaKeys()">📥 +30 KEYS</button>
-                    </div>
-                    
-                    <div class="key-display" id="keyDisplay"></div>
-                    <div class="key-status" id="keyStatus"></div>
-                    
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
-                        <h3 style="color:#a78bfa;">📋 LISTA DE KEYS</h3>
-                        <button class="btn-atualizar" onclick="listarKeys()">🔄 ATUALIZAR</button>
-                    </div>
-                    <div class="tabela-keys" id="tabelaKeys">
-                        <div class="no-keys">⏳ Carregando keys...</div>
-                    </div>
-                </div>
-                
-                <div id="conteudoNaoProprietario" style="display:none;">
-                    <div class="login-info" style="text-align:center;padding:20px;color:#888;">
-                        <p style="font-size:1.2rem;margin-bottom:15px;">🔒 Apenas o proprietário pode acessar este painel.</p>
-                        <p style="color:#888;margin-bottom:20px;">Faça login com a conta do proprietário para gerenciar keys.</p>
-                        <a href="#" class="btn-login" onclick="window.location.href='#perfil'" style="display:inline-block;padding:10px 30px;background:#dc2626;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;transition:0.3s;text-decoration:none;">👤 FAZER LOGIN</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===== BOTÃO CHAT GLOBAL ===== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
         <i class="fas fa-comment-dots"></i>
         <span class="chat-badge" id="chatBadge">0</span>
     </button>
 
-    <!-- ===== CHAT WINDOW ===== -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <div class="chat-title">
                 <i class="fas fa-comment-dots"></i>
-                <span>Chat Global</span>
+                <span>Chat Global - KZN</span>
                 <span class="online-count" id="onlineCount">👤 0 online</span>
             </div>
             <div class="chat-actions">
-                <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
                 <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
                     ✕
                 </button>
             </div>
         </div>
-
         <div class="chat-messages" id="chatMessages">
             <div style="text-align:center;color:var(--text-muted);padding:2rem;">
                 <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
@@ -3041,12 +2453,8 @@
                 <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
             </div>
         </div>
-
         <div class="chat-input-area">
-            <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
-                <i class="fas fa-microphone"></i>
-            </button>
-            <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500" />
             <button onclick="enviarMensagem()" id="sendBtn">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -3177,6 +2585,11 @@
                     </div>
                 </div>
 
+                <div class="lang-toggle">
+                    <button class="active" onclick="mudarIdioma('pt')" id="langPt">🇧🇷 PT</button>
+                    <button onclick="mudarIdioma('en')" id="langEn">🇺🇸 EN</button>
+                </div>
+
                 <div class="nav-toggle" id="mobileMenu">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -3194,13 +2607,6 @@
                 <br />
                 <span style="font-size: 2rem; color: var(--text-muted);">MELHORES MODS GRAAL CLASSIC &amp; GRAAL ERA</span>
             </h1>
-            
-            <div style="text-align: center; margin: 1.5rem 0;">
-                <img src="https://yt3.ggpht.com/4i0EiFBJLbCQWK67Eqm736mDl5wgCSloJBas2C3nYjSTU3v-yYcv7o77hqSSCjxcgqDM9LkfLCAKKA=s800-nd-v1-rwa" 
-                     alt="KZN MENU - Mods para Graal" 
-                     style="max-width: 100%; border-radius: 16px; border: 2px solid var(--primary); box-shadow: 0 8px 40px rgba(220,38,38,0.3);" />
-            </div>
-            
             <p class="hero-subtitle">
                 Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.
                 <br /><strong style="color: var(--primary);">Scripts exclusivos</strong> para farm e gameplay!
@@ -3321,8 +2727,8 @@
                     <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
                         <img src="https://yt3.ggpht.com/0hUMsOaawQjXvahFpmTn_w1NlRiBPdLzbqxzQJ26v9AaP1xPmxHj-ct9kYOzDXcRhebLWSL4-m_z=s746-rw-nd-v1" alt="Xcore Logo" style="width:60px;height:60px;border-radius:50%;border:3px solid var(--secondary);object-fit:cover;" />
                         <div>
-                            <h3 style="font-size:2rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
-                            <p style="color:var(--text-muted);font-size:0.9rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
+                            <h3 style="font-size:1.5rem;font-weight:900;background:linear-gradient(135deg,#fff,var(--secondary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">XCORE EXECUTOR</h3>
+                            <p style="color:var(--text-muted);font-size:0.8rem;letter-spacing:1px;">⚡ Executor de Scripts para Graal</p>
                         </div>
                     </div>
                     <p style="color:var(--text-muted);font-size:0.8rem;margin-top:0.5rem;border-top:1px solid var(--border);padding-top:0.6rem;">
@@ -3754,387 +3160,32 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- ===== SISTEMA DE KEYS (JAVASCRIPT) ===== -->
-    <!-- ========================================== -->
+    <!-- ===== SCRIPTS ===== -->
     <script>
-    // =====================================================
-    // ===== SISTEMA DE KEYS - KZN MENU =====
-    // =====================================================
+    // ====== FIREBASE CONFIG ======
+    const firebaseConfig = {
+        apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
+        authDomain: "chat-kzn.firebaseapp.com",
+        databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
+        projectId: "chat-kzn",
+        storageBucket: "chat-kzn.firebasestorage.app",
+        messagingSenderId: "641963268535",
+        appId: "1:641963268535:web:b1f8b26f69840f527a7032",
+        measurementId: "G-JZHCPK3VRP"
+    };
 
-    const keysRef = db.ref('keys_beta');
-    const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const mensagensRef = db.ref('chat/mensagens');
+    const usuariosRef = db.ref('chat/usuarios');
+    const bansRef = db.ref('chat/bans');
+    const mutesRef = db.ref('chat/mutes');
+    const adminsRef = db.ref('chat/admins');
+    const modLogRef = db.ref('chat/mod_log');
+    const typingRef = db.ref('chat/typing');
 
-    // ===== FUNÇÃO: isProprietario() =====
-    function isProprietario() {
-        const usuario = localStorage.getItem('kzn_usuario_logado');
-        if (!usuario) return false;
-        try {
-            const dados = JSON.parse(usuario);
-            return dados.email === PROPRIETARIO_EMAIL;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    // ===== FUNÇÃO: gerarKeyBeta() =====
-    function gerarKeyBeta() {
-        if (!isProprietario()) {
-            alert('⚠️ Apenas o proprietário pode gerar keys!');
-            return;
-        }
-
-        const email = document.getElementById('emailKey').value.trim();
-        const duracaoHoras = parseInt(document.getElementById('duracaoKey').value) || 7;
-        const valor = parseFloat(document.getElementById('valorKey').value) || 10;
-
-        if (!email) {
-            alert('⚠️ Digite um e-mail válido!');
-            return;
-        }
-
-        const timestamp = Date.now().toString(36).toUpperCase();
-        const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-        const key = 'KZN-' + timestamp + '-' + random;
-        const expira_em = Date.now() + (duracaoHoras * 60 * 60 * 1000);
-
-        const status = document.getElementById('keyStatus');
-        status.textContent = '⏳ Gerando key...';
-        status.style.color = '#fbbf24';
-        status.style.display = 'block';
-
-        keysRef.child(key).set({
-            email: email,
-            valor: valor,
-            criada_em: firebase.database.ServerValue.TIMESTAMP,
-            expira_em: expira_em,
-            duracao_horas: duracaoHoras,
-            ativa: true,
-            usada: false,
-            criada_por: 'proprietario'
-        }).then(() => {
-            status.textContent = '✅ Key gerada com sucesso!';
-            status.style.color = '#10b981';
-
-            const display = document.getElementById('keyDisplay');
-            display.innerHTML = `
-                <div style="font-size:1rem;color:#fff;margin-bottom:6px;">
-                    🔑 <strong style="color:#10b981;font-size:1.2rem;">${key}</strong>
-                </div>
-                <div style="font-size:0.8rem;color:#888;">
-                    📧 ${email} | ⏰ ${duracaoHoras}h | 💰 R$ ${valor.toFixed(2)}
-                </div>
-                <div style="font-size:0.75rem;color:#fbbf24;margin-top:4px;">
-                    📅 Expira em: ${new Date(expira_em).toLocaleString()}
-                </div>
-            `;
-            display.style.display = 'block';
-
-            navigator.clipboard.writeText(key).then(() => {
-                alert(`✅ Key gerada!\n\n🔑 ${key}\n📧 ${email}\n⏰ ${duracaoHoras} horas\n💰 R$ ${valor.toFixed(2)}\n\n📋 Copiada!`);
-            }).catch(() => {
-                alert(`✅ Key gerada!\n\n🔑 ${key}\n📧 ${email}\n⏰ ${duracaoHoras} horas\n💰 R$ ${valor.toFixed(2)}`);
-            });
-
-            document.getElementById('emailKey').value = '';
-            listarKeys();
-            carregarInfoProprietario();
-
-        }).catch(error => {
-            status.textContent = '❌ Erro: ' + error.message;
-            status.style.color = '#ef4444';
-            alert('❌ Erro ao gerar key: ' + error.message);
-        });
-    }
-
-    // ===== FUNÇÃO: listarKeys() =====
-    function listarKeys() {
-        if (!isProprietario()) {
-            document.getElementById('tabelaKeys').innerHTML = `
-                <div class="no-keys">🔒 Apenas o proprietário pode ver esta lista.</div>
-            `;
-            return;
-        }
-
-        const container = document.getElementById('tabelaKeys');
-        container.innerHTML = '<div class="no-keys">⏳ Carregando keys...</div>';
-
-        keysRef.orderByChild('criada_em').limitToLast(100).once('value', (snapshot) => {
-            const dados = snapshot.val();
-            if (!dados) {
-                container.innerHTML = '<div class="no-keys">📭 Nenhuma key encontrada.</div>';
-                return;
-            }
-
-            let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>🔑 KEY</th>
-                            <th>📧 USUÁRIO</th>
-                            <th>⏰ RESTA</th>
-                            <th>💰</th>
-                            <th>STATUS</th>
-                            <th>AÇÃO</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            const keys = Object.keys(dados);
-            let i = 1;
-            let ordenadas = keys.sort((a, b) => dados[b].criada_em - dados[a].criada_em);
-
-            ordenadas.forEach(key => {
-                const k = dados[key];
-                const agora = Date.now();
-                const expira = k.expira_em || 0;
-                const resta = expira - agora;
-                const horasRestantes = Math.max(0, Math.floor(resta / (1000 * 60 * 60)));
-                const minutosRestantes = Math.max(0, Math.floor((resta % (1000 * 60 * 60)) / (1000 * 60)));
-
-                let statusText = '🟢 ATIVA';
-                let statusClass = 'status-ativa';
-                let tempoRestante = `${horasRestantes}h ${minutosRestantes}m`;
-
-                if (k.usada === true) {
-                    statusText = '✅ USADA';
-                    statusClass = 'status-usada';
-                    tempoRestante = '—';
-                } else if (resta <= 0) {
-                    statusText = '🔴 EXPIRADA';
-                    statusClass = 'status-expirada';
-                    tempoRestante = '0h';
-                }
-
-                const keyResumida = key.length > 16 ? key.substring(0, 14) + '…' : key;
-
-                html += `
-                    <tr>
-                        <td>${i}</td>
-                        <td><strong style="color:#a78bfa;">${keyResumida}</strong></td>
-                        <td>${k.email || '—'}</td>
-                        <td>${tempoRestante}</td>
-                        <td>R$ ${(k.valor || 0).toFixed(2)}</td>
-                        <td class="${statusClass}">${statusText}</td>
-                        <td>
-                            <button class="btn-apagar" onclick="apagarKey('${key}')" title="Apagar key">
-                                🗑️
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                i++;
-            });
-
-            html += '</tbody></table>';
-            container.innerHTML = html;
-        });
-    }
-
-    // ===== FUNÇÃO: apagarKey() =====
-    function apagarKey(key) {
-        if (!isProprietario()) {
-            alert('⚠️ Apenas o proprietário pode apagar keys!');
-            return;
-        }
-
-        if (!confirm(`🗑️ Tem certeza que deseja apagar a key: ${key}?`)) return;
-
-        keysRef.child(key).remove().then(() => {
-            alert('✅ Key apagada com sucesso!');
-            listarKeys();
-            carregarInfoProprietario();
-        }).catch(error => {
-            alert('❌ Erro ao apagar key: ' + error.message);
-        });
-    }
-
-    // ===== FUNÇÃO: adicionarTrintaKeys() =====
-    function adicionarTrintaKeys() {
-        if (!isProprietario()) {
-            alert('⚠️ Apenas o proprietário pode executar esta ação!');
-            return;
-        }
-
-        const keysList = [
-            'KEY-7F3M9-W2N6', 'KEY-1H5D4-Z8K3', 'KEY-4J8V2-X5B9',
-            'KEY-9C6R3-Y4K7', 'KEY-2F7M1-W6N8', 'KEY-8H3D5-Z1K4',
-            'KEY-5J9V6-X2B7', 'KEY-3C8R2-Y7K1', 'KEY-6F4M9-W3N2',
-            'KEY-7H2D8-Z5K6', 'KEY-1J6V4-X8B3', 'KEY-9C5R1-Y2K9',
-            'KEY-4F8M3-W7N5', 'KEY-2H7D6-Z4K8', 'KEY-6J3V9-X1B4',
-            'KEY-8C2R7-Y6K2', 'KEY-5F9M4-W1N3', 'KEY-3H6D2-Z9K7',
-            'KEY-7J4V8-X3B1', 'KEY-1C9R5-Y8K6', 'KEY-8F2M7-W4N9',
-            'KEY-4H5D3-Z7K2', 'KEY-9J1V6-X5B8', 'KEY-6C8R4-Y3K7',
-            'KEY-3F7M9-W2N1', 'KEY-5H2D8-Z6K4', 'KEY-8J6V3-X9B5',
-            'KEY-2C4R7-Y1K8', 'KEY-7F9M1-W8N3', 'KEY-4H8D6-Z2K9'
-        ];
-
-        if (!confirm(`📥 Deseja adicionar ${keysList.length} keys pré-definidas?`)) return;
-
-        const status = document.getElementById('keyStatus');
-        status.textContent = '⏳ Adicionando 30 keys...';
-        status.style.color = '#fbbf24';
-        status.style.display = 'block';
-
-        let adicionadas = 0;
-
-        keysList.forEach((key) => {
-            const expira_em = Date.now() + (7 * 60 * 60 * 1000);
-
-            keysRef.child(key).set({
-                email: 'cliente1@email.com',
-                valor: 10,
-                criada_em: firebase.database.ServerValue.TIMESTAMP,
-                expira_em: expira_em,
-                duracao_horas: 7,
-                ativa: true,
-                usada: false,
-                criada_por: 'proprietario'
-            }).then(() => {
-                adicionadas++;
-                if (adicionadas === keysList.length) {
-                    status.textContent = `✅ ${keysList.length} keys adicionadas com sucesso!`;
-                    status.style.color = '#10b981';
-                    listarKeys();
-                    carregarInfoProprietario();
-                    alert(`✅ ${keysList.length} keys adicionadas com sucesso!`);
-                }
-            }).catch(error => {
-                status.textContent = '❌ Erro ao adicionar keys: ' + error.message;
-                status.style.color = '#ef4444';
-                alert('❌ Erro: ' + error.message);
-            });
-        });
-    }
-
-    // ===== FUNÇÃO: carregarInfoProprietario() =====
-    function carregarInfoProprietario() {
-        if (!isProprietario()) return;
-
-        keysRef.once('value', (snapshot) => {
-            const dados = snapshot.val();
-            if (!dados) {
-                document.getElementById('totalKeys').textContent = '0';
-                document.getElementById('ativasKeys').textContent = '0';
-                document.getElementById('usadasKeys').textContent = '0';
-                document.getElementById('expiradasKeys').textContent = '0';
-                document.getElementById('vendasKeys').textContent = 'R$ 0';
-                return;
-            }
-
-            const agora = Date.now();
-            let total = 0, ativas = 0, usadas = 0, expiradas = 0;
-            let vendas = 0;
-
-            Object.values(dados).forEach(k => {
-                total++;
-                const expira = k.expira_em || 0;
-                const resta = expira - agora;
-
-                if (k.usada === true) {
-                    usadas++;
-                } else if (resta <= 0) {
-                    expiradas++;
-                } else {
-                    ativas++;
-                }
-
-                if (k.valor) vendas += parseFloat(k.valor);
-            });
-
-            document.getElementById('totalKeys').textContent = total;
-            document.getElementById('ativasKeys').textContent = ativas;
-            document.getElementById('usadasKeys').textContent = usadas;
-            document.getElementById('expiradasKeys').textContent = expiradas;
-            document.getElementById('vendasKeys').textContent = `R$ ${vendas.toFixed(2)}`;
-        });
-    }
-
-    // ===== FUNÇÃO: abrirInfoProprietario() =====
-    function abrirInfoProprietario() {
-        if (!isProprietario()) {
-            alert('⚠️ Apenas o proprietário pode acessar as informações!');
-            return;
-        }
-
-        const infoDiv = document.getElementById('infoCards');
-        if (infoDiv.style.display === 'none') {
-            infoDiv.style.display = 'grid';
-            carregarInfoProprietario();
-            document.getElementById('btnInfoProprietario').style.background = 'linear-gradient(135deg, #10b981, #34d399)';
-        } else {
-            infoDiv.style.display = 'none';
-            document.getElementById('btnInfoProprietario').style.background = 'linear-gradient(135deg, #f59e0b, #fbbf24)';
-        }
-    }
-
-    // ===== FUNÇÃO: abrirPainelKeys() =====
-    function abrirPainelKeys() {
-        if (!isProprietario()) {
-            alert('⚠️ Apenas o proprietário pode acessar o painel de keys!');
-            return;
-        }
-
-        const overlay = document.getElementById('painelKeysOverlay');
-        overlay.classList.toggle('open');
-
-        if (overlay.classList.contains('open')) {
-            document.getElementById('conteudoProprietario').style.display = 'block';
-            document.getElementById('conteudoNaoProprietario').style.display = 'none';
-            listarKeys();
-            carregarInfoProprietario();
-        }
-    }
-
-    function fecharPainelKeys() {
-        document.getElementById('painelKeysOverlay').classList.remove('open');
-    }
-
-    // ===== FUNÇÃO: mostrarBotoesProprietario() =====
-    function mostrarBotoesProprietario() {
-        const isOwner = isProprietario();
-        document.getElementById('btnKeysProprietario').style.display = isOwner ? 'flex' : 'none';
-        document.getElementById('btnInfoProprietario').style.display = isOwner ? 'flex' : 'none';
-        
-        if (isOwner) {
-            document.getElementById('btnInfoProprietario').style.background = 'linear-gradient(135deg, #f59e0b, #fbbf24)';
-        }
-    }
-
-    // ==========================================
-    // ===== INICIALIZAÇÃO DO SISTEMA KEYS =====
-    // ==========================================
-    document.addEventListener('DOMContentLoaded', function() {
-        mostrarBotoesProprietario();
-        
-        // Observa mudanças no login
-        const observer = new MutationObserver(() => {
-            mostrarBotoesProprietario();
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    });
-
-    // ===== EXPORTA FUNÇÕES GLOBAIS =====
-    window.isProprietario = isProprietario;
-    window.gerarKeyBeta = gerarKeyBeta;
-    window.listarKeys = listarKeys;
-    window.apagarKey = apagarKey;
-    window.adicionarTrintaKeys = adicionarTrintaKeys;
-    window.carregarInfoProprietario = carregarInfoProprietario;
-    window.abrirInfoProprietario = abrirInfoProprietario;
-    window.abrirPainelKeys = abrirPainelKeys;
-    window.fecharPainelKeys = fecharPainelKeys;
-    window.mostrarBotoesProprietario = mostrarBotoesProprietario;
-    </script>
-
-    <!-- ========================================== -->
-    <!-- ===== SEU JAVASCRIPT EXISTENTE ===== -->
-    <!-- ========================================== -->
-    <script>
     // ====== CONSTANTES ======
-    const PROPRIETARIO_EMAIL_JS = 'gabriel6061yt@gmail.com';
+    const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
     const BOT_NOME = '🤖 BOT GUARDIAN';
     const BOT_AVATAR = '🤖';
     const BOT_EMAIL = 'bot@kzn.com';
@@ -4161,11 +3212,6 @@
     let botInterval = 120000;
     let botTimer = null;
     let lastBotMessage = 0;
-    let userScrolled = false;
-    let scrollTimeout = null;
-    let midiaRecorder = null;
-    let audioChunks = [];
-    let temaAtual = localStorage.getItem('kzn_tema') || 'dark';
 
     // ====== CARREGAR USUÁRIOS ======
     function carregarUsuarios() {
@@ -4228,31 +3274,9 @@
         } catch (e) {}
     }
 
-    // ====== TEMAS ======
-    function alternarTema() {
-        temaAtual = temaAtual === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('kzn_tema', temaAtual);
-        aplicarTema(temaAtual);
-    }
-
-    function aplicarTema(tema) {
-        const body = document.body;
-        const icon = document.getElementById('themeIcon');
-        
-        if (tema === 'light') {
-            body.classList.add('tema-claro');
-            icon.className = 'fas fa-sun';
-            icon.style.color = '#f59e0b';
-        } else {
-            body.classList.remove('tema-claro');
-            icon.className = 'fas fa-moon';
-            icon.style.color = '';
-        }
-    }
-
     // ====== PERMISSÕES ======
-    function isProprietarioJS(email) {
-        return email === PROPRIETARIO_EMAIL_JS;
+    function isProprietario(email) {
+        return email === PROPRIETARIO_EMAIL;
     }
 
     function isBot(email) {
@@ -4260,7 +3284,7 @@
     }
 
     function verificarAdmin(email, callback) {
-        if (isProprietarioJS(email)) {
+        if (isProprietario(email)) {
             callback(true);
             return;
         }
@@ -4308,7 +3332,7 @@
         verificarAdmin(usuarioLogado.email, (temPermissao) => {
             if (!temPermissao) { alert('⚠️ Você não tem permissão para banir!'); return; }
             if (isBot(email)) { alert('❌ Não pode banir o BOT!'); return; }
-            if (isProprietarioJS(email)) { alert('❌ Não pode banir o proprietário!'); return; }
+            if (isProprietario(email)) { alert('❌ Não pode banir o proprietário!'); return; }
 
             const banRef = bansRef.push();
             banRef.set({
@@ -4356,7 +3380,7 @@
         verificarAdmin(usuarioLogado.email, (temPermissao) => {
             if (!temPermissao) { alert('⚠️ Você não tem permissão para mutar!'); return; }
             if (isBot(email)) { alert('❌ Não pode mutar o BOT!'); return; }
-            if (isProprietarioJS(email)) { alert('❌ Não pode mutar o proprietário!'); return; }
+            if (isProprietario(email)) { alert('❌ Não pode mutar o proprietário!'); return; }
 
             mutesRef.once('value', (snapshot) => {
                 const mutes = snapshot.val() || {};
@@ -4494,7 +3518,7 @@
         const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
         const isBotMsg = dados.isBot || dados.email === BOT_EMAIL;
-        const isProprietarioUser = dados.email && isProprietarioJS(dados.email);
+        const isProprietarioUser = dados.email && isProprietario(dados.email);
         const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
 
         const div = document.createElement('div');
@@ -4520,83 +3544,71 @@
         let nomeClass = '';
         let badgeHtml = '';
 
+        // ⚡ VERIFICA SE É ADMIN E MOSTRA O BADGE CORRETAMENTE
         if (isBotMsg) {
             nomeClass = 'bot';
             badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
         } else if (isProprietarioUser) {
             nomeClass = 'proprietario';
             badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
-        } else if (dados.email) {
-            const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
-            const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
-            
-            if (isAdmin) {
-                nomeClass = 'admin';
-                badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
+        } else {
+            // Verifica se é admin
+            verificarAdmin(dados.email, (isAdmin) => {
+                if (isAdmin && !isBotMsg) {
+                    badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
+                    const nomeSpan = div.querySelector('.msg-nome');
+                    if (nomeSpan) nomeSpan.classList.add('admin');
+                }
+            });
+            // Define a classe padrão se não for admin
+            if (!badgeHtml) {
+                // Não faz nada, mantém a cor padrão
             }
         }
 
-        const isFixada = dados.fixada === true;
-        const podeApagar = usuarioLogado && (isCurrentUser || isProprietarioJS(usuarioLogado.email));
-
-        const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
-        const isAdminUser = usuarioLogado && storedAdmins.some(a => a.email === usuarioLogado.email && a.ativo === true);
-        const isOwner = usuarioLogado && isProprietarioJS(usuarioLogado.email);
-        const podeFixar = isAdminUser || isOwner;
+        const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
 
         div.innerHTML = `
             <div class="msg-header">
                 <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
                 <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
                 ${badgeHtml}
-                ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
-                ${dados.editada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
                 <span class="msg-hora">${hora}</span>
                 <div class="msg-acoes">
                     ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
-                    ${podeFixar ? `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>` : ''}
                 </div>
             </div>
             <div class="msg-content">${dados.mensagem}</div>
-            ${dados.imagem ? `<img src="${dados.imagem}" class="msg-imagem" />` : ''}
-            ${dados.audio ? `<audio controls src="${dados.audio}" class="msg-audio"></audio>` : ''}
-            ${isFixada ? '<div class="msg-fixada">📌 Mensagem Fixada</div>' : ''}
         `;
 
         const typingIndicator = document.getElementById('typingIndicator');
         container.insertBefore(div, typingIndicator);
 
+        // ⚡ SÓ TOCA SOM/NOTIFICAÇÃO SE NÃO FOR HISTÓRICO
         if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
-            const msgTime = new Date(dados.data).getTime();
-            const now = Date.now();
-            const isRecent = (now - msgTime) < 10000;
-            
-            if (isRecent) {
-                playNotificationSound();
-                
-                if (Notification.permission === 'granted') {
-                    try {
-                        new Notification(`💬 ${dados.nome}`, {
-                            body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
-                            icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
-                        });
-                    } catch (e) {}
-                }
+            playNotificationSound();
 
-                if (!chatAberto) {
-                    contadorNaoLidas++;
-                    const badge = document.getElementById('chatBadge');
-                    badge.textContent = contadorNaoLidas;
-                    badge.classList.add('show');
-                }
+            if (Notification.permission === 'granted') {
+                try {
+                    new Notification(`💬 ${dados.nome}`, {
+                        body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
+                        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
+                    });
+                } catch (e) {}
+            }
+
+            if (!chatAberto) {
+                contadorNaoLidas++;
+                const badge = document.getElementById('chatBadge');
+                badge.textContent = contadorNaoLidas;
+                badge.classList.add('show');
             }
         }
 
+        // ⚡ SCROLL AUTOMÁTICO
         if (!isHistorical && !isInitialLoad) {
             setTimeout(() => {
-                if (!userScrolled) {
-                    container.scrollTop = container.scrollHeight;
-                }
+                container.scrollTop = container.scrollHeight;
             }, 50);
         } else {
             container.scrollTop = container.scrollHeight;
@@ -4606,41 +3618,12 @@
     window.apagarMensagem = function(key) {
         if (!usuarioLogado) return;
         verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-            if (!isAdminUser && !isProprietarioJS(usuarioLogado.email)) {
+            if (!isAdminUser && !isProprietario(usuarioLogado.email)) {
                 alert('⚠️ Apenas administradores podem apagar mensagens!');
                 return;
             }
             if (!confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) return;
             mensagensRef.child(key).remove();
-        });
-    };
-
-    // ====== FIXAR MENSAGEM ======
-    window.fixarMensagem = function(key) {
-        if (!usuarioLogado) return;
-        verificarAdmin(usuarioLogado.email, (isAdmin) => {
-            if (!isAdmin) {
-                alert('⚠️ Apenas administradores podem fixar mensagens!');
-                return;
-            }
-            
-            mensagensRef.once('value', (snapshot) => {
-                const msgs = snapshot.val() || {};
-                const updates = {};
-                Object.keys(msgs).forEach(k => {
-                    if (msgs[k].fixada === true && k !== key) {
-                        updates[k] = { fixada: false };
-                    }
-                });
-                
-                updates[key] = { fixada: true };
-                
-                Object.keys(updates).forEach(k => {
-                    mensagensRef.child(k).update(updates[k]);
-                });
-                
-                alert('✅ Mensagem fixada com sucesso!');
-            });
         });
     };
 
@@ -4661,11 +3644,9 @@
             typingUser.textContent = dados.nome;
             typingIndicator.classList.add('show');
             
-            if (!userScrolled) {
-                setTimeout(() => {
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 50);
-            }
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 50);
 
             clearTimeout(timeoutId);
             timeoutId = setTimeout(() => {
@@ -4676,9 +3657,7 @@
                     });
                     if (!hasTyping) {
                         typingIndicator.classList.remove('show');
-                        if (!userScrolled) {
-                            chatMessages.scrollTop = chatMessages.scrollHeight;
-                        }
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
                     }
                 });
             }, 4000);
@@ -4692,9 +3671,7 @@
                 });
                 if (!hasTyping) {
                     typingIndicator.classList.remove('show');
-                    if (!userScrolled) {
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    }
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
                 }
             });
         });
@@ -4703,22 +3680,17 @@
     // ====== MONITORAR SCROLL ======
     function monitorarScrollChat() {
         const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
         
         chatMessages.addEventListener('scroll', function() {
-            userScrolled = true;
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                userScrolled = false;
-            }, 1000);
-        });
-    }
-
-    // ====== CARREGAR ADMINS ======
-    function carregarAdmins() {
-        adminsRef.on('value', (snapshot) => {
-            const admins = snapshot.val() || {};
-            const adminList = Object.values(admins).filter(a => a.ativo === true);
-            localStorage.setItem('kzn_admins', JSON.stringify(adminList));
+            if (typingIndicator.classList.contains('show')) {
+                const rect = typingIndicator.getBoundingClientRect();
+                const containerRect = chatMessages.getBoundingClientRect();
+                
+                if (rect.bottom > containerRect.bottom || rect.top < containerRect.top) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
         });
     }
 
@@ -4819,7 +3791,7 @@
                                     actions.innerHTML += `<button class="success" onclick="dessilenciarUsuario('${email}')"><i class="fas fa-microphone"></i> Desmutar</button>`;
                                 }
 
-                                if (isProprietarioJS(usuarioLogado.email)) {
+                                if (isProprietario(usuarioLogado.email)) {
                                     actions.innerHTML += `<button class="primary" onclick="verLogsUsuario('${email}')"><i class="fas fa-history"></i> Ver Logs</button>`;
                                 }
                             }
@@ -4914,7 +3886,7 @@
             
             verificarAdmin(usuario.email, (isAdminUser) => {
                 if (isAdminUser) {
-                    const isProprietarioUser = isProprietarioJS(usuario.email);
+                    const isProprietarioUser = isProprietario(usuario.email);
                     msg += '\n⚡ **COMANDOS ADMIN:**\n';
                     if (isProprietarioUser) {
                         msg += '🔸 `/admin [email]` - Conceder admin\n';
@@ -4939,23 +3911,9 @@
         }
 
         if (comando === '/online') {
-            usuariosRef.once('value', (snapshot) => {
-                const dados = snapshot.val() || {};
-                const onlineUsers = [];
-                Object.values(dados).forEach(u => {
-                    if (u.online === true || (Date.now() - u.ultimo) < 60000) {
-                        onlineUsers.push(u.nome || u.email.split('@')[0]);
-                    }
-                });
-                const count = onlineUsers.length;
-                let msg = `👥 **USUÁRIOS ONLINE:** ${count}\n\n`;
-                if (count > 0) {
-                    msg += onlineUsers.map((nome, i) => `${i+1}. ${nome}`).join('\n');
-                } else {
-                    msg += 'Nenhum usuário online no momento.';
-                }
-                enviarMensagemBot(msg);
-            });
+            const online = Object.keys(usuariosOnline).length;
+            const nomes = Object.values(usuariosOnline).map(u => u.nome).join(', ');
+            enviarMensagemBot(`👥 **Usuários online:** ${online}\n\n${nomes || 'Nenhum usuário online'}`);
             return true;
         }
 
@@ -4969,7 +3927,7 @@
 
             switch (comando) {
                 case '/admin':
-                    if (!isProprietarioJS(usuario.email)) {
+                    if (!isProprietario(usuario.email)) {
                         enviarMensagemBot('❌ Apenas o proprietário pode conceder admin!');
                         return;
                     }
@@ -4978,7 +3936,7 @@
                     break;
 
                 case '/removeadmin':
-                    if (!isProprietarioJS(usuario.email)) {
+                    if (!isProprietario(usuario.email)) {
                         enviarMensagemBot('❌ Apenas o proprietário pode remover admin!');
                         return;
                     }
@@ -5108,7 +4066,7 @@
 
     window.tornarAdmin = function(email) {
         if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
-        if (!isProprietarioJS(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode conceder admin!'); return; }
         if (isBot(email)) { alert('❌ BOT não pode ser admin!'); return; }
 
         adminsRef.once('value', (snapshot) => {
@@ -5137,8 +4095,8 @@
 
     window.removerAdmin = function(email) {
         if (!usuarioLogado) { alert('⚠️ Faça login primeiro!'); return; }
-        if (!isProprietarioJS(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return; }
-        if (isProprietarioJS(email)) { alert('❌ Não pode remover o proprietário!'); return; }
+        if (!isProprietario(usuarioLogado.email)) { alert('⚠️ Apenas o proprietário pode remover admin!'); return; }
+        if (isProprietario(email)) { alert('❌ Não pode remover o proprietário!'); return; }
         if (isBot(email)) { alert('❌ BOT não é admin!'); return; }
 
         adminsRef.once('value', (snapshot) => {
@@ -5206,59 +4164,6 @@
                 }
             });
         });
-    };
-
-    // ====== GRAVAÇÃO DE ÁUDIO ======
-    window.iniciarGravacao = function() {
-        const audioBtn = document.getElementById('audioBtn');
-        
-        if (midiaRecorder) {
-            midiaRecorder.stop();
-            midiaRecorder = null;
-            audioBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-            audioBtn.classList.remove('gravando');
-            return;
-        }
-        
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                midiaRecorder = new MediaRecorder(stream);
-                audioChunks = [];
-                
-                midiaRecorder.ondataavailable = event => {
-                    audioChunks.push(event.data);
-                };
-                
-                midiaRecorder.onstop = () => {
-                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const audioData = e.target.result;
-                        if (!usuarioLogado) {
-                            alert('⚠️ Faça login para enviar áudio!');
-                            return;
-                        }
-                        const msgRef = mensagensRef.push();
-                        msgRef.set({
-                            nome: usuarioLogado.nome,
-                            avatar: usuarioLogado.avatar || '',
-                            email: usuarioLogado.email,
-                            mensagem: '🎤 Mensagem de voz',
-                            audio: audioData,
-                            data: new Date().toISOString(),
-                            isHistorical: false
-                        });
-                    };
-                    reader.readAsDataURL(audioBlob);
-                    audioBtn.innerHTML = '<i class="fas fa-microphone"></i>';
-                    audioBtn.classList.remove('gravando');
-                };
-                
-                midiaRecorder.start();
-                audioBtn.innerHTML = '<i class="fas fa-stop" style="color:var(--danger);"></i>';
-                audioBtn.classList.add('gravando');
-            })
-            .catch(() => alert('⚠️ Permita o acesso ao microfone para gravar áudio!'));
     };
 
     // ====== TOGGLE CHAT ======
@@ -5353,16 +4258,6 @@
         if (dados) {
             try {
                 const usuario = JSON.parse(dados);
-                
-                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-                const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
-                
-                if (usuarioCadastrado) {
-                    usuario.nome = usuarioCadastrado.nome;
-                    usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
-                    localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                }
-                
                 usuarioLogado = usuario;
                 
                 document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
@@ -5540,16 +4435,10 @@
                     alert('🔐 Senha atualizada com sucesso!');
                 }
                 localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-                
-                try {
-                    const userRef = usuariosRef.child(emailAntigo.replace(/[.#$\/\[\]]/g, '_'));
-                    userRef.update({ nome: nome });
-                } catch (e) {}
             }
 
             document.getElementById('userDisplay').textContent = nome;
             document.getElementById('profileName').textContent = nome;
-            document.getElementById('profileEmail').textContent = usuario.email;
             
             const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
             if (!usuarioAtual.avatar) {
@@ -5565,8 +4454,6 @@
             document.getElementById('editEmail').style.opacity = '0.6';
             document.getElementById('editEmail').style.cursor = 'not-allowed';
             document.getElementById('editSenha').value = '';
-            
-            usuarioLogado = usuarioAtual;
             
             alert('✅ Perfil atualizado com sucesso!');
         } catch (e) {
@@ -5601,10 +4488,6 @@
         atualizarStatusOnline();
         iniciarBot();
         registrarServiceWorker();
-        carregarAdmins();
-        
-        // Atualiza botões do proprietário
-        mostrarBotoesProprietario();
     }
 
     window.fazerLogin = function() {
@@ -5958,65 +4841,15 @@
         input.value = '';
     };
 
-    // ====== EVENTO DE MENÇÃO (@) ======
-    function setupMention() {
-        const input = document.getElementById('chatInput');
-        
-        input.addEventListener('keydown', function(e) {
-            if (e.key === '@') {
-                e.preventDefault();
-                
-                usuariosRef.once('value', (snapshot) => {
-                    const dados = snapshot.val() || {};
-                    const usuarios = Object.values(dados).filter(u => u.online === true && u.email !== usuarioLogado?.email);
-                    
-                    if (usuarios.length === 0) {
-                        input.value += '@';
-                        return;
-                    }
-                    
-                    const oldMenu = document.querySelector('.mention-menu');
-                    if (oldMenu) oldMenu.remove();
-                    
-                    const menu = document.createElement('div');
-                    menu.className = 'mention-menu';
-                    
-                    usuarios.forEach(u => {
-                        const item = document.createElement('div');
-                        item.className = 'mention-item';
-                        item.textContent = `@${u.nome}`;
-                        item.onmouseover = () => item.style.background = 'var(--glass)';
-                        item.onmouseout = () => item.style.background = 'none';
-                        item.onclick = () => {
-                            input.value = input.value.slice(0, -1) + `@${u.nome} `;
-                            menu.remove();
-                            input.focus();
-                        };
-                        menu.appendChild(item);
-                    });
-                    
-                    document.querySelector('.chat-input-area').appendChild(menu);
-                    
-                    setTimeout(() => {
-                        document.addEventListener('click', function closeMention(e) {
-                            if (!menu.contains(e.target) && e.target !== input) {
-                                menu.remove();
-                                document.removeEventListener('click', closeMention);
-                            }
-                        });
-                    }, 100);
-                });
-                return;
-            }
-        });
-    }
+    window.mudarIdioma = function(lang) {
+        document.getElementById('langPt').classList.toggle('active', lang === 'pt');
+        document.getElementById('langEn').classList.toggle('active', lang === 'en');
+    };
 
     // ====== INICIALIZAÇÃO ======
     document.addEventListener('DOMContentLoaded', function() {
         const mobileToggle = document.getElementById('mobileMenu');
         const navMenuMobile = document.getElementById('navMenuMobile');
-
-        aplicarTema(temaAtual);
 
         if (mobileToggle) {
             mobileToggle.addEventListener('click', function(e) {
@@ -6049,7 +4882,7 @@
                     return;
                 }
 
-                if (usuarioLogado && e.key !== 'Enter' && e.key !== '@') {
+                if (usuarioLogado && e.key !== 'Enter') {
                     const userTypingRef = typingRef.child(usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'));
                     userTypingRef.set({ nome: usuarioLogado.nome, timestamp: Date.now() });
                     clearTimeout(typingTimeout);
@@ -6067,8 +4900,6 @@
             });
         }
 
-        setupMention();
-
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.getElementById('notifDropdown').classList.remove('open');
@@ -6077,7 +4908,6 @@
                 document.getElementById('modalPixXcore').classList.remove('open');
                 document.getElementById('userMenuOverlay').classList.remove('open');
                 document.getElementById('modalOverlay').classList.remove('open');
-                document.getElementById('painelKeysOverlay').classList.remove('open');
             }
         });
 
@@ -6088,16 +4918,12 @@
             if (!e.target.closest('#profileBtn') && !e.target.closest('#cartDropdown') && !e.target.closest('.cart-icon-wrap')) {
                 document.getElementById('cartDropdown').classList.remove('open');
             }
-            if (!e.target.closest('.btn-keys-fixo') && !e.target.closest('#painelKeysOverlay')) {
-                // Não fecha o painel clicando fora
-            }
         });
 
         carregarUsuarios();
         carregarNotificacoes();
         carregarCarrinho();
         carregarUsuariosOnline();
-        carregarAdmins();
 
         const usuario = localStorage.getItem('kzn_usuario_logado');
         if (usuario) {
@@ -6118,16 +4944,10 @@
         }
 
         console.log('🔥 KZN MENU carregado com sucesso!');
-        console.log('👑 Proprietário:', PROPRIETARIO_EMAIL_JS);
+        console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
         console.log('🤖 KZN BOT ativo!');
         console.log('💬 Chat Global com moderação!');
-        console.log('🎨 Temas disponíveis: escuro/claro');
-        console.log('🏷️ Menção: use @ para mencionar usuários');
-        console.log('🎤 Áudio: clique no microfone');
-        console.log('📌 Fixar: administradores podem fixar mensagens');
-        console.log('🔑 Painel de Keys: clique no botão 🔑');
     });
     </script>
-
 </body>
 </html>
