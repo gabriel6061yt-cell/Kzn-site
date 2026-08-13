@@ -2571,9 +2571,9 @@ l<!DOCTYPE html>
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
             .chat-window {
-                width: 280px;
-                max-height: 380px;
-                height: 380px;
+                width: 340px;
+                max-height: 450px;
+                height: 450px;
                 bottom: 180px;
                 left: 10px;
             }
@@ -3718,157 +3718,123 @@ l<!DOCTYPE html>
         }
 
         function renderizarMensagem(key, dados, isHistorical = false) {
-            const container = document.getElementById('chatMessages');
-            if (document.getElementById('msg-' + key)) return;
+    const container = document.getElementById('chatMessages');
+    if (document.getElementById('msg-' + key)) return;
 
-            const data = new Date(dados.data);
-            const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const data = new Date(dados.data);
+    const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-            const isBotMsg = dados.isBot || dados.email === BOT_EMAIL;
-            const isProprietarioUser = dados.email && isProprietario(dados.email);
-            const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
+    const isBotMsg = dados.isBot || dados.email === BOT_EMAIL;
+    const isProprietarioUser = dados.email && isProprietario(dados.email);
+    const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
 
-            const div = document.createElement('div');
-            div.className = 'chat-msg';
-            if (!isHistorical && !isInitialLoad) {
-                div.classList.add('msg-new');
-            } else {
-                div.classList.add('msg-historical');
-            }
-            div.id = 'msg-' + key;
+    const div = document.createElement('div');
+    div.className = 'chat-msg';
+    if (!isHistorical && !isInitialLoad) {
+        div.classList.add('msg-new');
+    } else {
+        div.classList.add('msg-historical');
+    }
+    div.id = 'msg-' + key;
 
-            let avatarHtml = '';
-            if (dados.avatar && dados.avatar.startsWith('http')) {
-                avatarHtml = `<img src="${dados.avatar}" />`;
-            } else if (dados.avatar && dados.avatar.includes('data:image')) {
-                avatarHtml = `<img src="${dados.avatar}" />`;
-            } else if (isBotMsg) {
-                avatarHtml = `<span style="font-size:0.9rem;">${BOT_AVATAR}</span>`;
-            } else {
-                avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
-            }
+    let avatarHtml = '';
+    if (dados.avatar && dados.avatar.startsWith('http')) {
+        avatarHtml = `<img src="${dados.avatar}" />`;
+    } else if (dados.avatar && dados.avatar.includes('data:image')) {
+        avatarHtml = `<img src="${dados.avatar}" />`;
+    } else if (isBotMsg) {
+        avatarHtml = `<span style="font-size:0.9rem;">${BOT_AVATAR}</span>`;
+    } else {
+        avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
+    }
 
-            let nomeClass = '';
-            let badgeHtml = '';
+    let nomeClass = '';
+    let badgeHtml = '';
 
-            if (isBotMsg) {
-                nomeClass = 'bot';
-                badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
-            } else if (isProprietarioUser) {
-                nomeClass = 'proprietario';
-                badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
-            } else if (dados.email) {
-                const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
-                const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
-                
-                if (isAdmin) {
-                    nomeClass = 'admin';
-                    badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
-                }
-            }
+    if (isBotMsg) {
+        nomeClass = 'bot';
+        badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
+    } else if (isProprietarioUser) {
+        nomeClass = 'proprietario';
+        badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
+    } else if (dados.email) {
+        const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
+        const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
+        
+        if (isAdmin) {
+            nomeClass = 'admin';
+            badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
+        }
+    }
 
-            const isFixada = dados.fixada === true;
-            const isEditada = dados.editada === true;
-            const podeEditar = usuarioLogado && dados.email === usuarioLogado.email && !isBotMsg;
-            const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
+    const isFixada = dados.fixada === true;
+    const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
 
-            // Verificar se há menção ao usuário
-            const contemMencao = dados.mensagem && usuarioLogado && 
-                dados.mensagem.includes(`@${usuarioLogado.nome}`) && 
-                !isBotMsg && dados.email !== usuarioLogado.email;
+    // ✅ VERIFICA SE O USUÁRIO É ADMIN PARA MOSTRAR O BOTÃO DE FIXAR
+    const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
+    const isAdminUser = usuarioLogado && storedAdmins.some(a => a.email === usuarioLogado.email && a.ativo === true);
+    const isOwner = usuarioLogado && isProprietario(usuarioLogado.email);
+    const podeFixar = isAdminUser || isOwner;
 
-            if (contemMencao && !isHistorical && !isInitialLoad) {
-                div.classList.add('msg-mencao');
-                // Notificação especial
-                playNotificationSound();
-                if (Notification.permission === 'granted') {
-                    new Notification(`🔔 Você foi mencionado por ${dados.nome}`, {
+    div.innerHTML = `
+        <div class="msg-header">
+            <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
+            <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
+            ${badgeHtml}
+            ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
+            ${dados.editada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
+            <span class="msg-hora">${hora}</span>
+            <div class="msg-acoes">
+                ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
+                ${podeFixar ? `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>` : ''}
+            </div>
+        </div>
+        <div class="msg-content">${dados.mensagem}</div>
+        ${dados.imagem ? `<img src="${dados.imagem}" class="msg-imagem" />` : ''}
+        ${dados.audio ? `<audio controls src="${dados.audio}" class="msg-audio"></audio>` : ''}
+        ${isFixada ? '<div class="msg-fixada">📌 Mensagem Fixada</div>' : ''}
+    `;
+
+    const typingIndicator = document.getElementById('typingIndicator');
+    container.insertBefore(div, typingIndicator);
+
+    // SÓ TOCA SOM SE NÃO FOR HISTÓRICO E FOR RECENTE
+    if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
+        const msgTime = new Date(dados.data).getTime();
+        const now = Date.now();
+        const isRecent = (now - msgTime) < 10000;
+        
+        if (isRecent) {
+            playNotificationSound();
+            
+            if (Notification.permission === 'granted') {
+                try {
+                    new Notification(`💬 ${dados.nome}`, {
                         body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
                         icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
                     });
-                }
+                } catch (e) {}
             }
 
-            let imagemHtml = '';
-            if (dados.imagem) {
-                imagemHtml = `<img src="${dados.imagem}" class="msg-imagem" />`;
-            }
-
-            let audioHtml = '';
-            if (dados.audio) {
-                audioHtml = `<audio controls src="${dados.audio}" class="msg-audio"></audio>`;
-            }
-
-            let fixadaHtml = '';
-            if (isFixada) {
-                fixadaHtml = '<div class="msg-fixada">📌 Mensagem Fixada</div>';
-            }
-
-            div.innerHTML = `
-                <div class="msg-header">
-                    <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
-                    <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
-                    ${badgeHtml}
-                    ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
-                    ${isEditada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
-                    <span class="msg-hora">${hora}</span>
-                    <div class="msg-acoes">
-                        ${podeEditar ? `<button onclick="editarMensagem('${key}')" title="Editar"><i class="fas fa-edit"></i></button>` : ''}
-                        ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
-                        ${usuarioLogado && verificarAdmin(usuarioLogado.email, (isAdmin) => {
-                            if (isAdmin) {
-                                return `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>`;
-                            }
-                            return '';
-                        })}
-                    </div>
-                </div>
-                <div class="msg-content">${dados.mensagem}</div>
-                ${imagemHtml}
-                ${audioHtml}
-                ${fixadaHtml}
-            `;
-
-            const typingIndicator = document.getElementById('typingIndicator');
-            container.insertBefore(div, typingIndicator);
-
-            // SÓ TOCA SOM SE NÃO FOR HISTÓRICO E FOR RECENTE
-            if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
-                const msgTime = new Date(dados.data).getTime();
-                const now = Date.now();
-                const isRecent = (now - msgTime) < 10000;
-                
-                if (isRecent) {
-                    playNotificationSound();
-                    
-                    if (Notification.permission === 'granted') {
-                        try {
-                            new Notification(`💬 ${dados.nome}`, {
-                                body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
-                                icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
-                            });
-                        } catch (e) {}
-                    }
-
-                    if (!chatAberto) {
-                        contadorNaoLidas++;
-                        const badge = document.getElementById('chatBadge');
-                        badge.textContent = contadorNaoLidas;
-                        badge.classList.add('show');
-                    }
-                }
-            }
-
-            if (!isHistorical && !isInitialLoad) {
-                setTimeout(() => {
-                    if (!userScrolled) {
-                        container.scrollTop = container.scrollHeight;
-                    }
-                }, 50);
-            } else {
-                container.scrollTop = container.scrollHeight;
+            if (!chatAberto) {
+                contadorNaoLidas++;
+                const badge = document.getElementById('chatBadge');
+                badge.textContent = contadorNaoLidas;
+                badge.classList.add('show');
             }
         }
+    }
+
+    if (!isHistorical && !isInitialLoad) {
+        setTimeout(() => {
+            if (!userScrolled) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }, 50);
+    } else {
+        container.scrollTop = container.scrollHeight;
+    }
+}
 
         // ====== EDIÇÃO DE MENSAGEM ======
         window.editarMensagem = function(key) {
