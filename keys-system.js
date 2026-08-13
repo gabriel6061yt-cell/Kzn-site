@@ -2,7 +2,7 @@
 // ===== SISTEMA DE KEYS BETA COM FIREBASE =====
 // =====================================================
 
-// REFERÊNCIA PARA AS KEYS
+// REFERÊNCIA PARA AS KEYS (USA O db QUE JÁ FOI INICIALIZADO)
 const keysRef = db.ref('keys_beta');
 
 // ===== 1. GERAR KEY =====
@@ -47,7 +47,9 @@ function gerarKeyBeta(email, duracaoMinutos = 60) {
             alert(`✅ Key gerada com sucesso!\n\n🔑 ${key}\n⏰ Válida por ${duracaoMinutos} minutos`);
         });
 
-        notificarDiscord(`🔑 **NOVA KEY GERADA**\n📧 Email: ${email}\n🔐 Key: ${key}\n⏰ Válida por: ${duracaoMinutos} minutos`);
+        // Envia notificação no Discord (opcional)
+        // notificarDiscord(`🔑 **NOVA KEY GERADA**\n📧 Email: ${email}\n🔐 Key: ${key}\n⏰ Válida por: ${duracaoMinutos} minutos`);
+
         document.getElementById('emailKey').value = '';
 
     }).catch(error => {
@@ -131,8 +133,9 @@ function listarKeys() {
         });
 }
 
-// ===== 4. NOTIFICAR DISCORD =====
+// ===== 4. NOTIFICAR DISCORD (OPCIONAL) =====
 function notificarDiscord(mensagem) {
+    // Substitua SEU_ID/SEU_TOKEN pelo seu webhook do Discord
     const webhookUrl = 'https://discord.com/api/webhooks/SEU_ID/SEU_TOKEN';
     
     fetch(webhookUrl, {
