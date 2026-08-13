@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,7 @@ l<!DOCTYPE html>
     <meta name="description" content="Compre o KZN MENU: mods exclusivos para farm, esp e muito mais no Graal Classic e Graal Era. Suporte VIP e atualizações vitalícias.">
     <link rel="canonical" href="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta property="og:title" content="KZN MENU - Mods para Graal" />
-    <meta property="og:description" content="🛒ACESSE O NOSSO SITE E GARANTA SEU MOD MENU 😈" />
+    <meta property="og:description" content="ACESSE O NOSSO SITE E GARANTA SEU MOD MENU" />
     <meta property="og:image" content="https://yt3.ggpht.com/Jn6QaxEthwP5GOcKdRxg38b_pJzUQdfJjmaGqFe0hqTaPQ3XOM8xqTFYCXhbkRynlX6uU4zcqCkuG1I=s800-rw-nd-v1" />
     <meta property="og:url" content="https://gabriel6061yt-cell.github.io/Kzn-site/" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -16,6 +16,9 @@ l<!DOCTYPE html>
     <script src="https://accounts.google.com/gsi/client" async></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
+    <!-- ===== SISTEMA DE KEYS ===== -->
+    <script src="keys-system.js"></script>
 
     <style>
         /* ===== CSS COMPLETO ===== */
@@ -181,6 +184,92 @@ l<!DOCTYPE html>
             100% { box-shadow: 0 4px 30px rgba(37,211,102,0.4); }
         }
 
+        /* ===== BOTÃO PAINEL DE KEYS (EM CIMA DO CHAT) ===== */
+        .btn-keys-fixo {
+            position: fixed;
+            bottom: 230px;
+            right: 20px;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-keys-fixo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(124,58,237,0.6);
+        }
+
+        /* ===== AJUSTE DO BOTÃO DO CHAT ===== */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 160px;
+            left: 24px;
+            z-index: 9998;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
+            transition: 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
+        }
+        .chat-toggle-btn .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+            display: none;
+        }
+        .chat-toggle-btn .chat-badge.show { display: flex; }
+
+        .chat-window {
+            position: fixed;
+            bottom: 230px;
+            left: 24px;
+            z-index: 9997;
+            width: 420px;
+            max-height: 550px;
+            height: 550px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-window.open { display: flex; }
+
         .navbar {
             position: fixed;
             top: 0;
@@ -263,7 +352,6 @@ l<!DOCTYPE html>
             border: 2px solid var(--secondary);
             object-fit: cover;
         }
-        /* ===== TEXTO XCORE EXECUTE AUMENTADO ===== */
         .nav-xcore .xcore-text .name {
             font-size: 1.2rem;
             font-weight: 900;
@@ -1531,69 +1619,28 @@ l<!DOCTYPE html>
             margin-top: 0.8rem;
         }
 
-        .chat-toggle-btn {
+        .btn-keys-fixo {
             position: fixed;
-            bottom: 160px;
-            left: 24px;
-            z-index: 9998;
-            width: 56px;
-            height: 56px;
+            bottom: 230px;
+            right: 20px;
+            z-index: 9999;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, #7c3aed, #a78bfa);
             color: #fff;
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 30px rgba(124,58,237,0.4);
-            transition: 0.3s;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        .chat-toggle-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 50px rgba(124,58,237,0.6);
-        }
-        .chat-toggle-btn .chat-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 700;
-            min-width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(124,58,237,0.4);
+            transition: transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--bg);
-            display: none;
         }
-        .chat-toggle-btn .chat-badge.show { display: flex; }
-
-        .chat-window {
-            position: fixed;
-            bottom: 230px;
-            left: 24px;
-            z-index: 9997;
-            width: 420px;
-            max-height: 550px;
-            height: 550px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .chat-window.open { display: flex; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .btn-keys-fixo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(124,58,237,0.6);
         }
 
         .chat-header {
@@ -1638,14 +1685,6 @@ l<!DOCTYPE html>
             border-radius: 4px;
         }
         .chat-header .chat-actions button:hover {
-            color: var(--text);
-            background: var(--glass);
-        }
-
-        /* ===== BOTÕES DO CHAT ===== */
-        .chat-header .chat-actions .theme-btn:hover,
-        .chat-header .chat-actions .search-btn:hover,
-        .chat-header .chat-actions .stats-btn:hover {
             color: var(--text);
             background: var(--glass);
         }
@@ -1821,7 +1860,6 @@ l<!DOCTYPE html>
             margin-top: 2px;
         }
 
-        /* ===== MENSAGEM DESTACADA POR MENÇÃO ===== */
         .chat-msg.msg-mencao {
             border-left: 3px solid var(--warning);
             background: rgba(245,158,11,0.08);
@@ -1832,7 +1870,6 @@ l<!DOCTYPE html>
             50% { transform: scale(1.02); }
         }
 
-        /* ===== SEARCH BOX ===== */
         .search-box {
             position: absolute;
             top: 100%;
@@ -1939,7 +1976,6 @@ l<!DOCTYPE html>
             50% { background: var(--danger); }
         }
 
-        /* ===== MENTION MENU ===== */
         .mention-menu {
             position: absolute;
             bottom: 60px;
@@ -1970,7 +2006,6 @@ l<!DOCTYPE html>
             background: var(--glass);
         }
 
-        /* ===== MODAIS ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -2452,6 +2487,7 @@ l<!DOCTYPE html>
             .hero-image { max-width: 100%; margin-left: 0; margin-top: 2rem; }
             .profile-section .profile-header { flex-direction: column; text-align: center; }
             .dropdown { width: 300px; right: -20px; }
+            .btn-keys-fixo { bottom: 200px; right: 15px; width: 45px; height: 45px; font-size: 1.2rem; }
         }
         @media (max-width: 768px) {
             .navbar { padding: 0 0.5rem; }
@@ -2554,6 +2590,7 @@ l<!DOCTYPE html>
                 right: 0;
             }
             .search-box input { width: 120px; }
+            .btn-keys-fixo { bottom: 180px; right: 10px; width: 40px; height: 40px; font-size: 1rem; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -2594,57 +2631,66 @@ l<!DOCTYPE html>
             .welcome-content {
                 padding: 1.2rem;
             }
+            .btn-keys-fixo { bottom: 160px; right: 10px; width: 36px; height: 36px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== BOTÃO WHATSAPP ===== -->
     <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o KZN MENU!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- ===== BOTÃO PAINEL DE KEYS (EM CIMA DO CHAT - LADO DIREITO) ===== -->
+    <button class="btn-keys-fixo" onclick="abrirPainelKeys()" title="Painel de Keys">
+        🔑
+    </button>
+
+    <!-- ===== BOTÃO CHAT GLOBAL ===== -->
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
-    <i class="fas fa-comment-dots"></i>
-    <span class="chat-badge" id="chatBadge">0</span>
-</button>
+        <i class="fas fa-comment-dots"></i>
+        <span class="chat-badge" id="chatBadge">0</span>
+    </button>
 
-<div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <div class="chat-title">
-            <i class="fas fa-comment-dots"></i>
-            <span>Chat Global🌎</span>
-            <span class="online-count" id="onlineCount">👤 0 online</span>
+    <!-- ===== CHAT WINDOW ===== -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-title">
+                <i class="fas fa-comment-dots"></i>
+                <span>Chat Global</span>
+                <span class="online-count" id="onlineCount">👤 0 online</span>
+            </div>
+            <div class="chat-actions">
+                <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    ✕
+                </button>
+            </div>
         </div>
-        <div class="chat-actions">
-            <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                <i class="fas fa-moon" id="themeIcon"></i>
+
+        <div class="chat-messages" id="chatMessages">
+            <div style="text-align:center;color:var(--text-muted);padding:2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                <p>Carregando mensagens...</p>
+            </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
+                <i class="fas fa-microphone"></i>
             </button>
-            <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                ✕
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
+            <button onclick="enviarMensagem()" id="sendBtn">
+                <i class="fas fa-paper-plane"></i>
             </button>
         </div>
     </div>
-
-    <div class="chat-messages" id="chatMessages">
-        <div style="text-align:center;color:var(--text-muted);padding:2rem;">
-            <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
-            <p>Carregando mensagens...</p>
-        </div>
-        <div class="typing-indicator" id="typingIndicator">
-            <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
-        </div>
-    </div>
-
-    <div class="chat-input-area">
-        <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
-            <i class="fas fa-microphone"></i>
-        </button>
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
-        <button onclick="enviarMensagem()" id="sendBtn">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-</div>
 
     <!-- ===== USER MENU (MODERAÇÃO) ===== -->
     <div class="user-menu-overlay" id="userMenuOverlay" onclick="fecharMenuUsuario(event)">
@@ -2780,29 +2826,28 @@ l<!DOCTYPE html>
     <!-- ===== HERO ===== -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-    <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
-    <h1>
-        <span class="highlight-red">KZN</span>
-        <span class="highlight">MENU</span>
-        <br />
-        <span style="font-size: 2rem; color: var(--text-muted);">MELHORES MODS GRAAL CLASSIC &amp; GRAAL ERA</span>
-    </h1>
-    
-    <!-- ✅ IMAGEM ABAIXO DO TÍTULO -->
-    <div style="text-align: center; margin: 1.5rem 0;">
-        <img src="https://yt3.ggpht.com/4i0EiFBJLbCQWK67Eqm736mDl5wgCSloJBas2C3nYjSTU3v-yYcv7o77hqSSCjxcgqDM9LkfLCAKKA=s800-nd-v1-rwa" 
-             alt="KZN MENU - Mods para Graal" 
-             style="max-width: 100%; border-radius: 16px; border: 2px solid var(--primary); box-shadow: 0 8px 40px rgba(220,38,38,0.3);" />
-    </div>
-    
-    <p class="hero-subtitle">
-        Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.
-        <br /><strong style="color: var(--primary);">Scripts exclusivos</strong> para farm e gameplay!
-    </p>
-    <div class="hero-buttons">
-        <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
-    </div>
-</div>
+            <div class="hero-badge"><i class="fas fa-crown"></i> Edição Premium</div>
+            <h1>
+                <span class="highlight-red">KZN</span>
+                <span class="highlight">MENU</span>
+                <br />
+                <span style="font-size: 2rem; color: var(--text-muted);">MELHORES MODS GRAAL CLASSIC &amp; GRAAL ERA</span>
+            </h1>
+            
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <img src="https://yt3.ggpht.com/4i0EiFBJLbCQWK67Eqm736mDl5wgCSloJBas2C3nYjSTU3v-yYcv7o77hqSSCjxcgqDM9LkfLCAKKA=s800-nd-v1-rwa" 
+                     alt="KZN MENU - Mods para Graal" 
+                     style="max-width: 100%; border-radius: 16px; border: 2px solid var(--primary); box-shadow: 0 8px 40px rgba(220,38,38,0.3);" />
+            </div>
+            
+            <p class="hero-subtitle">
+                Os melhores mods para <strong>Graal Classic</strong> e <strong>Graal Era</strong>.
+                <br /><strong style="color: var(--primary);">Scripts exclusivos</strong> para farm e gameplay!
+            </p>
+            <div class="hero-buttons">
+                <a href="#mods" class="btn btn-primary"><i class="fas fa-cubes"></i> Ver Mods</a>
+            </div>
+        </div>
         <div class="hero-image">
             <div class="video-wrapper">
                 <iframe src="https://www.youtube.com/embed/K0CcU8x3WDM?autoplay=0&rel=0&modestbranding=1&showinfo=0&controls=1" title="KZN MENU - Demonstração" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -3726,181 +3771,131 @@ l<!DOCTYPE html>
         }
 
         function renderizarMensagem(key, dados, isHistorical = false) {
-    const container = document.getElementById('chatMessages');
-    if (document.getElementById('msg-' + key)) return;
+            const container = document.getElementById('chatMessages');
+            if (document.getElementById('msg-' + key)) return;
 
-    const data = new Date(dados.data);
-    const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const data = new Date(dados.data);
+            const hora = data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-    const isBotMsg = dados.isBot || dados.email === BOT_EMAIL;
-    const isProprietarioUser = dados.email && isProprietario(dados.email);
-    const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
+            const isBotMsg = dados.isBot || dados.email === BOT_EMAIL;
+            const isProprietarioUser = dados.email && isProprietario(dados.email);
+            const isCurrentUser = usuarioLogado && dados.email === usuarioLogado.email;
 
-    const div = document.createElement('div');
-    div.className = 'chat-msg';
-    if (!isHistorical && !isInitialLoad) {
-        div.classList.add('msg-new');
-    } else {
-        div.classList.add('msg-historical');
-    }
-    div.id = 'msg-' + key;
+            const div = document.createElement('div');
+            div.className = 'chat-msg';
+            if (!isHistorical && !isInitialLoad) {
+                div.classList.add('msg-new');
+            } else {
+                div.classList.add('msg-historical');
+            }
+            div.id = 'msg-' + key;
 
-    let avatarHtml = '';
-    if (dados.avatar && dados.avatar.startsWith('http')) {
-        avatarHtml = `<img src="${dados.avatar}" />`;
-    } else if (dados.avatar && dados.avatar.includes('data:image')) {
-        avatarHtml = `<img src="${dados.avatar}" />`;
-    } else if (isBotMsg) {
-        avatarHtml = `<span style="font-size:0.9rem;">${BOT_AVATAR}</span>`;
-    } else {
-        avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
-    }
-
-    let nomeClass = '';
-    let badgeHtml = '';
-
-    if (isBotMsg) {
-        nomeClass = 'bot';
-        badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
-    } else if (isProprietarioUser) {
-        nomeClass = 'proprietario';
-        badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
-    } else if (dados.email) {
-        const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
-        const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
-        
-        if (isAdmin) {
-            nomeClass = 'admin';
-            badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
-        }
-    }
-
-    const isFixada = dados.fixada === true;
-    const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
-
-    // ✅ VERIFICA SE O USUÁRIO É ADMIN PARA MOSTRAR O BOTÃO DE FIXAR
-    const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
-    const isAdminUser = usuarioLogado && storedAdmins.some(a => a.email === usuarioLogado.email && a.ativo === true);
-    const isOwner = usuarioLogado && isProprietario(usuarioLogado.email);
-    const podeFixar = isAdminUser || isOwner;
-
-    div.innerHTML = `
-        <div class="msg-header">
-            <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
-            <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
-            ${badgeHtml}
-            ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
-            ${dados.editada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
-            <span class="msg-hora">${hora}</span>
-            <div class="msg-acoes">
-                ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
-                ${podeFixar ? `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>` : ''}
-            </div>
-        </div>
-        <div class="msg-content">${dados.mensagem}</div>
-        ${dados.imagem ? `<img src="${dados.imagem}" class="msg-imagem" />` : ''}
-        ${dados.audio ? `<audio controls src="${dados.audio}" class="msg-audio"></audio>` : ''}
-        ${isFixada ? '<div class="msg-fixada">📌 Mensagem Fixada</div>' : ''}
-    `;
-
-    const typingIndicator = document.getElementById('typingIndicator');
-    container.insertBefore(div, typingIndicator);
-
-    // SÓ TOCA SOM SE NÃO FOR HISTÓRICO E FOR RECENTE
-    if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
-        const msgTime = new Date(dados.data).getTime();
-        const now = Date.now();
-        const isRecent = (now - msgTime) < 10000;
-        
-        if (isRecent) {
-            playNotificationSound();
-            
-            if (Notification.permission === 'granted') {
-                try {
-                    new Notification(`💬 ${dados.nome}`, {
-                        body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
-                        icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
-                    });
-                } catch (e) {}
+            let avatarHtml = '';
+            if (dados.avatar && dados.avatar.startsWith('http')) {
+                avatarHtml = `<img src="${dados.avatar}" />`;
+            } else if (dados.avatar && dados.avatar.includes('data:image')) {
+                avatarHtml = `<img src="${dados.avatar}" />`;
+            } else if (isBotMsg) {
+                avatarHtml = `<span style="font-size:0.9rem;">${BOT_AVATAR}</span>`;
+            } else {
+                avatarHtml = `<span>${(dados.nome || 'U')[0].toUpperCase()}</span>`;
             }
 
-            if (!chatAberto) {
-                contadorNaoLidas++;
-                const badge = document.getElementById('chatBadge');
-                badge.textContent = contadorNaoLidas;
-                badge.classList.add('show');
-            }
-        }
-    }
+            let nomeClass = '';
+            let badgeHtml = '';
 
-    if (!isHistorical && !isInitialLoad) {
-        setTimeout(() => {
-            if (!userScrolled) {
-                container.scrollTop = container.scrollHeight;
+            if (isBotMsg) {
+                nomeClass = 'bot';
+                badgeHtml = '<span class="msg-badge bot-badge">🤖 BOT</span>';
+            } else if (isProprietarioUser) {
+                nomeClass = 'proprietario';
+                badgeHtml = '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>';
+            } else if (dados.email) {
+                const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
+                const isAdmin = storedAdmins.some(a => a.email === dados.email && a.ativo === true);
+                
+                if (isAdmin) {
+                    nomeClass = 'admin';
+                    badgeHtml = '<span class="msg-badge admin-badge">⚡ ADMIN</span>';
+                }
             }
-        }, 50);
-    } else {
-        container.scrollTop = container.scrollHeight;
-    }
-}
 
-        // ====== EDIÇÃO DE MENSAGEM ======
-        window.editarMensagem = function(key) {
-            const msgElement = document.getElementById('msg-' + key);
-            if (!msgElement) return;
-            
-            const content = msgElement.querySelector('.msg-content');
-            const textoAtual = content.textContent;
-            
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = textoAtual;
-            input.className = 'edit-input';
-            input.style.cssText = 'width:100%;padding:4px 8px;background:var(--bg);border:1px solid var(--secondary);border-radius:6px;color:var(--text);font-size:0.85rem;outline:none;';
-            content.replaceWith(input);
-            input.focus();
-            input.select();
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    const novoTexto = this.value.trim();
-                    if (novoTexto && novoTexto !== textoAtual) {
-                        mensagensRef.child(key).update({ 
-                            mensagem: novoTexto, 
-                            editada: true,
-                            data_edicao: new Date().toISOString()
-                        });
-                    } else if (!novoTexto) {
-                        const span = document.createElement('span');
-                        span.className = 'msg-content';
-                        span.textContent = textoAtual;
-                        this.replaceWith(span);
-                    } else {
-                        this.blur();
+            const isFixada = dados.fixada === true;
+            const podeApagar = usuarioLogado && (isCurrentUser || isProprietario(usuarioLogado.email));
+
+            const storedAdmins = JSON.parse(localStorage.getItem('kzn_admins') || '[]');
+            const isAdminUser = usuarioLogado && storedAdmins.some(a => a.email === usuarioLogado.email && a.ativo === true);
+            const isOwner = usuarioLogado && isProprietario(usuarioLogado.email);
+            const podeFixar = isAdminUser || isOwner;
+
+            div.innerHTML = `
+                <div class="msg-header">
+                    <div class="msg-avatar" onclick="abrirMenuUsuario('${dados.email}')">${avatarHtml}</div>
+                    <span class="msg-nome ${nomeClass}" onclick="abrirMenuUsuario('${dados.email}')">${dados.nome}</span>
+                    ${badgeHtml}
+                    ${isFixada ? '<span class="msg-badge fixada-badge">📌 FIXADA</span>' : ''}
+                    ${dados.editada ? '<span class="msg-badge editada-badge">✏️ editada</span>' : ''}
+                    <span class="msg-hora">${hora}</span>
+                    <div class="msg-acoes">
+                        ${podeApagar ? `<button onclick="apagarMensagem('${key}')" title="Apagar"><i class="fas fa-trash"></i></button>` : ''}
+                        ${podeFixar ? `<button onclick="fixarMensagem('${key}')" title="Fixar"><i class="fas fa-thumbtack"></i></button>` : ''}
+                    </div>
+                </div>
+                <div class="msg-content">${dados.mensagem}</div>
+                ${dados.imagem ? `<img src="${dados.imagem}" class="msg-imagem" />` : ''}
+                ${dados.audio ? `<audio controls src="${dados.audio}" class="msg-audio"></audio>` : ''}
+                ${isFixada ? '<div class="msg-fixada">📌 Mensagem Fixada</div>' : ''}
+            `;
+
+            const typingIndicator = document.getElementById('typingIndicator');
+            container.insertBefore(div, typingIndicator);
+
+            if (!isHistorical && !isInitialLoad && !isBotMsg && dados.email !== usuarioLogado?.email) {
+                const msgTime = new Date(dados.data).getTime();
+                const now = Date.now();
+                const isRecent = (now - msgTime) < 10000;
+                
+                if (isRecent) {
+                    playNotificationSound();
+                    
+                    if (Notification.permission === 'granted') {
+                        try {
+                            new Notification(`💬 ${dados.nome}`, {
+                                body: dados.mensagem.length > 50 ? dados.mensagem.substring(0, 50) + '...' : dados.mensagem,
+                                icon: 'https://yt3.ggpht.com/pCQ6XhcUzMYgxDHA4Z2WZzHIN9B8O3HqCB_nfbqMYymlQqQ1cDvZc-kszyjePyEjV13qgqvwDbJK=s800-rw-nd-v1'
+                            });
+                        } catch (e) {}
+                    }
+
+                    if (!chatAberto) {
+                        contadorNaoLidas++;
+                        const badge = document.getElementById('chatBadge');
+                        badge.textContent = contadorNaoLidas;
+                        badge.classList.add('show');
                     }
                 }
-                if (e.key === 'Escape') {
-                    const span = document.createElement('span');
-                    span.className = 'msg-content';
-                    span.textContent = textoAtual;
-                    this.replaceWith(span);
+            }
+
+            if (!isHistorical && !isInitialLoad) {
+                setTimeout(() => {
+                    if (!userScrolled) {
+                        container.scrollTop = container.scrollHeight;
+                    }
+                }, 50);
+            } else {
+                container.scrollTop = container.scrollHeight;
+            }
+        }
+
+        window.apagarMensagem = function(key) {
+            if (!usuarioLogado) return;
+            verificarAdmin(usuarioLogado.email, (isAdminUser) => {
+                if (!isAdminUser && !isProprietario(usuarioLogado.email)) {
+                    alert('⚠️ Apenas administradores podem apagar mensagens!');
+                    return;
                 }
-            });
-            
-            input.addEventListener('blur', function() {
-                const novoTexto = this.value.trim();
-                if (novoTexto && novoTexto !== textoAtual) {
-                    mensagensRef.child(key).update({ 
-                        mensagem: novoTexto, 
-                        editada: true,
-                        data_edicao: new Date().toISOString()
-                    });
-                } else if (!novoTexto) {
-                    const span = document.createElement('span');
-                    span.className = 'msg-content';
-                    span.textContent = textoAtual;
-                    this.replaceWith(span);
-                }
+                if (!confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) return;
+                mensagensRef.child(key).remove();
             });
         };
 
@@ -3913,7 +3908,6 @@ l<!DOCTYPE html>
                     return;
                 }
                 
-                // Desfixar todas as outras
                 mensagensRef.once('value', (snapshot) => {
                     const msgs = snapshot.val() || {};
                     const updates = {};
@@ -3923,28 +3917,14 @@ l<!DOCTYPE html>
                         }
                     });
                     
-                    // Fixar a atual
                     updates[key] = { fixada: true };
                     
-                    // Aplicar todas as atualizações
                     Object.keys(updates).forEach(k => {
                         mensagensRef.child(k).update(updates[k]);
                     });
                     
                     alert('✅ Mensagem fixada com sucesso!');
                 });
-            });
-        };
-
-        window.apagarMensagem = function(key) {
-            if (!usuarioLogado) return;
-            verificarAdmin(usuarioLogado.email, (isAdminUser) => {
-                if (!isAdminUser && !isProprietario(usuarioLogado.email)) {
-                    alert('⚠️ Apenas administradores podem apagar mensagens!');
-                    return;
-                }
-                if (!confirm('🗑️ Tem certeza que deseja apagar esta mensagem?')) return;
-                mensagensRef.child(key).remove();
             });
         };
 
@@ -4242,7 +4222,6 @@ l<!DOCTYPE html>
                 return true;
             }
 
-            // ✅ CORREÇÃO: COMANDO /online
             if (comando === '/online') {
                 usuariosRef.once('value', (snapshot) => {
                     const dados = snapshot.val() || {};
@@ -4513,81 +4492,6 @@ l<!DOCTYPE html>
             });
         };
 
-        // ====== ENVIO DE IMAGEM ======
-        window.enviarImagem = function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            if (!file.type.startsWith('image/')) {
-                alert('⚠️ Envie apenas imagens!');
-                return;
-            }
-            if (file.size > 2 * 1024 * 1024) {
-                alert('⚠️ Imagem deve ter no máximo 2MB!');
-                return;
-            }
-
-            if (!usuarioLogado) {
-                alert('⚠️ Faça login para enviar imagens!');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const imagem = e.target.result;
-                const msgRef = mensagensRef.push();
-                msgRef.set({
-                    nome: usuarioLogado.nome,
-                    avatar: usuarioLogado.avatar || '',
-                    email: usuarioLogado.email,
-                    mensagem: `📷 Imagem: ${file.name}`,
-                    imagem: imagem,
-                    data: new Date().toISOString(),
-                    isHistorical: false
-                });
-            };
-            reader.readAsDataURL(file);
-            event.target.value = '';
-        };
-
-        // ====== EMOJI PICKER ======
-        window.abrirEmojiPicker = function() {
-            const emojis = ['😊', '😂', '🔥', '❤️', '👍', '👏', '🎉', '✨', '💪', '🤝', '👀', '🙏', '😎', '🤩', '💯', '⚡', '🚀', '💎', '💻', '🎮', '🏆', '⭐', '🌈', '💜', '🖤'];
-            const input = document.getElementById('chatInput');
-            
-            // Remover picker existente
-            const oldPicker = document.querySelector('.emoji-picker');
-            if (oldPicker) oldPicker.remove();
-            
-            const picker = document.createElement('div');
-            picker.className = 'emoji-picker';
-            picker.style.cssText = 'position:absolute;bottom:60px;left:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:4px;max-width:280px;z-index:999;box-shadow:var(--shadow);';
-            
-            emojis.forEach(emoji => {
-                const btn = document.createElement('button');
-                btn.textContent = emoji;
-                btn.style.cssText = 'background:none;border:none;font-size:1.4rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:0.2s;';
-                btn.onmouseover = () => btn.style.background = 'var(--glass)';
-                btn.onmouseout = () => btn.style.background = 'none';
-                btn.onclick = () => {
-                    input.value += emoji;
-                    input.focus();
-                    picker.remove();
-                };
-                picker.appendChild(btn);
-            });
-            
-            document.querySelector('.chat-input-area').appendChild(picker);
-            
-            setTimeout(() => {
-                document.addEventListener('click', function removePicker(e) {
-                    if (!picker.contains(e.target) && e.target !== input) {
-                        picker.remove();
-                        document.removeEventListener('click', removePicker);
-                    }
-                });
-            }, 100);
-        };
-
         // ====== GRAVAÇÃO DE ÁUDIO ======
         window.iniciarGravacao = function() {
             const audioBtn = document.getElementById('audioBtn');
@@ -4639,65 +4543,6 @@ l<!DOCTYPE html>
                     audioBtn.classList.add('gravando');
                 })
                 .catch(() => alert('⚠️ Permita o acesso ao microfone para gravar áudio!'));
-        };
-
-        // ====== BUSCA DE MENSAGENS ======
-        window.toggleSearch = function() {
-            const box = document.getElementById('searchBox');
-            box.style.display = box.style.display === 'none' ? 'block' : 'none';
-            if (box.style.display === 'block') {
-                document.getElementById('searchInput').focus();
-            }
-        };
-
-        window.buscarMensagens = function() {
-            const termo = document.getElementById('searchInput').value.toLowerCase().trim();
-            if (!termo) return;
-            
-            const messages = document.querySelectorAll('.chat-msg');
-            let encontrou = false;
-            messages.forEach(msg => {
-                const content = msg.querySelector('.msg-content');
-                const text = content?.textContent?.toLowerCase() || '';
-                if (text.includes(termo)) {
-                    msg.style.border = '3px solid var(--secondary)';
-                    msg.style.boxShadow = '0 0 20px rgba(124,58,237,0.2)';
-                    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    encontrou = true;
-                    setTimeout(() => {
-                        msg.style.border = '';
-                        msg.style.boxShadow = '';
-                    }, 4000);
-                }
-            });
-            if (!encontrou) alert('🔍 Nenhuma mensagem encontrada.');
-        };
-
-        // ====== ESTATÍSTICAS DO CHAT ======
-        window.mostrarEstatisticas = function() {
-            mensagensRef.once('value', (snapshot) => {
-                const msgs = snapshot.val() || {};
-                const total = Object.keys(msgs).length;
-                const usuarios = new Set();
-                const usuariosNomes = new Set();
-                Object.values(msgs).forEach(m => {
-                    usuarios.add(m.email);
-                    usuariosNomes.add(m.nome);
-                });
-                const hoje = new Date().toDateString();
-                const hojeMsgs = Object.values(msgs).filter(m => new Date(m.data).toDateString() === hoje);
-                
-                const ultimaMsg = msgs[Object.keys(msgs).pop()];
-                const ultimaData = ultimaMsg ? new Date(ultimaMsg.data).toLocaleString() : 'Nenhuma';
-                
-                const stats = `📊 **ESTATÍSTICAS DO CHAT**\n\n` +
-                              `📝 Total de mensagens: **${total}**\n` +
-                              `👥 Total de usuários: **${usuarios.size}**\n` +
-                              `📅 Mensagens hoje: **${hojeMsgs.length}**\n` +
-                              `🕐 Última mensagem: **${ultimaData}**\n` +
-                              `🤖 BOT ativo: **${botEnabled ? '✅ Sim' : '❌ Não'}**`;
-                alert(stats);
-            });
         };
 
         // ====== TOGGLE CHAT ======
@@ -4787,72 +4632,65 @@ l<!DOCTYPE html>
         }
 
         // ====== PERFIL ======
-function carregarPerfil() {
-    const dados = localStorage.getItem('kzn_usuario_logado');
-    if (dados) {
-        try {
-            const usuario = JSON.parse(dados);
-            
-            // ✅ CARREGA OS USUÁRIOS DO LOCALSTORAGE
-            const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-            const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
-            
-            // ✅ SE ENCONTROU O USUÁRIO NO CADASTRO, USA O NOME DE LÁ
-            if (usuarioCadastrado) {
-                // ATUALIZA O NOME DO USUÁRIO LOGADO COM O NOME DO CADASTRO
-                usuario.nome = usuarioCadastrado.nome;
-                usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
-                // SALVA NO LOCALSTORAGE NOVAMENTE
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-            }
-            
-            // ATUALIZA A VARIÁVEL GLOBAL
-            usuarioLogado = usuario;
-            
-            // ATUALIZA A INTERFACE
-            document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
-            document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
-            document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
-            document.getElementById('editNome').value = usuario.nome || '';
-            document.getElementById('editEmail').value = usuario.email || '';
-            document.getElementById('editEmail').disabled = true;
+        function carregarPerfil() {
+            const dados = localStorage.getItem('kzn_usuario_logado');
+            if (dados) {
+                try {
+                    const usuario = JSON.parse(dados);
+                    
+                    const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+                    const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
+                    
+                    if (usuarioCadastrado) {
+                        usuario.nome = usuarioCadastrado.nome;
+                        usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
+                        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                    }
+                    
+                    usuarioLogado = usuario;
+                    
+                    document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
+                    document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
+                    document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
+                    document.getElementById('editNome').value = usuario.nome || '';
+                    document.getElementById('editEmail').value = usuario.email || '';
+                    document.getElementById('editEmail').disabled = true;
 
-            // ATUALIZA O AVATAR
-            if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
-                document.getElementById('avatarProfileImage').src = usuario.avatar;
-                document.getElementById('avatarProfileImage').style.display = 'block';
-                document.getElementById('avatarProfileText').style.display = 'none';
-                document.getElementById('avatarText').textContent = '';
-                document.querySelector('.profile-btn .avatar').innerHTML =
-                    `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-            } else if (usuario.avatar && usuario.avatar.startsWith('http')) {
-                document.getElementById('avatarProfileImage').src = usuario.avatar;
-                document.getElementById('avatarProfileImage').style.display = 'block';
-                document.getElementById('avatarProfileText').style.display = 'none';
-                document.getElementById('avatarText').textContent = '';
-                document.querySelector('.profile-btn .avatar').innerHTML =
-                    `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                    if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
+                        document.getElementById('avatarProfileImage').src = usuario.avatar;
+                        document.getElementById('avatarProfileImage').style.display = 'block';
+                        document.getElementById('avatarProfileText').style.display = 'none';
+                        document.getElementById('avatarText').textContent = '';
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                    } else if (usuario.avatar && usuario.avatar.startsWith('http')) {
+                        document.getElementById('avatarProfileImage').src = usuario.avatar;
+                        document.getElementById('avatarProfileImage').style.display = 'block';
+                        document.getElementById('avatarProfileText').style.display = 'none';
+                        document.getElementById('avatarText').textContent = '';
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                    } else {
+                        const letra = (usuario.nome || 'U')[0].toUpperCase();
+                        document.getElementById('avatarProfileText').textContent = letra;
+                        document.getElementById('avatarProfileText').style.display = 'block';
+                        document.getElementById('avatarProfileImage').style.display = 'none';
+                        document.getElementById('avatarText').textContent = letra;
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                    }
+                    
+                    return true;
+                } catch (e) {
+                    console.error('Erro ao carregar perfil:', e);
+                    resetarPerfilPadrao();
+                    return false;
+                }
             } else {
-                const letra = (usuario.nome || 'U')[0].toUpperCase();
-                document.getElementById('avatarProfileText').textContent = letra;
-                document.getElementById('avatarProfileText').style.display = 'block';
-                document.getElementById('avatarProfileImage').style.display = 'none';
-                document.getElementById('avatarText').textContent = letra;
-                document.querySelector('.profile-btn .avatar').innerHTML =
-                    `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                resetarPerfilPadrao();
+                return false;
             }
-            
-            return true;
-        } catch (e) {
-            console.error('Erro ao carregar perfil:', e);
-            resetarPerfilPadrao();
-            return false;
         }
-    } else {
-        resetarPerfilPadrao();
-        return false;
-    }
-}
 
         function resetarPerfilPadrao() {
             document.getElementById('userDisplay').textContent = 'Entrar';
@@ -4956,77 +4794,70 @@ function carregarPerfil() {
         };
 
         window.salvarEdicaoPerfil = function() {
-    const nome = document.getElementById('editNome').value.trim();
-    const senha = document.getElementById('editSenha').value;
+            const nome = document.getElementById('editNome').value.trim();
+            const senha = document.getElementById('editSenha').value;
 
-    if (!nome) {
-        alert('⚠️ Digite um nome válido.');
-        return;
-    }
-
-    const dados = localStorage.getItem('kzn_usuario_logado');
-    if (!dados) {
-        alert('❌ Nenhum usuário logado.');
-        return;
-    }
-
-    try {
-        const usuario = JSON.parse(dados);
-        const emailAntigo = usuario.email;
-        
-        // ✅ ATUALIZA O NOME NO USUÁRIO LOGADO
-        usuario.nome = nome;
-        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-
-        // ✅ ATUALIZA O NOME NA LISTA DE USUÁRIOS
-        const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-        const idx = usuarios.findIndex(u => u.email === emailAntigo);
-        if (idx !== -1) {
-            usuarios[idx].nome = nome;
-            if (senha && senha.length >= 6) {
-                usuarios[idx].senha = senha;
-                alert('🔐 Senha atualizada com sucesso!');
+            if (!nome) {
+                alert('⚠️ Digite um nome válido.');
+                return;
             }
-            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-            
-            // ✅ ATUALIZA TAMBÉM NO FIREBASE
+
+            const dados = localStorage.getItem('kzn_usuario_logado');
+            if (!dados) {
+                alert('❌ Nenhum usuário logado.');
+                return;
+            }
+
             try {
-                const userRef = usuariosRef.child(emailAntigo.replace(/[.#$\/\[\]]/g, '_'));
-                userRef.update({ nome: nome });
-            } catch (e) {}
-        }
+                const usuario = JSON.parse(dados);
+                const emailAntigo = usuario.email;
+                
+                usuario.nome = nome;
+                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
 
-        // ✅ ATUALIZA A INTERFACE
-        document.getElementById('userDisplay').textContent = nome;
-        document.getElementById('profileName').textContent = nome;
-        document.getElementById('profileEmail').textContent = usuario.email;
-        
-        // ATUALIZA A LETRA DO AVATAR SE NÃO TIVER IMAGEM
-        const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-        if (!usuarioAtual.avatar) {
-            const letra = nome[0].toUpperCase();
-            document.getElementById('avatarText').textContent = letra;
-            document.getElementById('avatarProfileText').textContent = letra;
-            document.querySelector('.profile-btn .avatar').innerHTML =
-                `<span class="avatar-letter" id="avatarText">${letra}</span>`;
-        }
+                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+                const idx = usuarios.findIndex(u => u.email === emailAntigo);
+                if (idx !== -1) {
+                    usuarios[idx].nome = nome;
+                    if (senha && senha.length >= 6) {
+                        usuarios[idx].senha = senha;
+                        alert('🔐 Senha atualizada com sucesso!');
+                    }
+                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+                    
+                    try {
+                        const userRef = usuariosRef.child(emailAntigo.replace(/[.#$\/\[\]]/g, '_'));
+                        userRef.update({ nome: nome });
+                    } catch (e) {}
+                }
 
-        // ✅ ATUALIZA A VARIÁVEL GLOBAL
-        usuarioLogado = usuarioAtual;
+                document.getElementById('userDisplay').textContent = nome;
+                document.getElementById('profileName').textContent = nome;
+                document.getElementById('profileEmail').textContent = usuario.email;
+                
+                const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+                if (!usuarioAtual.avatar) {
+                    const letra = nome[0].toUpperCase();
+                    document.getElementById('avatarText').textContent = letra;
+                    document.getElementById('avatarProfileText').textContent = letra;
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                }
 
-        // FECHA O EDITOR
-        document.getElementById('editProfileArea').style.display = 'none';
-        document.getElementById('editEmail').disabled = true;
-        document.getElementById('editEmail').style.opacity = '0.6';
-        document.getElementById('editEmail').style.cursor = 'not-allowed';
-        document.getElementById('editSenha').value = '';
-        
-        alert('✅ Perfil atualizado com sucesso!');
-    } catch (e) {
-        console.error('Erro ao salvar edição:', e);
-        alert('❌ Erro ao salvar perfil. Tente novamente.');
-    }
-};
+                document.getElementById('editProfileArea').style.display = 'none';
+                document.getElementById('editEmail').disabled = true;
+                document.getElementById('editEmail').style.opacity = '0.6';
+                document.getElementById('editEmail').style.cursor = 'not-allowed';
+                document.getElementById('editSenha').value = '';
+                
+                usuarioLogado = usuarioAtual;
+                
+                alert('✅ Perfil atualizado com sucesso!');
+            } catch (e) {
+                console.error('Erro ao salvar edição:', e);
+                alert('❌ Erro ao salvar perfil. Tente novamente.');
+            }
+        };
 
         window.abrirPerfil = function() {
             const dados = localStorage.getItem('kzn_usuario_logado');
@@ -5413,11 +5244,9 @@ function carregarPerfil() {
             const input = document.getElementById('chatInput');
             
             input.addEventListener('keydown', function(e) {
-                // Detectar @ para mencionar
                 if (e.key === '@') {
                     e.preventDefault();
                     
-                    // Mostrar lista de usuários online
                     usuariosRef.once('value', (snapshot) => {
                         const dados = snapshot.val() || {};
                         const usuarios = Object.values(dados).filter(u => u.online === true && u.email !== usuarioLogado?.email);
@@ -5427,11 +5256,9 @@ function carregarPerfil() {
                             return;
                         }
                         
-                        // Remover menu existente
                         const oldMenu = document.querySelector('.mention-menu');
                         if (oldMenu) oldMenu.remove();
                         
-                        // Criar dropdown de menção
                         const menu = document.createElement('div');
                         menu.className = 'mention-menu';
                         
@@ -5451,7 +5278,6 @@ function carregarPerfil() {
                         
                         document.querySelector('.chat-input-area').appendChild(menu);
                         
-                        // Fechar ao clicar fora
                         setTimeout(() => {
                             document.addEventListener('click', function closeMention(e) {
                                 if (!menu.contains(e.target) && e.target !== input) {
@@ -5471,7 +5297,6 @@ function carregarPerfil() {
             const mobileToggle = document.getElementById('mobileMenu');
             const navMenuMobile = document.getElementById('navMenuMobile');
 
-            // Aplicar tema
             aplicarTema(temaAtual);
 
             if (mobileToggle) {
@@ -5523,7 +5348,6 @@ function carregarPerfil() {
                 });
             }
 
-            // Setup de menção
             setupMention();
 
             document.addEventListener('keydown', function(e) {
@@ -5534,7 +5358,6 @@ function carregarPerfil() {
                     document.getElementById('modalPixXcore').classList.remove('open');
                     document.getElementById('userMenuOverlay').classList.remove('open');
                     document.getElementById('modalOverlay').classList.remove('open');
-                    document.getElementById('searchBox').style.display = 'none';
                 }
             });
 
@@ -5577,9 +5400,9 @@ function carregarPerfil() {
             console.log('💬 Chat Global com moderação!');
             console.log('🎨 Temas disponíveis: escuro/claro');
             console.log('🏷️ Menção: use @ para mencionar usuários');
-            console.log('📝 Mensagens editáveis: clique em ✏️');
             console.log('🎤 Áudio: clique no microfone');
             console.log('📌 Fixar: administradores podem fixar mensagens');
+            console.log('🔑 Painel de Keys: clique no botão 🔑');
         });
     </script>
 </body>
