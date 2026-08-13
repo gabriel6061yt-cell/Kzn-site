@@ -11,10 +11,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <!-- Google Identity Services (GSI) -->
-    <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
-        /* ====== CSS igual ao site principal ====== */
+        /* ====== CSS COMPLETO (mesmo do seu site principal) ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
@@ -804,7 +802,6 @@
 
         // ===== CONSTANTES =====
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
-        const CLIENT_ID = '642206758344-ma2e07eu08dokkui9d28cfiqfnrss50v.apps.googleusercontent.com';
         let currentUser = null;
         let currentUserDoc = null;
         let chatRoomId = null;
@@ -831,56 +828,31 @@
         const notifCount = document.getElementById('notifCount');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-        // ===== INICIALIZAR GSI =====
-        function initGoogleSignIn() {
-            if (typeof google !== 'undefined' && google.accounts) {
-                google.accounts.id.initialize({
-                    client_id: CLIENT_ID,
-                    callback: handleCredentialResponse,
-                    cancel_on_tap_outside: false,
-                    auto_select: false,
-                    context: 'signin'
-                });
-
-                // O botão agora chama o prompt do GSI
-                googleLoginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    google.accounts.id.prompt(); // Abre a janela de seleção de conta
-                });
-                console.log('GSI inicializado com sucesso.');
-            } else {
-                // Fallback: se o GSI não carregar, usar redirect (nunca popup)
-                console.warn('GSI não disponível, usando fallback redirect.');
-                googleLoginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    auth.signInWithRedirect(provider);
-                });
-            }
-        }
-
-        // ===== CALLBACK DO GSI =====
-        async function handleCredentialResponse(response) {
-            try {
-                const credential = firebase.auth.GoogleAuthProvider.credential(null, response.credential);
-                await auth.signInWithCredential(credential);
-                // O observer vai tratar
-            } catch (error) {
-                console.error('Erro no login GSI:', error);
-                alert('Falha ao fazer login. Tente novamente.');
-                // Fallback para redirect
-                const provider = new firebase.auth.GoogleAuthProvider();
-                auth.signInWithRedirect(provider);
-            }
+        // ===== LOGIN COM REDIRECT (MAIS CONFIÁVEL) =====
+        function loginGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            // Forçar seleção de conta
+            provider.setCustomParameters({
+                prompt: 'select_account'
+            });
+            auth.signInWithRedirect(provider);
         }
 
         // ===== PROCESSAR RESULTADO DO REDIRECT =====
         auth.getRedirectResult().then((result) => {
             if (result.user) {
-                // Login via redirect bem-sucedido
+                // Login bem-sucedido, o observer vai tratar
+                console.log('Login via redirect bem-sucedido!');
             }
         }).catch((error) => {
-            console.error('Erro no redirect login:', error);
+            console.error('Erro no redirect:', error);
+            // Se falhar, tenta popup como fallback
+            if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+                // Fallback: tentar novamente com redirect
+                setTimeout(() => {
+                    loginGoogle();
+                }, 1000);
+            }
         });
 
         // ===== OBSERVADOR DE AUTENTICAÇÃO =====
@@ -953,7 +925,7 @@
             }
         });
 
-        // ===== FUNÇÕES AUXILIARES (mesmas do site principal) =====
+        // ===== FUNÇÕES AUXILIARES =====
         async function carregarKeysUsuario(uid) {
             const snapshot = await db.collection('keys')
                 .where('uid', '==', uid)
@@ -1335,19 +1307,11 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== INICIALIZAR =====
-        // Inicializar GSI quando o script carregar
-        if (typeof google !== 'undefined') {
-            initGoogleSignIn();
-        } else {
-            // Fallback: aguardar o carregamento do GSI
-            const checkGSI = setInterval(() => {
-                if (typeof google !== 'undefined') {
-                    clearInterval(checkGSI);
-                    initGoogleSignIn();
-                }
-            }, 500);
-        }
+        // ===== BOTÃO DE LOGIN =====
+        googleLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginGoogle();
+        });
 
         console.log('🚀 Graal Classic BETA carregado!');
     </script>
