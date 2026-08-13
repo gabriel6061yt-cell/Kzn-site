@@ -365,6 +365,7 @@
             animation: fadeUp 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
         .auth-modal .modal-box h2 {
             text-align: center;
@@ -449,7 +450,6 @@
             transition: 0.3s;
         }
         .auth-modal .modal-box .close-modal:hover { color: var(--text); transform: rotate(90deg); }
-        .auth-modal .modal-box { position: relative; }
         .auth-modal .modal-box .auth-status {
             margin-top: 12px;
             padding: 10px;
@@ -760,6 +760,7 @@
                     <div class="user-avatar" id="userAvatar" onclick="window.location.href='#perfil'">
                         <span id="avatarLetter">U</span>
                     </div>
+                    <button onclick="logout()" style="background:none;border:none;color:var(--text-muted);font-size:0.7rem;margin-left:4px;cursor:pointer;">Sair</button>
                 </div>
             </div>
         </div>
@@ -1033,7 +1034,6 @@
             document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
             document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
             document.getElementById(`auth${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
-            // Limpar status
             document.getElementById('loginStatus').className = 'auth-status';
             document.getElementById('loginStatus').style.display = 'none';
             document.getElementById('registroStatus').className = 'auth-status';
@@ -1053,7 +1053,10 @@
                 return;
             }
 
-            auth.signInWithEmailAndPassword(email, senha)
+            auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => {
+                    return auth.signInWithEmailAndPassword(email, senha);
+                })
                 .then(() => {
                     status.className = 'auth-status success';
                     status.textContent = '✅ Login realizado!';
@@ -1101,9 +1104,11 @@
                 return;
             }
 
-            auth.createUserWithEmailAndPassword(email, senha)
+            auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => {
+                    return auth.createUserWithEmailAndPassword(email, senha);
+                })
                 .then(async (userCredential) => {
-                    // Salvar informações do usuário no Firestore
                     await db.collection('users').doc(userCredential.user.uid).set({
                         nome: nome,
                         email: email,
@@ -1128,43 +1133,59 @@
                 });
         }
 
-        // ===== OBSERVADOR DE AUTENTICAÇÃO =====
-        auth.onAuthStateChanged(async (user) => {
+        // ===== LOGOUT =====
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                auth.signOut().then(() => {
+                    // O observer vai tratar a UI
+                }).catch((error) => {
+                    alert('Erro ao sair: ' + error.message);
+                });
+            }
+        }
+
+        // ===== FUNÇÃO PARA ATUALIZAR A UI QUANDO O USUÁRIO MUDA =====
+        function atualizarUI(user) {
             if (user) {
                 currentUser = user;
-                const docRef = db.collection('users').doc(user.uid);
-                const docSnap = await docRef.get();
-                if (docSnap.exists) {
-                    currentUserDoc = docSnap.data();
-                } else {
-                    currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
-                }
-                // Atualizar UI
                 loginSection.style.display = 'none';
                 userSection.style.display = 'flex';
-                const initial = (currentUserDoc?.nome || 'U')[0].toUpperCase();
-                avatarLetter.textContent = initial;
-                profileNome.textContent = currentUserDoc?.nome || 'Usuário';
-                profileEmail.textContent = user.email;
-                profileAvatarLetter.textContent = initial;
-                document.getElementById('emailCompra').value = user.email;
-                // Verificar se é proprietário
-                if (user.email === PROPRIETARIO_EMAIL) {
-                    adminLink.style.display = 'block';
-                    adminPanel.style.display = 'block';
-                    carregarAdminCompras();
-                } else {
-                    adminLink.style.display = 'none';
-                    adminPanel.style.display = 'none';
-                }
-                carregarKeysUsuario(user.uid);
-                iniciarChat(user.uid);
-                carregarNotificacoes(user.uid);
-                chatInput.disabled = false;
-                chatSendBtn.disabled = false;
-                if (chatMessagesDiv.querySelector('div')?.textContent.includes('Faça login')) {
-                    chatMessagesDiv.innerHTML = '';
-                }
+
+                // Buscar dados do usuário no Firestore
+                db.collection('users').doc(user.uid).get().then((doc) => {
+                    if (doc.exists) {
+                        currentUserDoc = doc.data();
+                    } else {
+                        currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
+                    }
+
+                    const initial = (currentUserDoc?.nome || 'U')[0].toUpperCase();
+                    avatarLetter.textContent = initial;
+                    profileNome.textContent = currentUserDoc?.nome || 'Usuário';
+                    profileEmail.textContent = user.email;
+                    profileAvatarLetter.textContent = initial;
+                    document.getElementById('emailCompra').value = user.email;
+
+                    if (user.email === PROPRIETARIO_EMAIL) {
+                        adminLink.style.display = 'block';
+                        adminPanel.style.display = 'block';
+                        carregarAdminCompras();
+                    } else {
+                        adminLink.style.display = 'none';
+                        adminPanel.style.display = 'none';
+                    }
+
+                    carregarKeysUsuario(user.uid);
+                    iniciarChat(user.uid);
+                    carregarNotificacoes(user.uid);
+                    chatInput.disabled = false;
+                    chatSendBtn.disabled = false;
+                    if (chatMessagesDiv.querySelector('div')?.textContent.includes('Faça login')) {
+                        chatMessagesDiv.innerHTML = '';
+                    }
+                }).catch((err) => {
+                    console.error('Erro ao buscar usuário:', err);
+                });
             } else {
                 currentUser = null;
                 currentUserDoc = null;
@@ -1181,7 +1202,13 @@
                 profileNome.textContent = 'Usuário';
                 profileEmail.textContent = 'email@email.com';
                 profileAvatarLetter.textContent = 'U';
+                profileAvatarImg.style.display = 'none';
             }
+        }
+
+        // ===== OBSERVADOR DE AUTENTICAÇÃO (PRINCIPAL) =====
+        auth.onAuthStateChanged((user) => {
+            atualizarUI(user);
         });
 
         // ===== FUNÇÕES AUXILIARES =====
@@ -1247,7 +1274,6 @@
             const compraData = compraDoc.data();
             if (!compraData) return alert('Compra não encontrada.');
 
-            // Salvar key no Firestore
             await db.collection('keys').add({
                 uid: compraData.uid || '--',
                 key: key,
@@ -1257,19 +1283,16 @@
                 compraId: compraId
             });
 
-            // Atualizar compra
             await compraRef.update({
                 key: key,
                 status: 'aprovado',
                 dataExpiracao: firebase.firestore.Timestamp.fromDate(expiracao)
             });
 
-            // Notificar usuário (se tiver UID)
             if (compraData.uid) {
                 await enviarNotificacao(compraData.uid, `🔑 Sua key foi gerada: <strong>${key}</strong>. Expira em 24h.`);
             }
 
-            // Enviar e-mail com a key
             enviarEmailKey(compraData.email, compraData.nome, key, expiracao);
 
             alert(`✅ Key ${key} gerada e enviada para ${compraData.email}!`);
@@ -1477,7 +1500,6 @@
                         data: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
-                    // Enviar e-mail para o proprietário
                     const formEmail = document.createElement('form');
                     formEmail.method = 'POST';
                     formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -1501,7 +1523,6 @@
                     formEmail.submit();
                     document.body.removeChild(formEmail);
 
-                    // Notificar proprietário
                     if (currentUser && currentUser.email !== PROPRIETARIO_EMAIL) {
                         const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
                         if (!propSnapshot.empty) {
@@ -1558,12 +1579,10 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // Fechar modal ao clicar fora
         authModal.addEventListener('click', function(e) {
             if (e.target === this) fecharAuthModal();
         });
 
-        // Fechar modal com ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') fecharAuthModal();
         });
