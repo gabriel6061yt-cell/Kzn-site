@@ -4,442 +4,1035 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Graal Online Classic Test Beta</title>
-    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js">
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+
     <style>
-        /* ----- RESET & BASE ----- */
+        /* ===== CSS COMPLETO ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --secondary: #06b6d4;
+            --secondary-light: #67e8f9;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #0a0a1a;
+            --bg-card: #111125;
+            --bg-card-hover: #1a1a3e;
+            --border: #1f1f3f;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+            --glass: rgba(255, 255, 255, 0.05);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --container-max: 1200px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a1a;
-            color: #f1f5f9;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.3s;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1a1a3a;
+            background: var(--bg);
         }
         ::-webkit-scrollbar-thumb {
-            background: #7c3aed;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
             border-radius: 10px;
         }
 
-        /* ----- APP CONTAINER ----- */
-        #app {
+        /* ===== TEMA CLARO ===== */
+        body.tema-claro {
+            --bg: #f1f5f9;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --glass: rgba(0, 0, 0, 0.03);
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+        body.tema-claro .navbar {
+            background: rgba(255, 255, 255, 0.92);
+            border-bottom-color: #e2e8f0;
+        }
+        body.tema-claro .glass-card {
+            background: #ffffff;
+            border-color: #e2e8f0;
+        }
+        body.tema-claro .chat-window {
+            background: #ffffff;
+            border-color: #e2e8f0;
+        }
+        body.tema-claro .chat-messages {
+            background: #f8fafc;
+        }
+        body.tema-claro .chat-msg {
+            background: #ffffff;
+            border-left-color: var(--secondary);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
             width: 100%;
-            max-width: 1300px;
-            min-height: 100vh;
             background: rgba(10, 10, 26, 0.92);
-            backdrop-filter: blur(4px);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 60px rgba(124, 58, 237, 0.15);
-            border-left: 1px solid rgba(124, 58, 237, 0.2);
-            border-right: 1px solid rgba(124, 58, 237, 0.2);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 1rem;
+            transition: 0.3s;
         }
-
-        /* ----- PAGES (views) ----- */
-        .page {
-            display: none;
-            padding: 20px 16px 90px 16px;
-            flex: 1;
-            animation: fadeSlide 0.35s ease;
+        .navbar.scrolled {
+            border-bottom-color: var(--primary);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.3);
         }
-        .page.active {
-            display: block;
-        }
-        @keyframes fadeSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ----- HEADER / TOPBAR ----- */
-        .topbar {
+        .nav-container {
+            max-width: var(--container-max);
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 20px;
-            background: rgba(20, 20, 43, 0.7);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(124, 58, 237, 0.25);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            flex-wrap: wrap;
-            gap: 8px;
+            height: 72px;
+            gap: 10px;
         }
-        .topbar .logo {
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .nav-logo i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        .nav-logo .logo-text {
+            font-size: 1.1rem;
             font-weight: 800;
-            font-size: 1.2rem;
-            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+        }
+        .nav-menu {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            list-style: none;
+            gap: 0.2rem;
+            flex-wrap: wrap;
         }
-        .topbar .logo i {
-            -webkit-text-fill-color: #7c3aed;
-            font-size: 1.5rem;
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
         }
-        .topbar .right-icons {
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: #fff;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.3);
+        }
+        .nav-menu.mobile-menu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 72px;
+            left: 0;
+            width: 100%;
+            background: var(--bg-card);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            gap: 0.3rem;
+            z-index: 999;
+        }
+        .nav-menu.mobile-menu.open {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            position: relative;
         }
-        .topbar .right-icons .icon-btn {
-            background: transparent;
+        .nav-menu.mobile-menu a {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            text-transform: none;
             border: none;
-            color: #c4b5d4;
+            border-radius: 8px;
+            transition: 0.3s;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-menu.mobile-menu a:hover,
+        .nav-menu.mobile-menu a.active {
+            color: #fff;
+            background: var(--primary);
+        }
+        .nav-toggle {
+            display: none;
+            color: var(--text);
             font-size: 1.3rem;
             cursor: pointer;
-            position: relative;
-            transition: 0.2s;
             padding: 4px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
         }
-        .topbar .right-icons .icon-btn:hover {
-            color: #7c3aed;
-            transform: scale(1.1);
-        }
-        .topbar .right-icons .badge {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: #ef4444;
+        .nav-toggle:hover {
+            border-color: var(--primary);
             color: #fff;
-            font-size: 0.6rem;
-            font-weight: 700;
-            width: 18px;
-            height: 18px;
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .nav-icon-btn {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+            font-size: 1rem;
         }
-        .topbar .user-avatar-small {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 2px solid #7c3aed;
-            object-fit: cover;
-            cursor: pointer;
-            background: #1a1a3a;
-        }
-
-        /* ----- NAVEGAÇÃO INFERIOR (mobile first) ----- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(14, 14, 34, 0.92);
-            backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(124, 58, 237, 0.2);
-            display: flex;
-            justify-content: space-around;
-            padding: 6px 0 env(safe-area-inset-bottom, 6px) 0;
-            z-index: 200;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .bottom-nav .nav-item {
-            background: transparent;
-            border: none;
-            color: #6b6b8a;
-            font-size: 0.7rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            padding: 6px 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-        }
-        .bottom-nav .nav-item i {
-            font-size: 1.4rem;
-            transition: 0.2s;
-        }
-        .bottom-nav .nav-item span {
-            font-weight: 500;
-            letter-spacing: 0.2px;
-        }
-        .bottom-nav .nav-item.active {
-            color: #7c3aed;
-        }
-        .bottom-nav .nav-item.active i {
-            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
-        }
-
-        /* ----- CARDS GLASSMORPHISM ----- */
-        .glass-card {
-            background: rgba(20, 20, 43, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 20px;
-            padding: 24px 20px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-            transition: 0.25s;
-            margin-bottom: 20px;
-        }
-        .glass-card:hover {
-            border-color: rgba(124, 58, 237, 0.45);
-            box-shadow: 0 16px 40px rgba(124, 58, 237, 0.15);
-        }
-        .glass-card .card-title {
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #e0d7f5;
-        }
-        .glass-card .card-title i {
-            color: #7c3aed;
-        }
-
-        /* ----- BOTÕES ----- */
-        .btn-primary {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            border: none;
+        .nav-icon-btn:hover {
+            border-color: var(--primary);
             color: #fff;
-            padding: 12px 26px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: 0.25s;
-            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-primary:hover {
+            background: rgba(124, 58, 237, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
         }
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            color: #d4c9f0;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-secondary:hover {
-            background: rgba(124, 58, 237, 0.15);
-            border-color: #7c3aed;
-        }
-
-        /* ----- INPUTS ----- */
-        .input-group {
-            margin-bottom: 16px;
-        }
-        .input-group label {
-            display: block;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: #b4a7d6;
-            margin-bottom: 4px;
-        }
-        .input-group input,
-        .input-group textarea,
-        .input-group select {
-            width: 100%;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            border-radius: 14px;
-            color: #f1f5f9;
-            font-size: 0.95rem;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-        .input-group input:focus,
-        .input-group textarea:focus {
-            outline: none;
-            border-color: #7c3aed;
-            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-        }
-        .input-group input::placeholder {
-            color: #6b6b8a;
-        }
-        .input-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        /* ----- LOGIN / REGISTER ----- */
-        .auth-box {
-            max-width: 440px;
-            margin: 40px auto;
-            padding: 30px 24px;
-            background: rgba(20, 20, 43, 0.8);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 1px solid rgba(124, 58, 237, 0.25);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-        }
-        .auth-box .auth-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-align: center;
-            background: linear-gradient(135deg, #7c3aed, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 6px;
-        }
-        .auth-box .auth-sub {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 20px;
-        }
-        .auth-box .auth-switch {
-            text-align: center;
-            margin-top: 16px;
-            color: #94a3b8;
-        }
-        .auth-box .auth-switch a {
-            color: #7c3aed;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        .auth-box .auth-switch a:hover {
-            text-decoration: underline;
-        }
-
-        /* ----- PERFIL ----- */
-        .profile-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .profile-avatar-wrapper {
-            position: relative;
-            width: 120px;
-            height: 120px;
+        .nav-icon-btn .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.45rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
             border-radius: 50%;
-            border: 3px solid #7c3aed;
-            overflow: hidden;
-            margin-bottom: 12px;
-            background: #1a1a3a;
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.25);
-            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
         }
-        .profile-avatar-wrapper img {
+        .nav-icon-btn .badge.show {
+            display: flex;
+        }
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 0.2rem 0.6rem 0.2rem 0.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .profile-btn:hover {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .profile-btn .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .profile-btn .avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .profile-avatar-wrapper .avatar-overlay {
+        .profile-btn .user-name {
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 0.7rem;
+        }
+
+        /* ===== BOTÃO WHATSAPP ===== */
+        .btn-whatsapp-fixo {
+            position: fixed;
+            bottom: 90px;
+            left: 24px;
+            z-index: 9999;
+            background: #25d366;
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
+            transition: 0.3s;
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .btn-whatsapp-fixo:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(37, 211, 102, 0.6);
+        }
+        @keyframes pulse-whatsapp {
+            0% {
+                box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+            }
+            50% {
+                box-shadow: 0 4px 50px rgba(37, 211, 102, 0.8);
+            }
+            100% {
+                box-shadow: 0 4px 30px rgba(37, 211, 102, 0.4);
+            }
+        }
+
+        /* ===== BOTÃO CHAT ===== */
+        .chat-toggle-btn {
+            position: fixed;
+            bottom: 160px;
+            left: 24px;
+            z-index: 9998;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+            transition: 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 50px rgba(124, 58, 237, 0.6);
+        }
+        .chat-toggle-btn .chat-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg);
+            display: none;
+        }
+        .chat-toggle-btn .chat-badge.show {
+            display: flex;
+        }
+
+        /* ===== CHAT WINDOW ===== */
+        .chat-window {
+            position: fixed;
+            bottom: 230px;
+            left: 24px;
+            z-index: 9997;
+            width: 420px;
+            max-height: 550px;
+            height: 550px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-window.open {
+            display: flex;
+        }
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            min-height: 48px;
+        }
+        .chat-header .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+        .chat-header .chat-title i {
+            color: var(--secondary);
+        }
+        .chat-header .chat-actions button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
+        .chat-header .chat-actions button:hover {
+            color: var(--text);
+            background: var(--glass);
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            min-height: 200px;
+            background: var(--bg);
+        }
+        .chat-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        .chat-msg {
+            padding: 0.3rem 0.5rem;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border-left: 2px solid var(--secondary);
+            transition: 0.2s;
+            word-break: break-word;
+            flex-shrink: 0;
+        }
+        .chat-msg .msg-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+        }
+        .chat-msg .msg-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.5rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        .chat-msg .msg-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .chat-msg .msg-nome {
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .chat-msg .msg-nome.admin {
+            color: var(--danger);
+        }
+        .chat-msg .msg-nome.proprietario {
+            color: #fbbf24;
+        }
+        .chat-msg .msg-hora {
+            font-size: 0.5rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+        .chat-msg .msg-content {
+            font-size: 0.85rem;
+            margin-left: 30px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .chat-msg .msg-badge {
+            font-size: 0.45rem;
+            font-weight: 700;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+        .chat-msg .msg-badge.admin-badge {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        .chat-msg .msg-badge.proprietario-badge {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 0.4rem;
+            padding: 0.5rem 0.8rem;
+            border-top: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            flex-shrink: 0;
+            min-height: 52px;
+            flex-wrap: wrap;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 0.4rem 0.7rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.8rem;
+            outline: none;
+            transition: 0.3s;
+            min-width: 60px;
+        }
+        .chat-input-area input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.1);
+        }
+        .chat-input-area button {
+            padding: 0.4rem 0.8rem;
+            background: var(--secondary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .chat-input-area button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+        }
+        .typing-indicator {
+            display: none;
+            padding: 0.3rem 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-style: italic;
+            background: rgba(124, 58, 237, 0.08);
+            border-radius: 8px;
+            margin: 0.2rem 0;
+            flex-shrink: 0;
+            width: 100%;
+        }
+        .typing-indicator.show {
+            display: block !important;
+        }
+
+        /* ===== GLASS CARD ===== */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            margin-bottom: 1.5rem;
+        }
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .glass-card .card-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text);
+        }
+        .glass-card .card-title i {
+            color: var(--primary);
+        }
+
+        /* ===== BOTÕES ===== */
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 50px rgba(124, 58, 237, 0.6);
+        }
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.15);
+            transform: translateY(-3px);
+        }
+        .btn-success {
+            background: var(--success);
+            color: #fff;
+        }
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(34, 197, 94, 0.4);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
+        }
+
+        /* ===== INPUTS ===== */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.2rem;
+        }
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+        }
+        .input-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            background: radial-gradient(ellipse at 20% 30%, rgba(124, 58, 237, 0.15), transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(6, 182, 212, 0.10), transparent 60%),
+                var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.015) 2px, rgba(255, 255, 255, 0.015) 4px);
+            pointer-events: none;
+            animation: scanlines 20s linear infinite;
+        }
+        @keyframes scanlines {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(4px);
+            }
+        }
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 0.3rem 1.4rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.3);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        /* ===== SECTION ===== */
+        .section {
+            padding: 6rem 2rem;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        .section.dark {
+            background: var(--bg);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+        .section-header h2 i {
+            color: var(--primary);
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== PLANS GRID ===== */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 950px;
+            margin: 0 auto;
+        }
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        .plan-card.popular {
+            border-color: var(--secondary);
+            box-shadow: 0 0 60px rgba(6, 182, 212, 0.1);
+        }
+        .plan-card.popular::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        .plan-card .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--secondary);
+            color: #fff;
+            padding: 0.1rem 1rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .plan-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .plan-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+        .plan-card .price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 0.8rem 0;
+        }
+        .plan-card .price small {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+        .plan-card .features {
+            list-style: none;
+            text-align: left;
+            margin: 1rem 0;
+        }
+        .plan-card .features li {
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .plan-card .features li i {
+            color: var(--success);
+            width: 18px;
+            font-size: 0.7rem;
+        }
+
+        /* ===== FORM ===== */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        .form-container .btn-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .form-container .btn-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+        }
+        .form-container .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .form-status {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .form-status.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+        .form-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        /* ===== PERFIL ===== */
+        .profile-section {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+        }
+        .profile-section .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .profile-section .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            border: 3px solid var(--primary);
+            transition: var(--transition);
+        }
+        .profile-section .profile-avatar:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+        }
+        .profile-section .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-section .profile-avatar .avatar-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: 0.3s;
+            transition: var(--transition);
+            border-radius: 50%;
+            font-size: 0.65rem;
+            color: #fff;
+            font-weight: 600;
         }
-        .profile-avatar-wrapper:hover .avatar-overlay {
+        .profile-section .profile-avatar:hover .avatar-overlay {
             opacity: 1;
         }
-        .profile-avatar-wrapper .avatar-overlay i {
-            font-size: 2rem;
-            color: #fff;
+        .profile-section .profile-info h3 {
+            font-size: 1.2rem;
+            color: var(--text);
         }
-        .profile-name {
-            font-size: 1.6rem;
-            font-weight: 700;
+        .profile-section .profile-info p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
-        .profile-email {
-            color: #94a3b8;
-            font-size: 0.95rem;
-        }
-        .profile-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #0a0a1a;
-            font-weight: 700;
-            font-size: 0.7rem;
-            padding: 2px 14px;
-            border-radius: 40px;
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .profile-info-grid {
+        .profile-section .profile-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 16px;
-            width: 100%;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            padding: 0.8rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1.2rem;
         }
-        .profile-info-grid .info-item {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 16px;
-            padding: 12px;
+        .profile-section .profile-stats .stat {
             text-align: center;
         }
-        .profile-info-grid .info-item .label {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .profile-info-grid .info-item .value {
+        .profile-section .profile-stats .stat .number {
             font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 2px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .profile-section .profile-stats .stat .label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+        .hidden-file-input {
+            display: none;
         }
 
-        /* ----- ADMIN TABELA ----- */
+        /* ===== ADMIN TABLE ===== */
         .admin-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -455,7 +1048,7 @@
             text-align: left;
             padding: 12px 10px;
             background: rgba(124, 58, 237, 0.15);
-            color: #c4b5d4;
+            color: var(--text-muted);
             font-weight: 600;
             border-bottom: 2px solid rgba(124, 58, 237, 0.2);
         }
@@ -490,1011 +1083,1398 @@
             border: none;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
+            transition: var(--transition);
         }
         .admin-table .btn-sm:hover {
             transform: scale(1.05);
         }
         .admin-table .btn-sm-aprovar {
-            background: #22c55e;
+            background: var(--success);
             color: #fff;
         }
         .admin-table .btn-sm-cancelar {
-            background: #ef4444;
+            background: var(--danger);
             color: #fff;
         }
         .admin-table .btn-sm-key {
-            background: #06b6d4;
+            background: var(--secondary);
             color: #fff;
         }
 
-        /* ----- CHAT ----- */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 420px;
-            max-height: 60vh;
-            background: rgba(10, 10, 26, 0.6);
-            border-radius: 20px;
-            border: 1px solid rgba(124, 58, 237, 0.15);
-            overflow: hidden;
+        /* ===== NOTIFICAÇÕES DROPDOWN ===== */
+        .dropdown-container {
+            position: relative;
         }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .chat-messages .msg {
-            max-width: 82%;
-            padding: 10px 16px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            word-wrap: break-word;
-            animation: fadeSlide 0.2s ease;
-        }
-        .chat-messages .msg.me {
-            align-self: flex-end;
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
-            color: #fff;
-            border-bottom-right-radius: 4px;
-        }
-        .chat-messages .msg.other {
-            align-self: flex-start;
-            background: rgba(255, 255, 255, 0.07);
-            color: #e0d7f5;
-            border-bottom-left-radius: 4px;
-        }
-        .chat-messages .msg .time {
-            font-size: 0.6rem;
-            opacity: 0.6;
-            margin-top: 4px;
-            display: block;
-            text-align: right;
-        }
-        .chat-input-row {
-            display: flex;
-            gap: 10px;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border-top: 1px solid rgba(124, 58, 237, 0.1);
-        }
-        .chat-input-row input {
-            flex: 1;
-            padding: 10px 16px;
-            border-radius: 40px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            background: rgba(255, 255, 255, 0.05);
-            color: #f1f5f9;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-        }
-        .chat-input-row input:focus {
-            border-color: #7c3aed;
-        }
-        .chat-input-row button {
-            background: #7c3aed;
-            border: none;
-            color: #fff;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .chat-input-row button:hover {
-            transform: scale(1.06);
-            background: #6d28d9;
-        }
-        .typing-indicator {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            padding: 4px 16px;
-            font-style: italic;
-            min-height: 24px;
-        }
-
-        /* ----- NOTIFICAÇÕES DROPDOWN ----- */
-        .notif-dropdown {
+        .dropdown {
             position: absolute;
+            top: calc(100% + 8px);
             right: 0;
-            top: 50px;
-            background: rgba(20, 20, 43, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            border-radius: 20px;
-            width: 300px;
+            width: 360px;
+            max-height: 420px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 1001;
+            overflow: hidden;
+            animation: dropdownIn 0.25s ease;
+        }
+        .dropdown.open {
+            display: block;
+        }
+        @keyframes dropdownIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .dropdown-header span {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .dropdown-header .btn-clear {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.2rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .dropdown-header .btn-clear:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .dropdown-body {
+            padding: 0.3rem 0;
             max-height: 340px;
             overflow-y: auto;
-            padding: 12px 0;
-            display: none;
-            z-index: 300;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
         }
-        .notif-dropdown.open {
-            display: block;
-        }
-        .notif-dropdown .notif-item {
-            padding: 10px 18px;
+        .dropdown-item {
+            padding: 0.6rem 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 0.85rem;
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-        }
-        .notif-dropdown .notif-item .notif-icon {
-            color: #7c3aed;
-            font-size: 1rem;
-            margin-top: 2px;
-        }
-        .notif-dropdown .notif-item .notif-text {
-            flex: 1;
-        }
-        .notif-dropdown .notif-item .notif-time {
-            font-size: 0.65rem;
-            color: #6b6b8a;
-        }
-        .notif-dropdown .notif-item.lida {
-            opacity: 0.5;
-        }
-        .notif-dropdown .notif-empty {
-            padding: 20px;
-            text-align: center;
-            color: #6b6b8a;
-        }
-
-        /* ----- COMPRAS FORM ----- */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        @media (max-width: 500px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-        .file-upload-wrapper {
-            position: relative;
-            border: 2px dashed rgba(124, 58, 237, 0.3);
-            border-radius: 16px;
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
             transition: 0.2s;
         }
-        .file-upload-wrapper:hover {
-            border-color: #7c3aed;
-            background: rgba(124, 58, 237, 0.05);
+        .dropdown-item:hover {
+            background: var(--glass);
         }
-        .file-upload-wrapper input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-        .file-upload-wrapper .file-name {
-            color: #94a3b8;
+        .dropdown-item .item-text {
             font-size: 0.85rem;
-            margin-top: 8px;
+            color: var(--text);
+        }
+        .dropdown-item .item-time {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+        .dropdown-item.unread {
+            border-left: 3px solid var(--primary);
+            background: rgba(124, 58, 237, 0.04);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        .empty-state i {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            opacity: 0.3;
         }
 
-        /* ----- RESPONSIVIDADE GERAL ----- */
-        @media (min-width: 768px) {
-            .bottom-nav .nav-item {
-                font-size: 0.8rem;
-                padding: 8px 20px;
-            }
-            .bottom-nav .nav-item i {
-                font-size: 1.6rem;
-            }
-            .page {
-                padding: 30px 32px 100px 32px;
-            }
-            .topbar {
-                padding: 14px 32px;
-            }
-            .profile-info-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            .notif-dropdown {
-                width: 360px;
-                right: 10px;
-            }
-        }
-        @media (min-width: 1024px) {
-            #app {
-                min-height: 90vh;
-                border-radius: 32px;
-                margin: 20px auto;
-            }
-            .bottom-nav {
-                position: sticky;
-                bottom: 0;
-                border-radius: 0 0 32px 32px;
-            }
-        }
-
-        /* ----- MISC ----- */
-        .flex-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .gap-8 {
-            gap: 8px;
-        }
-        .gap-12 {
-            gap: 12px;
-        }
-        .mt-16 {
-            margin-top: 16px;
-        }
-        .mb-16 {
-            margin-bottom: 16px;
-        }
-        .w-full {
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
         }
-        .text-center {
+        .modal-overlay.open {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            max-width: 420px;
+            width: 100%;
+            animation: fadeIn 0.25s ease;
+            box-shadow: var(--shadow);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        .modal-content p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .modal-actions button {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            min-width: 80px;
+        }
+        .modal-actions button:hover {
+            border-color: var(--primary);
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .modal-actions .btn-danger {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+        .modal-actions .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.15);
+        }
+        .modal-actions .btn-success {
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .modal-actions .btn-success:hover {
+            background: rgba(34, 197, 94, 0.15);
+        }
+        .close-modal {
+            margin-top: 0.8rem;
+            padding: 6px;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
             text-align: center;
         }
-        .text-muted {
-            color: #94a3b8;
-            font-size: 0.85rem;
+        .close-modal:hover {
+            border-color: var(--text);
+            color: var(--text);
         }
-        .hidden {
-            display: none !important;
+
+        /* ===== WELCOME / LOGIN ===== */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
         }
-        .loading-spinner {
-            border: 3px solid rgba(124, 58, 237, 0.2);
-            border-top: 3px solid #7c3aed;
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .welcome-content {
+            max-width: 460px;
+            width: 90%;
+            padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+        .welcome-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+        }
+        .welcome-brand h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+        }
+        .welcome-brand p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+        .welcome-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+        .welcome-subtitle {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .welcome-or {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        .welcome-or::before,
+        .welcome-or::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        .login-tabs {
+            display: flex;
+            gap: 0.3rem;
+            margin-bottom: 1.2rem;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 0.3rem;
+        }
+        .login-tab-btn {
+            flex: 1;
+            padding: 0.4rem;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .login-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .login-form {
+            text-align: left;
+        }
+        .login-form .btn-login {
+            width: 100%;
+            padding: 0.7rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 0.3rem;
+        }
+        .login-form .btn-login:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+        }
+        .login-form .btn-register {
+            background: linear-gradient(135deg, var(--secondary), #0891b2);
+        }
+        .login-form .btn-register:hover {
+            box-shadow: 0 4px 30px rgba(6, 182, 212, 0.4);
+        }
+        .welcome-footer {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            border-top: 1px solid var(--border);
+            padding-top: 0.8rem;
+            margin-top: 0.8rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 2rem 1.5rem;
+        }
+        .footer-content {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .footer-social {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+        .footer-social a {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
         }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
+        .footer-social a:hover {
+            color: #fff;
+            transform: translateY(-4px);
+        }
+        .footer-social a.discord:hover {
+            background: #5865f2;
+            border-color: #5865f2;
+        }
+        .footer-social a.whatsapp:hover {
+            background: #25d366;
+            border-color: #25d366;
+        }
+        .footer-bottom {
+            max-width: var(--container-max);
+            margin: 1.2rem auto 0;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 7rem;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-subtitle {
+                margin: 0 auto 2rem;
+            }
+            .hero-buttons {
+                justify-content: center;
             }
         }
-        .toast {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(20, 20, 43, 0.95);
-            backdrop-filter: blur(12px);
-            padding: 14px 28px;
-            border-radius: 40px;
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            color: #f1f5f9;
-            font-weight: 500;
-            z-index: 999;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-            animation: fadeSlide 0.3s ease;
-            max-width: 90%;
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 0.5rem;
+            }
+            .nav-container {
+                height: 60px;
+                gap: 4px;
+                padding: 0 2px;
+            }
+            .nav-logo .logo-text {
+                font-size: 0.8rem;
+            }
+            .nav-menu:not(.mobile-menu) {
+                display: none;
+            }
+            .nav-toggle {
+                display: flex !important;
+                font-size: 1.1rem;
+                padding: 2px 6px;
+            }
+            .nav-actions {
+                gap: 4px;
+            }
+            .nav-icon-btn {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+            .profile-btn {
+                padding: 0.15rem 0.4rem 0.15rem 0.15rem;
+                font-size: 0.55rem;
+            }
+            .profile-btn .avatar {
+                width: 20px;
+                height: 20px;
+                font-size: 0.45rem;
+            }
+            .profile-btn .user-name {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            .plans-grid {
+                grid-template-columns: 1fr;
+            }
+            .chat-window {
+                width: 320px;
+                max-height: 420px;
+                height: 420px;
+                bottom: 200px;
+                left: 10px;
+            }
+            .chat-toggle-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+                bottom: 140px;
+                left: 14px;
+            }
+            .btn-whatsapp-fixo {
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                bottom: 80px;
+                left: 14px;
+            }
+            .dropdown {
+                width: 300px;
+                right: -20px;
+            }
+            .profile-section .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-section .profile-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .chat-window {
+                width: 340px;
+                max-height: 450px;
+                height: 450px;
+                bottom: 180px;
+                left: 10px;
+            }
+            .dropdown {
+                width: 260px;
+                right: -30px;
+            }
+            .profile-section .profile-stats {
+                grid-template-columns: 1fr 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="app">
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <div class="logo">
-                <i class="fas fa-crown"></i> Graal<span style="font-weight:300;">Online</span>
+    <!-- ===== WHATSAPP FIXO ===== -->
+    <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o GRAAL ONLINE!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== CHAT TOGGLE ===== -->
+    <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
+        <i class="fas fa-comment-dots"></i>
+        <span class="chat-badge" id="chatBadge">0</span>
+    </button>
+
+    <!-- ===== CHAT WINDOW ===== -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-title">
+                <i class="fas fa-comment-dots"></i>
+                <span>Suporte</span>
+                <span class="online-count" id="onlineCount">⚡ 0 online</span>
             </div>
-            <div class="right-icons">
-                <button class="icon-btn" id="notifBtn" title="Notificações">
-                    <i class="fas fa-bell"></i>
-                    <span class="badge" id="notifBadge" style="display:none;">0</span>
+            <div class="chat-actions">
+                <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                    ✕
                 </button>
-                <img id="topAvatar" class="user-avatar-small" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=36" alt="avatar" />
-                <button class="icon-btn" id="logoutBtn" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
-                <!-- Dropdown notificações -->
-                <div class="notif-dropdown" id="notifDropdown">
-                    <div id="notifList"></div>
-                </div>
-            </div>
-        </header>
-
-        <!-- PÁGINAS -->
-        <!-- HOME -->
-        <div class="page active" id="page-home">
-            <div class="glass-card">
-                <div class="card-title"><i class="fas fa-rocket"></i> Bem-vindo ao Graal Online</div>
-                <p style="color:#c4b5d4; line-height:1.6;">Servidor clássico em fase beta. Adquira sua key para acessar o mundo e viver a experiência única.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
-                    <button class="btn-primary" id="goToCompras"><i class="fas fa-shopping-cart"></i> Comprar Key</button>
-                    <button class="btn-secondary" id="goToChatHome"><i class="fas fa-comment-dots"></i> Suporte</button>
-                </div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-                <div class="glass-card" style="text-align:center;">
-                    <i class="fas fa-users" style="font-size:2rem;color:#7c3aed;"></i>
-                    <h3>Comunidade</h3>
-                    <p class="text-muted">Jogadores ativos</p>
-                </div>
-                <div class="glass-card" style="text-align:center;">
-                    <i class="fas fa-shield-alt" style="font-size:2rem;color:#06b6d4;"></i>
-                    <h3>Segurança</h3>
-                    <p class="text-muted">Anti-cheat ativo</p>
-                </div>
             </div>
         </div>
-
-        <!-- PERFIL -->
-        <div class="page" id="page-perfil">
-            <div class="glass-card profile-header">
-                <div class="profile-avatar-wrapper" id="avatarWrapper">
-                    <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=120" alt="Avatar" />
-                    <div class="avatar-overlay" id="avatarOverlay">
-                        <i class="fas fa-camera"></i>
-                    </div>
-                    <input type="file" id="avatarInput" accept="image/*" style="display:none;" />
-                </div>
-                <div class="profile-name" id="profileName">Usuário</div>
-                <div class="profile-email" id="profileEmail">email@exemplo.com</div>
-                <div id="profileBadgeContainer"></div>
-                <div class="profile-info-grid">
-                    <div class="info-item"><div class="label">Membro desde</div><div class="value" id="profileSince">---</div></div>
-                    <div class="info-item"><div class="label">Keys ativas</div><div class="value" id="profileKeys">0</div></div>
-                    <div class="info-item"><div class="label">Compras</div><div class="value" id="profileCompras">0</div></div>
-                    <div class="info-item"><div class="label">Status</div><div class="value" style="color:#22c55e;">Ativo</div></div>
-                </div>
-                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; width:100%; justify-content:center;">
-                    <button class="btn-secondary" id="editProfileBtn"><i class="fas fa-user-edit"></i> Editar Nome</button>
-                    <button class="btn-secondary" id="changePassBtn"><i class="fas fa-key"></i> Alterar Senha</button>
-                </div>
+        <div class="chat-messages" id="chatMessages">
+            <div style="text-align:center;color:var(--text-muted);padding:2rem;">
+                <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+                <p>Carregando mensagens...</p>
             </div>
-
-            <!-- Editar nome -->
-            <div class="glass-card hidden" id="editNameCard">
-                <div class="card-title"><i class="fas fa-user-edit"></i> Editar Nome</div>
-                <div class="input-group"><label>Novo nome</label><input type="text" id="editNameInput" placeholder="Digite seu nome" /></div>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn-primary" id="saveNameBtn">Salvar</button>
-                    <button class="btn-secondary" id="cancelEditName">Cancelar</button>
-                </div>
-            </div>
-
-            <!-- Alterar senha -->
-            <div class="glass-card hidden" id="changePassCard">
-                <div class="card-title"><i class="fas fa-key"></i> Alterar Senha</div>
-                <div class="input-group"><label>Nova senha</label><input type="password" id="newPassInput" placeholder="Mínimo 6 caracteres" /></div>
-                <div class="input-group"><label>Confirmar senha</label><input type="password" id="confirmPassInput" placeholder="Confirme a nova senha" /></div>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn-primary" id="savePassBtn">Salvar</button>
-                    <button class="btn-secondary" id="cancelPass">Cancelar</button>
-                </div>
-            </div>
-
-            <!-- Keys do usuário -->
-            <div class="glass-card">
-                <div class="card-title"><i class="fas fa-key"></i> Minhas Keys</div>
-                <div id="userKeysList"><p class="text-muted">Nenhuma key ativa.</p></div>
+            <div class="typing-indicator" id="typingIndicator">
+                <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
             </div>
         </div>
-
-        <!-- ADMIN -->
-        <div class="page" id="page-admin">
-            <div class="glass-card">
-                <div class="card-title"><i class="fas fa-user-shield"></i> Painel Administrativo</div>
-                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:16px;">
-                    <span style="background:rgba(124,58,237,0.2);padding:4px 14px;border-radius:40px;font-size:0.8rem;">
-                        <i class="fas fa-clock"></i> Pendentes: <span id="pendingCount">0</span>
-                    </span>
-                    <div style="flex:1; min-width:160px;">
-                        <input type="text" id="adminSearch" placeholder="Filtrar por usuário ou e-mail..." style="width:100%;padding:8px 14px;border-radius:40px;border:1px solid rgba(124,58,237,0.2);background:rgba(255,255,255,0.05);color:#f1f5f9;" />
-                    </div>
-                    <button class="btn-secondary" id="refreshAdmin"><i class="fas fa-sync"></i></button>
-                </div>
-                <div class="admin-table-wrap">
-                    <table class="admin-table" id="adminTable">
-                        <thead><tr><th>Data</th><th>Usuário</th><th>E-mail</th><th>Plano</th><th>Status</th><th>Key</th><th>Ações</th></tr></thead>
-                        <tbody id="adminTableBody"><tr><td colspan="7" class="text-muted text-center">Carregando...</td></tr></tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Digite sua mensagem..." maxlength="500" />
+            <button onclick="enviarMensagem()" id="sendBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
         </div>
-
-        <!-- COMPRAS -->
-        <div class="page" id="page-compras">
-            <div class="glass-card">
-                <div class="card-title"><i class="fas fa-shopping-cart"></i> Solicitar Key</div>
-                <form id="compraForm" novalidate>
-                    <div class="form-row">
-                        <div class="input-group"><label>Nome completo</label><input type="text" id="compraNome" placeholder="Seu nome" required /></div>
-                        <div class="input-group"><label>E-mail</label><input type="email" id="compraEmail" placeholder="Seu e-mail" required /></div>
-                    </div>
-                    <div class="input-group"><label>Plano</label>
-                        <select id="compraPlano"><option value="Basic">Basic - R$29,90</option><option value="Premium">Premium - R$59,90</option><option value="VIP">VIP - R$99,90</option></select>
-                    </div>
-                    <div class="input-group">
-                        <label>Comprovante de pagamento</label>
-                        <div class="file-upload-wrapper">
-                            <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:#7c3aed;"></i>
-                            <p style="color:#94a3b8;margin-top:4px;">Clique para enviar (imagem ou PDF)</p>
-                            <input type="file" id="compraComprovante" accept="image/*,application/pdf" required />
-                            <div class="file-name" id="fileChosen">Nenhum arquivo selecionado</div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-primary w-full" id="submitCompraBtn"><i class="fas fa-paper-plane"></i> Enviar Pedido</button>
-                    <div id="compraFeedback" class="text-muted text-center mt-16"></div>
-                </form>
-            </div>
-        </div>
-
-        <!-- CHAT SUPORTE -->
-        <div class="page" id="page-chat">
-            <div class="glass-card" style="padding:16px;">
-                <div class="card-title" style="margin-bottom:6px;"><i class="fas fa-comment-dots"></i> Suporte <span style="font-size:0.7rem;font-weight:400;color:#94a3b8;">(chat privado)</span></div>
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="typing-indicator" id="typingIndicator"></div>
-                    <div class="chat-input-row">
-                        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
-                        <button id="chatSendBtn"><i class="fas fa-arrow-up"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- RODAPÉ (NAVEGAÇÃO INFERIOR) -->
-        <nav class="bottom-nav" id="bottomNav">
-            <button class="nav-item active" data-page="page-home"><i class="fas fa-home"></i><span>Início</span></button>
-            <button class="nav-item" data-page="page-perfil"><i class="fas fa-user"></i><span>Perfil</span></button>
-            <button class="nav-item" data-page="page-compras"><i class="fas fa-shopping-cart"></i><span>Comprar</span></button>
-            <button class="nav-item" data-page="page-chat"><i class="fas fa-comment"></i><span>Chat</span></button>
-            <button class="nav-item" id="adminNavBtn" data-page="page-admin" style="display:none;"><i class="fas fa-shield-alt"></i><span>Admin</span></button>
-        </nav>
     </div>
 
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#inicio" class="nav-logo">
+                <i class="fas fa-crown"></i>
+                <span class="logo-text">Graal Online</span>
+            </a>
+
+            <ul class="nav-menu" id="navMenuDesktop">
+                <li><a href="#inicio" class="active"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
+                <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+            </ul>
+
+            <ul class="nav-menu mobile-menu" id="navMenuMobile">
+                <li><a href="#inicio"><i class="fas fa-home"></i> Início</a></li>
+                <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
+                <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
+                <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
+                <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <div class="dropdown-container">
+                    <button class="nav-icon-btn" id="notifBtn" onclick="toggleNotificacoes()" title="Notificações">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notifBadge">0</span>
+                    </button>
+                    <div class="dropdown" id="notifDropdown">
+                        <div class="dropdown-header">
+                            <span><i class="fas fa-bell"></i> Notificações</span>
+                            <button class="btn-clear" onclick="marcarTodasNotificacoesLidas()">Marcar todas</button>
+                        </div>
+                        <div class="dropdown-body" id="notifList">
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                Nenhuma notificação
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="profile-btn" id="profileBtn" onclick="abrirPerfil()">
+                    <span class="avatar" id="avatarLetter">
+                        <span class="avatar-letter" id="avatarText">G</span>
+                    </span>
+                    <span class="user-name" id="userDisplay">Entrar</span>
+                </button>
+
+                <div class="nav-toggle" id="mobileMenu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-crown"></i> Beta Classic</div>
+            <h1>
+                <span class="highlight">GRAAL</span><br />
+                <span style="font-size: 2rem; color: var(--text-muted);">ONLINE CLASSIC TEST BETA</span>
+            </h1>
+            <p class="hero-subtitle">
+                Servidor clássico em fase beta. Adquira sua key para acessar o mundo e viver a experiência única.
+            </p>
+            <div class="hero-buttons">
+                <a href="#comprar" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Comprar Key</a>
+                <a href="#mods" class="btn btn-secondary"><i class="fas fa-cubes"></i> Ver Mods</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MODS ===== -->
+    <section id="mods" class="section dark">
+        <div class="section-header">
+            <h2><i class="fas fa-cubes"></i> Nossos Mods</h2>
+            <p>Escolha o plano ideal para você</p>
+        </div>
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="icon">⚔️</div>
+                <h3>Graal Classic</h3>
+                <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> Acesso completo</li>
+                    <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                    <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                    <li><i class="fas fa-check"></i> Atualizações automáticas</li>
+                </ul>
+                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Graal Classic - Mensal', 50)">Comprar R$ 50,00</button>
+            </div>
+
+            <div class="plan-card popular">
+                <span class="badge">⭐ Mais Vantagem</span>
+                <div class="icon">👑</div>
+                <h3>Graal Classic</h3>
+                <div class="price">R$ 200,00 <small>/ vitalício</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> +50 funcionalidades</li>
+                    <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
+                    <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
+                    <li><i class="fas fa-check"></i> Sem renovação!</li>
+                </ul>
+                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Graal Classic - Permanente', 200)">Comprar R$ 200,00</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="icon">🏙️</div>
+                <h3>Auto Trash</h3>
+                <div class="price">R$ 200,00 <small>/ vitalício</small></div>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
+                    <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
+                    <li><i class="fas fa-check"></i> Movimento inteligente</li>
+                    <li><i class="fas fa-check"></i> Coleta automática</li>
+                </ul>
+                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Auto Trash', 200)">Comprar R$ 200,00</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMPRAR ===== -->
+    <section id="comprar" class="section">
+        <div class="section-header">
+            <h2><i class="fas fa-shopping-cart"></i> Solicitar Key</h2>
+            <p>Preencha o formulário abaixo para adquirir sua key</p>
+        </div>
+        <div class="form-container">
+            <form id="formCompra" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_subject" value="📦 NOVA COMPRA - GRAAL ONLINE!">
+
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Nome Completo <span style="color:var(--danger);">*</span></label>
+                    <input type="text" name="Nome" placeholder="Digite seu nome completo..." required>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-envelope"></i> E-mail <span style="color:var(--danger);">*</span></label>
+                    <input type="email" name="Email" placeholder="Digite seu e-mail..." required>
+                    <small style="color:var(--text-muted);font-size:0.7rem;">Você receberá sua key neste e-mail</small>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fab fa-whatsapp"></i> WhatsApp <span style="color:var(--danger);">*</span></label>
+                    <input type="text" name="WhatsApp" placeholder="(DDD) 9 9999-9999" required>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--danger);">*</span></label>
+                    <select name="Plano" required>
+                        <option value="">Selecione um plano...</option>
+                        <option value="Graal Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00</option>
+                        <option value="Graal Classic - Permanente R$ 200,00">👑 Classic - Permanente R$ 200,00</option>
+                        <option value="Auto Trash - R$ 200,00">🏙️ Auto Trash - R$ 200,00</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-image"></i> Comprovante PIX <span style="color:var(--danger);">*</span></label>
+                    <input type="file" name="Comprovante" accept="image/*,.pdf" required>
+                    <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (PNG, JPG, PDF - até 5MB)</p>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-pencil-alt"></i> Mensagem (opcional)</label>
+                    <textarea name="Mensagem" rows="3" placeholder="Digite sua mensagem aqui..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit" id="formSubmitBtn">
+                    <i class="fas fa-paper-plane"></i> Enviar Pedido
+                </button>
+                <div class="form-status" id="formStatus"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== PERFIL ===== -->
+    <section id="perfil" class="section dark">
+        <div class="section-header">
+            <h2><i class="fas fa-user"></i> Meu Perfil</h2>
+            <p>Gerencie suas informações</p>
+        </div>
+        <div class="profile-section" id="profileSection">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar" onclick="document.getElementById('avatarUpload').click()">
+                    <span class="avatar-letter" id="avatarProfileText">G</span>
+                    <img id="avatarProfileImage" style="display:none;width:100%;height:100%;object-fit:cover;" />
+                    <div class="avatar-overlay">📷 Trocar</div>
+                </div>
+                <input type="file" id="avatarUpload" class="hidden-file-input" accept="image/*" onchange="uploadAvatar(event)" />
+
+                <div class="profile-info">
+                    <h3 id="profileName">Usuário</h3>
+                    <p id="profileEmail">usuario@email.com</p>
+                    <a href="#" class="edit-link" onclick="editarPerfil(event)" style="color:var(--secondary-light);text-decoration:none;font-size:0.8rem;font-weight:600;transition:0.3s;">
+                        <i class="fas fa-edit"></i> Editar perfil
+                    </a>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="number" id="profileKeys">0</div>
+                    <div class="label">Keys Ativas</div>
+                </div>
+                <div class="stat">
+                    <div class="number" id="profileCompras">0</div>
+                    <div class="label">Compras</div>
+                </div>
+                <div class="stat">
+                    <div class="number" id="profileSince">2026</div>
+                    <div class="label">Membro desde</div>
+                </div>
+            </div>
+
+            <div id="profileKeysList" style="margin-bottom:1.2rem;">
+                <h4 style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.5rem;">🔑 Minhas Keys</h4>
+                <div id="userKeysList"><p class="text-muted" style="color:var(--text-muted);font-size:0.85rem;">Nenhuma key ativa.</p></div>
+            </div>
+
+            <div class="profile-actions" style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+                <button class="btn btn-primary" onclick="window.location.href='#comprar'" style="flex:1;min-width:100px;padding:0.6rem;border-radius:8px;font-size:0.8rem;">
+                    <i class="fas fa-shopping-cart"></i> Comprar Key
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='#mods'" style="flex:1;min-width:100px;padding:0.6rem;border-radius:8px;font-size:0.8rem;">
+                    <i class="fas fa-cubes"></i> Ver Mods
+                </button>
+                <button class="btn btn-danger" onclick="logout()" style="flex:1;min-width:100px;padding:0.6rem;border-radius:8px;font-size:0.8rem;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+
+            <div id="editProfileArea" style="display:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+                <h4 style="margin-bottom:0.8rem;color:var(--text);font-size:1rem;">✏️ Editar Perfil</h4>
+                <div class="input-group">
+                    <label>Nome</label>
+                    <input type="text" id="editNome" placeholder="Digite seu novo nome" />
+                </div>
+                <div class="input-group">
+                    <label>E-mail (fixo)</label>
+                    <input type="email" id="editEmail" disabled style="opacity:0.6;cursor:not-allowed;" />
+                </div>
+                <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.8rem;">
+                    <button class="btn btn-primary" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
+                    <button class="btn btn-secondary" onclick="cancelarEdicaoPerfil()"><i class="fas fa-times"></i> Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ADMIN (visível apenas para proprietário) ===== -->
+    <section id="admin" class="section" style="display:none;">
+        <div class="section-header">
+            <h2><i class="fas fa-user-shield"></i> Painel Administrativo</h2>
+            <p>Gerencie pedidos e envie keys</p>
+        </div>
+        <div class="glass-card">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px;">
+                <span style="background:rgba(124,58,237,0.2);padding:4px 14px;border-radius:40px;font-size:0.8rem;">
+                    <i class="fas fa-clock"></i> Pendentes: <span id="pendingCount">0</span>
+                </span>
+                <div style="flex:1;min-width:160px;">
+                    <input type="text" id="adminSearch" placeholder="Filtrar por usuário ou e-mail..." style="width:100%;padding:8px 14px;border-radius:40px;border:1px solid rgba(124,58,237,0.2);background:rgba(255,255,255,0.05);color:#f1f5f9;" />
+                </div>
+                <button class="btn btn-secondary" onclick="carregarComprasAdmin()"><i class="fas fa-sync"></i> Atualizar</button>
+            </div>
+            <div class="admin-table-wrap">
+                <table class="admin-table" id="adminTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Usuário</th>
+                            <th>E-mail</th>
+                            <th>Plano</th>
+                            <th>Status</th>
+                            <th>Key</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody">
+                        <tr>
+                            <td colspan="7" class="text-muted text-center">Carregando...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="section dark">
+        <div class="section-header">
+            <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
+            <p>Dúvidas comuns sobre o Graal Online</p>
+        </div>
+        <div style="max-width:800px;margin:0 auto;">
+            <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+                    <span>🔒 O Graal Online é seguro?</span>
+                    <span style="transition:0.3s;">▼</span>
+                </div>
+                <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
+                    Sim! O Graal Online é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.
+                </div>
+            </div>
+            <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+                    <span>📱 Funciona no celular?</span>
+                    <span style="transition:0.3s;">▼</span>
+                </div>
+                <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
+                    Sim! O Graal Online é 100% compatível com Graal Mobile (Android e iOS).
+                </div>
+            </div>
+            <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+                    <span>🔑 O que acontece após a compra?</span>
+                    <span style="transition:0.3s;">▼</span>
+                </div>
+                <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
+                    Você recebe a key e instruções via Discord. Suporte 24/7 para ativação.
+                </div>
+            </div>
+            <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+                    <span>💰 Quais formas de pagamento?</span>
+                    <span style="transition:0.3s;">▼</span>
+                </div>
+                <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
+                    Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span>Graal Online</span>
+                <p>Servidor clássico em fase beta</p>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="discord" title="Discord"><i class="fab fa-discord"></i></a>
+                <a href="https://wa.me/5542988752654" class="whatsapp" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Graal Online - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- ===== WELCOME / LOGIN ===== -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-content">
+            <div class="welcome-brand">
+                <h1>Graal Online</h1>
+                <p>Classic Test Beta</p>
+            </div>
+            <div class="welcome-divider"></div>
+            <p class="welcome-subtitle">Entre para acessar todos os recursos</p>
+
+            <div class="login-tabs">
+                <button class="login-tab-btn active" onclick="trocarLoginTab('login')" id="loginTabBtn">Login</button>
+                <button class="login-tab-btn" onclick="trocarLoginTab('registro')" id="registroTabBtn">Registrar</button>
+            </div>
+
+            <div class="login-form" id="loginForm">
+                <div class="input-group"><label>E-mail</label><input type="email" id="loginEmail" placeholder="Digite seu e-mail" /></div>
+                <div class="input-group"><label>Senha</label><input type="password" id="loginSenha" placeholder="Digite sua senha" /></div>
+                <button class="btn-login" onclick="fazerLogin()"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+                <div class="form-status" id="loginStatus"></div>
+            </div>
+
+            <div class="login-form" id="registroForm" style="display:none;">
+                <div class="input-group"><label>Nome</label><input type="text" id="registroNome" placeholder="Digite seu nome" /></div>
+                <div class="input-group"><label>E-mail</label><input type="email" id="registroEmail" placeholder="Digite seu e-mail" /></div>
+                <div class="input-group"><label>Senha</label><input type="password" id="registroSenha" placeholder="Digite sua senha (mínimo 6 caracteres)" /></div>
+                <div class="input-group"><label>Confirmar Senha</label><input type="password" id="registroConfirmarSenha" placeholder="Confirme sua senha" /></div>
+                <button class="btn-login btn-register" onclick="fazerRegistro()"><i class="fas fa-user-plus"></i> Criar Conta</button>
+                <div class="form-status" id="registroStatus"></div>
+            </div>
+
+            <p class="welcome-footer">Ao entrar, você concorda com nossos Termos de Serviço</p>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPT ===== -->
     <script>
-        // ============================================================
-        // FIREBASE CONFIG
-        // ============================================================
+        // ====== FIREBASE CONFIG ======
         const firebaseConfig = {
             apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
             authDomain: "chat-kzn.firebaseapp.com",
+            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
             projectId: "chat-kzn",
             storageBucket: "chat-kzn.firebasestorage.app",
             messagingSenderId: "641963268535",
-            appId: "1:641963268535:web:b1f8b26f69840f527a7032",
-            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com"
+            appId: "1:641963268535:web:b1f8b26f69840f527a7032"
         };
+
         firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
         const auth = firebase.auth();
-        const db = firebase.firestore();
+        const firestore = firebase.firestore();
         const storage = firebase.storage();
-        const rtdb = firebase.database();
 
-        // ============================================================
-        // VARIÁVEIS GLOBAIS
-        // ============================================================
-        const PROPR_EMAIL = 'gabriel6061yt@gmail.com';
-        let currentUser = null;
-        let currentUserDoc = null;
-        let unsubscribeCompras = null;
-        let unsubscribeNotifs = null;
-        let chatRoomRef = null;
+        // ====== CONSTANTES ======
+        const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
+
+        // ====== VARIÁVEIS ======
+        let usuarioLogado = null;
+        let usuariosCadastrados = [];
+        let notificacoes = [];
+        let chatAberto = false;
+        let contadorNaoLidas = 0;
         let typingTimeout = null;
-        let isSending = false;
+        let usuariosOnline = {};
+        let processedMessageIds = new Set();
+        let chatRoomRef = null;
+        let unsubscribeCompras = null;
 
-        // ============================================================
-        // DOM REFS
-        // ============================================================
-        const $ = (id) => document.getElementById(id);
-        const pages = document.querySelectorAll('.page');
-        const navItems = document.querySelectorAll('.nav-item');
-        const topAvatar = $('topAvatar');
-        const profileAvatar = $('profileAvatar');
-        const profileName = $('profileName');
-        const profileEmail = $('profileEmail');
-        const profileSince = $('profileSince');
-        const profileKeys = $('profileKeys');
-        const profileCompras = $('profileCompras');
-        const profileBadge = $('profileBadgeContainer');
-        const userKeysList = $('userKeysList');
-        const notifBtn = $('notifBtn');
-        const notifDropdown = $('notifDropdown');
-        const notifList = $('notifList');
-        const notifBadge = $('notifBadge');
-        const logoutBtn = $('logoutBtn');
-        const adminNavBtn = $('adminNavBtn');
-        const adminTableBody = $('adminTableBody');
-        const pendingCount = $('pendingCount');
-        const adminSearch = $('adminSearch');
-        const refreshAdminBtn = $('refreshAdmin');
-        const chatMessages = $('chatMessages');
-        const chatInput = $('chatInput');
-        const chatSendBtn = $('chatSendBtn');
-        const typingIndicator = $('typingIndicator');
-        const compraForm = $('compraForm');
-        const submitCompraBtn = $('submitCompraBtn');
-        const compraFeedback = $('compraFeedback');
-        const fileChosen = $('fileChosen');
-        const compraComprovante = $('compraComprovante');
-        const editProfileBtn = $('editProfileBtn');
-        const editNameCard = $('editNameCard');
-        const editNameInput = $('editNameInput');
-        const saveNameBtn = $('saveNameBtn');
-        const cancelEditName = $('cancelEditName');
-        const changePassBtn = $('changePassBtn');
-        const changePassCard = $('changePassCard');
-        const newPassInput = $('newPassInput');
-        const confirmPassInput = $('confirmPassInput');
-        const savePassBtn = $('savePassBtn');
-        const cancelPass = $('cancelPass');
-        const avatarInput = $('avatarInput');
-        const avatarOverlay = $('avatarOverlay');
-
-        // ============================================================
-        // NAVEGAÇÃO
-        // ============================================================
-        function navigateTo(pageId) {
-            pages.forEach(p => p.classList.remove('active'));
-            const target = $(pageId);
-            if (target) target.classList.add('active');
-            navItems.forEach(item => {
-                item.classList.toggle('active', item.dataset.page === pageId);
-            });
-            notifDropdown.classList.remove('open');
-        }
-
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const page = item.dataset.page;
-                if (page) navigateTo(page);
-            });
-        });
-
-        $('goToCompras').addEventListener('click', () => navigateTo('page-compras'));
-        $('goToChatHome').addEventListener('click', () => navigateTo('page-chat'));
-
-        // ============================================================
-        // TOAST
-        // ============================================================
-        function showToast(msg, duration = 3000) {
-            const old = document.querySelector('.toast');
-            if (old) old.remove();
-            const div = document.createElement('div');
-            div.className = 'toast';
-            div.textContent = msg;
-            document.body.appendChild(div);
-            setTimeout(() => div.remove(), duration);
-        }
-
-        // ============================================================
-        // AUTENTICAÇÃO
-        // ============================================================
-        auth.onAuthStateChanged(async user => {
-            if (user) {
-                currentUser = user;
-                await loadUserProfile(user);
-                setupRealtimeListeners(user);
-                if (user.email === PROPR_EMAIL) {
-                    adminNavBtn.style.display = 'flex';
-                    loadAdminCompras();
-                } else {
-                    adminNavBtn.style.display = 'none';
-                }
-                navigateTo('page-home');
-                setupChat(user);
-                loadNotificacoes(user.uid);
-                updateAvatarUI();
-            } else {
-                currentUser = null;
-                currentUserDoc = null;
-                if (unsubscribeCompras) unsubscribeCompras();
-                if (unsubscribeNotifs) unsubscribeNotifs();
-                if (chatRoomRef) chatRoomRef.off();
-                showAuthScreen();
-            }
-        });
-
-        // ============================================================
-        // TELA DE LOGIN / REGISTRO
-        // ============================================================
-        function showAuthScreen() {
-            pages.forEach(p => p.classList.remove('active'));
-            let authContainer = document.getElementById('authContainer');
-            if (!authContainer) {
-                authContainer = document.createElement('div');
-                authContainer.id = 'authContainer';
-                authContainer.style.cssText =
-                    'position:fixed;inset:0;z-index:999;background:rgba(10,10,26,0.95);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;';
-                document.body.appendChild(authContainer);
-            } else {
-                authContainer.style.display = 'flex';
-            }
-            authContainer.innerHTML = `
-                <div class="auth-box">
-                    <div class="auth-title">Graal Online</div>
-                    <div class="auth-sub">Beta Classic</div>
-                    <div id="authFormContainer">
-                        <form id="loginForm">
-                            <div class="input-group"><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.com" required /></div>
-                            <div class="input-group"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••" required /></div>
-                            <button type="submit" class="btn-primary w-full">Entrar</button>
-                            <div class="auth-switch">Não tem conta? <a id="switchToRegister">Criar conta</a></div>
-                            <div id="authFeedback" class="text-muted text-center mt-16"></div>
-                        </form>
-                    </div>
-                </div>
-            `;
-            const loginForm = document.getElementById('loginForm');
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('loginEmail').value.trim();
-                const pass = document.getElementById('loginPass').value;
-                const fb = document.getElementById('authFeedback');
-                fb.textContent = 'Entrando...';
-                try {
-                    await auth.signInWithEmailAndPassword(email, pass);
-                    fb.textContent = 'Sucesso!';
-                    authContainer.style.display = 'none';
-                } catch (err) {
-                    fb.textContent = 'Erro: ' + err.message;
-                }
-            });
-            document.getElementById('switchToRegister').addEventListener('click', () => {
-                const container = document.getElementById('authFormContainer');
-                container.innerHTML = `
-                    <form id="registerForm">
-                        <div class="input-group"><label>Nome</label><input type="text" id="regNome" placeholder="Seu nome" required /></div>
-                        <div class="input-group"><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.com" required /></div>
-                        <div class="input-group"><label>Senha</label><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required /></div>
-                        <button type="submit" class="btn-primary w-full">Criar conta</button>
-                        <div class="auth-switch">Já tem conta? <a id="switchToLogin">Entrar</a></div>
-                        <div id="authFeedback" class="text-muted text-center mt-16"></div>
-                    </form>
-                `;
-                document.getElementById('registerForm').addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const nome = document.getElementById('regNome').value.trim();
-                    const email = document.getElementById('regEmail').value.trim();
-                    const pass = document.getElementById('regPass').value;
-                    const fb = document.getElementById('authFeedback');
-                    if (pass.length < 6) { fb.textContent = 'Senha deve ter no mínimo 6 caracteres.'; return; }
-                    fb.textContent = 'Criando conta...';
-                    try {
-                        const cred = await auth.createUserWithEmailAndPassword(email, pass);
-                        await db.collection('users').doc(cred.user.uid).set({
-                            nome: nome,
-                            email: email,
-                            criado: firebase.firestore.FieldValue.serverTimestamp(),
-                            avatar: null
-                        });
-                        fb.textContent = 'Conta criada!';
-                        authContainer.style.display = 'none';
-                    } catch (err) {
-                        fb.textContent = 'Erro: ' + err.message;
-                    }
-                });
-                document.getElementById('switchToLogin').addEventListener('click', showAuthScreen);
-            });
-        }
-
-        // ============================================================
-        // CARREGAR PERFIL DO USUÁRIO
-        // ============================================================
-        async function loadUserProfile(user) {
+        // ====== CARREGAR USUÁRIOS ======
+        function carregarUsuarios() {
             try {
-                const doc = await db.collection('users').doc(user.uid).get();
-                if (doc.exists) {
-                    currentUserDoc = doc.data();
-                    profileName.textContent = currentUserDoc.nome || 'Usuário';
-                    profileEmail.textContent = user.email;
-                    if (currentUserDoc.criado) {
-                        const d = currentUserDoc.criado.toDate ? currentUserDoc.criado.toDate() : new Date(currentUserDoc.criado);
-                        profileSince.textContent = d.toLocaleDateString('pt-BR');
-                    } else {
-                        profileSince.textContent = '---';
-                    }
-                    if (user.email === PROPR_EMAIL) {
-                        profileBadge.innerHTML = '<span class="profile-badge"><i class="fas fa-crown"></i> Proprietário</span>';
-                    } else {
-                        profileBadge.innerHTML = '';
-                    }
-                    const keysSnap = await db.collection('keys')
-                        .where('uid', '==', user.uid)
-                        .where('ativa', '==', true)
-                        .get();
-                    profileKeys.textContent = keysSnap.size;
-                    const comprasSnap = await db.collection('compras')
-                        .where('uid', '==', user.uid)
-                        .get();
-                    profileCompras.textContent = comprasSnap.size;
-                    renderUserKeys(user.uid);
-                } else {
-                    await db.collection('users').doc(user.uid).set({
-                        nome: user.displayName || 'Usuário',
-                        email: user.email,
-                        criado: firebase.firestore.FieldValue.serverTimestamp(),
-                        avatar: null
+                const dados = localStorage.getItem('graal_usuarios');
+                usuariosCadastrados = dados ? JSON.parse(dados) : [];
+            } catch (e) {
+                usuariosCadastrados = [];
+            }
+        }
+
+        function salvarUsuarios() {
+            localStorage.setItem('graal_usuarios', JSON.stringify(usuariosCadastrados));
+        }
+
+        // ====== SOM DE NOTIFICAÇÃO ======
+        function playNotificationSound() {
+            try {
+                const audio = new Audio('https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3');
+                audio.volume = 0.5;
+                audio.play().catch(() => {});
+            } catch (e) {}
+        }
+
+        // ====== PERMISSÕES ======
+        function isProprietario(email) {
+            return email === PROPRIETARIO_EMAIL;
+        }
+
+        // ====== CHAT ======
+        function setupChat(user) {
+            if (chatRoomRef) chatRoomRef.off();
+            const roomId = [user.uid || user.email, 'proprietario'].sort().join('_');
+            chatRoomRef = db.ref('chats/' + roomId);
+
+            chatRoomRef.limitToLast(50).on('value', (snap) => {
+                const msgs = snap.val();
+                const container = document.getElementById('chatMessages');
+                // Remove mensagens antigas mantendo o typing indicator
+                const typingIndicator = document.getElementById('typingIndicator');
+                container.innerHTML = '';
+                container.appendChild(typingIndicator);
+
+                if (msgs) {
+                    const keys = Object.keys(msgs).sort((a, b) => (msgs[a].timestamp || 0) - (msgs[b].timestamp || 0));
+                    keys.forEach(k => {
+                        const m = msgs[k];
+                        const isMe = m.uid === (user.uid || user.email);
+                        const div = document.createElement('div');
+                        div.className = 'chat-msg';
+                        const nomeClass = isProprietario(m.email) ? 'proprietario' : '';
+                        const badgeHtml = isProprietario(m.email) ?
+                            '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>' :
+                            '';
+                        const avatarHtml = m.avatar && m.avatar.startsWith('data:image') ?
+                            `<img src="${m.avatar}" />` :
+                            `<span>${(m.nome || 'U')[0].toUpperCase()}</span>`;
+                        div.innerHTML = `
+                            <div class="msg-header">
+                                <div class="msg-avatar">${avatarHtml}</div>
+                                <span class="msg-nome ${nomeClass}">${m.nome}</span>
+                                ${badgeHtml}
+                                <span class="msg-hora">${m.time || ''}</span>
+                            </div>
+                            <div class="msg-content">${m.text}</div>
+                        `;
+                        container.appendChild(div);
                     });
-                    currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
-                    profileName.textContent = currentUserDoc.nome;
-                    profileEmail.textContent = user.email;
-                    profileSince.textContent = 'hoje';
-                    profileKeys.textContent = '0';
-                    profileCompras.textContent = '0';
                 }
-                updateAvatarUI();
-            } catch (e) {
-                console.error('loadUserProfile', e);
-                showToast('Erro ao carregar perfil.');
-            }
+                container.scrollTop = container.scrollHeight;
+            });
+
+            // Typing
+            const typingRef = db.ref('typing/' + roomId);
+            typingRef.on('value', (snap) => {
+                const val = snap.val();
+                const indicator = document.getElementById('typingIndicator');
+                if (val && val.uid !== (user.uid || user.email)) {
+                    indicator.classList.add('show');
+                    document.getElementById('typingUser').textContent = val.nome || 'Alguém';
+                } else {
+                    indicator.classList.remove('show');
+                }
+            });
         }
 
-        // ============================================================
-        // UPDATE AVATAR UI
-        // ============================================================
-        function updateAvatarUI() {
-            if (!currentUserDoc) return;
-            const nome = currentUserDoc.nome || 'User';
-            if (currentUserDoc.avatar) {
-                topAvatar.src = currentUserDoc.avatar;
-                profileAvatar.src = currentUserDoc.avatar;
+        window.enviarMensagem = function() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text || !usuarioLogado || !chatRoomRef) return;
+
+            const user = usuarioLogado;
+            chatRoomRef.push({
+                uid: user.uid || user.email,
+                nome: user.nome,
+                email: user.email,
+                avatar: user.avatar || '',
+                text: text,
+                time: new Date().toLocaleTimeString('pt-BR'),
+                timestamp: Date.now()
+            });
+
+            input.value = '';
+            // Remove typing
+            const roomId = [user.uid || user.email, 'proprietario'].sort().join('_');
+            db.ref('typing/' + roomId).remove();
+
+            // Notificar proprietário
+            if (!isProprietario(user.email)) {
+                adicionarNotificacao(`💬 Nova mensagem de ${user.nome}`, 'info');
+            }
+        };
+
+        window.toggleChat = function() {
+            const chat = document.getElementById('chatWindow');
+            chat.classList.toggle('open');
+            chatAberto = chat.classList.contains('open');
+            if (chatAberto) {
+                contadorNaoLidas = 0;
+                document.getElementById('chatBadge').classList.remove('show');
+                document.getElementById('chatInput').focus();
+                const container = document.getElementById('chatMessages');
+                container.scrollTop = container.scrollHeight;
+            }
+        };
+
+        // ====== PERFIL ======
+        function carregarPerfil() {
+            const dados = localStorage.getItem('graal_usuario_logado');
+            if (dados) {
+                try {
+                    const usuario = JSON.parse(dados);
+                    usuarioLogado = usuario;
+
+                    document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
+                    document.getElementById('profileName').textContent = usuario.nome || 'Usuário';
+                    document.getElementById('profileEmail').textContent = usuario.email || 'usuario@email.com';
+                    document.getElementById('editNome').value = usuario.nome || '';
+                    document.getElementById('editEmail').value = usuario.email || '';
+                    document.getElementById('editEmail').disabled = true;
+
+                    // Avatar
+                    if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
+                        document.getElementById('avatarProfileImage').src = usuario.avatar;
+                        document.getElementById('avatarProfileImage').style.display = 'block';
+                        document.getElementById('avatarProfileText').style.display = 'none';
+                        document.getElementById('avatarText').textContent = '';
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+                    } else {
+                        const letra = (usuario.nome || 'U')[0].toUpperCase();
+                        document.getElementById('avatarProfileText').textContent = letra;
+                        document.getElementById('avatarProfileText').style.display = 'block';
+                        document.getElementById('avatarProfileImage').style.display = 'none';
+                        document.getElementById('avatarText').textContent = letra;
+                        document.querySelector('.profile-btn .avatar').innerHTML =
+                            `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                    }
+
+                    // Keys do usuário
+                    carregarKeysUsuario(usuario.email);
+
+                    // Mostrar admin se for proprietário
+                    if (isProprietario(usuario.email)) {
+                        document.getElementById('admin').style.display = 'block';
+                        carregarComprasAdmin();
+                    } else {
+                        document.getElementById('admin').style.display = 'none';
+                    }
+
+                    return true;
+                } catch (e) {
+                    console.error('Erro ao carregar perfil:', e);
+                    resetarPerfilPadrao();
+                    return false;
+                }
             } else {
-                const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=7c3aed&color=fff&size=120`;
-                topAvatar.src = fallback;
-                profileAvatar.src = fallback;
+                resetarPerfilPadrao();
+                return false;
             }
         }
 
-        // ============================================================
-        // RENDER KEYS DO USUÁRIO
-        // ============================================================
-        async function renderUserKeys(uid) {
-            try {
-                const snap = await db.collection('keys')
-                    .where('uid', '==', uid)
-                    .orderBy('dataCriacao', 'desc')
-                    .get();
-                if (snap.empty) {
-                    userKeysList.innerHTML = '<p class="text-muted">Nenhuma key encontrada.</p>';
-                    return;
-                }
-                let html = '<div style="display:flex;flex-direction:column;gap:8px;">';
-                snap.forEach(doc => {
-                    const data = doc.data();
-                    const expirada = data.dataExpiracao && data.dataExpiracao.toDate ? data.dataExpiracao.toDate() < new Date() :
-                        false;
-                    const status = data.ativa && !expirada ? 'Ativa' : 'Expirada';
-                    const cor = status === 'Ativa' ? '#22c55e' : '#ef4444';
-                    html += `
-                        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:10px 16px;border-radius:14px;border-left:3px solid ${cor};">
-                            <span><code style="background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:8px;font-size:0.85rem;">${data.key}</code></span>
-                            <span style="font-size:0.8rem;color:${cor};">${status}</span>
-                            <span style="font-size:0.7rem;color:#94a3b8;">${data.dataExpiracao ? new Date(data.dataExpiracao.seconds*1000).toLocaleDateString('pt-BR') : '---'}</span>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                userKeysList.innerHTML = html;
-            } catch (e) {
-                console.error('renderUserKeys', e);
-            }
+        function resetarPerfilPadrao() {
+            document.getElementById('userDisplay').textContent = 'Entrar';
+            document.getElementById('profileName').textContent = 'Usuário';
+            document.getElementById('profileEmail').textContent = 'usuario@email.com';
+            document.getElementById('avatarText').textContent = 'G';
+            document.getElementById('avatarProfileText').textContent = 'G';
+            document.querySelector('.profile-btn .avatar').innerHTML =
+                '<span class="avatar-letter" id="avatarText">G</span>';
+            document.getElementById('avatarProfileImage').style.display = 'none';
+            document.getElementById('avatarProfileText').style.display = 'block';
+            document.getElementById('editNome').value = '';
+            document.getElementById('editEmail').value = '';
+            document.getElementById('admin').style.display = 'none';
         }
 
-        // ============================================================
-        // EDIÇÃO DE PERFIL (nome, senha, avatar) - CORRIGIDO
-        // ============================================================
-        editProfileBtn.addEventListener('click', () => {
-            editNameCard.classList.toggle('hidden');
-            if (!editNameCard.classList.contains('hidden')) {
-                editNameInput.value = currentUserDoc?.nome || '';
-            }
-        });
-        cancelEditName.addEventListener('click', () => editNameCard.classList.add('hidden'));
-
-        saveNameBtn.addEventListener('click', async () => {
-            const novo = editNameInput.value.trim();
-            if (!novo) {
-                showToast('Digite um nome válido.');
-                return;
-            }
-            if (!currentUser) {
-                showToast('Usuário não autenticado.');
-                return;
-            }
-
-            saveNameBtn.disabled = true;
-            saveNameBtn.innerHTML = '<span class="loading-spinner"></span> Salvando...';
-
-            try {
-                await db.collection('users').doc(currentUser.uid).update({ nome: novo });
-                currentUserDoc.nome = novo;
-                profileName.textContent = novo;
-                await currentUser.updateProfile({ displayName: novo });
-
-                if (!currentUserDoc.avatar) {
-                    const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(novo)}&background=7c3aed&color=fff&size=120`;
-                    topAvatar.src = fallback;
-                    profileAvatar.src = fallback;
-                }
-
-                editNameCard.classList.add('hidden');
-                showToast('✅ Nome atualizado com sucesso!');
-
-            } catch (error) {
-                console.error('Erro ao atualizar nome:', error);
-                showToast('❌ Erro ao atualizar nome: ' + error.message);
-            } finally {
-                saveNameBtn.disabled = false;
-                saveNameBtn.innerHTML = '<i class="fas fa-save"></i> Salvar';
-            }
-        });
-
-        changePassBtn.addEventListener('click', () => {
-            changePassCard.classList.toggle('hidden');
-            if (!changePassCard.classList.contains('hidden')) {
-                newPassInput.value = '';
-                confirmPassInput.value = '';
-            }
-        });
-        cancelPass.addEventListener('click', () => changePassCard.classList.add('hidden'));
-
-        savePassBtn.addEventListener('click', async () => {
-            const nova = newPassInput.value;
-            const conf = confirmPassInput.value;
-            if (nova.length < 6) { showToast('Senha deve ter no mínimo 6 caracteres.'); return; }
-            if (nova !== conf) { showToast('As senhas não coincidem.'); return; }
-            try {
-                await currentUser.updatePassword(nova);
-                changePassCard.classList.add('hidden');
-                showToast('Senha alterada com sucesso!');
-            } catch (e) {
-                showToast('Erro: ' + e.message);
-            }
-        });
-
-        // Avatar upload - CORRIGIDO
-        avatarOverlay.addEventListener('click', () => avatarInput.click());
-        avatarInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
+        window.uploadAvatar = function(event) {
+            const file = event.target.files[0];
             if (!file) return;
-            try {
-                showToast('Enviando foto...');
-                const ref = storage.ref(`avatars/${currentUser.uid}`);
-                await ref.put(file);
-                const url = await ref.getDownloadURL();
-                await db.collection('users').doc(currentUser.uid).update({ avatar: url });
-                currentUserDoc.avatar = url;
-                topAvatar.src = url;
-                profileAvatar.src = url;
-                showToast('✅ Avatar atualizado!');
-            } catch (err) {
-                console.error('Upload avatar error:', err);
-                showToast('❌ Erro no upload: ' + err.message);
-            }
-            avatarInput.value = '';
-        });
-
-        // ============================================================
-        // COMPRAS (formulário) - COM ENVIO DE E-MAIL
-        // ============================================================
-        compraComprovante.addEventListener('change', () => {
-            const file = compraComprovante.files[0];
-            fileChosen.textContent = file ? file.name : 'Nenhum arquivo selecionado';
-        });
-
-        compraForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (isSending) return;
-            const nome = document.getElementById('compraNome').value.trim();
-            const email = document.getElementById('compraEmail').value.trim();
-            const plano = document.getElementById('compraPlano').value;
-            const file = compraComprovante.files[0];
-            if (!nome || !email || !file) {
-                compraFeedback.textContent = 'Preencha todos os campos e anexe o comprovante.';
+            if (!file.type.startsWith('image/')) {
+                alert('📷 Por favor, selecione uma imagem.');
                 return;
             }
-            isSending = true;
-            submitCompraBtn.disabled = true;
-            submitCompraBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
-            compraFeedback.textContent = '';
+            if (file.size > 2 * 1024 * 1024) {
+                alert('📷 A imagem deve ter no máximo 2MB.');
+                event.target.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imagem = e.target.result;
+                const usuario = JSON.parse(localStorage.getItem('graal_usuario_logado'));
+                if (usuario) {
+                    usuario.avatar = imagem;
+                    localStorage.setItem('graal_usuario_logado', JSON.stringify(usuario));
+
+                    const usuarios = JSON.parse(localStorage.getItem('graal_usuarios') || '[]');
+                    const idx = usuarios.findIndex(u => u.email === usuario.email);
+                    if (idx !== -1) {
+                        usuarios[idx].avatar = imagem;
+                        localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
+                    }
+
+                    carregarPerfil();
+                    alert('📷 Foto de perfil atualizada com sucesso!');
+                }
+            };
+            reader.readAsDataURL(file);
+            event.target.value = '';
+        };
+
+        window.editarPerfil = function(event) {
+            if (event) event.preventDefault();
+            const area = document.getElementById('editProfileArea');
+            area.style.display = 'block';
+            const usuario = JSON.parse(localStorage.getItem('graal_usuario_logado'));
+            if (usuario) {
+                document.getElementById('editNome').value = usuario.nome || '';
+                document.getElementById('editEmail').value = usuario.email || '';
+                document.getElementById('editEmail').disabled = true;
+            }
+        };
+
+        window.cancelarEdicaoPerfil = function() {
+            document.getElementById('editProfileArea').style.display = 'none';
+        };
+
+        window.salvarEdicaoPerfil = function() {
+            const nome = document.getElementById('editNome').value.trim();
+            if (!nome) {
+                alert('📝 Digite um nome válido.');
+                return;
+            }
+
+            const dados = localStorage.getItem('graal_usuario_logado');
+            if (!dados) {
+                alert('❌ Nenhum usuário logado.');
+                return;
+            }
 
             try {
-                // 1. Upload do comprovante
-                const ref = storage.ref(`comprovantes/${Date.now()}_${file.name}`);
-                await ref.put(file);
-                const comprovanteUrl = await ref.getDownloadURL();
+                const usuario = JSON.parse(dados);
+                const emailAntigo = usuario.email;
 
-                // 2. Salvar no Firestore
-                await db.collection('compras').add({
-                    uid: currentUser.uid,
-                    nome,
-                    email,
-                    plano,
-                    comprovante: comprovanteUrl,
-                    status: 'pendente',
-                    data: firebase.firestore.FieldValue.serverTimestamp(),
-                    key: null,
-                    dataExpiracao: null
-                });
+                usuario.nome = nome;
+                localStorage.setItem('graal_usuario_logado', JSON.stringify(usuario));
 
-                // 3. ENVIAR E-MAIL via FormSubmit
-                const formData = new FormData();
-                formData.append('_subject', '📦 Nova Compra - Graal Online');
-                formData.append('_captcha', 'false');
-                formData.append('_template', 'table');
-                formData.append('Nome', nome);
-                formData.append('E-mail', email);
-                formData.append('Plano', plano);
-                formData.append('Comprovante', comprovanteUrl);
+                const usuarios = JSON.parse(localStorage.getItem('graal_usuarios') || '[]');
+                const idx = usuarios.findIndex(u => u.email === emailAntigo);
+                if (idx !== -1) {
+                    usuarios[idx].nome = nome;
+                    localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
+                }
 
-                await fetch('https://formsubmit.co/ajax/gabriel6061yt@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                });
+                document.getElementById('userDisplay').textContent = nome;
+                document.getElementById('profileName').textContent = nome;
 
-                compraFeedback.innerHTML = '<span style="color:#22c55e;">✅ Pedido enviado com sucesso! Você receberá um e-mail de confirmação em breve.</span>';
-                compraForm.reset();
-                fileChosen.textContent = 'Nenhum arquivo selecionado';
-                showToast('✅ Pedido enviado!');
+                if (!usuario.avatar) {
+                    const letra = nome[0].toUpperCase();
+                    document.getElementById('avatarText').textContent = letra;
+                    document.getElementById('avatarProfileText').textContent = letra;
+                    document.querySelector('.profile-btn .avatar').innerHTML =
+                        `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+                }
 
-                // Notificar proprietário
-                await db.collection('notificacoes').add({
-                    uid: 'proprietario',
-                    mensagem: `Nova compra de ${nome} (${email}) - Plano ${plano}`,
-                    lida: false,
-                    data: firebase.firestore.FieldValue.serverTimestamp(),
-                    tipo: 'compra'
-                });
-
-            } catch (err) {
-                console.error('Erro no pedido:', err);
-                compraFeedback.textContent = '❌ Erro: ' + err.message;
-                showToast('❌ Erro ao enviar pedido.');
-            } finally {
-                isSending = false;
-                submitCompraBtn.disabled = false;
-                submitCompraBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
+                usuarioLogado = usuario;
+                document.getElementById('editProfileArea').style.display = 'none';
+                alert('✅ Perfil atualizado com sucesso!');
+            } catch (e) {
+                console.error('Erro ao salvar edição:', e);
+                alert('❌ Erro ao salvar perfil. Tente novamente.');
             }
-        });
+        };
 
-        // ============================================================
-        // ADMIN - CARREGAR COMPRAS
-        // ============================================================
-        function loadAdminCompras() {
+        window.abrirPerfil = function() {
+            const dados = localStorage.getItem('graal_usuario_logado');
+            if (dados) {
+                window.location.href = '#perfil';
+                setTimeout(carregarPerfil, 100);
+            } else {
+                document.getElementById('welcomeOverlay').classList.remove('hidden');
+            }
+        };
+
+        // ====== KEYS DO USUÁRIO ======
+        function carregarKeysUsuario(email) {
+            // Busca keys no Firestore
+            firestore.collection('keys')
+                .where('email', '==', email)
+                .orderBy('dataCriacao', 'desc')
+                .get()
+                .then(snap => {
+                    const list = document.getElementById('userKeysList');
+                    if (snap.empty) {
+                        list.innerHTML = '<p style="color:var(--text-muted);font-size:0.85rem;">Nenhuma key ativa.</p>';
+                        document.getElementById('profileKeys').textContent = '0';
+                        return;
+                    }
+                    let html = '';
+                    let ativas = 0;
+                    snap.forEach(doc => {
+                        const data = doc.data();
+                        const expirada = data.dataExpiracao && data.dataExpiracao.toDate ? data.dataExpiracao
+                            .toDate() < new Date() : false;
+                        const status = data.ativa && !expirada ? 'Ativa' : 'Expirada';
+                        const cor = status === 'Ativa' ? '#22c55e' : '#ef4444';
+                        if (status === 'Ativa') ativas++;
+                        html += `
+                            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:8px 14px;border-radius:10px;border-left:3px solid ${cor};margin-bottom:4px;">
+                                <span><code style="background:rgba(255,255,255,0.05);padding:2px 8px;border-radius:6px;font-size:0.8rem;">${data.key}</code></span>
+                                <span style="font-size:0.75rem;color:${cor};">${status}</span>
+                                <span style="font-size:0.65rem;color:var(--text-muted);">${data.dataExpiracao ? new Date(data.dataExpiracao.seconds*1000).toLocaleDateString('pt-BR') : '---'}</span>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('profileKeys').textContent = ativas;
+                    list.innerHTML = html;
+                })
+                .catch(err => {
+                    console.error('Erro ao carregar keys:', err);
+                });
+        }
+
+        // ====== COMPRAS ADMIN ======
+        function carregarComprasAdmin() {
             if (unsubscribeCompras) unsubscribeCompras();
-            unsubscribeCompras = db.collection('compras')
+
+            unsubscribeCompras = firestore.collection('compras')
                 .orderBy('data', 'desc')
                 .onSnapshot(snapshot => {
-                    renderAdminTable(snapshot);
+                    renderizarComprasAdmin(snapshot);
                 }, err => {
-                    console.error('admin snapshot error', err);
+                    console.error('Erro ao carregar compras:', err);
                 });
         }
 
-        function renderAdminTable(snapshot) {
-            const searchTerm = adminSearch.value.toLowerCase();
+        function renderizarComprasAdmin(snapshot) {
+            const searchTerm = document.getElementById('adminSearch').value.toLowerCase();
             let html = '';
             let pendentes = 0;
+
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const id = doc.id;
                 if (data.status === 'pendente') pendentes++;
+
                 const nome = data.nome || '';
                 const email = data.email || '';
-                if (searchTerm && !nome.toLowerCase().includes(searchTerm) && !email.toLowerCase().includes(searchTerm))
-                    return;
+                if (searchTerm && !nome.toLowerCase().includes(searchTerm) && !email.toLowerCase().includes(
+                    searchTerm)) return;
+
                 const statusClass = data.status === 'pendente' ? 'status-pendente' :
                     data.status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
                 const dataStr = data.data?.toDate ? data.data.toDate().toLocaleDateString('pt-BR') : '---';
                 const keyDisplay = data.key ? `<code style="font-size:0.7rem;">${data.key}</code>` :
-                '<span class="text-muted">—</span>';
+                    '<span class="text-muted">—</span>';
+
                 html += `
                     <tr>
                         <td>${dataStr}</td>
@@ -1505,243 +2485,378 @@
                         <td>${keyDisplay}</td>
                         <td>
                             ${data.status === 'pendente' ? `
-                                <button class="btn-sm btn-sm-aprovar" data-id="${id}" data-action="aprovar"><i class="fas fa-check"></i></button>
-                                <button class="btn-sm btn-sm-cancelar" data-id="${id}" data-action="cancelar"><i class="fas fa-times"></i></button>
+                                <button class="btn-sm btn-sm-aprovar" data-id="${id}" onclick="aprovarCompra('${id}')"><i class="fas fa-check"></i></button>
+                                <button class="btn-sm btn-sm-cancelar" data-id="${id}" onclick="cancelarCompra('${id}')"><i class="fas fa-times"></i></button>
                             ` : ''}
                             ${data.status === 'aprovado' && !data.key ? `
-                                <button class="btn-sm btn-sm-key" data-id="${id}" data-action="key"><i class="fas fa-key"></i></button>
+                                <button class="btn-sm btn-sm-key" data-id="${id}" onclick="gerarKeyAdmin('${id}')"><i class="fas fa-key"></i></button>
                             ` : ''}
                             ${data.status === 'aprovado' && data.key ? `<span style="color:#22c55e;"><i class="fas fa-check-circle"></i></span>` : ''}
                         </td>
                     </tr>
                 `;
             });
-            pendingCount.textContent = pendentes;
+
+            document.getElementById('pendingCount').textContent = pendentes;
+
             if (!html) {
                 html =
                     `<tr><td colspan="7" class="text-muted text-center">${snapshot.empty ? 'Nenhuma compra encontrada.' : 'Nenhum resultado para o filtro.'}</td></tr>`;
             }
-            adminTableBody.innerHTML = html;
+            document.getElementById('adminTableBody').innerHTML = html;
+        }
 
-            document.querySelectorAll('.admin-table .btn-sm').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const id = btn.dataset.id;
-                    const action = btn.dataset.action;
-                    if (!id) return;
-                    if (action === 'aprovar') {
-                        if (!confirm('Aprovar esta compra?')) return;
-                        await db.collection('compras').doc(id).update({ status: 'aprovado' });
-                        showToast('✅ Compra aprovada!');
-                    } else if (action === 'cancelar') {
-                        if (!confirm('Cancelar esta compra?')) return;
-                        await db.collection('compras').doc(id).update({ status: 'cancelado' });
-                        showToast('❌ Compra cancelada.');
-                    } else if (action === 'key') {
-                        if (!confirm('Gerar e enviar key para este usuário?')) return;
-                        await gerarKey(id);
+        window.aprovarCompra = function(id) {
+            if (!confirm('✅ Aprovar esta compra?')) return;
+            firestore.collection('compras').doc(id).update({ status: 'aprovado' })
+                .then(() => {
+                    alert('✅ Compra aprovada!');
+                    adicionarNotificacao('✅ Compra aprovada!', 'sucesso');
+                })
+                .catch(err => alert('❌ Erro: ' + err.message));
+        };
+
+        window.cancelarCompra = function(id) {
+            if (!confirm('❌ Cancelar esta compra?')) return;
+            firestore.collection('compras').doc(id).update({ status: 'cancelado' })
+                .then(() => {
+                    alert('❌ Compra cancelada.');
+                    adicionarNotificacao('❌ Compra cancelada.', 'alerta');
+                })
+                .catch(err => alert('❌ Erro: ' + err.message));
+        };
+
+        window.gerarKeyAdmin = function(id) {
+            if (!confirm('🔑 Gerar e enviar key para este usuário?')) return;
+
+            firestore.collection('compras').doc(id).get()
+                .then(doc => {
+                    if (!doc.exists) throw new Error('Compra não encontrada.');
+                    const data = doc.data();
+                    if (data.key) {
+                        alert('Este pedido já possui key.');
+                        return;
+                    }
+
+                    const key = 'GRAAL-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                    const expiracao = new Date();
+                    expiracao.setHours(expiracao.getHours() + 24);
+
+                    return firestore.collection('keys').add({
+                        uid: data.uid || data.email,
+                        email: data.email,
+                        nome: data.nome,
+                        key: key,
+                        dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
+                        dataExpiracao: expiracao,
+                        ativa: true,
+                        compraId: id
+                    }).then(() => {
+                        return firestore.collection('compras').doc(id).update({
+                            key: key,
+                            dataExpiracao: expiracao,
+                            status: 'aprovado'
+                        });
+                    }).then(() => {
+                        alert(`🔑 Key ${key} gerada com sucesso!`);
+                        adicionarNotificacao(`🔑 Key gerada: ${key}`, 'sucesso');
+                        // Notificar usuário
+                        if (data.email) {
+                            adicionarNotificacao(`🔑 Nova key gerada para ${data.nome}`, 'info');
+                        }
+                    });
+                })
+                .catch(err => alert('❌ Erro ao gerar key: ' + err.message));
+        };
+
+        // ====== LOGIN / REGISTRO ======
+        function setLoggedIn() {
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+            document.getElementById('chatToggleBtn').style.display = 'flex';
+            document.getElementById('chatWindow').classList.add('open');
+            chatAberto = true;
+
+            carregarPerfil();
+
+            if (usuarioLogado) {
+                setupChat(usuarioLogado);
+                // Atualiza status online
+                const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
+                '_')));
+                userRef.set({
+                    nome: usuarioLogado.nome,
+                    email: usuarioLogado.email,
+                    avatar: usuarioLogado.avatar || '',
+                    online: true,
+                    ultimo: Date.now()
+                });
+                window.addEventListener('beforeunload', () => userRef.remove());
+            }
+        }
+
+        window.fazerLogin = function() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value.trim();
+            const status = document.getElementById('loginStatus');
+
+            if (!email || !senha) {
+                status.className = 'form-status error';
+                status.textContent = '📝 Preencha todos os campos.';
+                return;
+            }
+
+            const usuario = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
+            if (!usuario) {
+                status.className = 'form-status error';
+                status.textContent = '❌ E-mail ou senha incorretos.';
+                return;
+            }
+
+            usuarioLogado = { nome: usuario.nome, email: usuario.email, avatar: usuario.avatar || null };
+            localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
+            setLoggedIn();
+            status.className = 'form-status success';
+            status.textContent = '✅ Login realizado! Bem-vindo ' + usuario.nome;
+        };
+
+        window.fazerRegistro = function() {
+            const nome = document.getElementById('registroNome').value.trim();
+            const email = document.getElementById('registroEmail').value.trim();
+            const senha = document.getElementById('registroSenha').value.trim();
+            const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
+            const status = document.getElementById('registroStatus');
+
+            if (!nome || !email || !senha || !confirmar) {
+                status.className = 'form-status error';
+                status.textContent = '📝 Preencha todos os campos.';
+                return;
+            }
+
+            if (senha.length < 6) {
+                status.className = 'form-status error';
+                status.textContent = '🔒 A senha deve ter no mínimo 6 caracteres.';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                status.className = 'form-status error';
+                status.textContent = '🔒 As senhas não coincidem.';
+                return;
+            }
+
+            if (usuariosCadastrados.find(u => u.email === email)) {
+                status.className = 'form-status error';
+                status.textContent = '📧 Este e-mail já está cadastrado.';
+                return;
+            }
+
+            usuariosCadastrados.push({ nome, email, senha });
+            salvarUsuarios();
+
+            status.className = 'form-status success';
+            status.textContent = '✅ Conta criada! Faça login.';
+
+            document.getElementById('registroNome').value = '';
+            document.getElementById('registroEmail').value = '';
+            document.getElementById('registroSenha').value = '';
+            document.getElementById('registroConfirmarSenha').value = '';
+
+            setTimeout(() => {
+                trocarLoginTab('login');
+                document.getElementById('loginEmail').value = email;
+                status.style.display = 'none';
+            }, 1500);
+        };
+
+        window.trocarLoginTab = function(tab) {
+            const loginBtn = document.getElementById('loginTabBtn');
+            const registroBtn = document.getElementById('registroTabBtn');
+            const loginForm = document.getElementById('loginForm');
+            const registroForm = document.getElementById('registroForm');
+
+            if (tab === 'login') {
+                loginBtn.classList.add('active');
+                registroBtn.classList.remove('active');
+                loginForm.style.display = 'block';
+                registroForm.style.display = 'none';
+            } else {
+                registroBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+                registroForm.style.display = 'block';
+                loginForm.style.display = 'none';
+            }
+        };
+
+        window.logout = function() {
+            if (!confirm('Tem certeza que deseja sair?')) return;
+            if (usuarioLogado) {
+                const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
+                    '_')));
+                userRef.remove();
+                if (chatRoomRef) chatRoomRef.off();
+            }
+            localStorage.removeItem('graal_usuario_logado');
+            usuarioLogado = null;
+            document.getElementById('welcomeOverlay').classList.remove('hidden');
+            document.getElementById('chatToggleBtn').style.display = 'none';
+            document.getElementById('chatWindow').classList.remove('open');
+            chatAberto = false;
+            resetarPerfilPadrao();
+            alert('👋 Você saiu da sua conta.');
+        };
+
+        // ====== NOTIFICAÇÕES ======
+        function carregarNotificacoes() {
+            try {
+                const n = localStorage.getItem('graal_notificacoes');
+                notificacoes = n ? JSON.parse(n) : [];
+            } catch (e) {
+                notificacoes = [];
+            }
+        }
+
+        function salvarNotificacoes() {
+            localStorage.setItem('graal_notificacoes', JSON.stringify(notificacoes));
+        }
+
+        function adicionarNotificacao(mensagem, tipo = 'info') {
+            const icones = { compra: '📦', pagamento: '💰', sucesso: '✅', info: 'ℹ️', alerta: '⚠️' };
+            notificacoes.unshift({
+                id: Date.now(),
+                mensagem: `${icones[tipo] || 'ℹ️'} ${mensagem}`,
+                data: new Date().toLocaleString('pt-BR'),
+                lida: false,
+                tipo: tipo
+            });
+            if (notificacoes.length > 50) notificacoes.pop();
+            salvarNotificacoes();
+            atualizarBadgeNotificacoes();
+            renderizarNotificacoes();
+            playNotificationSound();
+        }
+
+        window.toggleNotificacoes = function() {
+            const dropdown = document.getElementById('notifDropdown');
+            dropdown.classList.toggle('open');
+            if (dropdown.classList.contains('open')) {
+                notificacoes.forEach(n => n.lida = true);
+                salvarNotificacoes();
+                atualizarBadgeNotificacoes();
+                renderizarNotificacoes();
+            }
+        };
+
+        function atualizarBadgeNotificacoes() {
+            const naoLidas = notificacoes.filter(n => !n.lida).length;
+            const badge = document.getElementById('notifBadge');
+            if (naoLidas > 0) {
+                badge.textContent = naoLidas;
+                badge.classList.add('show');
+            } else {
+                badge.classList.remove('show');
+            }
+        }
+
+        function renderizarNotificacoes() {
+            const list = document.getElementById('notifList');
+            if (notificacoes.length === 0) {
+                list.innerHTML =
+                    `<div class="empty-state"><i class="fas fa-bell-slash"></i>Nenhuma notificação</div>`;
+                return;
+            }
+            list.innerHTML = notificacoes.map(n => `
+                <div class="dropdown-item ${n.lida ? '' : 'unread'}">
+                    <span class="item-text">${n.mensagem}</span>
+                    <span class="item-time">${n.data}</span>
+                </div>
+            `).join('');
+        }
+
+        window.marcarTodasNotificacoesLidas = function() {
+            notificacoes.forEach(n => n.lida = true);
+            salvarNotificacoes();
+            atualizarBadgeNotificacoes();
+            renderizarNotificacoes();
+        };
+
+        // ====== INICIALIZAÇÃO ======
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileToggle = document.getElementById('mobileMenu');
+            const navMenuMobile = document.getElementById('navMenuMobile');
+
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    navMenuMobile.classList.toggle('open');
+                });
+            }
+
+            document.addEventListener('click', function(e) {
+                if (navMenuMobile && !e.target.closest('.nav-container') && !e.target.closest('#navMenuMobile')) {
+                    navMenuMobile.classList.remove('open');
+                }
+            });
+
+            document.querySelectorAll('#navMenuMobile a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenuMobile.classList.remove('open');
+                });
+            });
+
+            // Chat input
+            const input = document.getElementById('chatInput');
+            if (input) {
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        window.enviarMensagem();
+                        return;
+                    }
+
+                    if (usuarioLogado && e.key !== 'Enter') {
+                        const roomId = [usuarioLogado.uid || usuarioLogado.email, 'proprietario'].sort().join('_');
+                        const typingRef = db.ref('typing/' + roomId);
+                        typingRef.set({
+                            uid: usuarioLogado.uid || usuarioLogado.email,
+                            nome: usuarioLogado.nome,
+                            timestamp: Date.now()
+                        });
+                        clearTimeout(typingTimeout);
+                        typingTimeout = setTimeout(() => {
+                            typingRef.remove();
+                        }, 3000);
                     }
                 });
-            });
-        }
-
-        // ============================================================
-        // GERAR KEY
-        // ============================================================
-        async function gerarKey(compraId) {
-            try {
-                const docRef = db.collection('compras').doc(compraId);
-                const doc = await docRef.get();
-                if (!doc.exists) return;
-                const data = doc.data();
-                if (data.key) { showToast('Este pedido já possui key.'); return; }
-                const key = 'KZN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
-                const expiracao = new Date();
-                expiracao.setHours(expiracao.getHours() + 24);
-
-                await db.collection('keys').add({
-                    uid: data.uid,
-                    key: key,
-                    dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
-                    dataExpiracao: expiracao,
-                    ativa: true,
-                    compraId: compraId
-                });
-                await docRef.update({ key: key, dataExpiracao: expiracao, status: 'aprovado' });
-
-                await db.collection('notificacoes').add({
-                    uid: data.uid,
-                    mensagem: `🔑 Sua key foi gerada: ${key}`,
-                    lida: false,
-                    data: firebase.firestore.FieldValue.serverTimestamp(),
-                    tipo: 'key'
-                });
-
-                showToast(`🔑 Key ${key} gerada com sucesso!`);
-            } catch (e) {
-                showToast('❌ Erro ao gerar key: ' + e.message);
             }
-        }
 
-        // ============================================================
-        // NOTIFICAÇÕES
-        // ============================================================
-        function loadNotificacoes(uid) {
-            if (unsubscribeNotifs) unsubscribeNotifs();
-            unsubscribeNotifs = db.collection('notificacoes')
-                .where('uid', '==', uid)
-                .orderBy('data', 'desc')
-                .limit(30)
-                .onSnapshot(snap => {
-                    let count = 0;
-                    let html = '';
-                    snap.forEach(doc => {
-                        const n = doc.data();
-                        if (!n.lida) count++;
-                        const time = n.data?.toDate ? n.data.toDate().toLocaleString('pt-BR') : '';
-                        const lidaClass = n.lida ? 'lida' : '';
-                        html += `
-                            <div class="notif-item ${lidaClass}">
-                                <div class="notif-icon"><i class="fas fa-${n.tipo === 'key' ? 'key' : n.tipo === 'compra' ? 'shopping-cart' : 'bell'}"></i></div>
-                                <div class="notif-text">${n.mensagem} <span class="notif-time">${time}</span></div>
-                            </div>
-                        `;
-                    });
-                    if (!html) html = '<div class="notif-empty">Nenhuma notificação</div>';
-                    notifList.innerHTML = html;
-                    notifBadge.textContent = count;
-                    notifBadge.style.display = count > 0 ? 'flex' : 'none';
-                }, err => console.error('notif error', err));
-        }
-
-        notifBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notifDropdown.classList.toggle('open');
-        });
-        document.addEventListener('click', () => notifDropdown.classList.remove('open'));
-
-        // ============================================================
-        // CHAT (Realtime Database)
-        // ============================================================
-        function setupChat(user) {
-            if (chatRoomRef) chatRoomRef.off();
-            const roomId = [user.uid, 'proprietario'].sort().join('_');
-            chatRoomRef = rtdb.ref('chats/' + roomId);
-
-            chatRoomRef.limitToLast(50).on('value', (snap) => {
-                const msgs = snap.val();
-                chatMessages.innerHTML = '';
-                if (msgs) {
-                    const keys = Object.keys(msgs).sort((a, b) => (msgs[a].timestamp || 0) - (msgs[b].timestamp || 0));
-                    keys.forEach(k => {
-                        const m = msgs[k];
-                        const isMe = m.uid === user.uid;
-                        const div = document.createElement('div');
-                        div.className = `msg ${isMe ? 'me' : 'other'}`;
-                        div.innerHTML = `${m.text} <span class="time">${m.time || ''}</span>`;
-                        chatMessages.appendChild(div);
-                    });
-                }
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            });
-
-            const typingRef = rtdb.ref('typing/' + roomId);
-            typingRef.on('value', (snap) => {
-                const val = snap.val();
-                if (val && val.uid !== user.uid) {
-                    typingIndicator.textContent = 'Alguém está digitando...';
-                } else {
-                    typingIndicator.textContent = '';
+            // Admin search
+            document.getElementById('adminSearch').addEventListener('input', function() {
+                if (unsubscribeCompras) {
+                    unsubscribeCompras();
+                    carregarComprasAdmin();
                 }
             });
-        }
 
-        chatSendBtn.addEventListener('click', sendChatMessage);
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') sendChatMessage();
-            if (chatRoomRef && currentUser) {
-                const roomId = [currentUser.uid, 'proprietario'].sort().join('_');
-                const typingRef = rtdb.ref('typing/' + roomId);
-                typingRef.set({ uid: currentUser.uid, timestamp: Date.now() });
-                clearTimeout(typingTimeout);
-                typingTimeout = setTimeout(() => typingRef.remove(), 1500);
+            carregarUsuarios();
+            carregarNotificacoes();
+
+            const usuario = localStorage.getItem('graal_usuario_logado');
+            if (usuario) {
+                usuarioLogado = JSON.parse(usuario);
+                setLoggedIn();
+            } else {
+                document.getElementById('welcomeOverlay').classList.remove('hidden');
+                document.getElementById('chatWindow').classList.remove('open');
+                document.getElementById('chatToggleBtn').style.display = 'none';
             }
+
+            // Notificações iniciais
+            if (notificacoes.length === 0) {
+                adicionarNotificacao('🎮 Bem-vindo ao Graal Online! Confira nossos mods.', 'info');
+            }
+
+            console.log('🚀 Graal Online carregado com sucesso!');
+            console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
         });
-
-        async function sendChatMessage() {
-            const text = chatInput.value.trim();
-            if (!text || !currentUser || !chatRoomRef) return;
-            chatInput.value = '';
-            try {
-                await chatRoomRef.push({
-                    uid: currentUser.uid,
-                    text: text,
-                    time: new Date().toLocaleTimeString('pt-BR'),
-                    timestamp: Date.now()
-                });
-                if (currentUser.email !== PROPR_EMAIL) {
-                    await db.collection('notificacoes').add({
-                        uid: 'proprietario',
-                        mensagem: `💬 Nova mensagem de ${currentUserDoc?.nome || currentUser.email}`,
-                        lida: false,
-                        data: firebase.firestore.FieldValue.serverTimestamp(),
-                        tipo: 'chat'
-                    });
-                }
-            } catch (e) {
-                showToast('Erro ao enviar mensagem.');
-            }
-        }
-
-        // ============================================================
-        // LOGOUT
-        // ============================================================
-        logoutBtn.addEventListener('click', async () => {
-            if (confirm('Deseja sair?')) {
-                try {
-                    await auth.signOut();
-                    showToast('Deslogado.');
-                } catch (e) {
-                    showToast('Erro ao sair.');
-                }
-            }
-        });
-
-        // ============================================================
-        // ADMIN SEARCH & REFRESH
-        // ============================================================
-        adminSearch.addEventListener('input', () => {
-            if (unsubscribeCompras) {
-                unsubscribeCompras();
-                loadAdminCompras();
-            }
-        });
-        refreshAdminBtn.addEventListener('click', () => {
-            if (unsubscribeCompras) {
-                unsubscribeCompras();
-                loadAdminCompras();
-                showToast('Atualizado!');
-            }
-        });
-
-        // ============================================================
-        // SETUP LISTENERS
-        // ============================================================
-        function setupRealtimeListeners(user) {
-            // Escuta mudanças no perfil para atualizar UI
-            db.collection('users').doc(user.uid).onSnapshot((doc) => {
-                if (doc.exists) {
-                    currentUserDoc = doc.data();
-                    profileName.textContent = currentUserDoc.nome || 'Usuário';
-                    updateAvatarUI();
-                    renderUserKeys(user.uid);
-                }
-            });
-        }
-
-        // ============================================================
-        // INICIAR
-        // ============================================================
-        console.log('🚀 Graal Online Classic Test Beta - carregado com sucesso!');
     </script>
 
 </body>
