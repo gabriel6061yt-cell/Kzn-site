@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -10,6 +9,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <style>
+        /* (mesmo CSS que você já tem, pode manter igual) */
         * {
             margin: 0;
             padding: 0;
@@ -297,6 +297,18 @@
             display: block;
             margin-bottom: 1rem;
             opacity: 0.3;
+        }
+
+        .info-aguardando {
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid #7c3aed;
+            border-radius: 10px;
+            padding: 0.6rem 1rem;
+            font-size: 0.8rem;
+            color: #a78bfa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* MODAL ENVIAR KEY */
@@ -637,6 +649,11 @@
                 </div>
             </div>
 
+            <!-- Info: quantidade de compras aguardando -->
+            <div class="info-aguardando" id="infoAguardando">
+                <i class="fas fa-clock"></i> <span id="contAguardando">0</span> compra(s) aguardando Key.
+            </div>
+
             <!-- Lista de Compras -->
             <div class="compras-lista" id="comprasList">
                 <div class="empty-state">
@@ -748,7 +765,6 @@
                     } catch (e) {}
                 }
 
-                // Fallback: verificar login do site
                 const siteUser = localStorage.getItem('kzn_usuario_logado');
                 if (siteUser) {
                     try {
@@ -765,7 +781,6 @@
                     } catch (e) {}
                 }
 
-                // Tentar autenticar com Firebase
                 auth.onAuthStateChanged((user) => {
                     if (user && user.email === PROPRIETARIO_EMAIL) {
                         usuarioAtual = {
@@ -779,7 +794,6 @@
                         avatar.textContent = (usuarioAtual.nome || 'P')[0].toUpperCase();
                         resolve(true);
                     } else {
-                        // Se não estiver autenticado, redirecionar para login
                         if (!user) {
                             window.location.href = '/';
                         } else {
@@ -810,14 +824,12 @@
                 Object.keys(dados).forEach(key => {
                     const compra = dados[key];
                     compra.id = key;
-                    // Buscar dados do usuário
                     if (compra.userId) {
                         const userRef = db.ref('usuarios/' + compra.userId);
                         userRef.once('value', (userSnap) => {
                             const userData = userSnap.val() || {};
                             compra.usuario = userData;
                             compra.usuarioId = compra.userId;
-                            // Recarregar lista depois de buscar o usuário
                             renderizarCompras();
                         });
                     } else {
@@ -825,7 +837,6 @@
                         compras.push(compra);
                     }
                 });
-                // Se não tiver usuários, renderizar direto
                 setTimeout(() => {
                     renderizarCompras();
                 }, 500);
@@ -836,10 +847,7 @@
         function renderizarCompras() {
             const container = document.getElementById('comprasList');
             const filtrados = compras.filter(compra => {
-                // Filtro de status
                 if (filtroStatus !== 'todos' && compra.status !== filtroStatus) return false;
-
-                // Filtro de busca
                 if (termoBusca) {
                     const busca = termoBusca.toLowerCase();
                     const nome = (compra.usuario?.nome || '').toLowerCase();
@@ -847,9 +855,12 @@
                     const produto = (compra.produto || '').toLowerCase();
                     if (!nome.includes(busca) && !email.includes(busca) && !produto.includes(busca)) return false;
                 }
-
                 return true;
             });
+
+            // Atualizar contador de aguardando
+            const aguardando = compras.filter(c => c.status === 'aguardando' && (!c.key || c.key.trim() === ''));
+            document.getElementById('contAguardando').textContent = aguardando.length;
 
             if (filtrados.length === 0) {
                 container.innerHTML = `
@@ -873,6 +884,7 @@
                 const horaCompra = compra.hora || '--:--';
 
                 const keyEnviada = compra.key && compra.key.trim() !== '';
+                const podeEnviar = !keyEnviada && compra.status !== 'cancelado' && compra.status !== 'enviado';
 
                 return `
                     <div class="compra-card" onclick="selecionarCompra('${compra.id}')">
@@ -885,8 +897,9 @@
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                             <span class="status-badge ${statusClass}">${statusLabel}</span>
-                            ${!keyEnviada ? `<button class="btn-key" onclick="event.stopPropagation(); abrirModalKey('${compra.id}')"><i class="fas fa-paper-plane"></i> Enviar Key</button>` : ''}
+                            ${podeEnviar ? `<button class="btn-key" onclick="event.stopPropagation(); abrirModalKey('${compra.id}')"><i class="fas fa-paper-plane"></i> Enviar Key</button>` : ''}
                             ${keyEnviada ? `<span style="font-size:0.65rem;color:#22c55e;"><i class="fas fa-check"></i> Enviada em ${compra.dataEnvio ? new Date(compra.dataEnvio).toLocaleString('pt-BR') : ''}</span>` : ''}
+                            ${compra.status === 'cancelado' ? `<span style="font-size:0.65rem;color:#ef4444;"><i class="fas fa-ban"></i> Cancelada</span>` : ''}
                         </div>
                     </div>
                 `;
@@ -915,8 +928,8 @@
                 return;
             }
 
-            if (compra.status === 'cancelado') {
-                showToast('Esta compra está cancelada.', 'error');
+            if (compra.status === 'cancelado' || compra.status === 'enviado') {
+                showToast('Esta compra não pode receber Key.', 'error');
                 return;
             }
 
@@ -951,26 +964,25 @@
 
             if (!key) {
                 statusMsg.className = 'status-msg error';
-                statusMsg.textContent = ' Digite a Key antes de enviar.';
+                statusMsg.textContent = '⚠️ Digite a Key antes de enviar.';
                 return;
             }
 
             if (!compraSelecionada) {
                 statusMsg.className = 'status-msg error';
-                statusMsg.textContent = ' Nenhuma compra selecionada.';
+                statusMsg.textContent = '❌ Nenhuma compra selecionada.';
                 return;
             }
 
-            if (compraSelecionada.status === 'cancelado') {
+            if (compraSelecionada.status === 'cancelado' || compraSelecionada.status === 'enviado') {
                 statusMsg.className = 'status-msg error';
-                statusMsg.textContent = ' Esta compra está cancelada.';
+                statusMsg.textContent = '❌ Esta compra não pode receber Key.';
                 return;
             }
 
-            // Verificar se já tem key
             if (compraSelecionada.key && compraSelecionada.key.trim() !== '') {
                 statusMsg.className = 'status-msg error';
-                statusMsg.textContent = ' Esta compra já possui uma Key.';
+                statusMsg.textContent = '❌ Esta compra já possui uma Key.';
                 return;
             }
 
@@ -982,7 +994,6 @@
             const dataEnvio = agora.toISOString();
             const horaEnvio = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 
-            // Atualizar compra no Firebase
             const compraRef = db.ref('compras/' + compraSelecionada.id);
             const updates = {
                 key: key,
@@ -994,10 +1005,9 @@
             compraRef.update(updates)
                 .then(() => {
                     statusMsg.className = 'status-msg success';
-                    statusMsg.textContent = ' Key enviada com sucesso!';
+                    statusMsg.textContent = '✅ Key enviada com sucesso!';
                     document.getElementById('btnEnviarKey').disabled = false;
 
-                    // Criar notificação para o usuário
                     const userId = compraSelecionada.usuarioId || compraSelecionada.userId;
                     if (userId) {
                         const notifRef = db.ref('notificacoes').push();
@@ -1014,7 +1024,6 @@
 
                     showToast('Key enviada com sucesso!', 'success');
 
-                    // Recarregar lista
                     setTimeout(() => {
                         fecharModalKey();
                         renderizarCompras();
@@ -1022,24 +1031,23 @@
                 })
                 .catch((error) => {
                     statusMsg.className = 'status-msg error';
-                    statusMsg.textContent = ' Erro ao enviar Key: ' + error.message;
+                    statusMsg.textContent = '❌ Erro ao enviar Key: ' + error.message;
                     document.getElementById('btnEnviarKey').disabled = false;
                     showToast('Erro ao enviar Key.', 'error');
                 });
         }
 
-        // ===== SELECIONAR COMPRA (para futura visualização) =====
+        // ===== SELECIONAR COMPRA =====
         function selecionarCompra(compraId) {
             const compra = compras.find(c => c.id === compraId);
             if (!compra) return;
 
-            // Se já tiver key, mostrar informações
             if (compra.key && compra.key.trim() !== '') {
-                showToast(`Key: ${compra.key}`, 'info');
-            } else if (compra.status !== 'cancelado') {
+                showToast(`🔑 Key: ${compra.key}`, 'info');
+            } else if (compra.status === 'aguardando') {
                 abrirModalKey(compraId);
             } else {
-                showToast('Compra cancelada.', 'error');
+                showToast(`Status: ${compra.status || 'aguardando'}`, 'info');
             }
         }
 
@@ -1047,16 +1055,9 @@
         async function init() {
             const autenticado = await verificarAutenticacao();
             if (!autenticado) return;
-
             carregarCompras();
-
-            // Atualizar lista quando houver mudanças nas compras
-            db.ref('compras').on('value', () => {
-                // As compras já são atualizadas via carregarCompras()
-            });
         }
 
-        // ===== INICIAR =====
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
