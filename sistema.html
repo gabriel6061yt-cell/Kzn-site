@@ -1,111 +1,209 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
   <title>GRAAL ONLINE CLASSIC TEST BETA</title>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
   <style>
+    /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #0b0b1a;
+      background: #0a0a1a;
       color: #f1f5f9;
       min-height: 100vh;
-      padding-top: 72px;
+      padding-top: 76px;
+      line-height: 1.6;
     }
     a { color: #7c3aed; text-decoration: none; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-    /* HEADER FIXO */
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a1a; }
+    ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
+
+    /* ===== HEADER ===== */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      background: rgba(11,11,26,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #2d2d5e;
+      background: rgba(10, 10, 26, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(45, 45, 94, 0.6);
       padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       z-index: 1000;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 8px;
     }
-    .logo { font-weight: 700; font-size: 1.5rem; color: #7c3aed; }
-    .logo span { color: #06b6d4; }
-    .logo small { font-size: 0.7rem; color: #94a3b8; font-weight: 400; margin-left: 4px; }
-    .nav-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .logo {
+      font-weight: 800;
+      font-size: 1.6rem;
+      background: linear-gradient(135deg, #7c3aed, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .logo small {
+      font-size: 0.65rem;
+      font-weight: 500;
+      -webkit-text-fill-color: #94a3b8;
+      background: none;
+      margin-left: 4px;
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
     .nav-actions button {
-      background: transparent; border: none; color: #f1f5f9;
-      font-size: 1.2rem; cursor: pointer; transition: .2s;
+      background: transparent;
+      border: none;
+      color: #f1f5f9;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      padding: 6px;
+      border-radius: 8px;
     }
-    .nav-actions button:hover { color: #7c3aed; }
+    .nav-actions button:hover { color: #7c3aed; background: rgba(124, 58, 237, 0.1); }
     .avatar-small {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: #2d2d5e; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; border: 2px solid #7c3aed; object-fit: cover;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #2d2d5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border: 2px solid #7c3aed;
+      object-fit: cover;
+      transition: 0.3s;
     }
+    .avatar-small:hover { border-color: #06b6d4; transform: scale(1.05); }
+
+    /* ===== BADGE PROPRIETÁRIO ===== */
     .badge-proprietario {
-      background: #f59e0b; color: #0b0b1a; font-size: 0.6rem;
-      padding: 2px 10px; border-radius: 30px; font-weight: 700;
-      margin-left: 6px;
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #0a0a1a;
+      font-size: 0.6rem;
+      padding: 2px 12px;
+      border-radius: 30px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
     }
 
-    /* NOTIFICAÇÕES */
+    /* ===== NOTIFICAÇÕES ===== */
     .notif-container { position: relative; cursor: pointer; }
     .notif-count {
-      position: absolute; top: -8px; right: -8px;
-      background: #ef4444; color: #fff; border-radius: 50%;
-      padding: 2px 6px; font-size: 0.65rem; font-weight: 700;
+      position: absolute;
+      top: -6px; right: -6px;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 50%;
+      padding: 2px 7px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
     }
     .notif-dropdown {
-      position: absolute; right: 0; top: 40px;
-      background: #14142b; border: 1px solid #2d2d5e;
-      border-radius: 16px; width: 300px; max-height: 300px;
-      overflow-y: auto; padding: 8px 0;
-      display: none; box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+      position: absolute;
+      right: 0; top: 44px;
+      background: rgba(20, 20, 43, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid #2d2d5e;
+      border-radius: 16px;
+      width: 320px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding: 8px 0;
+      display: none;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      z-index: 200;
     }
     .notif-dropdown.open { display: block; }
-    .notif-item { padding: 10px 16px; border-bottom: 1px solid #2d2d5e; font-size: 0.9rem; }
+    .notif-item {
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(45, 45, 94, 0.4);
+      font-size: 0.9rem;
+      transition: 0.2s;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
     .notif-item:last-child { border: none; }
     .notif-item.lida { opacity: 0.5; }
+    .notif-item .notif-icon { color: #7c3aed; font-size: 1.1rem; margin-top: 2px; }
+    .notif-item .notif-text { flex: 1; }
+    .notif-item .notif-time { font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px; }
 
-    /* CARDS E BOTÕES */
-    .card {
-      background: #14142b;
-      border: 1px solid #2d2d5e;
-      border-radius: 24px;
-      padding: 28px;
-      margin: 24px 0;
-      transition: .3s;
-    }
+    /* ===== BOTÕES ===== */
     .btn {
-      background: #7c3aed;
-      border: none; color: #fff;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      border: none;
+      color: #fff;
       padding: 12px 28px;
       border-radius: 40px;
       font-weight: 600;
       cursor: pointer;
-      transition: .3s;
+      transition: 0.3s;
       font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+      border: 1px solid rgba(124, 58, 237, 0.2);
     }
-    .btn:hover { background: #6d28d9; transform: scale(1.02); }
-    .btn-secondary { background: #2d2d5e; }
-    .btn-secondary:hover { background: #3d3d7e; }
-    .btn-success { background: #22c55e; }
-    .btn-danger { background: #ef4444; }
-    .btn-warning { background: #f59e0b; color: #0b0b1a; }
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-secondary {
+      background: rgba(45, 45, 94, 0.8);
+      box-shadow: none;
+      border: 1px solid #2d2d5e;
+    }
+    .btn-secondary:hover { background: rgba(45, 45, 94, 1); box-shadow: 0 4px 20px rgba(45,45,94,0.4); }
+    .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
+    .btn-success:hover { box-shadow: 0 8px 30px rgba(34, 197, 94, 0.5); }
+    .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+    .btn-danger:hover { box-shadow: 0 8px 30px rgba(239, 68, 68, 0.5); }
+    .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: #0a0a1a; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+    .btn-warning:hover { box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5); }
+    .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+    .btn-block { width: 100%; justify-content: center; }
 
-    input, select, .file-upload {
-      background: #0b0b1a;
+    /* ===== CARDS ===== */
+    .card {
+      background: rgba(20, 20, 43, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(45, 45, 94, 0.5);
+      border-radius: 24px;
+      padding: 28px;
+      margin: 24px 0;
+      transition: 0.4s;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+    .card:hover { border-color: rgba(124, 58, 237, 0.3); box-shadow: 0 12px 50px rgba(124, 58, 237, 0.1); }
+
+    /* ===== INPUTS ===== */
+    input, select, textarea, .file-upload {
+      background: rgba(11, 11, 26, 0.8);
       border: 1px solid #2d2d5e;
       border-radius: 14px;
       padding: 12px 16px;
@@ -113,78 +211,253 @@
       width: 100%;
       margin: 8px 0;
       font-family: 'Inter', sans-serif;
+      transition: 0.3s;
+      font-size: 0.95rem;
     }
-    input:focus, select:focus { outline: 2px solid #7c3aed; border: none; }
-    label { font-weight: 500; font-size: 0.9rem; color: #94a3b8; }
-
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
-
-    .status-badge {
-      padding: 4px 14px; border-radius: 40px; font-size: 0.7rem;
-      font-weight: 600; display: inline-block;
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
     }
-    .status-pendente { background: #f59e0b; color: #0b0b1a; }
-    .status-aprovado { background: #22c55e; color: #0b0b1a; }
-    .status-cancelado { background: #ef4444; color: #fff; }
+    label { font-weight: 500; font-size: 0.9rem; color: #94a3b8; display: block; margin-top: 8px; }
 
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th { text-align: left; padding: 12px 8px; border-bottom: 2px solid #2d2d5e; color: #94a3b8; }
-    td { padding: 12px 8px; border-bottom: 1px solid #2d2d5e; }
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 26, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      max-width: 440px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: fadeUp 0.4s ease;
+    }
+
+    /* ===== SEÇÕES ===== */
+    section { padding: 20px 0; }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title i { color: #7c3aed; }
+
+    /* ===== HERO ===== */
+    .hero {
+      text-align: center;
+      padding: 60px 0 30px;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero h1 i { -webkit-text-fill-color: #f59e0b; }
+    .hero p { font-size: 1.2rem; color: #94a3b8; margin-top: 8px; }
+
+    /* ===== PLANOS ===== */
+    .plano-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .plano-card .preco { font-size: 1.8rem; font-weight: 700; color: #7c3aed; }
+
+    /* ===== PERFIL ===== */
+    .perfil-grid {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .perfil-avatar {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #7c3aed;
+      background: #2d2d5e;
+      transition: 0.3s;
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
+    }
+    .perfil-avatar:hover { transform: scale(1.02); border-color: #06b6d4; }
+    .perfil-info h3 { font-size: 1.6rem; }
+    .perfil-info .text-muted { font-size: 0.95rem; }
+    .perfil-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .perfil-keys { margin-top: 20px; }
+    .key-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(45, 45, 94, 0.4);
+    }
+    .key-item:last-child { border: none; }
+
+    @media (max-width: 640px) {
+      .perfil-grid { grid-template-columns: 1fr; text-align: center; }
+      .perfil-avatar { margin: 0 auto; }
+      .perfil-actions { justify-content: center; }
+    }
+
+    /* ===== ADMIN ===== */
+    .admin-stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .stat-card {
+      background: rgba(11, 11, 26, 0.6);
+      border-radius: 16px;
+      padding: 12px 20px;
+      border: 1px solid #2d2d5e;
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+    }
+    .stat-card .num { font-size: 1.8rem; font-weight: 700; color: #7c3aed; }
+    .stat-card .label { font-size: 0.8rem; color: #94a3b8; }
+
+    .table-wrap { overflow-x: auto; margin-top: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 700px; }
+    th { text-align: left; padding: 12px 10px; border-bottom: 2px solid #2d2d5e; color: #94a3b8; font-weight: 600; }
+    td { padding: 12px 10px; border-bottom: 1px solid rgba(45, 45, 94, 0.4); vertical-align: middle; }
     .admin-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
+    /* ===== CHAT ===== */
     .chat-box {
-      height: 280px; overflow-y: auto; background: #0b0b1a;
-      border-radius: 16px; padding: 16px;
-      border: 1px solid #2d2d5e; margin: 12px 0;
+      height: 300px;
+      overflow-y: auto;
+      background: rgba(11, 11, 26, 0.6);
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #2d2d5e;
+      margin: 12px 0;
+      display: flex;
+      flex-direction: column;
     }
-    .chat-msg { margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; }
+    .chat-msg {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+      animation: fadeUp 0.3s ease;
+    }
     .chat-msg.proprietario { flex-direction: row-reverse; }
     .chat-bubble {
-      background: #14142b; padding: 10px 16px; border-radius: 16px;
-      max-width: 75%; border: 1px solid #2d2d5e;
+      background: rgba(20, 20, 43, 0.8);
+      padding: 10px 16px;
+      border-radius: 18px;
+      max-width: 78%;
+      border: 1px solid #2d2d5e;
+      word-break: break-word;
     }
-    .chat-msg.proprietario .chat-bubble { background: #2d2d5e; border-color: #7c3aed; }
-    .chat-time { font-size: 0.6rem; color: #94a3b8; margin-top: 4px; }
+    .chat-msg.proprietario .chat-bubble {
+      background: rgba(124, 58, 237, 0.2);
+      border-color: #7c3aed;
+    }
+    .chat-bubble .chat-name { font-weight: 600; font-size: 0.85rem; color: #7c3aed; }
+    .chat-bubble .chat-text { margin: 4px 0; }
+    .chat-bubble .chat-time { font-size: 0.6rem; color: #94a3b8; text-align: right; margin-top: 4px; }
+    .chat-input-row { display: flex; gap: 10px; margin-top: 8px; }
+    .chat-input-row input { flex: 1; }
 
-    .hero { text-align: center; padding: 50px 0 20px; }
-    .hero h1 { font-size: 2.6rem; font-weight: 700; }
-    .hero h1 i { color: #f59e0b; }
+    /* ===== RESPONSIVIDADE ===== */
+    @media (max-width: 768px) {
+      body { padding-top: 70px; }
+      header { padding: 10px 16px; }
+      .logo { font-size: 1.3rem; }
+      .nav-actions { gap: 8px; }
+      .nav-actions button { font-size: 1rem; padding: 4px; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .card { padding: 20px; }
+      .section-title { font-size: 1.5rem; }
+      .notif-dropdown { width: 280px; right: -20px; }
+      .perfil-avatar { width: 100px; height: 100px; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.6rem; }
+      .btn { padding: 10px 20px; font-size: 0.85rem; }
+      .admin-actions .btn-sm { font-size: 0.7rem; padding: 4px 10px; }
+      .chat-box { height: 220px; }
+    }
 
-    .footer { margin-top: 60px; padding: 30px 0; border-top: 1px solid #2d2d5e; text-align: center; color: #94a3b8; font-size: 0.9rem; }
-
+    /* ===== ANIMAÇÕES ===== */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
     .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; }
-    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
 
+    /* ===== UTILIDADES ===== */
     .hidden { display: none !important; }
     .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .flex-center { justify-content: center; }
     .gap-8 { gap: 8px; }
     .mt-12 { margin-top: 12px; }
     .mb-12 { margin-bottom: 12px; }
     .text-muted { color: #94a3b8; }
     .text-center { text-align: center; }
     .w-full { width: 100%; }
-
-    /* MODAL */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(11,11,26,0.8); backdrop-filter: blur(4px);
-      z-index: 2000; align-items: center; justify-content: center;
+    .status-badge {
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
+      text-transform: uppercase;
     }
-    .modal-overlay.open { display: flex; }
-    .modal-card { max-width: 420px; width: 100%; margin: 20px; }
+    .status-pendente { background: #f59e0b; color: #0a0a1a; }
+    .status-aprovado { background: #22c55e; color: #0a0a1a; }
+    .status-cancelado { background: #ef4444; color: #fff; }
+
+    /* ===== LOADING ===== */
+    .spinner { animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 60px;
+      padding: 30px 0;
+      border-top: 1px solid #2d2d5e;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ===== HEADER ===== -->
 <header>
   <div class="logo">GRAAL<span>CLASSIC</span><small>BETA</small></div>
   <div class="nav-actions">
-    <button onclick="scrollToSection('comprar')"><i class="fas fa-shopping-cart"></i></button>
-    <button onclick="scrollToSection('perfil')"><i class="fas fa-user"></i></button>
-    <button onclick="scrollToSection('suporte')"><i class="fas fa-headset"></i></button>
+    <button onclick="scrollToSection('comprar')" title="Comprar"><i class="fas fa-shopping-cart"></i></button>
+    <button onclick="scrollToSection('perfil')" title="Perfil"><i class="fas fa-user"></i></button>
+    <button onclick="scrollToSection('suporte')" title="Suporte"><i class="fas fa-headset"></i></button>
 
     <div class="notif-container" onclick="toggleNotificacoes()">
       <i class="fas fa-bell" style="font-size:1.3rem;"></i>
@@ -197,60 +470,68 @@
       <button onclick="showRegister()" class="btn" style="padding:6px 18px;">Registrar</button>
     </div>
     <div id="userInfo" class="hidden flex">
-      <span id="userNameDisplay" style="font-weight:500;"></span>
+      <span id="userNameDisplay" style="font-weight:500; font-size:0.95rem;"></span>
       <img id="userAvatarHeader" class="avatar-small" src="" alt="avatar" />
-      <button onclick="logout()" style="background:transparent; border:none; color:#ef4444; font-size:1.1rem;"><i class="fas fa-sign-out-alt"></i></button>
+      <button onclick="logout()" style="background:transparent; border:none; color:#ef4444; font-size:1.1rem; padding:4px;" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
 </header>
 
-<!-- MODAL LOGIN/REGISTRO -->
+<!-- ===== MODAL LOGIN / REGISTRO ===== -->
 <div class="modal-overlay" id="loginModal">
   <div class="card modal-card">
     <h3 id="loginTitle">Login</h3>
     <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="E-mail" />
+      <input type="email" id="loginEmail" placeholder="Seu e-mail" />
       <input type="password" id="loginSenha" placeholder="Senha" />
-      <div id="loginMsg" class="text-muted" style="font-size:0.9rem;"></div>
-      <button onclick="login()" class="btn w-full" style="justify-content:center;">Entrar</button>
+      <div id="loginMsg" class="text-muted" style="font-size:0.9rem; min-height:24px;"></div>
+      <button onclick="login()" class="btn btn-block"><i class="fas fa-sign-in-alt"></i> Entrar</button>
       <p style="margin-top:12px; text-align:center;">Não tem conta? <a href="#" onclick="showRegister(); return false;">Registrar</a></p>
-      <button onclick="fecharModal()" class="btn btn-secondary w-full" style="justify-content:center; margin-top:8px;">Fechar</button>
+      <button onclick="fecharModal()" class="btn btn-secondary btn-block" style="margin-top:8px;">Fechar</button>
     </div>
     <div id="registerForm" style="display:none;">
-      <input type="text" id="regNome" placeholder="Nome" />
+      <input type="text" id="regNome" placeholder="Nome completo" />
       <input type="email" id="regEmail" placeholder="E-mail" />
       <input type="password" id="regSenha" placeholder="Senha (mín 6)" />
       <input type="password" id="regConfirm" placeholder="Confirmar senha" />
-      <div id="regMsg" class="text-muted" style="font-size:0.9rem;"></div>
-      <button onclick="register()" class="btn w-full" style="justify-content:center;">Registrar</button>
+      <div id="regMsg" class="text-muted" style="font-size:0.9rem; min-height:24px;"></div>
+      <button onclick="register()" class="btn btn-block"><i class="fas fa-user-plus"></i> Registrar</button>
       <p style="margin-top:12px; text-align:center;">Já tem conta? <a href="#" onclick="showLogin(); return false;">Login</a></p>
-      <button onclick="fecharModal()" class="btn btn-secondary w-full" style="justify-content:center; margin-top:8px;">Fechar</button>
+      <button onclick="fecharModal()" class="btn btn-secondary btn-block" style="margin-top:8px;">Fechar</button>
     </div>
   </div>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
+<!-- ===== CONTEÚDO ===== -->
 <div class="container">
 
   <!-- HERO -->
   <section class="hero fade-up">
     <h1><i class="fas fa-crown"></i> GRAAL ONLINE CLASSIC</h1>
-    <p style="font-size:1.2rem; color:#94a3b8;">Servidor exclusivo · Acesso 24h · R$ 15,00</p>
-    <button onclick="scrollToSection('comprar')" class="btn" style="margin-top:20px; font-size:1.1rem; padding:14px 40px;"><i class="fas fa-rocket"></i> Comprar Agora</button>
+    <p>Servidor exclusivo · Acesso 24h · R$ 15,00</p>
+    <button onclick="scrollToSection('comprar')" class="btn" style="margin-top:20px; font-size:1.1rem; padding:14px 44px;">
+      <i class="fas fa-rocket"></i> Comprar Agora
+    </button>
   </section>
 
   <!-- PLANOS -->
-  <section id="planos" class="fade-up">
-    <h2>Planos</h2>
-    <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-      <div><h3>Acesso 24h</h3><p class="text-muted">R$ 15,00</p></div>
-      <button onclick="scrollToSection('comprar')" class="btn"><i class="fas fa-cart-plus"></i> Comprar</button>
+  <section id="planos" class="fade-up delay-1">
+    <h2 class="section-title"><i class="fas fa-tags"></i> Planos</h2>
+    <div class="card plano-card">
+      <div>
+        <h3>Acesso 24h</h3>
+        <p class="text-muted">Jogue por 24 horas completas</p>
+      </div>
+      <div>
+        <span class="preco">R$ 15,00</span>
+        <button onclick="scrollToSection('comprar')" class="btn btn-sm"><i class="fas fa-cart-plus"></i> Comprar</button>
+      </div>
     </div>
   </section>
 
   <!-- COMPRAR -->
-  <section id="comprar" class="fade-up">
-    <h2>Comprar Acesso</h2>
+  <section id="comprar" class="fade-up delay-2">
+    <h2 class="section-title"><i class="fas fa-credit-card"></i> Comprar Acesso</h2>
     <div class="card">
       <form id="compraForm" onsubmit="enviarCompra(event)">
         <input type="text" id="compraNome" placeholder="Seu nome" required />
@@ -259,49 +540,70 @@
           <option value="Acesso 24h - R$ 15,00">Acesso 24h - R$ 15,00</option>
         </select>
         <div class="file-upload">
-          <label>Comprovante PIX (imagem/PDF)</label>
-          <input type="file" id="compraComprovante" accept="image/*,application/pdf" required style="padding:8px; background:#0b0b1a; border:1px solid #2d2d5e; border-radius:14px; width:100%;" />
+          <label>Comprovante PIX (imagem ou PDF)</label>
+          <input type="file" id="compraComprovante" accept="image/*,application/pdf" required style="padding:10px;" />
         </div>
-        <div id="compraMsg" class="text-muted"></div>
-        <button type="submit" class="btn w-full" style="justify-content:center;" id="compraBtn"><i class="fas fa-paper-plane"></i> Enviar Compra</button>
+        <div id="compraMsg" class="text-muted" style="min-height:24px;"></div>
+        <button type="submit" class="btn btn-block" id="compraBtn"><i class="fas fa-paper-plane"></i> Enviar Pedido</button>
       </form>
     </div>
   </section>
 
   <!-- PERFIL -->
   <section id="perfil" class="fade-up">
-    <h2>Perfil</h2>
+    <h2 class="section-title"><i class="fas fa-user-circle"></i> Meu Perfil</h2>
     <div class="card" id="perfilCard">
-      <div class="flex" style="flex-wrap:wrap;">
-        <img id="perfilAvatar" src="" alt="avatar" style="width:80px; height:80px; border-radius:50%; background:#2d2d5e; object-fit:cover; border:3px solid #7c3aed;" />
-        <div>
+      <div class="perfil-grid">
+        <div style="text-align:center;">
+          <img id="perfilAvatar" class="perfil-avatar" src="" alt="avatar" />
+          <div style="margin-top:12px;">
+            <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)" />
+            <button onclick="document.getElementById('avatarUpload').click()" class="btn btn-secondary btn-sm"><i class="fas fa-camera"></i> Trocar Foto</button>
+          </div>
+        </div>
+        <div class="perfil-info">
           <h3 id="perfilNome">---</h3>
-          <p class="text-muted" id="perfilEmail">---</p>
-          <p class="text-muted" style="font-size:0.8rem;">Cadastro: <span id="perfilData">---</span></p>
-          <div id="perfilBadge"></div>
+          <p class="text-muted"><i class="fas fa-envelope"></i> <span id="perfilEmail">---</span></p>
+          <p class="text-muted" style="font-size:0.85rem;"><i class="fas fa-calendar-alt"></i> Membro desde: <span id="perfilData">---</span></p>
+          <div id="perfilBadge" style="margin-top:4px;"></div>
+          <div class="perfil-actions">
+            <input type="text" id="editarNomeInput" placeholder="Novo nome" style="flex:1; min-width:140px;" />
+            <button onclick="atualizarNome()" class="btn btn-secondary btn-sm"><i class="fas fa-pen"></i> Editar Nome</button>
+            <button onclick="mostrarModalSenha()" class="btn btn-secondary btn-sm"><i class="fas fa-key"></i> Alterar Senha</button>
+          </div>
         </div>
       </div>
-      <div class="flex" style="margin-top:12px;">
-        <input type="text" id="editarNomeInput" placeholder="Novo nome" style="flex:1; min-width:150px;" />
-        <button onclick="atualizarNome()" class="btn btn-secondary"><i class="fas fa-pen"></i> Editar</button>
-        <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)" />
-        <button onclick="document.getElementById('avatarUpload').click()" class="btn btn-secondary"><i class="fas fa-camera"></i> Foto</button>
+
+      <!-- Modal senha (inline) -->
+      <div id="senhaModal" style="display:none; margin-top:16px; padding:16px; background:rgba(11,11,26,0.6); border-radius:16px; border:1px solid #2d2d5e;">
+        <h4>Alterar Senha</h4>
+        <input type="password" id="senhaAtual" placeholder="Senha atual" />
+        <input type="password" id="novaSenha" placeholder="Nova senha (mín 6)" />
+        <input type="password" id="confirmaNova" placeholder="Confirmar nova senha" />
+        <div id="senhaMsg" class="text-muted" style="min-height:20px;"></div>
+        <div class="flex" style="gap:10px;">
+          <button onclick="alterarSenha()" class="btn btn-sm"><i class="fas fa-save"></i> Salvar</button>
+          <button onclick="document.getElementById('senhaModal').style.display='none'" class="btn btn-secondary btn-sm">Cancelar</button>
+        </div>
       </div>
+
       <hr style="border-color:#2d2d5e; margin:20px 0;" />
-      <h4>Minhas Keys</h4>
-      <div id="minhasKeys"><p class="text-muted">Nenhuma key ativa.</p></div>
-      <p class="text-muted" style="margin-top:6px;">Keys ativas: <span id="contadorKeys">0</span></p>
+      <div class="perfil-keys">
+        <h4><i class="fas fa-key"></i> Minhas Keys</h4>
+        <div id="minhasKeys"><p class="text-muted">Nenhuma key ativa.</p></div>
+        <p class="text-muted" style="margin-top:6px;">Keys ativas: <span id="contadorKeys">0</span></p>
+      </div>
     </div>
   </section>
 
-  <!-- SUPORTE (CHAT) -->
+  <!-- SUPORTE / CHAT -->
   <section id="suporte" class="fade-up">
-    <h2>Suporte <i class="fas fa-headset" style="color:#06b6d4;"></i></h2>
+    <h2 class="section-title"><i class="fas fa-headset" style="color:#06b6d4;"></i> Suporte</h2>
     <div class="card">
       <div id="chatStatus" class="text-muted">Faça login para usar o chat.</div>
       <div class="chat-box" id="chatBox"></div>
-      <div class="flex" style="gap:8px;">
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." style="flex:1;" />
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
         <button onclick="enviarMensagem()" class="btn"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
@@ -309,8 +611,16 @@
 
   <!-- PAINEL ADMIN (somente proprietário) -->
   <section id="adminPanel" class="fade-up hidden">
-    <h2>Painel Administrador <i class="fas fa-shield-alt" style="color:#f59e0b;"></i></h2>
+    <h2 class="section-title"><i class="fas fa-shield-alt" style="color:#f59e0b;"></i> Painel Administrador</h2>
     <div class="card">
+      <div class="admin-stats" id="adminStats">
+        <div class="stat-card"><span class="num" id="totalCompras">0</span><div class="label">Total</div></div>
+        <div class="stat-card"><span class="num" id="pendentesCount">0</span><div class="label">Pendentes</div></div>
+        <div class="stat-card"><span class="num" id="aprovadosCount">0</span><div class="label">Aprovados</div></div>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+        <input type="text" id="adminSearch" placeholder="Filtrar por usuário ou e-mail..." style="flex:1; min-width:180px;" oninput="filtrarAdmin()" />
+      </div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Data</th><th>Usuário</th><th>E-mail</th><th>Plano</th><th>Status</th><th>Key</th><th>Ações</th></tr></thead>
@@ -319,13 +629,14 @@
       </div>
     </div>
   </section>
+
 </div>
 
 <footer class="footer">
   <p>GRAAL ONLINE CLASSIC TEST BETA © 2026 · <span class="text-muted">Desenvolvido com ❤️</span></p>
 </footer>
 
-<!-- FIREBASE SDK -->
+<!-- ===== FIREBASE SDK ===== -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -357,12 +668,13 @@
   let adminUnsub = null;
   let notifUnsub = null;
   let chatUnsub = null;
+  let adminData = []; // para filtro
 
   // ===== UTIL =====
   function gerarKey() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let code = '';
-    for (let i=0; i<8; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+    for (let i = 0; i < 8; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
     return 'KZN-' + code;
   }
 
@@ -374,18 +686,25 @@
     document.getElementById('loginModal').classList.remove('open');
   }
 
+  function mostrarModalSenha() {
+    const el = document.getElementById('senhaModal');
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+  }
+
   // ===== AUTENTICAÇÃO =====
   function showLogin() {
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('registerForm').style.display = 'none';
     document.getElementById('loginTitle').innerText = 'Login';
     document.getElementById('loginModal').classList.add('open');
+    document.getElementById('loginMsg').innerText = '';
   }
   function showRegister() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('registerForm').style.display = 'block';
     document.getElementById('loginTitle').innerText = 'Registrar';
     document.getElementById('loginModal').classList.add('open');
+    document.getElementById('regMsg').innerText = '';
   }
 
   async function login() {
@@ -401,7 +720,7 @@
   }
 
   async function register() {
-    const nome = document.getElementById('regNome').value;
+    const nome = document.getElementById('regNome').value.trim();
     const email = document.getElementById('regEmail').value;
     const senha = document.getElementById('regSenha').value;
     const confirm = document.getElementById('regConfirm').value;
@@ -434,20 +753,21 @@
     if (user) {
       authBtns.classList.add('hidden');
       userInfo.classList.remove('hidden');
+      // Carregar dados do perfil
       const doc = await db.collection('users').doc(user.uid).get();
       const data = doc.data() || { nome: user.displayName || 'Usuário', email: user.email, avatar: '' };
       document.getElementById('userNameDisplay').innerText = data.nome || 'Usuário';
       const avatar = data.avatar || '';
-      document.getElementById('userAvatarHeader').src = avatar || 'https://ui-avatars.com/api/?name='+encodeURIComponent(data.nome||'U')+'&background=7c3aed&color=fff';
-      // perfil
+      document.getElementById('userAvatarHeader').src = avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.nome || 'U') + '&background=7c3aed&color=fff&size=38';
+      // Perfil
       document.getElementById('perfilNome').innerText = data.nome || '---';
       document.getElementById('perfilEmail').innerText = user.email;
-      document.getElementById('perfilData').innerText = data.criado ? new Date(data.criado).toLocaleDateString() : '---';
-      document.getElementById('perfilAvatar').src = avatar || 'https://ui-avatars.com/api/?name='+encodeURIComponent(data.nome||'U')+'&background=7c3aed&color=fff';
-      // badge proprietário
+      document.getElementById('perfilData').innerText = data.criado ? new Date(data.criado).toLocaleDateString('pt-BR') : '---';
+      document.getElementById('perfilAvatar').src = avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.nome || 'U') + '&background=7c3aed&color=fff&size=140';
+      // Badge proprietário
       const badgeDiv = document.getElementById('perfilBadge');
       if (user.email === PROPRIETARIO_EMAIL) {
-        badgeDiv.innerHTML = '<span class="badge-proprietario">👑 Proprietário</span>';
+        badgeDiv.innerHTML = '<span class="badge-proprietario"><i class="fas fa-crown"></i> Proprietário</span>';
         document.getElementById('adminPanel').classList.remove('hidden');
         carregarAdmin();
       } else {
@@ -458,6 +778,7 @@
       carregarMinhasKeys(user.uid);
       carregarNotificacoes(user.uid);
       iniciarChat(user.uid);
+      // Notificações em tempo real
       if (notifUnsub) notifUnsub();
       notifUnsub = db.collection('notificacoes').where('uid', '==', user.uid).onSnapshot(() => {
         carregarNotificacoes(user.uid);
@@ -472,10 +793,11 @@
       document.getElementById('chatBox').innerHTML = '<p class="text-muted">Faça login para usar o chat.</p>';
       document.getElementById('minhasKeys').innerHTML = '<p class="text-muted">Nenhuma key ativa.</p>';
       document.getElementById('contadorKeys').innerText = '0';
+      document.getElementById('chatStatus').innerText = 'Faça login para usar o chat.';
     }
   });
 
-  // ===== PERFIL =====
+  // ===== PERFIL: editar nome =====
   async function atualizarNome() {
     if (!currentUser) return;
     const novo = document.getElementById('editarNomeInput').value.trim();
@@ -486,8 +808,10 @@
     const data = doc.data();
     document.getElementById('perfilNome').innerText = data.nome;
     document.getElementById('userNameDisplay').innerText = data.nome;
+    // Atualizar avatar header se tiver
   }
 
+  // ===== PERFIL: upload avatar =====
   async function uploadAvatar(e) {
     if (!currentUser) return;
     const file = e.target.files[0];
@@ -502,6 +826,30 @@
     reader.readAsDataURL(file);
   }
 
+  // ===== PERFIL: alterar senha =====
+  async function alterarSenha() {
+    if (!currentUser) return;
+    const atual = document.getElementById('senhaAtual').value;
+    const nova = document.getElementById('novaSenha').value;
+    const confirma = document.getElementById('confirmaNova').value;
+    const msg = document.getElementById('senhaMsg');
+    if (nova.length < 6) { msg.innerText = '❌ Nova senha deve ter no mínimo 6 caracteres.'; return; }
+    if (nova !== confirma) { msg.innerText = '❌ As senhas não coincidem.'; return; }
+    try {
+      // Reautenticar
+      const cred = firebase.auth.EmailAuthProvider.credential(currentUser.email, atual);
+      await currentUser.reauthenticateWithCredential(cred);
+      await currentUser.updatePassword(nova);
+      msg.innerText = '✅ Senha alterada com sucesso!';
+      document.getElementById('senhaAtual').value = '';
+      document.getElementById('novaSenha').value = '';
+      document.getElementById('confirmaNova').value = '';
+      setTimeout(() => { document.getElementById('senhaModal').style.display = 'none'; }, 1500);
+    } catch (e) {
+      msg.innerText = '❌ ' + e.message;
+    }
+  }
+
   // ===== MINHAS KEYS =====
   async function carregarMinhasKeys(uid) {
     const snap = await db.collection('keys').where('uid', '==', uid).get();
@@ -513,7 +861,7 @@
       const expirada = new Date(data.dataExpiracao) < new Date();
       const status = expirada ? 'Expirada' : 'Ativa';
       if (!expirada) ativas++;
-      html += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #2d2d5e; padding:8px 0;">
+      html += `<div class="key-item">
         <span><strong>${data.key}</strong></span>
         <span class="status-badge ${expirada ? 'status-cancelado' : 'status-aprovado'}">${status}</span>
       </div>`;
@@ -529,13 +877,14 @@
     if (!currentUser) { alert('Faça login para comprar.'); return; }
     formSubmitting = true;
     const btn = document.getElementById('compraBtn');
+    const originalText = btn.innerHTML;
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
     const nome = document.getElementById('compraNome').value;
     const email = document.getElementById('compraEmail').value;
     const plano = document.getElementById('compraPlano').value;
     const file = document.getElementById('compraComprovante').files[0];
-    if (!file) { alert('Selecione um comprovante.'); formSubmitting=false; btn.disabled=false; btn.innerHTML='<i class="fas fa-paper-plane"></i> Enviar Compra'; return; }
+    if (!file) { alert('Selecione um comprovante.'); formSubmitting=false; btn.disabled=false; btn.innerHTML=originalText; return; }
     const reader = new FileReader();
     reader.onload = async (ev) => {
       const base64 = ev.target.result;
@@ -551,14 +900,15 @@
         });
         document.getElementById('compraMsg').innerText = '✅ Compra enviada com sucesso! Aguarde aprovação.';
         document.getElementById('compraForm').reset();
-        // notificar proprietário
+        // Notificar proprietário
         await db.collection('notificacoes').add({
           uid: PROPRIETARIO_EMAIL,
           mensagem: `Nova compra de ${nome} (${email}) - ${plano}`,
           lida: false,
-          data: new Date().toISOString()
+          data: new Date().toISOString(),
+          tipo: 'compra'
         });
-        // e-mail via FormSubmit
+        // Enviar e-mail via FormSubmit
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -579,7 +929,7 @@
       }
       formSubmitting = false;
       btn.disabled = false;
-      btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Compra';
+      btn.innerHTML = originalText;
     };
     reader.readAsDataURL(file);
   }
@@ -588,30 +938,56 @@
   function carregarAdmin() {
     if (adminUnsub) adminUnsub();
     adminUnsub = db.collection('compras').orderBy('data', 'desc').onSnapshot((snap) => {
-      const tbody = document.getElementById('adminTableBody');
-      let html = '';
+      adminData = [];
       snap.forEach(doc => {
-        const d = doc.data();
-        const id = doc.id;
-        const status = d.status || 'pendente';
-        const statusClasse = status === 'pendente' ? 'status-pendente' : status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
-        const keyDisplay = d.key || '—';
-        html += `<tr>
-          <td>${d.data ? new Date(d.data).toLocaleDateString() : '—'}</td>
-          <td>${d.nome || '—'}</td>
-          <td>${d.email || '—'}</td>
-          <td>${d.plano || '—'}</td>
-          <td><span class="status-badge ${statusClasse}">${status}</span></td>
-          <td>${keyDisplay}</td>
-          <td class="admin-actions">
-            ${status === 'pendente' ? `<button onclick="aprovarCompra('${id}')" class="btn btn-success" style="padding:4px 10px; font-size:0.8rem;"><i class="fas fa-check"></i></button>` : ''}
-            ${status === 'pendente' ? `<button onclick="cancelarCompra('${id}')" class="btn btn-danger" style="padding:4px 10px; font-size:0.8rem;"><i class="fas fa-times"></i></button>` : ''}
-            ${status === 'pendente' ? `<button onclick="gerarKeyParaCompra('${id}')" class="btn btn-warning" style="padding:4px 10px; font-size:0.8rem;"><i class="fas fa-key"></i> Enviar Key</button>` : ''}
-          </td>
-        </tr>`;
+        adminData.push({ id: doc.id, ...doc.data() });
       });
-      tbody.innerHTML = html || '<tr><td colspan="7" class="text-muted">Nenhuma compra.</td></tr>';
+      renderAdminTable(adminData);
+      atualizarStats(adminData);
     });
+  }
+
+  function renderAdminTable(data) {
+    const tbody = document.getElementById('adminTableBody');
+    let html = '';
+    data.forEach(d => {
+      const status = d.status || 'pendente';
+      const statusClasse = status === 'pendente' ? 'status-pendente' : status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
+      const keyDisplay = d.key || '—';
+      html += `<tr>
+        <td>${d.data ? new Date(d.data).toLocaleDateString('pt-BR') : '—'}</td>
+        <td>${d.nome || '—'}</td>
+        <td>${d.email || '—'}</td>
+        <td>${d.plano || '—'}</td>
+        <td><span class="status-badge ${statusClasse}">${status}</span></td>
+        <td>${keyDisplay}</td>
+        <td class="admin-actions">
+          ${status === 'pendente' ? `<button onclick="aprovarCompra('${d.id}')" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>` : ''}
+          ${status === 'pendente' ? `<button onclick="cancelarCompra('${d.id}')" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>` : ''}
+          ${status === 'pendente' ? `<button onclick="gerarKeyParaCompra('${d.id}')" class="btn btn-warning btn-sm"><i class="fas fa-key"></i> Enviar Key</button>` : ''}
+        </td>
+      </tr>`;
+    });
+    tbody.innerHTML = html || '<tr><td colspan="7" class="text-muted">Nenhuma compra.</td></tr>';
+  }
+
+  function atualizarStats(data) {
+    const total = data.length;
+    const pendentes = data.filter(d => d.status === 'pendente').length;
+    const aprovados = data.filter(d => d.status === 'aprovado').length;
+    document.getElementById('totalCompras').innerText = total;
+    document.getElementById('pendentesCount').innerText = pendentes;
+    document.getElementById('aprovadosCount').innerText = aprovados;
+  }
+
+  function filtrarAdmin() {
+    const term = document.getElementById('adminSearch').value.toLowerCase();
+    if (!term) { renderAdminTable(adminData); return; }
+    const filtrado = adminData.filter(d =>
+      (d.nome && d.nome.toLowerCase().includes(term)) ||
+      (d.email && d.email.toLowerCase().includes(term))
+    );
+    renderAdminTable(filtrado);
   }
 
   async function aprovarCompra(id) {
@@ -627,9 +1003,10 @@
     const compraSnap = await compraRef.get();
     const compra = compraSnap.data();
     if (!compra) return;
+    if (compra.status !== 'pendente') { alert('Esta compra já foi processada.'); return; }
     const key = gerarKey();
     const agora = new Date();
-    const expiracao = new Date(agora.getTime() + 24*60*60*1000);
+    const expiracao = new Date(agora.getTime() + 24 * 60 * 60 * 1000);
     await db.collection('keys').add({
       uid: compra.uid,
       key: key,
@@ -639,13 +1016,15 @@
       compraId: compraId
     });
     await compraRef.update({ status: 'aprovado', key: key, dataExpiracao: expiracao.toISOString() });
+    // Notificar usuário
     await db.collection('notificacoes').add({
       uid: compra.uid,
       mensagem: `Sua key foi gerada: ${key}`,
       lida: false,
-      data: new Date().toISOString()
+      data: new Date().toISOString(),
+      tipo: 'key'
     });
-    // e-mail para o usuário com a key
+    // Enviar e-mail para o usuário com a key
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'https://formsubmit.co/' + compra.email;
@@ -661,6 +1040,7 @@
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
+    alert('✅ Key gerada e enviada para o usuário!');
   }
 
   // ===== NOTIFICAÇÕES =====
@@ -678,7 +1058,13 @@
       return;
     }
     dropdown.innerHTML = lista.map(n => `
-      <div class="notif-item ${n.lida ? 'lida' : ''}">${n.mensagem} <span class="text-muted" style="font-size:0.65rem; display:block;">${new Date(n.data).toLocaleString()}</span></div>
+      <div class="notif-item ${n.lida ? 'lida' : ''}">
+        <span class="notif-icon"><i class="fas ${n.tipo === 'key' ? 'fa-key' : 'fa-shopping-cart'}"></i></span>
+        <div class="notif-text">
+          ${n.mensagem}
+          <span class="notif-time">${new Date(n.data).toLocaleString('pt-BR')}</span>
+        </div>
+      </div>
     `).join('');
   }
 
@@ -696,7 +1082,10 @@
   // ===== CHAT =====
   function iniciarChat(uid) {
     if (!uid) return;
-    const chatRef = rtdb.ref('chats/' + uid + '_' + PROPRIETARIO_EMAIL);
+    // Sala ordenada para ser única
+    const ids = [uid, currentUser?.uid].sort();
+    const sala = ids.join('_');
+    const chatRef = rtdb.ref('chats/' + sala);
     if (chatUnsub) chatUnsub();
     chatUnsub = chatRef.limitToLast(50).on('value', (snap) => {
       const msgs = [];
@@ -706,18 +1095,18 @@
         box.innerHTML = '<p class="text-muted">Nenhuma mensagem. Inicie o chat!</p>';
         return;
       }
-      box.innerHTML = msgs.sort((a,b) => a.timestamp - b.timestamp).map(m => `
+      box.innerHTML = msgs.sort((a, b) => a.timestamp - b.timestamp).map(m => `
         <div class="chat-msg ${m.uid === PROPRIETARIO_EMAIL ? 'proprietario' : ''}">
           <div class="chat-bubble">
-            <strong>${m.nome || 'Usuário'}</strong>
-            <p style="margin:4px 0;">${m.texto}</p>
-            <div class="chat-time">${new Date(m.timestamp).toLocaleString()}</div>
+            <div class="chat-name">${m.nome || 'Usuário'}</div>
+            <div class="chat-text">${m.texto}</div>
+            <div class="chat-time">${new Date(m.timestamp).toLocaleString('pt-BR')}</div>
           </div>
         </div>
       `).join('');
       box.scrollTop = box.scrollHeight;
     });
-    document.getElementById('chatStatus').innerText = 'Chat conectado';
+    document.getElementById('chatStatus').innerText = '✅ Chat conectado';
   }
 
   async function enviarMensagem() {
@@ -728,7 +1117,16 @@
     input.value = '';
     const userDoc = await db.collection('users').doc(currentUser.uid).get();
     const nome = userDoc.data()?.nome || 'Usuário';
-    const chatRef = rtdb.ref('chats/' + currentUser.uid + '_' + PROPRIETARIO_EMAIL);
+    const ids = [currentUser.uid, currentUser.uid].sort(); // sala com ele mesmo? Mas o chat é entre usuário e proprietário, precisamos do uid do proprietário.
+    // Correção: a sala deve ser uid_usuario + uid_proprietario (precisamos do uid do proprietário)
+    // Vamos buscar o uid do proprietário pelo email
+    let propUid = null;
+    const query = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
+    query.forEach(doc => propUid = doc.id);
+    if (!propUid) { alert('Proprietário não encontrado.'); return; }
+    const idsSala = [currentUser.uid, propUid].sort();
+    const sala = idsSala.join('_');
+    const chatRef = rtdb.ref('chats/' + sala);
     chatRef.push({
       uid: currentUser.uid,
       nome: nome,
@@ -737,9 +1135,43 @@
     });
   }
 
+  // Corrigir iniciarChat para usar a sala correta
+  // Sobrescrever a função iniciarChat
+  const originalIniciarChat = iniciarChat;
+  iniciarChat = async function(uid) {
+    if (!uid) return;
+    let propUid = null;
+    const query = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
+    query.forEach(doc => propUid = doc.id);
+    if (!propUid) { document.getElementById('chatStatus').innerText = '⚠️ Proprietário não encontrado.'; return; }
+    const ids = [uid, propUid].sort();
+    const sala = ids.join('_');
+    const chatRef = rtdb.ref('chats/' + sala);
+    if (chatUnsub) chatUnsub();
+    chatUnsub = chatRef.limitToLast(50).on('value', (snap) => {
+      const msgs = [];
+      snap.forEach(child => msgs.push(child.val()));
+      const box = document.getElementById('chatBox');
+      if (msgs.length === 0) {
+        box.innerHTML = '<p class="text-muted">Nenhuma mensagem. Inicie o chat!</p>';
+        return;
+      }
+      box.innerHTML = msgs.sort((a, b) => a.timestamp - b.timestamp).map(m => `
+        <div class="chat-msg ${m.uid === propUid ? 'proprietario' : ''}">
+          <div class="chat-bubble">
+            <div class="chat-name">${m.nome || 'Usuário'}</div>
+            <div class="chat-text">${m.texto}</div>
+            <div class="chat-time">${new Date(m.timestamp).toLocaleString('pt-BR')}</div>
+          </div>
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
+    });
+    document.getElementById('chatStatus').innerText = '✅ Chat conectado';
+  };
+
   // ===== INÍCIO =====
   console.log('🚀 GRAAL ONLINE CLASSIC TEST BETA carregado.');
 </script>
 </body>
 </html>
-```
