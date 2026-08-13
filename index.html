@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8" />
@@ -2604,62 +2604,47 @@
     </a>
 
     <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()" style="display:none;">
-        <i class="fas fa-comment-dots"></i>
-        <span class="chat-badge" id="chatBadge">0</span>
-    </button>
+    <i class="fas fa-comment-dots"></i>
+    <span class="chat-badge" id="chatBadge">0</span>
+</button>
 
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <div class="chat-title">
-                <i class="fas fa-comment-dots"></i>
-                <span>Chat Global - KZN</span>
-                <span class="online-count" id="onlineCount">👤 0 online</span>
-            </div>
-            <div class="chat-actions">
-                <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                </button>
-                <button onclick="toggleSearch()" title="Buscar mensagens" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                    <i class="fas fa-search"></i>
-                </button>
-                <button onclick="mostrarEstatisticas()" title="Estatísticas" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                    <i class="fas fa-chart-bar"></i>
-                </button>
-                <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
-                    ✕
-                </button>
-            </div>
-            <div class="search-box" id="searchBox">
-                <input type="text" id="searchInput" placeholder="Buscar mensagens..." />
-                <button onclick="buscarMensagens()"><i class="fas fa-search"></i></button>
-            </div>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <div class="chat-title">
+            <i class="fas fa-comment-dots"></i>
+            <span>Chat Global - KZN</span>
+            <span class="online-count" id="onlineCount">👤 0 online</span>
         </div>
-        <div class="chat-messages" id="chatMessages">
-            <div style="text-align:center;color:var(--text-muted);padding:2rem;">
-                <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
-                <p>Carregando mensagens...</p>
-            </div>
-            <div class="typing-indicator" id="typingIndicator">
-                <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
-            </div>
-        </div>
-        <div class="chat-input-area">
-            <button onclick="abrirEmojiPicker()" title="Emojis" style="background:var(--glass);border:1px solid var(--border);color:var(--text);font-size:1.2rem;padding:0.2rem 0.5rem;border-radius:8px;">
-                😊
+        <div class="chat-actions">
+            <button onclick="alternarTema()" title="Alternar tema" id="themeBtn" style="background:none;border:none;color:var(--text-muted);font-size:1rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                <i class="fas fa-moon" id="themeIcon"></i>
             </button>
-            <button onclick="document.getElementById('fileInput').click()" title="Enviar imagem" style="background:var(--glass);border:1px solid var(--border);color:var(--text);font-size:1rem;padding:0.2rem 0.5rem;border-radius:8px;">
-                📎
-            </button>
-            <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="enviarImagem(event)" />
-            <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
-                <i class="fas fa-microphone"></i>
-            </button>
-            <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
-            <button onclick="enviarMensagem()" id="sendBtn">
-                <i class="fas fa-paper-plane"></i>
+            <button onclick="toggleChat()" title="Fechar" style="background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:0.3s;padding:4px 6px;border-radius:4px;">
+                ✕
             </button>
         </div>
     </div>
+
+    <div class="chat-messages" id="chatMessages">
+        <div style="text-align:center;color:var(--text-muted);padding:2rem;">
+            <i class="fas fa-spinner fa-spin" style="font-size:1.5rem;"></i>
+            <p>Carregando mensagens...</p>
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <i class="fas fa-pen-fancy"></i> <strong id="typingUser">Alguém</strong> está digitando...
+        </div>
+    </div>
+
+    <div class="chat-input-area">
+        <button onclick="iniciarGravacao()" title="Gravar áudio" id="audioBtn" class="audio-btn" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:0.2rem 0.6rem;font-size:1rem;cursor:pointer;transition:0.3s;">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <input type="text" id="chatInput" placeholder="Digite sua mensagem... use @ para mencionar" maxlength="500" />
+        <button onclick="enviarMensagem()" id="sendBtn">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
 
     <!-- ===== USER MENU (MODERAÇÃO) ===== -->
     <div class="user-menu-overlay" id="userMenuOverlay" onclick="fecharMenuUsuario(event)">
