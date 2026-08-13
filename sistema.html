@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>Graal Online Classic Test Beta</title>
+    <title>Graal Online - Mod Menu Beta</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -304,7 +304,7 @@
             font-size: 0.7rem;
         }
 
-        /* ===== BOTÃO WHATSAPP ===== */
+        /* ===== WHATSAPP FIXO ===== */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 90px;
@@ -340,7 +340,7 @@
             }
         }
 
-        /* ===== BOTÃO CHAT ===== */
+        /* ===== CHAT TOGGLE ===== */
         .chat-toggle-btn {
             position: fixed;
             bottom: 160px;
@@ -496,9 +496,6 @@
             font-weight: 600;
             font-size: 0.8rem;
         }
-        .chat-msg .msg-nome.admin {
-            color: var(--danger);
-        }
         .chat-msg .msg-nome.proprietario {
             color: #fbbf24;
         }
@@ -518,10 +515,6 @@
             font-weight: 700;
             padding: 0.1rem 0.4rem;
             border-radius: 4px;
-        }
-        .chat-msg .msg-badge.admin-badge {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
         }
         .chat-msg .msg-badge.proprietario-badge {
             background: rgba(251, 191, 36, 0.2);
@@ -1628,7 +1621,7 @@
 <body>
 
     <!-- ===== WHATSAPP FIXO ===== -->
-    <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o GRAAL ONLINE!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
+    <a href="https://wa.me/5542988752654?text=Olá! Quero comprar o MOD MENU BETA!" class="btn-whatsapp-fixo" target="_blank" title="Falar no WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1682,6 +1675,7 @@
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
                 <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
+                <li><a href="#admin"><i class="fas fa-user-shield"></i> Admin</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
 
@@ -1690,6 +1684,7 @@
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
                 <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
+                <li><a href="#admin"><i class="fas fa-user-shield"></i> Admin</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
                 <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
@@ -1731,13 +1726,13 @@
     <!-- ===== HERO ===== -->
     <section id="inicio" class="hero">
         <div class="hero-content">
-            <div class="hero-badge"><i class="fas fa-crown"></i> Beta Classic</div>
+            <div class="hero-badge"><i class="fas fa-crown"></i> Mod Menu Beta</div>
             <h1>
                 <span class="highlight">GRAAL</span><br />
-                <span style="font-size: 2rem; color: var(--text-muted);">ONLINE CLASSIC TEST BETA</span>
+                <span style="font-size: 2rem; color: var(--text-muted);">ONLINE MOD MENU BETA</span>
             </h1>
             <p class="hero-subtitle">
-                Servidor clássico em fase beta. Adquira sua key para acessar o mundo e viver a experiência única.
+                Mod Menu exclusivo para Graal Classic. Adquira sua key por apenas <strong style="color:var(--primary);">R$ 15,00</strong> e aproveite por <strong style="color:var(--secondary);">24 horas</strong> de acesso total!
             </p>
             <div class="hero-buttons">
                 <a href="#comprar" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Comprar Key</a>
@@ -1753,44 +1748,19 @@
             <p>Escolha o plano ideal para você</p>
         </div>
         <div class="plans-grid">
-            <div class="plan-card">
-                <div class="icon">⚔️</div>
-                <h3>Graal Classic</h3>
-                <div class="price">R$ 50,00 <small>/ 35 dias</small></div>
-                <ul class="features">
-                    <li><i class="fas fa-check"></i> Acesso completo</li>
-                    <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
-                    <li><i class="fas fa-check"></i> Suporte via Discord</li>
-                    <li><i class="fas fa-check"></i> Atualizações automáticas</li>
-                </ul>
-                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Graal Classic - Mensal', 50)">Comprar R$ 50,00</button>
-            </div>
-
             <div class="plan-card popular">
                 <span class="badge">⭐ Mais Vantagem</span>
-                <div class="icon">👑</div>
-                <h3>Graal Classic</h3>
-                <div class="price">R$ 200,00 <small>/ vitalício</small></div>
+                <div class="icon">⚔️</div>
+                <h3>Mod Menu Beta</h3>
+                <div class="price">R$ 15,00 <small>/ 24 horas</small></div>
                 <ul class="features">
-                    <li><i class="fas fa-check"></i> +50 funcionalidades</li>
-                    <li><i class="fas fa-check"></i> Suporte VIP via Discord</li>
-                    <li><i class="fas fa-check"></i> Atualizações vitalícias</li>
-                    <li><i class="fas fa-check"></i> Sem renovação!</li>
+                    <li><i class="fas fa-check"></i> Acesso completo ao mod</li>
+                    <li><i class="fas fa-check"></i> Todas as funcionalidades</li>
+                    <li><i class="fas fa-check"></i> Suporte via Discord</li>
+                    <li><i class="fas fa-check"></i> Key válida por 24h</li>
+                    <li><i class="fas fa-check"></i> Perfeito para testar</li>
                 </ul>
-                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Graal Classic - Permanente', 200)">Comprar R$ 200,00</button>
-            </div>
-
-            <div class="plan-card">
-                <div class="icon">🏙️</div>
-                <h3>Auto Trash</h3>
-                <div class="price">R$ 200,00 <small>/ vitalício</small></div>
-                <ul class="features">
-                    <li><i class="fas fa-check"></i> 100% AUTOMATIZADO</li>
-                    <li><i class="fas fa-check"></i> Farm de lixo 24/7</li>
-                    <li><i class="fas fa-check"></i> Movimento inteligente</li>
-                    <li><i class="fas fa-check"></i> Coleta automática</li>
-                </ul>
-                <button class="btn btn-primary" onclick="adicionarAoCarrinho('Auto Trash', 200)">Comprar R$ 200,00</button>
+                <button class="btn btn-primary" onclick="window.location.href='#comprar'">Comprar R$ 15,00</button>
             </div>
         </div>
     </section>
@@ -1805,7 +1775,7 @@
             <form id="formCompra" action="https://formsubmit.co/gabriel6061yt@gmail.com" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_subject" value="📦 NOVA COMPRA - GRAAL ONLINE!">
+                <input type="hidden" name="_subject" value="📦 NOVA COMPRA - MOD MENU BETA!">
 
                 <div class="input-group">
                     <label><i class="fas fa-user"></i> Nome Completo <span style="color:var(--danger);">*</span></label>
@@ -1827,9 +1797,7 @@
                     <label><i class="fas fa-crown"></i> Plano Escolhido <span style="color:var(--danger);">*</span></label>
                     <select name="Plano" required>
                         <option value="">Selecione um plano...</option>
-                        <option value="Graal Classic - Mensal R$ 50,00">⚔️ Classic - Mensal R$ 50,00</option>
-                        <option value="Graal Classic - Permanente R$ 200,00">👑 Classic - Permanente R$ 200,00</option>
-                        <option value="Auto Trash - R$ 200,00">🏙️ Auto Trash - R$ 200,00</option>
+                        <option value="Mod Menu Beta - R$ 15,00 (24h)">⚔️ Mod Menu Beta - R$ 15,00 (24h)</option>
                     </select>
                 </div>
 
@@ -1926,7 +1894,7 @@
         </div>
     </section>
 
-    <!-- ===== ADMIN (visível apenas para proprietário) ===== -->
+    <!-- ===== ADMIN (SÓ PARA O PROPRIETÁRIO) ===== -->
     <section id="admin" class="section" style="display:none;">
         <div class="section-header">
             <h2><i class="fas fa-user-shield"></i> Painel Administrativo</h2>
@@ -1969,16 +1937,16 @@
     <section id="faq" class="section dark">
         <div class="section-header">
             <h2><i class="fas fa-question-circle"></i> Perguntas Frequentes</h2>
-            <p>Dúvidas comuns sobre o Graal Online</p>
+            <p>Dúvidas comuns sobre o Mod Menu Beta</p>
         </div>
         <div style="max-width:800px;margin:0 auto;">
             <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
                 <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
-                    <span>🔒 O Graal Online é seguro?</span>
+                    <span>🔒 O Mod Menu é seguro?</span>
                     <span style="transition:0.3s;">▼</span>
                 </div>
                 <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
-                    Sim! O Graal Online é desenvolvido com códigos otimizados e testados. Milhares de jogadores já utilizam sem problemas.
+                    Sim! O Mod Menu Beta é desenvolvido com códigos otimizados e testados.
                 </div>
             </div>
             <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
@@ -1987,25 +1955,34 @@
                     <span style="transition:0.3s;">▼</span>
                 </div>
                 <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
-                    Sim! O Graal Online é 100% compatível com Graal Mobile (Android e iOS).
+                    Sim! O Mod Menu é 100% compatível com Graal Mobile (Android e iOS).
                 </div>
             </div>
             <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
                 <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
-                    <span>🔑 O que acontece após a compra?</span>
+                    <span>🔑 Como recebo minha key?</span>
                     <span style="transition:0.3s;">▼</span>
                 </div>
                 <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
-                    Você recebe a key e instruções via Discord. Suporte 24/7 para ativação.
+                    Após a confirmação do pagamento, você receberá sua key por e-mail e WhatsApp em até 24h.
                 </div>
             </div>
             <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
                 <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
-                    <span>💰 Quais formas de pagamento?</span>
+                    <span>💰 Qual o valor?</span>
                     <span style="transition:0.3s;">▼</span>
                 </div>
                 <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
-                    Aceitamos PIX (chave: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>).
+                    O Mod Menu Beta custa <strong style="color:var(--primary);">R$ 15,00</strong> com validade de <strong style="color:var(--secondary);">24 horas</strong>.
+                </div>
+            </div>
+            <div class="glass-card" onclick="this.classList.toggle('open')" style="cursor:pointer;margin-bottom:0.8rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+                    <span>💰 Chave PIX</span>
+                    <span style="transition:0.3s;">▼</span>
+                </div>
+                <div style="display:none;margin-top:0.5rem;color:var(--text-muted);font-size:0.85rem;">
+                    Chave PIX: <code style="color:var(--success);">6c80021c-957b-49c0-9a5d-98371bf67120</code>
                 </div>
             </div>
         </div>
@@ -2016,7 +1993,7 @@
         <div class="footer-content">
             <div class="footer-brand">
                 <span>Graal Online</span>
-                <p>Servidor clássico em fase beta</p>
+                <p>Mod Menu Beta - R$ 15,00 (24h)</p>
             </div>
             <div class="footer-social">
                 <a href="#" class="discord" title="Discord"><i class="fab fa-discord"></i></a>
@@ -2033,7 +2010,7 @@
         <div class="welcome-content">
             <div class="welcome-brand">
                 <h1>Graal Online</h1>
-                <p>Classic Test Beta</p>
+                <p>Mod Menu Beta</p>
             </div>
             <div class="welcome-divider"></div>
             <p class="welcome-subtitle">Entre para acessar todos os recursos</p>
@@ -2078,9 +2055,7 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        const auth = firebase.auth();
         const firestore = firebase.firestore();
-        const storage = firebase.storage();
 
         // ====== CONSTANTES ======
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
@@ -2092,8 +2067,6 @@
         let chatAberto = false;
         let contadorNaoLidas = 0;
         let typingTimeout = null;
-        let usuariosOnline = {};
-        let processedMessageIds = new Set();
         let chatRoomRef = null;
         let unsubscribeCompras = null;
 
@@ -2134,7 +2107,6 @@
             chatRoomRef.limitToLast(50).on('value', (snap) => {
                 const msgs = snap.val();
                 const container = document.getElementById('chatMessages');
-                // Remove mensagens antigas mantendo o typing indicator
                 const typingIndicator = document.getElementById('typingIndicator');
                 container.innerHTML = '';
                 container.appendChild(typingIndicator);
@@ -2148,7 +2120,7 @@
                         div.className = 'chat-msg';
                         const nomeClass = isProprietario(m.email) ? 'proprietario' : '';
                         const badgeHtml = isProprietario(m.email) ?
-                            '<span class="msg-badge proprietario-badge">👑 PROPRIETÁRIO</span>' :
+                            '<span class="msg-badge proprietario-badge">👑 DONO</span>' :
                             '';
                         const avatarHtml = m.avatar && m.avatar.startsWith('data:image') ?
                             `<img src="${m.avatar}" />` :
@@ -2199,11 +2171,9 @@
             });
 
             input.value = '';
-            // Remove typing
             const roomId = [user.uid || user.email, 'proprietario'].sort().join('_');
             db.ref('typing/' + roomId).remove();
 
-            // Notificar proprietário
             if (!isProprietario(user.email)) {
                 adicionarNotificacao(`💬 Nova mensagem de ${user.nome}`, 'info');
             }
@@ -2258,7 +2228,7 @@
                     // Keys do usuário
                     carregarKeysUsuario(usuario.email);
 
-                    // Mostrar admin se for proprietário
+                    // MOSTRA ADMIN SÓ PARA O PROPRIETÁRIO
                     if (isProprietario(usuario.email)) {
                         document.getElementById('admin').style.display = 'block';
                         carregarComprasAdmin();
@@ -2404,7 +2374,6 @@
 
         // ====== KEYS DO USUÁRIO ======
         function carregarKeysUsuario(email) {
-            // Busca keys no Firestore
             firestore.collection('keys')
                 .where('email', '==', email)
                 .orderBy('dataCriacao', 'desc')
@@ -2485,13 +2454,13 @@
                         <td>${keyDisplay}</td>
                         <td>
                             ${data.status === 'pendente' ? `
-                                <button class="btn-sm btn-sm-aprovar" data-id="${id}" onclick="aprovarCompra('${id}')"><i class="fas fa-check"></i></button>
-                                <button class="btn-sm btn-sm-cancelar" data-id="${id}" onclick="cancelarCompra('${id}')"><i class="fas fa-times"></i></button>
+                                <button class="btn-sm btn-sm-aprovar" data-id="${id}" onclick="aprovarCompra('${id}')"><i class="fas fa-check"></i> Aprovar</button>
+                                <button class="btn-sm btn-sm-cancelar" data-id="${id}" onclick="cancelarCompra('${id}')"><i class="fas fa-times"></i> Cancelar</button>
                             ` : ''}
                             ${data.status === 'aprovado' && !data.key ? `
-                                <button class="btn-sm btn-sm-key" data-id="${id}" onclick="gerarKeyAdmin('${id}')"><i class="fas fa-key"></i></button>
+                                <button class="btn-sm btn-sm-key" data-id="${id}" onclick="gerarKeyAdmin('${id}')"><i class="fas fa-key"></i> Enviar Key</button>
                             ` : ''}
-                            ${data.status === 'aprovado' && data.key ? `<span style="color:#22c55e;"><i class="fas fa-check-circle"></i></span>` : ''}
+                            ${data.status === 'aprovado' && data.key ? `<span style="color:#22c55e;"><i class="fas fa-check-circle"></i> Key enviada</span>` : ''}
                         </td>
                     </tr>
                 `;
@@ -2510,7 +2479,7 @@
             if (!confirm('✅ Aprovar esta compra?')) return;
             firestore.collection('compras').doc(id).update({ status: 'aprovado' })
                 .then(() => {
-                    alert('✅ Compra aprovada!');
+                    alert('✅ Compra aprovada! Agora clique em "Enviar Key" para gerar a key.');
                     adicionarNotificacao('✅ Compra aprovada!', 'sucesso');
                 })
                 .catch(err => alert('❌ Erro: ' + err.message));
@@ -2558,11 +2527,10 @@
                             status: 'aprovado'
                         });
                     }).then(() => {
-                        alert(`🔑 Key ${key} gerada com sucesso!`);
+                        alert(`🔑 Key ${key} gerada e enviada com sucesso!`);
                         adicionarNotificacao(`🔑 Key gerada: ${key}`, 'sucesso');
-                        // Notificar usuário
                         if (data.email) {
-                            adicionarNotificacao(`🔑 Nova key gerada para ${data.nome}`, 'info');
+                            adicionarNotificacao(`🔑 Key enviada para ${data.nome} (${data.email})`, 'info');
                         }
                     });
                 })
@@ -2580,7 +2548,6 @@
 
             if (usuarioLogado) {
                 setupChat(usuarioLogado);
-                // Atualiza status online
                 const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
                 '_')));
                 userRef.set({
@@ -2849,13 +2816,13 @@
                 document.getElementById('chatToggleBtn').style.display = 'none';
             }
 
-            // Notificações iniciais
             if (notificacoes.length === 0) {
-                adicionarNotificacao('🎮 Bem-vindo ao Graal Online! Confira nossos mods.', 'info');
+                adicionarNotificacao('🎮 Bem-vindo ao Graal Online - Mod Menu Beta!', 'info');
             }
 
-            console.log('🚀 Graal Online carregado com sucesso!');
-            console.log('👑 Proprietário:', PROPRIETARIO_EMAIL);
+            console.log('🚀 Graal Online - Mod Menu Beta carregado!');
+            console.log('👑 Proprietário (DONO):', PROPRIETARIO_EMAIL);
+            console.log('💰 Valor: R$ 15,00 - 24h de acesso');
         });
     </script>
 
