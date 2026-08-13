@@ -9,7 +9,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <style>
-        /* (mesmo CSS que você já tem, pode manter igual) */
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +25,7 @@
             padding: 20px;
         }
         .system-container {
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
             background: #1a1a2e;
             border-radius: 20px;
@@ -108,7 +107,7 @@
         .system-body {
             display: flex;
             flex-direction: column;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .filter-section {
@@ -186,7 +185,7 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 500px;
+            max-height: 520px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -264,27 +263,56 @@
             color: #a78bfa;
         }
         .compra-card .btn-key {
-            padding: 6px 18px;
+            padding: 8px 20px;
             border-radius: 10px;
             border: none;
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #fff;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .compra-card .btn-key:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+        }
+        .compra-card .btn-key:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .compra-card .btn-ver {
+            padding: 8px 16px;
+            border-radius: 10px;
+            border: 1px solid #7c3aed;
+            background: transparent;
+            color: #a78bfa;
+            font-weight: 600;
+            font-size: 0.7rem;
             cursor: pointer;
             transition: 0.3s;
             display: flex;
             align-items: center;
             gap: 6px;
         }
-        .compra-card .btn-key:hover {
+        .compra-card .btn-ver:hover {
+            background: rgba(124, 58, 237, 0.15);
             transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
         }
-        .compra-card .btn-key:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
+        .compra-card .key-display {
+            font-family: monospace;
+            background: #0f0f1a;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid #22c55e;
+            color: #22c55e;
+            font-size: 0.7rem;
+            word-break: break-all;
+            max-width: 180px;
         }
 
         .empty-state {
@@ -300,18 +328,19 @@
         }
 
         .info-aguardando {
-            background: rgba(124, 58, 237, 0.1);
-            border: 1px solid #7c3aed;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid #f59e0b;
             border-radius: 10px;
             padding: 0.6rem 1rem;
             font-size: 0.8rem;
-            color: #a78bfa;
+            color: #f59e0b;
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
-        /* MODAL ENVIAR KEY */
+        /* MODAL CRIAR KEY PERSONALIZADA */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -319,8 +348,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
             z-index: 10000;
             align-items: center;
             justify-content: center;
@@ -331,13 +360,15 @@
         }
         .modal-key {
             background: #1a1a2e;
-            border: 1px solid #2d2d44;
+            border: 2px solid #f59e0b;
             border-radius: 20px;
             padding: 2rem;
-            max-width: 480px;
+            max-width: 540px;
             width: 100%;
             animation: modalIn 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            max-height: 95vh;
+            overflow-y: auto;
         }
         @keyframes modalIn {
             from {
@@ -362,7 +393,7 @@
             gap: 8px;
         }
         .modal-key .modal-header h3 i {
-            color: #7c3aed;
+            color: #f59e0b;
         }
         .modal-key .modal-header .close {
             background: none;
@@ -409,21 +440,52 @@
             margin-bottom: 4px;
             color: #cbd5e1;
         }
+        .modal-key .form-group label .hint {
+            font-weight: 400;
+            color: #94a3b8;
+            font-size: 0.7rem;
+        }
         .modal-key .form-group input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 10px;
-            border: 1px solid #2d2d44;
+            border: 2px solid #2d2d44;
             background: #0f0f1a;
             color: #e2e8f0;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-family: monospace;
             outline: none;
             transition: 0.3s;
+            letter-spacing: 0.5px;
         }
         .modal-key .form-group input:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+        }
+        .modal-key .form-group input::placeholder {
+            color: #4a4a6a;
+            font-size: 0.85rem;
+        }
+        .modal-key .form-group .exemplos {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+        .modal-key .form-group .exemplos span {
+            background: rgba(124, 58, 237, 0.15);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            color: #a78bfa;
+            font-family: monospace;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .modal-key .form-group .exemplos span:hover {
             border-color: #7c3aed;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+            background: rgba(124, 58, 237, 0.25);
         }
         .modal-key .form-actions {
             display: flex;
@@ -445,12 +507,12 @@
             gap: 8px;
         }
         .modal-key .form-actions .btn-enviar {
-            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #fff;
         }
         .modal-key .form-actions .btn-enviar:hover {
             transform: scale(1.02);
-            box-shadow: 0 4px 30px rgba(124, 58, 237, 0.4);
+            box-shadow: 0 4px 30px rgba(245, 158, 11, 0.4);
         }
         .modal-key .form-actions .btn-enviar:disabled {
             opacity: 0.5;
@@ -485,6 +547,65 @@
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid #ef4444;
             color: #ef4444;
+        }
+        .modal-key .status-msg.warning {
+            display: block;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+        }
+
+        /* MODAL VER DADOS DO COMPRADOR */
+        .modal-ver-dados .comprador-dados {
+            background: #0f0f1a;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #2d2d44;
+        }
+        .modal-ver-dados .comprador-dados .linha {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.85rem;
+        }
+        .modal-ver-dados .comprador-dados .linha:last-child {
+            border-bottom: none;
+        }
+        .modal-ver-dados .comprador-dados .label {
+            color: #94a3b8;
+        }
+        .modal-ver-dados .comprador-dados .valor {
+            color: #e2e8f0;
+            font-weight: 500;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
+        }
+        .modal-ver-dados .comprovante-area {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .modal-ver-dados .comprovante-area img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            border: 1px solid #2d2d44;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .modal-ver-dados .comprovante-area img:hover {
+            transform: scale(1.02);
+            border-color: #7c3aed;
+        }
+        .modal-ver-dados .comprovante-area .no-comprovante {
+            color: #64748b;
+            font-size: 0.85rem;
+            padding: 1rem;
+            background: #0f0f1a;
+            border-radius: 8px;
+            border: 1px dashed #2d2d44;
         }
 
         .toast {
@@ -554,7 +675,8 @@
             .compra-card .info .item {
                 font-size: 0.7rem;
             }
-            .compra-card .btn-key {
+            .compra-card .btn-key,
+            .compra-card .btn-ver {
                 width: 100%;
                 justify-content: center;
                 padding: 8px;
@@ -577,6 +699,14 @@
                 right: 20px;
                 left: 20px;
                 max-width: none;
+            }
+            .modal-ver-dados .comprador-dados .linha {
+                flex-direction: column;
+                gap: 2px;
+            }
+            .modal-ver-dados .comprador-dados .valor {
+                text-align: left;
+                max-width: 100%;
             }
         }
 
@@ -651,7 +781,7 @@
 
             <!-- Info: quantidade de compras aguardando -->
             <div class="info-aguardando" id="infoAguardando">
-                <i class="fas fa-clock"></i> <span id="contAguardando">0</span> compra(s) aguardando Key.
+                <i class="fas fa-clock"></i> <span id="contAguardando">0</span> compra(s) aguardando Key personalizada.
             </div>
 
             <!-- Lista de Compras -->
@@ -664,11 +794,11 @@
         </div>
     </div>
 
-    <!-- ===== MODAL ENVIAR KEY ===== -->
+    <!-- ===== MODAL CRIAR KEY PERSONALIZADA ===== -->
     <div class="modal-overlay" id="modalKey">
         <div class="modal-key">
             <div class="modal-header">
-                <h3><i class="fas fa-paper-plane"></i> Enviar Key</h3>
+                <h3><i class="fas fa-pen-fancy"></i> Criar Key Personalizada</h3>
                 <button class="close" onclick="fecharModalKey()">&times;</button>
             </div>
             <div class="comprador-info">
@@ -680,16 +810,55 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="keyInput"><i class="fas fa-key"></i> Chave da Key</label>
-                <input type="text" id="keyInput" placeholder="Cole a Key aqui..." autocomplete="off">
+                <label for="keyInput"><i class="fas fa-key"></i> Digite a Key personalizada <span class="hint">(crie qualquer formato)</span></label>
+                <input type="text" id="keyInput" placeholder="Ex: KZN-BETA-2026-ABCD-1234" autocomplete="off">
+                <div class="exemplos">
+                    <span onclick="document.getElementById('keyInput').value='KZN-CLASSIC-2026-ABCD-1234'">KZN-CLASSIC-2026-ABCD-1234</span>
+                    <span onclick="document.getElementById('keyInput').value='BETA-TESTE-7H-XXXX-YYYY'">BETA-TESTE-7H-XXXX-YYYY</span>
+                    <span onclick="document.getElementById('keyInput').value='ERA-AUTO-2026-9999'">ERA-AUTO-2026-9999</span>
+                    <span onclick="document.getElementById('keyInput').value='VIP-PERMANENTE-0001'">VIP-PERMANENTE-0001</span>
+                </div>
             </div>
             <div class="form-actions">
                 <button class="btn-cancelar" onclick="fecharModalKey()">Cancelar</button>
                 <button class="btn-enviar" id="btnEnviarKey" onclick="enviarKey()">
-                    <i class="fas fa-paper-plane"></i> Enviar Key
+                    <i class="fas fa-save"></i> Criar e Enviar Key
                 </button>
             </div>
             <div class="status-msg" id="modalStatus"></div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL VER DADOS DO COMPRADOR ===== -->
+    <div class="modal-overlay" id="modalVerDados">
+        <div class="modal-key modal-ver-dados">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-circle"></i> Dados do Comprador</h3>
+                <button class="close" onclick="fecharModalVerDados()">&times;</button>
+            </div>
+            <div class="comprador-dados" id="dadosComprador">
+                <div class="linha"><span class="label"><i class="fas fa-user"></i> Nome</span><span class="valor" id="vdNome">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-envelope"></i> E-mail</span><span class="valor" id="vdEmail">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-tag"></i> Produto</span><span class="valor" id="vdProduto">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-dollar-sign"></i> Valor</span><span class="valor" id="vdValor">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-calendar"></i> Data da Compra</span><span class="valor" id="vdData">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-clock"></i> Hora</span><span class="valor" id="vdHora">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-info-circle"></i> Status</span><span class="valor" id="vdStatus">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-key"></i> Key</span><span class="valor" id="vdKey" style="color:#22c55e;font-family:monospace;">-</span></div>
+                <div class="linha"><span class="label"><i class="fas fa-clock"></i> Enviada em</span><span class="valor" id="vdDataEnvio">-</span></div>
+            </div>
+            <div class="comprovante-area">
+                <div id="comprovanteContainer">
+                    <div class="no-comprovante"><i class="fas fa-image"></i> Nenhum comprovante anexado</div>
+                </div>
+            </div>
+            <div class="form-actions" style="margin-top:1rem;">
+                <button class="btn-cancelar" onclick="fecharModalVerDados()" style="flex:1;">Fechar</button>
+                <button class="btn-enviar" id="btnAbrirKey" onclick="abrirKeyDoModal()" style="flex:1; background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <i class="fas fa-key"></i> Criar Key
+                </button>
+            </div>
+            <div class="status-msg" id="modalVerStatus"></div>
         </div>
     </div>
 
@@ -718,6 +887,7 @@
         let usuarioAtual = null;
         let compras = [];
         let compraSelecionada = null;
+        let compraVisualizando = null;
         let filtroStatus = 'todos';
         let termoBusca = '';
 
@@ -858,7 +1028,6 @@
                 return true;
             });
 
-            // Atualizar contador de aguardando
             const aguardando = compras.filter(c => c.status === 'aguardando' && (!c.key || c.key.trim() === ''));
             document.getElementById('contAguardando').textContent = aguardando.length;
 
@@ -897,9 +1066,9 @@
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                             <span class="status-badge ${statusClass}">${statusLabel}</span>
-                            ${podeEnviar ? `<button class="btn-key" onclick="event.stopPropagation(); abrirModalKey('${compra.id}')"><i class="fas fa-paper-plane"></i> Enviar Key</button>` : ''}
-                            ${keyEnviada ? `<span style="font-size:0.65rem;color:#22c55e;"><i class="fas fa-check"></i> Enviada em ${compra.dataEnvio ? new Date(compra.dataEnvio).toLocaleString('pt-BR') : ''}</span>` : ''}
-                            ${compra.status === 'cancelado' ? `<span style="font-size:0.65rem;color:#ef4444;"><i class="fas fa-ban"></i> Cancelada</span>` : ''}
+                            ${podeEnviar ? `<button class="btn-key" onclick="event.stopPropagation(); abrirModalKey('${compra.id}')"><i class="fas fa-pen-fancy"></i> Criar Key</button>` : ''}
+                            ${keyEnviada ? `<span class="key-display">${compra.key}</span>` : ''}
+                            <button class="btn-ver" onclick="event.stopPropagation(); abrirModalVerDados('${compra.id}')"><i class="fas fa-eye"></i> Ver Dados</button>
                         </div>
                     </div>
                 `;
@@ -920,7 +1089,7 @@
             renderizarCompras();
         }
 
-        // ===== MODAL ENVIAR KEY =====
+        // ===== MODAL CRIAR KEY PERSONALIZADA =====
         function abrirModalKey(compraId) {
             const compra = compras.find(c => c.id === compraId);
             if (!compra) {
@@ -934,7 +1103,7 @@
             }
 
             if (compra.key && compra.key.trim() !== '') {
-                showToast('Esta compra já possui uma Key enviada.', 'error');
+                showToast('Esta compra já possui uma Key.', 'error');
                 return;
             }
 
@@ -949,7 +1118,7 @@
             document.getElementById('modalStatus').textContent = '';
             document.getElementById('btnEnviarKey').disabled = false;
             document.getElementById('modalKey').classList.add('open');
-            document.getElementById('keyInput').focus();
+            setTimeout(() => document.getElementById('keyInput').focus(), 300);
         }
 
         function fecharModalKey() {
@@ -957,14 +1126,20 @@
             compraSelecionada = null;
         }
 
-        // ===== ENVIAR KEY =====
+        // ===== ENVIAR KEY PERSONALIZADA =====
         function enviarKey() {
             const key = document.getElementById('keyInput').value.trim();
             const statusMsg = document.getElementById('modalStatus');
 
             if (!key) {
-                statusMsg.className = 'status-msg error';
-                statusMsg.textContent = '⚠️ Digite a Key antes de enviar.';
+                statusMsg.className = 'status-msg warning';
+                statusMsg.textContent = '⚠️ Digite a Key personalizada antes de criar.';
+                return;
+            }
+
+            if (key.length < 4) {
+                statusMsg.className = 'status-msg warning';
+                statusMsg.textContent = '⚠️ A Key deve ter pelo menos 4 caracteres.';
                 return;
             }
 
@@ -986,13 +1161,18 @@
                 return;
             }
 
+            // Confirmar antes de enviar
+            if (!confirm(`⚠️ Confirmar envio da Key personalizada para ${compraSelecionada.usuario?.nome || compraSelecionada.nome}?\n\nKey: ${key}`)) {
+                return;
+            }
+
             document.getElementById('btnEnviarKey').disabled = true;
             statusMsg.className = 'status-msg';
-            statusMsg.textContent = 'Enviando...';
+            statusMsg.textContent = 'Salvando Key personalizada...';
 
             const agora = new Date();
             const dataEnvio = agora.toISOString();
-            const horaEnvio = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            const horaEnvio = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
             const compraRef = db.ref('compras/' + compraSelecionada.id);
             const updates = {
@@ -1005,7 +1185,7 @@
             compraRef.update(updates)
                 .then(() => {
                     statusMsg.className = 'status-msg success';
-                    statusMsg.textContent = '✅ Key enviada com sucesso!';
+                    statusMsg.textContent = '✅ Key personalizada criada e enviada com sucesso!';
                     document.getElementById('btnEnviarKey').disabled = false;
 
                     const userId = compraSelecionada.usuarioId || compraSelecionada.userId;
@@ -1014,15 +1194,15 @@
                         notifRef.set({
                             userId: userId,
                             tipo: 'key_enviada',
-                            titulo: 'Nova Key disponível!',
-                            mensagem: `Sua Key para "${compraSelecionada.produto || 'seu produto'}" foi enviada. Acesse sua área de compras para visualizar.`,
+                            titulo: '🔑 Nova Key disponível!',
+                            mensagem: `Sua Key para "${compraSelecionada.produto || 'seu produto'}" foi criada e está disponível na sua área de compras.`,
                             data: new Date().toISOString(),
                             lida: false,
                             compraId: compraSelecionada.id
                         });
                     }
 
-                    showToast('Key enviada com sucesso!', 'success');
+                    showToast(`✅ Key "${key}" enviada com sucesso!`, 'success');
 
                     setTimeout(() => {
                         fecharModalKey();
@@ -1031,10 +1211,91 @@
                 })
                 .catch((error) => {
                     statusMsg.className = 'status-msg error';
-                    statusMsg.textContent = '❌ Erro ao enviar Key: ' + error.message;
+                    statusMsg.textContent = '❌ Erro ao salvar Key: ' + error.message;
                     document.getElementById('btnEnviarKey').disabled = false;
-                    showToast('Erro ao enviar Key.', 'error');
+                    showToast('Erro ao salvar Key.', 'error');
                 });
+        }
+
+        // ===== MODAL VER DADOS DO COMPRADOR =====
+        function abrirModalVerDados(compraId) {
+            const compra = compras.find(c => c.id === compraId);
+            if (!compra) {
+                showToast('Compra não encontrada.', 'error');
+                return;
+            }
+
+            compraVisualizando = compra;
+
+            document.getElementById('vdNome').textContent = compra.usuario?.nome || compra.nome || 'Desconhecido';
+            document.getElementById('vdEmail').textContent = compra.usuario?.email || compra.email || 'sem@email';
+            document.getElementById('vdProduto').textContent = compra.produto || 'Produto';
+            document.getElementById('vdValor').textContent = compra.valor ? `R$ ${compra.valor.toFixed(2)}` : '--';
+            document.getElementById('vdData').textContent = compra.data ? new Date(compra.data).toLocaleDateString('pt-BR') :
+                '--/--/----';
+            document.getElementById('vdHora').textContent = compra.hora || '--:--';
+
+            const statusMap = {
+                'aguardando': '⏳ Aguardando Key',
+                'enviado': '✅ Key Enviada',
+                'cancelado': '❌ Cancelado'
+            };
+            document.getElementById('vdStatus').textContent = statusMap[compra.status] || compra.status || 'Aguardando';
+            document.getElementById('vdStatus').style.color = compra.status === 'enviado' ? '#22c55e' :
+                compra.status === 'cancelado' ? '#ef4444' : '#f59e0b';
+
+            document.getElementById('vdKey').textContent = compra.key || '⏳ Aguardando';
+            document.getElementById('vdKey').style.color = compra.key ? '#22c55e' : '#f59e0b';
+
+            document.getElementById('vdDataEnvio').textContent = compra.dataEnvio ? new Date(compra.dataEnvio)
+                .toLocaleString('pt-BR') : '--';
+
+            // Comprovante
+            const container = document.getElementById('comprovanteContainer');
+            if (compra.comprovante && compra.comprovante.startsWith('data:image')) {
+                container.innerHTML = `
+                    <img src="${compra.comprovante}" alt="Comprovante PIX" onclick="window.open('${compra.comprovante}', '_blank')" />
+                    <p style="font-size:0.65rem;color:#64748b;margin-top:4px;">Clique na imagem para ampliar</p>
+                `;
+            } else if (compra.comprovante && compra.comprovante.startsWith('http')) {
+                container.innerHTML = `
+                    <img src="${compra.comprovante}" alt="Comprovante PIX" onclick="window.open('${compra.comprovante}', '_blank')" />
+                    <p style="font-size:0.65rem;color:#64748b;margin-top:4px;">Clique na imagem para ampliar</p>
+                `;
+            } else {
+                container.innerHTML = `
+                    <div class="no-comprovante"><i class="fas fa-image"></i> Nenhum comprovante anexado</div>
+                `;
+            }
+
+            document.getElementById('modalVerStatus').className = 'status-msg';
+            document.getElementById('modalVerStatus').textContent = '';
+
+            // Botão "Criar Key" só aparece se ainda não tiver key
+            const btnAbrirKey = document.getElementById('btnAbrirKey');
+            if (compra.key && compra.key.trim() !== '') {
+                btnAbrirKey.style.display = 'none';
+            } else if (compra.status === 'cancelado') {
+                btnAbrirKey.style.display = 'none';
+            } else {
+                btnAbrirKey.style.display = 'flex';
+            }
+
+            document.getElementById('modalVerDados').classList.add('open');
+        }
+
+        function fecharModalVerDados() {
+            document.getElementById('modalVerDados').classList.remove('open');
+            compraVisualizando = null;
+        }
+
+        function abrirKeyDoModal() {
+            if (compraVisualizando) {
+                fecharModalVerDados();
+                setTimeout(() => {
+                    abrirModalKey(compraVisualizando.id);
+                }, 300);
+            }
         }
 
         // ===== SELECIONAR COMPRA =====
@@ -1047,7 +1308,7 @@
             } else if (compra.status === 'aguardando') {
                 abrirModalKey(compraId);
             } else {
-                showToast(`Status: ${compra.status || 'aguardando'}`, 'info');
+                abrirModalVerDados(compraId);
             }
         }
 
