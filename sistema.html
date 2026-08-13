@@ -14,6 +14,7 @@
     <!-- Google Identity Services -->
     <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
+        /* ========== MESMO CSS DO SITE PRINCIPAL ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
@@ -48,6 +49,7 @@
         }
         .fade-up { animation: fadeUp 0.6s ease forwards; }
 
+        /* ===== HEADER ===== */
         .header {
             background: rgba(11,11,26,0.85);
             backdrop-filter: blur(16px);
@@ -152,6 +154,7 @@
             font-size: 1.6rem;
         }
 
+        /* ===== HERO ===== */
         .hero {
             padding: 140px 0 80px;
             background: radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.15), transparent 60%),
@@ -188,6 +191,7 @@
             letter-spacing: 1px;
         }
 
+        /* ===== PLANOS ===== */
         .section {
             padding: 60px 0;
         }
@@ -275,6 +279,7 @@
         }
         .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
 
+        /* ===== FORMULÁRIO ===== */
         .form-container {
             max-width: 560px;
             margin: 0 auto;
@@ -337,6 +342,7 @@
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #22c55e; }
         .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #ef4444; }
 
+        /* ===== ADMIN ===== */
         .admin-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -395,6 +401,7 @@
         .btn-small.success { background: #22c55e; color: #fff; }
         .btn-small.success:hover { background: #16a34a; }
 
+        /* ===== PERFIL ===== */
         .profile-card {
             max-width: 600px;
             margin: 0 auto;
@@ -442,6 +449,7 @@
         .profile-card .keys-list .key-item:last-child { border-bottom: none; }
         .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); }
 
+        /* ===== CHAT ===== */
         .chat-container {
             max-width: 700px;
             margin: 0 auto;
@@ -529,6 +537,7 @@
         }
         .chat-input-area button:hover { background: var(--primary-dark); }
 
+        /* ===== NOTIFICAÇÕES ===== */
         .notification-badge {
             position: relative;
             cursor: pointer;
@@ -572,6 +581,7 @@
         .notif-item:last-child { border-bottom: none; }
         .notif-item .notif-time { font-size: 0.6rem; color: var(--text-muted); display: block; margin-top: 4px; }
 
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-links {
@@ -786,7 +796,7 @@
     </footer>
 
     <script>
-        // ===== FIREBASE CONFIG =====
+        // ===== CONFIGURAÇÃO FIREBASE (MESMA DO SITE PRINCIPAL) =====
         const firebaseConfig = {
             apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
             authDomain: "chat-kzn.firebaseapp.com",
@@ -803,6 +813,7 @@
 
         // ===== CONSTANTES =====
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
+        const CLIENT_ID = '642206758344-ma2e07eu08dokkui9d28cfiqfnrss50v.apps.googleusercontent.com';
         let currentUser = null;
         let currentUserDoc = null;
         let chatRoomId = null;
@@ -829,22 +840,42 @@
         const notifCount = document.getElementById('notifCount');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-        // ===== REDIRECT LOGIN =====
-        function loginWithRedirect() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithRedirect(provider);
+        // ===== INICIALIZAR GSI (IGUAL AO SITE PRINCIPAL) =====
+        function initGoogleSignIn() {
+            if (typeof google !== 'undefined') {
+                google.accounts.id.initialize({
+                    client_id: CLIENT_ID,
+                    callback: handleCredentialResponse,
+                    cancel_on_tap_outside: false,
+                    auto_select: false
+                });
+                googleLoginBtn.addEventListener('click', () => {
+                    google.accounts.id.prompt(); // Abre o popup
+                });
+            } else {
+                // Fallback: Firebase popup
+                googleLoginBtn.addEventListener('click', loginWithFirebasePopup);
+            }
         }
 
-        // ===== PROCESSAR RESULTADO DO REDIRECT =====
-        auth.getRedirectResult().then((result) => {
-            if (result.user) {
-                // Login bem-sucedido via redirect
-                // O observer vai tratar
+        // ===== CALLBACK DO GSI =====
+        async function handleCredentialResponse(response) {
+            try {
+                const credential = firebase.auth.GoogleAuthProvider.credential(null, response.credential);
+                await auth.signInWithCredential(credential);
+            } catch (error) {
+                console.error('Erro no GSI:', error);
+                loginWithFirebasePopup(); // Fallback
             }
-        }).catch((error) => {
-            console.error('Redirect login error:', error);
-            // Se houver erro, tentar popup como fallback (mas dificilmente)
-        });
+        }
+
+        // ===== FALLBACK: POPUP FIREBASE =====
+        function loginWithFirebasePopup() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(err => {
+                alert('Erro ao fazer login: ' + err.message);
+            });
+        }
 
         // ===== OBSERVADOR DE AUTENTICAÇÃO =====
         auth.onAuthStateChanged(async (user) => {
@@ -915,7 +946,7 @@
             }
         });
 
-        // ===== FUNÇÕES AUXILIARES =====
+        // ===== FUNÇÕES AUXILIARES (MESMAS DO SITE PRINCIPAL) =====
         async function carregarKeysUsuario(uid) {
             const snapshot = await db.collection('keys')
                 .where('uid', '==', uid)
@@ -1159,6 +1190,7 @@
             input.value = '';
         }
 
+        // ===== ENVIO DO FORMULÁRIO =====
         document.getElementById('formCompra').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnComprar');
@@ -1296,8 +1328,12 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== BOTÃO DE LOGIN =====
-        googleLoginBtn.addEventListener('click', loginWithRedirect);
+        // ===== INICIALIZAR =====
+        if (typeof google !== 'undefined') {
+            initGoogleSignIn();
+        } else {
+            googleLoginBtn.addEventListener('click', loginWithFirebasePopup);
+        }
 
         console.log('🚀 Graal Classic BETA carregado!');
     </script>
