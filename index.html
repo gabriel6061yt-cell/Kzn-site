@@ -4779,65 +4779,72 @@ l<!DOCTYPE html>
         }
 
         // ====== PERFIL ======
-        function carregarPerfil() {
-            const dados = localStorage.getItem('kzn_usuario_logado');
-            if (dados) {
-                try {
-                    const usuario = JSON.parse(dados);
-                    
-                    const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-                    const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
-                    
-                    if (usuarioCadastrado) {
-                        usuario.nome = usuarioCadastrado.nome;
-                        usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
-                        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
-                    }
-                    
-                    usuarioLogado = usuario;
-                    
-                    document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
-                    document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
-                    document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
-                    document.getElementById('editNome').value = usuario.nome || '';
-                    document.getElementById('editEmail').value = usuario.email || '';
-                    document.getElementById('editEmail').disabled = true;
-
-                    if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
-                        document.getElementById('avatarProfileImage').src = usuario.avatar;
-                        document.getElementById('avatarProfileImage').style.display = 'block';
-                        document.getElementById('avatarProfileText').style.display = 'none';
-                        document.getElementById('avatarText').textContent = '';
-                        document.querySelector('.profile-btn .avatar').innerHTML =
-                            `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-                    } else if (usuario.avatar && usuario.avatar.startsWith('http')) {
-                        document.getElementById('avatarProfileImage').src = usuario.avatar;
-                        document.getElementById('avatarProfileImage').style.display = 'block';
-                        document.getElementById('avatarProfileText').style.display = 'none';
-                        document.getElementById('avatarText').textContent = '';
-                        document.querySelector('.profile-btn .avatar').innerHTML =
-                            `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
-                    } else {
-                        const letra = (usuario.nome || 'U')[0].toUpperCase();
-                        document.getElementById('avatarProfileText').textContent = letra;
-                        document.getElementById('avatarProfileText').style.display = 'block';
-                        document.getElementById('avatarProfileImage').style.display = 'none';
-                        document.getElementById('avatarText').textContent = letra;
-                        document.querySelector('.profile-btn .avatar').innerHTML =
-                            `<span class="avatar-letter" id="avatarText">${letra}</span>`;
-                    }
-                    
-                    return true;
-                } catch (e) {
-                    console.error('Erro ao carregar perfil:', e);
-                    resetarPerfilPadrao();
-                    return false;
-                }
-            } else {
-                resetarPerfilPadrao();
-                return false;
+function carregarPerfil() {
+    const dados = localStorage.getItem('kzn_usuario_logado');
+    if (dados) {
+        try {
+            const usuario = JSON.parse(dados);
+            
+            // ✅ CARREGA OS USUÁRIOS DO LOCALSTORAGE
+            const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+            const usuarioCadastrado = usuarios.find(u => u.email === usuario.email);
+            
+            // ✅ SE ENCONTROU O USUÁRIO NO CADASTRO, USA O NOME DE LÁ
+            if (usuarioCadastrado) {
+                // ATUALIZA O NOME DO USUÁRIO LOGADO COM O NOME DO CADASTRO
+                usuario.nome = usuarioCadastrado.nome;
+                usuario.avatar = usuarioCadastrado.avatar || usuario.avatar || null;
+                // SALVA NO LOCALSTORAGE NOVAMENTE
+                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
             }
+            
+            // ATUALIZA A VARIÁVEL GLOBAL
+            usuarioLogado = usuario;
+            
+            // ATUALIZA A INTERFACE
+            document.getElementById('userDisplay').textContent = usuario.nome || 'Usuário';
+            document.getElementById('profileName').textContent = usuario.nome || 'KZN Usuário';
+            document.getElementById('profileEmail').textContent = usuario.email || 'usuario@kzn.com';
+            document.getElementById('editNome').value = usuario.nome || '';
+            document.getElementById('editEmail').value = usuario.email || '';
+            document.getElementById('editEmail').disabled = true;
+
+            // ATUALIZA O AVATAR
+            if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
+                document.getElementById('avatarProfileImage').src = usuario.avatar;
+                document.getElementById('avatarProfileImage').style.display = 'block';
+                document.getElementById('avatarProfileText').style.display = 'none';
+                document.getElementById('avatarText').textContent = '';
+                document.querySelector('.profile-btn .avatar').innerHTML =
+                    `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+            } else if (usuario.avatar && usuario.avatar.startsWith('http')) {
+                document.getElementById('avatarProfileImage').src = usuario.avatar;
+                document.getElementById('avatarProfileImage').style.display = 'block';
+                document.getElementById('avatarProfileText').style.display = 'none';
+                document.getElementById('avatarText').textContent = '';
+                document.querySelector('.profile-btn .avatar').innerHTML =
+                    `<img src="${usuario.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" />`;
+            } else {
+                const letra = (usuario.nome || 'U')[0].toUpperCase();
+                document.getElementById('avatarProfileText').textContent = letra;
+                document.getElementById('avatarProfileText').style.display = 'block';
+                document.getElementById('avatarProfileImage').style.display = 'none';
+                document.getElementById('avatarText').textContent = letra;
+                document.querySelector('.profile-btn .avatar').innerHTML =
+                    `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+            }
+            
+            return true;
+        } catch (e) {
+            console.error('Erro ao carregar perfil:', e);
+            resetarPerfilPadrao();
+            return false;
         }
+    } else {
+        resetarPerfilPadrao();
+        return false;
+    }
+}
 
         function resetarPerfilPadrao() {
             document.getElementById('userDisplay').textContent = 'Entrar';
@@ -4941,70 +4948,77 @@ l<!DOCTYPE html>
         };
 
         window.salvarEdicaoPerfil = function() {
-            const nome = document.getElementById('editNome').value.trim();
-            const senha = document.getElementById('editSenha').value;
+    const nome = document.getElementById('editNome').value.trim();
+    const senha = document.getElementById('editSenha').value;
 
-            if (!nome) {
-                alert('⚠️ Digite um nome válido.');
-                return;
+    if (!nome) {
+        alert('⚠️ Digite um nome válido.');
+        return;
+    }
+
+    const dados = localStorage.getItem('kzn_usuario_logado');
+    if (!dados) {
+        alert('❌ Nenhum usuário logado.');
+        return;
+    }
+
+    try {
+        const usuario = JSON.parse(dados);
+        const emailAntigo = usuario.email;
+        
+        // ✅ ATUALIZA O NOME NO USUÁRIO LOGADO
+        usuario.nome = nome;
+        localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+
+        // ✅ ATUALIZA O NOME NA LISTA DE USUÁRIOS
+        const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
+        const idx = usuarios.findIndex(u => u.email === emailAntigo);
+        if (idx !== -1) {
+            usuarios[idx].nome = nome;
+            if (senha && senha.length >= 6) {
+                usuarios[idx].senha = senha;
+                alert('🔐 Senha atualizada com sucesso!');
             }
-
-            const dados = localStorage.getItem('kzn_usuario_logado');
-            if (!dados) {
-                alert('❌ Nenhum usuário logado.');
-                return;
-            }
-
+            localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
+            
+            // ✅ ATUALIZA TAMBÉM NO FIREBASE
             try {
-                const usuario = JSON.parse(dados);
-                const emailAntigo = usuario.email;
-                
-                usuario.nome = nome;
-                localStorage.setItem('kzn_usuario_logado', JSON.stringify(usuario));
+                const userRef = usuariosRef.child(emailAntigo.replace(/[.#$\/\[\]]/g, '_'));
+                userRef.update({ nome: nome });
+            } catch (e) {}
+        }
 
-                const usuarios = JSON.parse(localStorage.getItem('kzn_usuarios') || '[]');
-                const idx = usuarios.findIndex(u => u.email === emailAntigo);
-                if (idx !== -1) {
-                    usuarios[idx].nome = nome;
-                    if (senha && senha.length >= 6) {
-                        usuarios[idx].senha = senha;
-                        alert('🔐 Senha atualizada com sucesso!');
-                    }
-                    localStorage.setItem('kzn_usuarios', JSON.stringify(usuarios));
-                    
-                    try {
-                        const userRef = usuariosRef.child(emailAntigo.replace(/[.#$\/\[\]]/g, '_'));
-                        userRef.update({ nome: nome });
-                    } catch (e) {}
-                }
+        // ✅ ATUALIZA A INTERFACE
+        document.getElementById('userDisplay').textContent = nome;
+        document.getElementById('profileName').textContent = nome;
+        document.getElementById('profileEmail').textContent = usuario.email;
+        
+        // ATUALIZA A LETRA DO AVATAR SE NÃO TIVER IMAGEM
+        const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
+        if (!usuarioAtual.avatar) {
+            const letra = nome[0].toUpperCase();
+            document.getElementById('avatarText').textContent = letra;
+            document.getElementById('avatarProfileText').textContent = letra;
+            document.querySelector('.profile-btn .avatar').innerHTML =
+                `<span class="avatar-letter" id="avatarText">${letra}</span>`;
+        }
 
-                document.getElementById('userDisplay').textContent = nome;
-                document.getElementById('profileName').textContent = nome;
-                document.getElementById('profileEmail').textContent = usuario.email;
-                
-                const usuarioAtual = JSON.parse(localStorage.getItem('kzn_usuario_logado'));
-                if (!usuarioAtual.avatar) {
-                    const letra = nome[0].toUpperCase();
-                    document.getElementById('avatarText').textContent = letra;
-                    document.getElementById('avatarProfileText').textContent = letra;
-                    document.querySelector('.profile-btn .avatar').innerHTML =
-                        `<span class="avatar-letter" id="avatarText">${letra}</span>`;
-                }
+        // ✅ ATUALIZA A VARIÁVEL GLOBAL
+        usuarioLogado = usuarioAtual;
 
-                document.getElementById('editProfileArea').style.display = 'none';
-                document.getElementById('editEmail').disabled = true;
-                document.getElementById('editEmail').style.opacity = '0.6';
-                document.getElementById('editEmail').style.cursor = 'not-allowed';
-                document.getElementById('editSenha').value = '';
-                
-                usuarioLogado = usuarioAtual;
-                
-                alert('✅ Perfil atualizado com sucesso!');
-            } catch (e) {
-                console.error('Erro ao salvar edição:', e);
-                alert('❌ Erro ao salvar perfil. Tente novamente.');
-            }
-        };
+        // FECHA O EDITOR
+        document.getElementById('editProfileArea').style.display = 'none';
+        document.getElementById('editEmail').disabled = true;
+        document.getElementById('editEmail').style.opacity = '0.6';
+        document.getElementById('editEmail').style.cursor = 'not-allowed';
+        document.getElementById('editSenha').value = '';
+        
+        alert('✅ Perfil atualizado com sucesso!');
+    } catch (e) {
+        console.error('Erro ao salvar edição:', e);
+        alert('❌ Erro ao salvar perfil. Tente novamente.');
+    }
+};
 
         window.abrirPerfil = function() {
             const dados = localStorage.getItem('kzn_usuario_logado');
