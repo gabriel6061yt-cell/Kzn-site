@@ -2228,12 +2228,18 @@
                     // Keys do usuário
                     carregarKeysUsuario(usuario.email);
 
-                    // MOSTRA ADMIN SÓ PARA O PROPRIETÁRIO
-                    if (isProprietario(usuario.email)) {
-                        document.getElementById('admin').style.display = 'block';
+                    // ⚠️ MOSTRA ADMIN SÓ PARA O PROPRIETÁRIO (CORRIGIDO!)
+                    const isOwner = isProprietario(usuario.email);
+                    const adminSection = document.getElementById('admin');
+                    
+                    if (isOwner) {
+                        adminSection.style.display = 'block';
                         carregarComprasAdmin();
+                        console.log('👑 Proprietário detectado! Admin liberado.');
+                        adicionarNotificacao('👑 Bem-vindo, Proprietário! Painel Admin disponível.', 'sucesso');
                     } else {
-                        document.getElementById('admin').style.display = 'none';
+                        adminSection.style.display = 'none';
+                        console.log('👤 Usuário comum. Admin oculto.');
                     }
 
                     return true;
