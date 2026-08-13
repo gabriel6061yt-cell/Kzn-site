@@ -1,14 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GRAAL ONLINE CLASSIC TEST BETA</title>
-  <!-- Font Awesome 6 (gratuito) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- Google Fonts Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- CSS interno -->
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -16,7 +16,7 @@
       background: #0b0b1a;
       color: #f1f5f9;
       min-height: 100vh;
-      padding-top: 70px;
+      padding-top: 72px;
     }
     a { color: #7c3aed; text-decoration: none; }
     .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
@@ -25,59 +25,69 @@
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      background: #0b0b1aee;
-      backdrop-filter: blur(6px);
+      background: rgba(11,11,26,0.92);
+      backdrop-filter: blur(8px);
       border-bottom: 1px solid #2d2d5e;
-      padding: 12px 20px;
+      padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       z-index: 1000;
       flex-wrap: wrap;
+      gap: 8px;
     }
-    .logo { font-weight: 700; font-size: 1.4rem; color: #7c3aed; }
+    .logo { font-weight: 700; font-size: 1.5rem; color: #7c3aed; }
     .logo span { color: #06b6d4; }
-    .nav-actions { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
-    .nav-actions button { background: transparent; border: none; color: #f1f5f9; font-size: 1.2rem; cursor: pointer; transition: .2s; }
+    .logo small { font-size: 0.7rem; color: #94a3b8; font-weight: 400; margin-left: 4px; }
+    .nav-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .nav-actions button {
+      background: transparent; border: none; color: #f1f5f9;
+      font-size: 1.2rem; cursor: pointer; transition: .2s;
+    }
     .nav-actions button:hover { color: #7c3aed; }
-    .avatar-small { width: 36px; height: 36px; border-radius: 50%; background: #2d2d5e; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; border: 2px solid #7c3aed; object-fit: cover; }
-    .badge-proprietario { background: #f59e0b; color: #0b0b1a; font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; margin-left: 6px; }
+    .avatar-small {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #2d2d5e; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; border: 2px solid #7c3aed; object-fit: cover;
+    }
+    .badge-proprietario {
+      background: #f59e0b; color: #0b0b1a; font-size: 0.6rem;
+      padding: 2px 10px; border-radius: 30px; font-weight: 700;
+      margin-left: 6px;
+    }
 
     /* NOTIFICAÇÕES */
     .notif-container { position: relative; cursor: pointer; }
-    .notif-count { position: absolute; top: -8px; right: -8px; background: #ef4444; color: #fff; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: 700; }
+    .notif-count {
+      position: absolute; top: -8px; right: -8px;
+      background: #ef4444; color: #fff; border-radius: 50%;
+      padding: 2px 6px; font-size: 0.65rem; font-weight: 700;
+    }
     .notif-dropdown {
-      position: absolute;
-      right: 0; top: 40px;
-      background: #14142b;
-      border: 1px solid #2d2d5e;
-      border-radius: 12px;
-      width: 300px;
-      max-height: 300px;
-      overflow-y: auto;
-      padding: 10px 0;
-      display: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      position: absolute; right: 0; top: 40px;
+      background: #14142b; border: 1px solid #2d2d5e;
+      border-radius: 16px; width: 300px; max-height: 300px;
+      overflow-y: auto; padding: 8px 0;
+      display: none; box-shadow: 0 12px 40px rgba(0,0,0,0.8);
     }
     .notif-dropdown.open { display: block; }
     .notif-item { padding: 10px 16px; border-bottom: 1px solid #2d2d5e; font-size: 0.9rem; }
     .notif-item:last-child { border: none; }
-    .notif-item.lida { opacity: 0.6; }
+    .notif-item.lida { opacity: 0.5; }
 
     /* CARDS E BOTÕES */
     .card {
       background: #14142b;
       border: 1px solid #2d2d5e;
-      border-radius: 20px;
-      padding: 24px;
-      margin: 20px 0;
+      border-radius: 24px;
+      padding: 28px;
+      margin: 24px 0;
       transition: .3s;
     }
     .btn {
       background: #7c3aed;
-      border: none;
-      color: #fff;
-      padding: 12px 24px;
+      border: none; color: #fff;
+      padding: 12px 28px;
       border-radius: 40px;
       font-weight: 600;
       cursor: pointer;
@@ -94,23 +104,26 @@
     .btn-danger { background: #ef4444; }
     .btn-warning { background: #f59e0b; color: #0b0b1a; }
 
-    input, select, textarea, .file-upload {
+    input, select, .file-upload {
       background: #0b0b1a;
       border: 1px solid #2d2d5e;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px 16px;
       color: #f1f5f9;
       width: 100%;
       margin: 8px 0;
       font-family: 'Inter', sans-serif;
     }
-    input:focus, select:focus, textarea:focus { outline: 2px solid #7c3aed; border: none; }
+    input:focus, select:focus { outline: 2px solid #7c3aed; border: none; }
     label { font-weight: 500; font-size: 0.9rem; color: #94a3b8; }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-    .status-badge { padding: 4px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; }
+    .status-badge {
+      padding: 4px 14px; border-radius: 40px; font-size: 0.7rem;
+      font-weight: 600; display: inline-block;
+    }
     .status-pendente { background: #f59e0b; color: #0b0b1a; }
     .status-aprovado { background: #22c55e; color: #0b0b1a; }
     .status-cancelado { background: #ef4444; color: #fff; }
@@ -119,40 +132,32 @@
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     th { text-align: left; padding: 12px 8px; border-bottom: 2px solid #2d2d5e; color: #94a3b8; }
     td { padding: 12px 8px; border-bottom: 1px solid #2d2d5e; }
-    .admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .admin-actions { display: flex; gap: 6px; flex-wrap: wrap; }
 
     .chat-box {
-      height: 300px;
-      overflow-y: auto;
-      background: #0b0b1a;
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid #2d2d5e;
-      margin: 12px 0;
+      height: 280px; overflow-y: auto; background: #0b0b1a;
+      border-radius: 16px; padding: 16px;
+      border: 1px solid #2d2d5e; margin: 12px 0;
     }
     .chat-msg { margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; }
     .chat-msg.proprietario { flex-direction: row-reverse; }
     .chat-bubble {
-      background: #14142b;
-      padding: 10px 16px;
-      border-radius: 16px;
-      max-width: 75%;
-      border: 1px solid #2d2d5e;
+      background: #14142b; padding: 10px 16px; border-radius: 16px;
+      max-width: 75%; border: 1px solid #2d2d5e;
     }
     .chat-msg.proprietario .chat-bubble { background: #2d2d5e; border-color: #7c3aed; }
-    .chat-time { font-size: 0.65rem; color: #94a3b8; margin-top: 4px; }
+    .chat-time { font-size: 0.6rem; color: #94a3b8; margin-top: 4px; }
 
-    .hero { text-align: center; padding: 60px 0 30px; }
-    .hero h1 { font-size: 2.8rem; font-weight: 700; }
+    .hero { text-align: center; padding: 50px 0 20px; }
+    .hero h1 { font-size: 2.6rem; font-weight: 700; }
     .hero h1 i { color: #f59e0b; }
 
     .footer { margin-top: 60px; padding: 30px 0; border-top: 1px solid #2d2d5e; text-align: center; color: #94a3b8; font-size: 0.9rem; }
 
-    /* animações */
     .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; }
     @keyframes fadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    .hidden { display: none; }
+    .hidden { display: none !important; }
     .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .gap-8 { gap: 8px; }
     .mt-12 { margin-top: 12px; }
@@ -160,37 +165,48 @@
     .text-muted { color: #94a3b8; }
     .text-center { text-align: center; }
     .w-full { width: 100%; }
+
+    /* MODAL */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(11,11,26,0.8); backdrop-filter: blur(4px);
+      z-index: 2000; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card { max-width: 420px; width: 100%; margin: 20px; }
   </style>
 </head>
 <body>
+
 <!-- HEADER -->
 <header>
-  <div class="logo">GRAAL<span>CLASSIC</span> <span style="font-size:0.7rem; color:#94a3b8;">BETA</span></div>
+  <div class="logo">GRAAL<span>CLASSIC</span><small>BETA</small></div>
   <div class="nav-actions">
     <button onclick="scrollToSection('comprar')"><i class="fas fa-shopping-cart"></i></button>
     <button onclick="scrollToSection('perfil')"><i class="fas fa-user"></i></button>
     <button onclick="scrollToSection('suporte')"><i class="fas fa-headset"></i></button>
-    <!-- notificações -->
+
     <div class="notif-container" onclick="toggleNotificacoes()">
       <i class="fas fa-bell" style="font-size:1.3rem;"></i>
       <span class="notif-count" id="notifCount">0</span>
       <div class="notif-dropdown" id="notifDropdown"></div>
     </div>
+
     <div id="authButtons">
-      <button onclick="showLogin()" class="btn btn-secondary" style="padding:8px 18px;">Entrar</button>
-      <button onclick="showRegister()" class="btn" style="padding:8px 18px;">Registrar</button>
+      <button onclick="showLogin()" class="btn btn-secondary" style="padding:6px 18px;">Entrar</button>
+      <button onclick="showRegister()" class="btn" style="padding:6px 18px;">Registrar</button>
     </div>
     <div id="userInfo" class="hidden flex">
       <span id="userNameDisplay" style="font-weight:500;"></span>
-      <img id="userAvatarHeader" class="avatar-small" src="" alt="avatar">
+      <img id="userAvatarHeader" class="avatar-small" src="" alt="avatar" />
       <button onclick="logout()" style="background:transparent; border:none; color:#ef4444; font-size:1.1rem;"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
 </header>
 
-<!-- MODAL LOGIN / REGISTRO (simplificado) -->
-<div id="loginModal" style="display:none; position:fixed; inset:0; background:#0b0b1acc; backdrop-filter:blur(4px); z-index:2000; align-items:center; justify-content:center;">
-  <div class="card" style="max-width:400px; width:100%; margin:20px;">
+<!-- MODAL LOGIN/REGISTRO -->
+<div class="modal-overlay" id="loginModal">
+  <div class="card modal-card">
     <h3 id="loginTitle">Login</h3>
     <div id="loginForm">
       <input type="email" id="loginEmail" placeholder="E-mail" />
@@ -215,16 +231,17 @@
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container">
+
   <!-- HERO -->
   <section class="hero fade-up">
     <h1><i class="fas fa-crown"></i> GRAAL ONLINE CLASSIC</h1>
-    <p style="font-size:1.3rem; color:#94a3b8;">Servidor exclusivo · Acesso 24h · R$ 15,00</p>
-    <button onclick="scrollToSection('comprar')" class="btn" style="margin-top:20px; font-size:1.2rem; padding:14px 40px;"><i class="fas fa-rocket"></i> Comprar Agora</button>
+    <p style="font-size:1.2rem; color:#94a3b8;">Servidor exclusivo · Acesso 24h · R$ 15,00</p>
+    <button onclick="scrollToSection('comprar')" class="btn" style="margin-top:20px; font-size:1.1rem; padding:14px 40px;"><i class="fas fa-rocket"></i> Comprar Agora</button>
   </section>
 
   <!-- PLANOS -->
   <section id="planos" class="fade-up">
-    <h2 style="margin-bottom:10px;">Planos</h2>
+    <h2>Planos</h2>
     <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
       <div><h3>Acesso 24h</h3><p class="text-muted">R$ 15,00</p></div>
       <button onclick="scrollToSection('comprar')" class="btn"><i class="fas fa-cart-plus"></i> Comprar</button>
@@ -243,7 +260,7 @@
         </select>
         <div class="file-upload">
           <label>Comprovante PIX (imagem/PDF)</label>
-          <input type="file" id="compraComprovante" accept="image/*,application/pdf" required style="padding:8px; background:#0b0b1a; border:1px solid #2d2d5e; border-radius:12px; width:100%;" />
+          <input type="file" id="compraComprovante" accept="image/*,application/pdf" required style="padding:8px; background:#0b0b1a; border:1px solid #2d2d5e; border-radius:14px; width:100%;" />
         </div>
         <div id="compraMsg" class="text-muted"></div>
         <button type="submit" class="btn w-full" style="justify-content:center;" id="compraBtn"><i class="fas fa-paper-plane"></i> Enviar Compra</button>
@@ -266,7 +283,7 @@
       </div>
       <div class="flex" style="margin-top:12px;">
         <input type="text" id="editarNomeInput" placeholder="Novo nome" style="flex:1; min-width:150px;" />
-        <button onclick="atualizarNome()" class="btn btn-secondary"><i class="fas fa-pen"></i> Editar Nome</button>
+        <button onclick="atualizarNome()" class="btn btn-secondary"><i class="fas fa-pen"></i> Editar</button>
         <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)" />
         <button onclick="document.getElementById('avatarUpload').click()" class="btn btn-secondary"><i class="fas fa-camera"></i> Foto</button>
       </div>
@@ -317,13 +334,13 @@
 <script>
   // ===== CONFIG FIREBASE =====
   const firebaseConfig = {
-    apiKey: "AIzaSyD-9f5G8j7H3vK2LmNpQrStUvWxYzAbCdEfGhIj", // substitua com suas credenciais
-    authDomain: "graal-classic-test.firebaseapp.com",
-    projectId: "graal-classic-test",
-    storageBucket: "graal-classic-test.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef1234567890",
-    databaseURL: "https://graal-classic-test-default-rtdb.firebaseio.com/"
+    apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
+    authDomain: "chat-kzn.firebaseapp.com",
+    projectId: "chat-kzn",
+    storageBucket: "chat-kzn.firebasestorage.app",
+    messagingSenderId: "641963268535",
+    appId: "1:641963268535:web:b1f8b26f69840f527a7032",
+    databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com"
   };
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
@@ -333,7 +350,7 @@
   // Persistência LOCAL
   auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-  // ===== VARIÁVEIS GLOBAIS =====
+  // ===== VARIÁVEIS =====
   const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
   let currentUser = null;
   let formSubmitting = false;
@@ -354,7 +371,7 @@
   }
 
   function fecharModal() {
-    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('loginModal').classList.remove('open');
   }
 
   // ===== AUTENTICAÇÃO =====
@@ -362,13 +379,13 @@
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById('registerForm').style.display = 'none';
     document.getElementById('loginTitle').innerText = 'Login';
-    document.getElementById('loginModal').style.display = 'flex';
+    document.getElementById('loginModal').classList.add('open');
   }
   function showRegister() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('registerForm').style.display = 'block';
     document.getElementById('loginTitle').innerText = 'Registrar';
-    document.getElementById('loginModal').style.display = 'flex';
+    document.getElementById('loginModal').classList.add('open');
   }
 
   async function login() {
@@ -379,7 +396,7 @@
       await auth.signInWithEmailAndPassword(email, senha);
       fecharModal();
     } catch (e) {
-      msg.innerText = 'Erro: ' + e.message;
+      msg.innerText = '❌ ' + e.message;
     }
   }
 
@@ -389,8 +406,8 @@
     const senha = document.getElementById('regSenha').value;
     const confirm = document.getElementById('regConfirm').value;
     const msg = document.getElementById('regMsg');
-    if (senha.length < 6) { msg.innerText = 'Senha deve ter no mínimo 6 caracteres.'; return; }
-    if (senha !== confirm) { msg.innerText = 'As senhas não coincidem.'; return; }
+    if (senha.length < 6) { msg.innerText = '❌ Senha deve ter no mínimo 6 caracteres.'; return; }
+    if (senha !== confirm) { msg.innerText = '❌ As senhas não coincidem.'; return; }
     try {
       const cred = await auth.createUserWithEmailAndPassword(email, senha);
       await db.collection('users').doc(cred.user.uid).set({
@@ -401,7 +418,7 @@
       });
       fecharModal();
     } catch (e) {
-      msg.innerText = 'Erro: ' + e.message;
+      msg.innerText = '❌ ' + e.message;
     }
   }
 
@@ -417,7 +434,6 @@
     if (user) {
       authBtns.classList.add('hidden');
       userInfo.classList.remove('hidden');
-      // carregar dados do perfil
       const doc = await db.collection('users').doc(user.uid).get();
       const data = doc.data() || { nome: user.displayName || 'Usuário', email: user.email, avatar: '' };
       document.getElementById('userNameDisplay').innerText = data.nome || 'Usuário';
@@ -439,13 +455,9 @@
         document.getElementById('adminPanel').classList.add('hidden');
         if (adminUnsub) { adminUnsub(); adminUnsub = null; }
       }
-      // carregar keys
       carregarMinhasKeys(user.uid);
-      // carregar notificações
       carregarNotificacoes(user.uid);
-      // chat
       iniciarChat(user.uid);
-      // atualizar notificações em tempo real
       if (notifUnsub) notifUnsub();
       notifUnsub = db.collection('notificacoes').where('uid', '==', user.uid).onSnapshot(() => {
         carregarNotificacoes(user.uid);
@@ -463,14 +475,13 @@
     }
   });
 
-  // ===== PERFIL: editar nome / avatar =====
+  // ===== PERFIL =====
   async function atualizarNome() {
     if (!currentUser) return;
     const novo = document.getElementById('editarNomeInput').value.trim();
     if (!novo) return;
     await db.collection('users').doc(currentUser.uid).update({ nome: novo });
     document.getElementById('editarNomeInput').value = '';
-    // recarregar
     const doc = await db.collection('users').doc(currentUser.uid).get();
     const data = doc.data();
     document.getElementById('perfilNome').innerText = data.nome;
@@ -529,7 +540,7 @@
     reader.onload = async (ev) => {
       const base64 = ev.target.result;
       try {
-        const docRef = await db.collection('compras').add({
+        await db.collection('compras').add({
           uid: currentUser.uid,
           nome, email, plano,
           comprovante: base64,
@@ -547,7 +558,7 @@
           lida: false,
           data: new Date().toISOString()
         });
-        // enviar e-mail via FormSubmit
+        // e-mail via FormSubmit
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -564,7 +575,7 @@
         form.submit();
         document.body.removeChild(form);
       } catch (err) {
-        document.getElementById('compraMsg').innerText = 'Erro: ' + err.message;
+        document.getElementById('compraMsg').innerText = '❌ ' + err.message;
       }
       formSubmitting = false;
       btn.disabled = false;
@@ -628,14 +639,13 @@
       compraId: compraId
     });
     await compraRef.update({ status: 'aprovado', key: key, dataExpiracao: expiracao.toISOString() });
-    // notificar usuário
     await db.collection('notificacoes').add({
       uid: compra.uid,
       mensagem: `Sua key foi gerada: ${key}`,
       lida: false,
       data: new Date().toISOString()
     });
-    // enviar e-mail para o usuário com a key via FormSubmit
+    // e-mail para o usuário com a key
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = 'https://formsubmit.co/' + compra.email;
@@ -676,7 +686,6 @@
     const dropdown = document.getElementById('notifDropdown');
     dropdown.classList.toggle('open');
     if (dropdown.classList.contains('open') && currentUser) {
-      // marcar como lidas
       const pendentes = notificacoesCache.filter(n => !n.lida);
       for (let n of pendentes) {
         await db.collection('notificacoes').doc(n.id).update({ lida: true });
@@ -733,3 +742,4 @@
 </script>
 </body>
 </html>
+```
