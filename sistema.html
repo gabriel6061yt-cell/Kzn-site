@@ -520,6 +520,7 @@
         .btn-small.success { background: var(--success); color: #fff; }
         .btn-small.success:hover { background: #16a34a; }
 
+        /* ===== PERFIL PROFISSIONAL ===== */
         .profile-card {
             max-width: 600px;
             margin: 0 auto;
@@ -530,26 +531,131 @@
             text-align: center;
         }
         .profile-card .avatar-lg {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             margin: 0 auto 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             font-weight: 700;
             color: #fff;
             overflow: hidden;
             border: 4px solid var(--secondary);
             cursor: pointer;
             transition: 0.3s;
+            position: relative;
         }
-        .profile-card .avatar-lg:hover { border-color: var(--primary); }
+        .profile-card .avatar-lg:hover { border-color: var(--primary); transform: scale(1.02); }
+        .profile-card .avatar-lg .avatar-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            color: #fff;
+            font-weight: 600;
+        }
+        .profile-card .avatar-lg:hover .avatar-overlay { opacity: 1; }
         .profile-card .avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
         .profile-card h3 { font-size: 1.6rem; }
-        .profile-card p { color: var(--text-muted); }
+        .profile-card .profile-email { color: var(--text-muted); margin-bottom: 4px; }
+        .profile-card .profile-badge {
+            display: inline-block;
+            background: var(--primary);
+            padding: 2px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .profile-card .profile-badge.proprietario { background: var(--accent); color: #000; }
+
+        .profile-card .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+            text-align: left;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .profile-card .profile-info-grid .info-item label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-card .profile-info-grid .info-item .value {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .profile-card .edit-area {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+            display: none;
+        }
+        .profile-card .edit-area.open { display: block; }
+        .profile-card .edit-area .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .profile-card .edit-area .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        .profile-card .edit-area .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .profile-card .edit-area .form-group input:focus { border-color: var(--primary); }
+        .profile-card .edit-area .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+        .profile-card .edit-area .btn-group button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .profile-card .edit-area .btn-group .btn-save {
+            background: var(--success);
+            color: #fff;
+        }
+        .profile-card .edit-area .btn-group .btn-save:hover { background: #16a34a; }
+        .profile-card .edit-area .btn-group .btn-cancel {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .profile-card .edit-area .btn-group .btn-cancel:hover { border-color: var(--danger); color: var(--danger); }
+
         .profile-card .keys-list {
             margin-top: 20px;
             text-align: left;
@@ -565,7 +671,14 @@
             font-size: 0.9rem;
         }
         .profile-card .keys-list .key-item:last-child { border-bottom: none; }
-        .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); }
+        .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); font-weight: 700; }
+        .profile-card .keys-list .key-status {
+            font-size: 0.7rem;
+            padding: 2px 10px;
+            border-radius: 50px;
+        }
+        .key-active { background: rgba(34,197,94,0.2); color: var(--success); }
+        .key-expired { background: rgba(239,68,68,0.2); color: var(--danger); }
 
         /* ===== CHAT ===== */
         .chat-container {
@@ -718,6 +831,7 @@
             .admin-table th, .admin-table td { padding: 6px 8px; }
             .chat-container { height: 400px; }
             .notif-dropdown { width: 280px; right: -10px; }
+            .profile-card .profile-info-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
@@ -896,21 +1010,62 @@
         </div>
     </section>
 
-    <!-- ===== PERFIL ===== -->
+    <!-- ===== PERFIL PROFISSIONAL ===== -->
     <section class="section" id="perfil">
         <div class="container">
             <h2 class="section-title">Meu Perfil</h2>
             <p class="section-sub">Gerencie suas informações e keys ativas</p>
             <div class="profile-card" id="profileCard">
-                <div class="avatar-lg" id="profileAvatar">
+                <!-- AVATAR -->
+                <div class="avatar-lg" id="profileAvatar" onclick="document.getElementById('avatarUpload').click()">
                     <span id="profileAvatarLetter">U</span>
                     <img id="profileAvatarImg" style="display:none;width:100%;height:100%;object-fit:cover;" />
+                    <div class="avatar-overlay"><i class="fas fa-camera"></i> Trocar</div>
                 </div>
+                <input type="file" id="avatarUpload" accept="image/*" style="display:none;" />
+
                 <h3 id="profileNome">Usuário</h3>
-                <p id="profileEmail">email@email.com</p>
-                <div style="margin:16px 0;">
-                    <button class="btn-primary" onclick="editarPerfil()" style="font-size:0.8rem;padding:8px 20px;"><i class="fas fa-edit"></i> Editar Nome</button>
+                <p class="profile-email" id="profileEmail">email@email.com</p>
+                <span class="profile-badge" id="profileBadge" style="display:none;">👑 Proprietário</span>
+
+                <!-- INFORMAÇÕES DO USUÁRIO -->
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <label>Nome de usuário</label>
+                        <div class="value" id="infoNome">--</div>
+                    </div>
+                    <div class="info-item">
+                        <label>E-mail</label>
+                        <div class="value" id="infoEmail">--</div>
+                    </div>
+                    <div class="info-item">
+                        <label>Membro desde</label>
+                        <div class="value" id="infoMembro">--</div>
+                    </div>
+                    <div class="info-item">
+                        <label>Keys ativas</label>
+                        <div class="value" id="infoKeys">0</div>
+                    </div>
                 </div>
+
+                <!-- BOTÃO EDITAR PERFIL -->
+                <button class="btn-primary" onclick="toggleEditarPerfil()" style="font-size:0.85rem;padding:8px 24px;">
+                    <i class="fas fa-edit"></i> Editar Perfil
+                </button>
+
+                <!-- ÁREA DE EDIÇÃO -->
+                <div class="edit-area" id="editArea">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="editNome" placeholder="Digite seu novo nome" />
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn-save" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
+                        <button class="btn-cancel" onclick="toggleEditarPerfil()">Cancelar</button>
+                    </div>
+                </div>
+
+                <!-- KEYS DO USUÁRIO -->
                 <div class="keys-list" id="keysList">
                     <p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>
                 </div>
@@ -1006,6 +1161,13 @@
         const profileAvatarImg = document.getElementById('profileAvatarImg');
         const profileNome = document.getElementById('profileNome');
         const profileEmail = document.getElementById('profileEmail');
+        const profileBadge = document.getElementById('profileBadge');
+        const infoNome = document.getElementById('infoNome');
+        const infoEmail = document.getElementById('infoEmail');
+        const infoMembro = document.getElementById('infoMembro');
+        const infoKeys = document.getElementById('infoKeys');
+        const editArea = document.getElementById('editArea');
+        const editNome = document.getElementById('editNome');
         const keysList = document.getElementById('keysList');
         const adminLink = document.getElementById('adminLink');
         const adminPanel = document.getElementById('admin');
@@ -1040,7 +1202,7 @@
             document.getElementById('registroStatus').style.display = 'none';
         }
 
-        // ===== LOGIN COM EMAIL/SENHA =====
+        // ===== LOGIN =====
         function fazerLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const senha = document.getElementById('loginSenha').value.trim();
@@ -1054,9 +1216,7 @@
             }
 
             auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-                .then(() => {
-                    return auth.signInWithEmailAndPassword(email, senha);
-                })
+                .then(() => auth.signInWithEmailAndPassword(email, senha))
                 .then(() => {
                     status.className = 'auth-status success';
                     status.textContent = '✅ Login realizado!';
@@ -1075,7 +1235,7 @@
                 });
         }
 
-        // ===== REGISTRO COM EMAIL/SENHA =====
+        // ===== REGISTRO =====
         function fazerRegistro() {
             const nome = document.getElementById('registroNome').value.trim();
             const email = document.getElementById('registroEmail').value.trim();
@@ -1105,9 +1265,7 @@
             }
 
             auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-                .then(() => {
-                    return auth.createUserWithEmailAndPassword(email, senha);
-                })
+                .then(() => auth.createUserWithEmailAndPassword(email, senha))
                 .then(async (userCredential) => {
                     await db.collection('users').doc(userCredential.user.uid).set({
                         nome: nome,
@@ -1136,35 +1294,69 @@
         // ===== LOGOUT =====
         function logout() {
             if (confirm('Tem certeza que deseja sair?')) {
-                auth.signOut().then(() => {
-                    // O observer vai tratar a UI
-                }).catch((error) => {
-                    alert('Erro ao sair: ' + error.message);
-                });
+                auth.signOut().catch((error) => alert('Erro ao sair: ' + error.message));
             }
         }
 
-        // ===== FUNÇÃO PARA ATUALIZAR A UI QUANDO O USUÁRIO MUDA =====
+        // ===== ATUALIZAR PERFIL NA UI =====
+        function atualizarPerfilUI(userData) {
+            if (!userData) return;
+
+            const nome = userData.nome || 'Usuário';
+            const email = userData.email || 'email@email.com';
+            const criado = userData.criado ? new Date(userData.criado.seconds * 1000).toLocaleDateString() : '--';
+            const avatar = userData.avatar || null;
+
+            // Avatar
+            if (avatar && avatar.startsWith('data:image')) {
+                profileAvatarImg.src = avatar;
+                profileAvatarImg.style.display = 'block';
+                profileAvatarLetter.style.display = 'none';
+                avatarLetter.innerHTML = `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover;" />`;
+            } else {
+                const initial = nome[0].toUpperCase();
+                profileAvatarLetter.textContent = initial;
+                profileAvatarLetter.style.display = 'block';
+                profileAvatarImg.style.display = 'none';
+                avatarLetter.textContent = initial;
+            }
+
+            // Informações
+            profileNome.textContent = nome;
+            profileEmail.textContent = email;
+            infoNome.textContent = nome;
+            infoEmail.textContent = email;
+            infoMembro.textContent = criado;
+
+            // Badge proprietário
+            if (email === PROPRIETARIO_EMAIL) {
+                profileBadge.style.display = 'inline-block';
+                profileBadge.textContent = '👑 Proprietário';
+            } else {
+                profileBadge.style.display = 'none';
+            }
+
+            // Preencher campo de edição
+            editNome.value = nome;
+
+            // Keys ativas
+            carregarKeysUsuario(currentUser?.uid);
+        }
+
+        // ===== FUNÇÃO PRINCIPAL: ATUALIZAR UI =====
         function atualizarUI(user) {
             if (user) {
                 currentUser = user;
                 loginSection.style.display = 'none';
                 userSection.style.display = 'flex';
 
-                // Buscar dados do usuário no Firestore
                 db.collection('users').doc(user.uid).get().then((doc) => {
                     if (doc.exists) {
                         currentUserDoc = doc.data();
                     } else {
                         currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
                     }
-
-                    const initial = (currentUserDoc?.nome || 'U')[0].toUpperCase();
-                    avatarLetter.textContent = initial;
-                    profileNome.textContent = currentUserDoc?.nome || 'Usuário';
-                    profileEmail.textContent = user.email;
-                    profileAvatarLetter.textContent = initial;
-                    document.getElementById('emailCompra').value = user.email;
+                    atualizarPerfilUI(currentUserDoc);
 
                     if (user.email === PROPRIETARIO_EMAIL) {
                         adminLink.style.display = 'block';
@@ -1175,17 +1367,17 @@
                         adminPanel.style.display = 'none';
                     }
 
-                    carregarKeysUsuario(user.uid);
                     iniciarChat(user.uid);
                     carregarNotificacoes(user.uid);
                     chatInput.disabled = false;
                     chatSendBtn.disabled = false;
+                    document.getElementById('emailCompra').value = user.email;
+
                     if (chatMessagesDiv.querySelector('div')?.textContent.includes('Faça login')) {
                         chatMessagesDiv.innerHTML = '';
                     }
-                }).catch((err) => {
-                    console.error('Erro ao buscar usuário:', err);
-                });
+                }).catch((err) => console.error('Erro ao buscar usuário:', err));
+
             } else {
                 currentUser = null;
                 currentUserDoc = null;
@@ -1203,38 +1395,65 @@
                 profileEmail.textContent = 'email@email.com';
                 profileAvatarLetter.textContent = 'U';
                 profileAvatarImg.style.display = 'none';
+                profileAvatarLetter.style.display = 'block';
+                profileBadge.style.display = 'none';
+                infoNome.textContent = '--';
+                infoEmail.textContent = '--';
+                infoMembro.textContent = '--';
+                infoKeys.textContent = '0';
             }
         }
 
-        // ===== OBSERVADOR DE AUTENTICAÇÃO (PRINCIPAL) =====
+        // ===== OBSERVADOR DE AUTENTICAÇÃO =====
         auth.onAuthStateChanged((user) => {
             atualizarUI(user);
         });
 
-        // ===== FUNÇÕES AUXILIARES =====
+        // ===== CARREGAR KEYS DO USUÁRIO =====
         async function carregarKeysUsuario(uid) {
+            if (!uid) {
+                keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
+                return;
+            }
+
             const snapshot = await db.collection('keys')
                 .where('uid', '==', uid)
                 .where('ativa', '==', true)
                 .get();
+
             if (snapshot.empty) {
                 keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
+                infoKeys.textContent = '0';
                 return;
             }
+
             let html = '<p style="font-weight:600;margin-bottom:8px;">🔑 Suas Keys Ativas:</p>';
+            let count = 0;
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao.seconds * 1000).toLocaleString() : 'Indeterminada';
+                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao.seconds * 1000) : null;
+                const isExpired = expiracao && expiracao < new Date();
+                const statusClass = isExpired ? 'key-expired' : 'key-active';
+                const statusText = isExpired ? 'Expirada' : 'Ativa';
+                count++;
+
                 html += `
                     <div class="key-item">
                         <span class="key-code">${data.key}</span>
-                        <span style="font-size:0.75rem;color:var(--text-muted);">Expira: ${expiracao}</span>
+                        <span>
+                            <span class="key-status ${statusClass}">${statusText}</span>
+                            <span style="font-size:0.7rem;color:var(--text-muted);margin-left:8px;">
+                                ${expiracao ? expiracao.toLocaleString() : 'Indeterminada'}
+                            </span>
+                        </span>
                     </div>
                 `;
             });
             keysList.innerHTML = html;
+            infoKeys.textContent = count;
         }
 
+        // ===== CARREGAR ADMIN COMPRAS =====
         async function carregarAdminCompras() {
             const snapshot = await db.collection('compras').orderBy('data', 'desc').get();
             if (snapshot.empty) {
@@ -1265,7 +1484,7 @@
             adminTableBody.innerHTML = html;
         }
 
-        // ===== FUNÇÃO PRINCIPAL: GERAR E ENVIAR KEY =====
+        // ===== GERAR KEY =====
         window.gerarKey = async function(compraId) {
             const key = 'KZN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
             const expiracao = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -1310,6 +1529,7 @@
             carregarAdminCompras();
         };
 
+        // ===== NOTIFICAÇÕES =====
         async function enviarNotificacao(uid, mensagem) {
             if (!uid) return;
             await db.collection('notificacoes').add({
@@ -1348,7 +1568,6 @@
             document.body.removeChild(form);
         }
 
-        // ===== NOTIFICAÇÕES =====
         async function carregarNotificacoes(uid) {
             const snapshot = await db.collection('notificacoes')
                 .where('uid', '==', uid)
@@ -1401,7 +1620,7 @@
             }
         };
 
-        // ===== CHAT PRIVADO =====
+        // ===== CHAT =====
         function iniciarChat(uid) {
             if (chatListener) { chatListener(); chatListener = null; }
             db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get().then(snapshot => {
@@ -1430,9 +1649,7 @@
                         chatMessagesDiv.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px;">Inicie uma conversa com o suporte</div>';
                     }
                 });
-            }).catch(err => {
-                console.error('Erro ao buscar proprietário:', err);
-            });
+            }).catch(err => console.error('Erro ao buscar proprietário:', err));
         }
 
         function adicionarMensagemChat(texto, tipo, timestamp) {
@@ -1461,6 +1678,67 @@
             });
             input.value = '';
         }
+
+        // ===== PERFIL: EDITAR =====
+        function toggleEditarPerfil() {
+            const area = document.getElementById('editArea');
+            area.classList.toggle('open');
+            if (area.classList.contains('open')) {
+                editNome.value = currentUserDoc?.nome || '';
+            }
+        }
+
+        function salvarEdicaoPerfil() {
+            const nome = editNome.value.trim();
+            if (!nome) {
+                alert('Digite um nome válido.');
+                return;
+            }
+
+            if (!currentUser) {
+                alert('Você precisa estar logado.');
+                return;
+            }
+
+            db.collection('users').doc(currentUser.uid).update({
+                nome: nome
+            }).then(() => {
+                currentUserDoc.nome = nome;
+                atualizarPerfilUI(currentUserDoc);
+                document.getElementById('editArea').classList.remove('open');
+                alert('✅ Nome atualizado com sucesso!');
+            }).catch((err) => {
+                alert('❌ Erro ao atualizar: ' + err.message);
+            });
+        }
+
+        // ===== UPLOAD AVATAR =====
+        document.getElementById('avatarUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) {
+                alert('Envie uma imagem (JPG, PNG, GIF).');
+                return;
+            }
+            if (file.size > 2 * 1024 * 1024) {
+                alert('A imagem deve ter no máximo 2MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = ev.target.result;
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({ avatar: img }).then(() => {
+                        currentUserDoc.avatar = img;
+                        atualizarPerfilUI(currentUserDoc);
+                        alert('✅ Avatar atualizado!');
+                    }).catch((err) => alert('❌ Erro: ' + err.message));
+                }
+            };
+            reader.readAsDataURL(file);
+            e.target.value = '';
+        });
 
         // ===== ENVIO DO FORMULÁRIO DE COMPRA =====
         document.getElementById('formCompra').addEventListener('submit', async function(e) {
@@ -1552,23 +1830,6 @@
             reader.readAsDataURL(file);
         });
 
-        window.editarPerfil = function() {
-            const novoNome = prompt('Digite seu novo nome:', profileNome.textContent);
-            if (novoNome && novoNome.trim() !== '') {
-                const nome = novoNome.trim();
-                if (currentUser) {
-                    db.collection('users').doc(currentUser.uid).update({ nome: nome }).then(() => {
-                        profileNome.textContent = nome;
-                        const initial = nome[0].toUpperCase();
-                        profileAvatarLetter.textContent = initial;
-                        avatarLetter.textContent = initial;
-                        currentUserDoc.nome = nome;
-                        alert('✅ Nome atualizado!');
-                    }).catch(err => alert('Erro: ' + err.message));
-                }
-            }
-        };
-
         // ===== EVENTOS =====
         document.getElementById('openLoginBtn').addEventListener('click', abrirAuthModal);
         document.getElementById('menuToggle').addEventListener('click', function() {
@@ -1591,6 +1852,8 @@
         console.log('📧 Proprietário:', PROPRIETARIO_EMAIL);
         console.log('🔐 Login/Registro próprio (sem Google)');
         console.log('📊 Painel admin para gerenciar compras e enviar keys');
+        console.log('👤 Perfil profissional com avatar e edição de nome');
+        console.log('🔑 Sistema de keys com expiração de 24h');
     </script>
 </body>
 </html>
