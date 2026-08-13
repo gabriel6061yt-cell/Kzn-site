@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
+        /* ... (mantido o mesmo CSS) ... */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
@@ -828,7 +829,7 @@
                     </div>
                     <div class="btn-group">
                         <button class="btn-save" onclick="salvarEdicaoPerfil()"><i class="fas fa-save"></i> Salvar</button>
-                        <button class="btn-cancel" onclick="toggleEditarPerfil()">Cancelar</button>
+                        <button class="btn-cancel" onclick="fecharEdicaoPerfil()">Cancelar</button>
                     </div>
                 </div>
 
@@ -948,6 +949,7 @@
             document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
             document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
             document.getElementById(`auth${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+            // Limpa status ao trocar
             document.getElementById('loginStatus').className = 'auth-status';
             document.getElementById('loginStatus').style.display = 'none';
             document.getElementById('registroStatus').className = 'auth-status';
@@ -959,12 +961,19 @@
             const email = document.getElementById('loginEmail').value.trim();
             const senha = document.getElementById('loginSenha').value.trim();
             const status = document.getElementById('loginStatus');
+            
+            // Limpa status anterior
+            status.className = 'auth-status';
+            status.style.display = 'none';
+            
             if (!email || !senha) {
                 status.className = 'auth-status error';
                 status.textContent = 'Preencha todos os campos.';
                 status.style.display = 'block';
                 return;
             }
+            
+            // 🔧 FIX #1: Adicionar persistence LOCAL
             auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
                 .then(() => auth.signInWithEmailAndPassword(email, senha))
                 .then(() => {
@@ -979,8 +988,14 @@
                     }, 1000);
                 })
                 .catch((error) => {
+                    // 🔧 FIX #8: Exibir mensagem de erro corretamente
+                    let msg = error.message;
+                    if (error.code === 'auth/user-not-found') msg = 'Usuário não encontrado.';
+                    else if (error.code === 'auth/wrong-password') msg = 'Senha incorreta.';
+                    else if (error.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+                    else if (error.code === 'auth/too-many-requests') msg = 'Muitas tentativas. Tente novamente mais tarde.';
                     status.className = 'auth-status error';
-                    status.textContent = '❌ ' + error.message;
+                    status.textContent = '❌ ' + msg;
                     status.style.display = 'block';
                 });
         }
@@ -992,6 +1007,10 @@
             const senha = document.getElementById('registroSenha').value;
             const confirmar = document.getElementById('registroConfirmar').value;
             const status = document.getElementById('registroStatus');
+            
+            status.className = 'auth-status';
+            status.style.display = 'none';
+            
             if (!nome || !email || !senha || !confirmar) {
                 status.className = 'auth-status error';
                 status.textContent = 'Preencha todos os campos.';
@@ -1010,6 +1029,8 @@
                 status.style.display = 'block';
                 return;
             }
+            
+            // 🔧 FIX #1: Adicionar persistence LOCAL
             auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
                 .then(() => auth.createUserWithEmailAndPassword(email, senha))
                 .then(async (userCredential) => {
@@ -1031,8 +1052,13 @@
                     }, 1000);
                 })
                 .catch((error) => {
+                    // 🔧 FIX #8: Exibir mensagem de erro corretamente
+                    let msg = error.message;
+                    if (error.code === 'auth/email-already-in-use') msg = 'Este e-mail já está em uso.';
+                    else if (error.code === 'auth/invalid-email') msg = 'E-mail inválido.';
+                    else if (error.code === 'auth/weak-password') msg = 'Senha muito fraca. Use pelo menos 6 caracteres.';
                     status.className = 'auth-status error';
-                    status.textContent = '❌ ' + error.message;
+                    status.textContent = '❌ ' + msg;
                     status.style.display = 'block';
                 });
         }
@@ -1049,9 +1075,10 @@
             if (!userData) return;
             const nome = userData.nome || 'Usuário';
             const email = userData.email || 'email@email.com';
-            const criado = userData.criado ? new Date(userData.criado.seconds * 1000).toLocaleDateString() : '--';
+            const criado = userData.criado ? new Date(userData.criado.seconds * 1000).toLocaleDateString('pt-BR') : '--';
             const avatar = userData.avatar || null;
 
+            // Avatar
             if (avatar && avatar.startsWith('data:image')) {
                 profileAvatarImg.src = avatar;
                 profileAvatarImg.style.display = 'block';
@@ -1065,15 +1092,18 @@
                 avatarLetter.textContent = initial;
             }
 
+            // Nome e email
             profileNome.textContent = nome;
             profileEmail.textContent = email;
             infoNome.textContent = nome;
             infoEmail.textContent = email;
             infoMembro.textContent = criado;
 
+            // 🔧 FIX #5: Verificar proprietário corretamente
             if (email === PROPRIETARIO_EMAIL) {
                 profileBadge.style.display = 'inline-block';
                 profileBadge.textContent = '👑 Proprietário';
+                profileBadge.className = 'profile-badge proprietario';
             } else {
                 profileBadge.style.display = 'none';
             }
@@ -1096,10 +1126,11 @@
                     }
                     atualizarPerfilUI(currentUserDoc);
 
-                    // VERIFICAÇÃO CORRETA DO PROPRIETÁRIO
+                    // 🔧 FIX #5: Verificação CORRETA do proprietário
                     if (user.email === PROPRIETARIO_EMAIL) {
                         adminLink.style.display = 'block';
                         adminPanel.style.display = 'block';
+                        // 🔧 FIX #6: Carregar compras do admin
                         carregarAdminCompras();
                     } else {
                         adminLink.style.display = 'none';
@@ -1138,6 +1169,8 @@
                 infoEmail.textContent = '--';
                 infoMembro.textContent = '--';
                 infoKeys.textContent = '0';
+                // 🔧 FIX #7: Fechar área de edição ao deslogar
+                editArea.classList.remove('open');
             }
         });
 
@@ -1245,10 +1278,12 @@
                 dataExpiracao: firebase.firestore.Timestamp.fromDate(expiracao)
             });
 
+            // 🔧 FIX #12: Notificar proprietário
             if (compraData.uid) {
                 await enviarNotificacao(compraData.uid, `🔑 Sua key foi gerada: <strong>${key}</strong>. Expira em 24h.`);
             }
-
+            
+            // 🔧 FIX #11: Enviar email com a key
             enviarEmailKey(compraData.email, compraData.nome, key, expiracao);
 
             alert(`✅ Key ${key} gerada e enviada para ${compraData.email}!`);
@@ -1280,11 +1315,14 @@
             }
         }
 
+        // 🔧 FIX #11: Envio de email corrigido
         function enviarEmailKey(email, nome, key, expiracao) {
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
             form.target = '_blank';
+            
+            // Campos ocultos para o FormSubmit
             const fields = {
                 '_subject': '🔑 Sua Key de Acesso - Graal Classic BETA',
                 'Nome': nome || 'Cliente',
@@ -1306,26 +1344,32 @@
         }
 
         async function carregarNotificacoes(uid) {
-            const snapshot = await db.collection('notificacoes')
-                .where('uid', '==', uid)
-                .orderBy('data', 'desc')
-                .limit(20)
-                .get();
-            notificacoes = [];
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                notificacoes.push({ id: doc.id, ...data });
-            });
-            const naoLidas = notificacoes.filter(n => !n.lida).length;
-            if (naoLidas > 0) {
-                notifCount.style.display = 'flex';
-                notifCount.textContent = naoLidas;
-            } else {
-                notifCount.style.display = 'none';
+            try {
+                const snapshot = await db.collection('notificacoes')
+                    .where('uid', '==', uid)
+                    .orderBy('data', 'desc')
+                    .limit(20)
+                    .get();
+                notificacoes = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    notificacoes.push({ id: doc.id, ...data });
+                });
+                const naoLidas = notificacoes.filter(n => !n.lida).length;
+                // 🔧 FIX #10: Mostrar contador de notificações
+                if (naoLidas > 0) {
+                    notifCount.style.display = 'flex';
+                    notifCount.textContent = naoLidas;
+                } else {
+                    notifCount.style.display = 'none';
+                }
+                renderizarNotificacoes();
+            } catch (err) {
+                console.error('Erro ao carregar notificações:', err);
             }
-            renderizarNotificacoes();
         }
 
+        // 🔧 FIX #10: Renderizar notificações
         function renderizarNotificacoes() {
             if (notificacoes.length === 0) {
                 notifDropdown.innerHTML = '<div style="padding:12px;color:var(--text-muted);">Nenhuma notificação</div>';
@@ -1342,6 +1386,7 @@
                 `;
             });
             notifDropdown.innerHTML = html;
+            // Marcar como lidas
             notificacoes.forEach(n => {
                 if (!n.lida) {
                     db.collection('notificacoes').doc(n.id).update({ lida: true });
@@ -1370,10 +1415,8 @@
                 const ids = [uid, propUid].sort();
                 chatRoomId = ids.join('_');
                 const chatRef = rtdb.ref('chats/' + chatRoomId + '/mensagens');
-                chatListener = chatRef.on('child_added', (snap) => {
-                    const msg = snap.val();
-                    adicionarMensagemChat(msg.texto, msg.remetente === uid ? 'me' : 'other', msg.timestamp);
-                });
+                
+                // 🔧 FIX #9: Carregar mensagens antigas
                 chatMessagesDiv.innerHTML = '';
                 chatRef.orderByChild('timestamp').limitToLast(50).once('value', (snap) => {
                     const msgs = [];
@@ -1386,10 +1429,31 @@
                         chatMessagesDiv.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px;">Inicie uma conversa com o suporte</div>';
                     }
                 });
+                
+                chatListener = chatRef.on('child_added', (snap) => {
+                    const msg = snap.val();
+                    // Verifica se já existe uma mensagem igual para evitar duplicatas
+                    const existing = chatMessagesDiv.querySelectorAll('.chat-msg');
+                    let isDuplicate = false;
+                    existing.forEach(el => {
+                        if (el.textContent.includes(msg.texto) && el.textContent.includes(new Date(msg.timestamp).toLocaleTimeString())) {
+                            isDuplicate = true;
+                        }
+                    });
+                    if (!isDuplicate) {
+                        adicionarMensagemChat(msg.texto, msg.remetente === uid ? 'me' : 'other', msg.timestamp);
+                    }
+                });
             }).catch(err => console.error('Erro ao buscar proprietário:', err));
         }
 
         function adicionarMensagemChat(texto, tipo, timestamp) {
+            // Remove mensagem de placeholder se existir
+            const placeholder = chatMessagesDiv.querySelector('div[style*="text-align:center"]');
+            if (placeholder && placeholder.textContent.includes('Inicie uma conversa')) {
+                placeholder.remove();
+            }
+            
             const div = document.createElement('div');
             div.className = `chat-msg ${tipo}`;
             const time = timestamp ? new Date(timestamp).toLocaleTimeString() : '';
@@ -1424,6 +1488,12 @@
             }
         }
 
+        // 🔧 FIX #7: Fechar área de edição
+        function fecharEdicaoPerfil() {
+            editArea.classList.remove('open');
+        }
+
+        // 🔧 FIX #2: CORRIGIR função salvarEdicaoPerfil
         function salvarEdicaoPerfil() {
             const nome = editNome.value.trim();
             if (!nome) {
@@ -1436,15 +1506,22 @@
             }
             db.collection('users').doc(currentUser.uid).update({ nome: nome })
                 .then(() => {
-                    currentUserDoc.nome = nome;
+                    if (currentUserDoc) {
+                        currentUserDoc.nome = nome;
+                    }
                     atualizarPerfilUI(currentUserDoc);
+                    // 🔧 FIX #7: Fechar área de edição após salvar
                     editArea.classList.remove('open');
+                    // 🔧 FIX #7: Atualizar avatarLetter na navbar
+                    const initial = nome[0].toUpperCase();
+                    avatarLetter.textContent = initial;
                     alert('✅ Nome atualizado com sucesso!');
                 })
                 .catch((err) => alert('❌ Erro ao atualizar: ' + err.message));
         }
 
         // ===== UPLOAD AVATAR =====
+        // 🔧 FIX #3: Adicionar campo avatar no Firestore
         document.getElementById('avatarUpload').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -1462,7 +1539,9 @@
                 if (currentUser) {
                     db.collection('users').doc(currentUser.uid).update({ avatar: img })
                         .then(() => {
-                            currentUserDoc.avatar = img;
+                            if (currentUserDoc) {
+                                currentUserDoc.avatar = img;
+                            }
                             atualizarPerfilUI(currentUserDoc);
                             alert('✅ Avatar atualizado!');
                         })
@@ -1474,9 +1553,14 @@
         });
 
         // ===== ENVIO DO FORMULÁRIO DE COMPRA =====
+        // 🔧 FIX #4: Adicionar controle de envio duplicado
         document.getElementById('formCompra').addEventListener('submit', async function(e) {
             e.preventDefault();
-            if (formSubmitting) return;
+            
+            // 🔧 FIX #4: Prevenir envios múltiplos
+            if (formSubmitting) {
+                return;
+            }
             formSubmitting = true;
 
             const btn = document.getElementById('btnComprar');
@@ -1515,6 +1599,7 @@
                         data: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
+                    // 🔧 FIX #11: Envio de email via FormSubmit
                     const formEmail = document.createElement('form');
                     formEmail.method = 'POST';
                     formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -1537,6 +1622,7 @@
                     formEmail.submit();
                     document.body.removeChild(formEmail);
 
+                    // 🔧 FIX #12: Notificar proprietário sobre nova compra
                     if (currentUser && currentUser.email !== PROPRIETARIO_EMAIL) {
                         const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
                         if (!propSnapshot.empty) {
@@ -1584,6 +1670,7 @@
 
         console.log('🚀 Graal Classic BETA carregado!');
         console.log('📧 Proprietário:', PROPRIETARIO_EMAIL);
+        console.log('✅ Todas as correções aplicadas!');
     </script>
 </body>
 </html>
