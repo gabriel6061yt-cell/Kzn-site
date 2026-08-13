@@ -12,13 +12,15 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        /* ====== CSS COMPLETO (mesmo do seu site principal) ====== */
+        /* ====== CSS COMPLETO ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
             --primary-dark: #5b21b6;
             --secondary: #06b6d4;
             --accent: #f59e0b;
+            --success: #22c55e;
+            --danger: #ef4444;
             --bg: #0b0b1a;
             --bg-card: #14142b;
             --text: #f1f5f9;
@@ -109,7 +111,7 @@
             align-items: center;
             gap: 12px;
         }
-        .btn-google {
+        .btn-login {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -122,7 +124,7 @@
             font-size: 0.85rem;
             transition: 0.3s;
         }
-        .btn-google:hover { border-color: var(--primary); background: rgba(124,58,237,0.1); }
+        .btn-login:hover { border-color: var(--primary); background: rgba(124,58,237,0.1); }
 
         .user-avatar {
             width: 38px;
@@ -274,6 +276,7 @@
         }
         .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
 
+        /* ===== FORMULÁRIOS ===== */
         .form-container {
             max-width: 560px;
             margin: 0 auto;
@@ -333,9 +336,132 @@
             text-align: center;
             font-size: 0.9rem;
         }
-        .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #22c55e; }
-        .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #ef4444; }
+        .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
+        .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid var(--danger); color: var(--danger); }
 
+        /* ===== LOGIN/REGISTRO MODAL ===== */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .auth-modal.open { display: flex; }
+        .auth-modal .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            max-width: 420px;
+            width: 100%;
+            animation: fadeUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .auth-modal .modal-box h2 {
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.6rem;
+        }
+        .auth-modal .modal-box .sub {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+        }
+        .auth-modal .modal-box .auth-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 4px;
+        }
+        .auth-modal .modal-box .auth-tab {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .auth-modal .modal-box .auth-tab.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .auth-modal .modal-box .auth-tab:hover:not(.active) { background: var(--glass); }
+        .auth-modal .modal-box .auth-form { display: none; }
+        .auth-modal .modal-box .auth-form.active { display: block; }
+        .auth-modal .modal-box .auth-form .form-group { margin-bottom: 14px; }
+        .auth-modal .modal-box .auth-form .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        .auth-modal .modal-box .auth-form .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        .auth-modal .modal-box .auth-form .form-group input:focus { border-color: var(--primary); }
+        .auth-modal .modal-box .auth-form .btn-auth {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: 0.3s;
+            color: #fff;
+            background: var(--primary);
+        }
+        .auth-modal .modal-box .auth-form .btn-auth:hover { background: var(--primary-dark); transform: scale(1.02); }
+        .auth-modal .modal-box .auth-form .btn-auth.register-btn { background: var(--secondary); }
+        .auth-modal .modal-box .auth-form .btn-auth.register-btn:hover { background: #0891b2; }
+        .auth-modal .modal-box .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .auth-modal .modal-box .close-modal:hover { color: var(--text); transform: rotate(90deg); }
+        .auth-modal .modal-box { position: relative; }
+        .auth-modal .modal-box .auth-status {
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        .auth-modal .modal-box .auth-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
+        .auth-modal .modal-box .auth-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid var(--danger); color: var(--danger); }
+
+        /* ===== ADMIN PANEL ===== */
         .admin-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -376,8 +502,8 @@
             text-transform: uppercase;
         }
         .status-pendente { background: rgba(245,158,11,0.2); color: var(--accent); }
-        .status-aprovado { background: rgba(34,197,94,0.2); color: #22c55e; }
-        .status-cancelado { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .status-aprovado { background: rgba(34,197,94,0.2); color: var(--success); }
+        .status-cancelado { background: rgba(239,68,68,0.2); color: var(--danger); }
 
         .btn-small {
             padding: 4px 12px;
@@ -389,9 +515,9 @@
         }
         .btn-small.key { background: var(--secondary); color: #fff; }
         .btn-small.key:hover { background: #0891b2; }
-        .btn-small.danger { background: #ef4444; color: #fff; }
+        .btn-small.danger { background: var(--danger); color: #fff; }
         .btn-small.danger:hover { background: #dc2626; }
-        .btn-small.success { background: #22c55e; color: #fff; }
+        .btn-small.success { background: var(--success); color: #fff; }
         .btn-small.success:hover { background: #16a34a; }
 
         .profile-card {
@@ -441,6 +567,7 @@
         .profile-card .keys-list .key-item:last-child { border-bottom: none; }
         .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); }
 
+        /* ===== CHAT ===== */
         .chat-container {
             max-width: 700px;
             margin: 0 auto;
@@ -595,6 +722,7 @@
         @media (max-width: 480px) {
             .hero h1 { font-size: 1.8rem; }
             .form-container { padding: 20px; }
+            .auth-modal .modal-box { padding: 20px; }
         }
     </style>
 </head>
@@ -624,8 +752,8 @@
                     <div class="notif-dropdown" id="notifDropdown"></div>
                 </div>
                 <div id="loginSection">
-                    <button class="btn-google" id="googleLoginBtn">
-                        <i class="fab fa-google"></i> Entrar com Google
+                    <button class="btn-login" id="openLoginBtn">
+                        <i class="fas fa-user"></i> Entrar
                     </button>
                 </div>
                 <div id="userSection" style="display:none;">
@@ -637,6 +765,61 @@
         </div>
     </header>
 
+    <!-- ===== MODAL LOGIN/REGISTRO ===== -->
+    <div class="auth-modal" id="authModal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="fecharAuthModal()">✕</button>
+            <h2>🔐 Bem-vindo</h2>
+            <p class="sub">Entre ou crie sua conta para continuar</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login" onclick="trocarAuthTab('login')">Entrar</button>
+                <button class="auth-tab" data-tab="registro" onclick="trocarAuthTab('registro')">Registrar</button>
+            </div>
+
+            <!-- FORM LOGIN -->
+            <div class="auth-form active" id="authLogin">
+                <form id="loginForm" onsubmit="event.preventDefault(); fazerLogin();">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="loginEmail" placeholder="Digite seu e-mail" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="loginSenha" placeholder="Digite sua senha" required />
+                    </div>
+                    <button type="submit" class="btn-auth">Entrar</button>
+                    <div class="auth-status" id="loginStatus"></div>
+                </form>
+            </div>
+
+            <!-- FORM REGISTRO -->
+            <div class="auth-form" id="authRegistro">
+                <form id="registroForm" onsubmit="event.preventDefault(); fazerRegistro();">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nome</label>
+                        <input type="text" id="registroNome" placeholder="Digite seu nome" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="registroEmail" placeholder="Digite seu e-mail" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Senha</label>
+                        <input type="password" id="registroSenha" placeholder="Mínimo 6 caracteres" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-check"></i> Confirmar Senha</label>
+                        <input type="password" id="registroConfirmar" placeholder="Confirme sua senha" required />
+                    </div>
+                    <button type="submit" class="btn-auth register-btn">Criar Conta</button>
+                    <div class="auth-status" id="registroStatus"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HERO ===== -->
     <section class="hero" id="inicio">
         <div class="container">
             <div class="hero-badge"><i class="fas fa-flask"></i> Fase BETA</div>
@@ -649,6 +832,7 @@
         </div>
     </section>
 
+    <!-- ===== PLANOS ===== -->
     <section class="section" id="planos">
         <div class="container">
             <h2 class="section-title">Planos Disponíveis</h2>
@@ -671,6 +855,7 @@
         </div>
     </section>
 
+    <!-- ===== COMPRAR ===== -->
     <section class="section" id="comprar">
         <div class="container">
             <h2 class="section-title">Finalizar Compra</h2>
@@ -710,16 +895,16 @@
         </div>
     </section>
 
+    <!-- ===== PERFIL ===== -->
     <section class="section" id="perfil">
         <div class="container">
             <h2 class="section-title">Meu Perfil</h2>
             <p class="section-sub">Gerencie suas informações e keys ativas</p>
             <div class="profile-card" id="profileCard">
-                <div class="avatar-lg" id="profileAvatar" onclick="document.getElementById('avatarUpload').click()">
+                <div class="avatar-lg" id="profileAvatar">
                     <span id="profileAvatarLetter">U</span>
                     <img id="profileAvatarImg" style="display:none;width:100%;height:100%;object-fit:cover;" />
                 </div>
-                <input type="file" id="avatarUpload" accept="image/*" style="display:none;" />
                 <h3 id="profileNome">Usuário</h3>
                 <p id="profileEmail">email@email.com</p>
                 <div style="margin:16px 0;">
@@ -732,6 +917,7 @@
         </div>
     </section>
 
+    <!-- ===== SUPORTE CHAT ===== -->
     <section class="section" id="suporte">
         <div class="container">
             <h2 class="section-title">Suporte ao Cliente</h2>
@@ -752,16 +938,19 @@
         </div>
     </section>
 
+    <!-- ===== PAINEL ADMIN ===== -->
     <section class="section" id="admin" style="display:none;">
         <div class="container">
             <div class="admin-panel">
                 <h2><i class="fas fa-shield-alt"></i> Painel do Proprietário</h2>
+                <p style="color:var(--text-muted);margin-bottom:16px;">Gerencie compras, envie keys e acompanhe pedidos</p>
                 <div style="overflow-x:auto;">
                     <table class="admin-table" id="adminTable">
                         <thead>
                             <tr>
                                 <th>Data</th>
                                 <th>Usuário</th>
+                                <th>E-mail</th>
                                 <th>Plano</th>
                                 <th>Status</th>
                                 <th>Key</th>
@@ -769,7 +958,7 @@
                             </tr>
                         </thead>
                         <tbody id="adminTableBody">
-                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Carregando...</td></tr>
+                            <tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Carregando...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -826,34 +1015,118 @@
         const formStatus = document.getElementById('formStatus');
         const notifDropdown = document.getElementById('notifDropdown');
         const notifCount = document.getElementById('notifCount');
-        const googleLoginBtn = document.getElementById('googleLoginBtn');
+        const authModal = document.getElementById('authModal');
 
-        // ===== LOGIN COM REDIRECT (MAIS CONFIÁVEL) =====
-        function loginGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            // Forçar seleção de conta
-            provider.setCustomParameters({
-                prompt: 'select_account'
-            });
-            auth.signInWithRedirect(provider);
+        // ===== FUNÇÕES DE AUTENTICAÇÃO =====
+        function abrirAuthModal() {
+            authModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
 
-        // ===== PROCESSAR RESULTADO DO REDIRECT =====
-        auth.getRedirectResult().then((result) => {
-            if (result.user) {
-                // Login bem-sucedido, o observer vai tratar
-                console.log('Login via redirect bem-sucedido!');
+        function fecharAuthModal() {
+            authModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function trocarAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(`auth${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.add('active');
+            // Limpar status
+            document.getElementById('loginStatus').className = 'auth-status';
+            document.getElementById('loginStatus').style.display = 'none';
+            document.getElementById('registroStatus').className = 'auth-status';
+            document.getElementById('registroStatus').style.display = 'none';
+        }
+
+        // ===== LOGIN COM EMAIL/SENHA =====
+        function fazerLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value.trim();
+            const status = document.getElementById('loginStatus');
+
+            if (!email || !senha) {
+                status.className = 'auth-status error';
+                status.textContent = 'Preencha todos os campos.';
+                status.style.display = 'block';
+                return;
             }
-        }).catch((error) => {
-            console.error('Erro no redirect:', error);
-            // Se falhar, tenta popup como fallback
-            if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
-                // Fallback: tentar novamente com redirect
-                setTimeout(() => {
-                    loginGoogle();
-                }, 1000);
+
+            auth.signInWithEmailAndPassword(email, senha)
+                .then(() => {
+                    status.className = 'auth-status success';
+                    status.textContent = '✅ Login realizado!';
+                    status.style.display = 'block';
+                    setTimeout(() => {
+                        fecharAuthModal();
+                        document.getElementById('loginEmail').value = '';
+                        document.getElementById('loginSenha').value = '';
+                        status.style.display = 'none';
+                    }, 1000);
+                })
+                .catch((error) => {
+                    status.className = 'auth-status error';
+                    status.textContent = '❌ ' + error.message;
+                    status.style.display = 'block';
+                });
+        }
+
+        // ===== REGISTRO COM EMAIL/SENHA =====
+        function fazerRegistro() {
+            const nome = document.getElementById('registroNome').value.trim();
+            const email = document.getElementById('registroEmail').value.trim();
+            const senha = document.getElementById('registroSenha').value;
+            const confirmar = document.getElementById('registroConfirmar').value;
+            const status = document.getElementById('registroStatus');
+
+            if (!nome || !email || !senha || !confirmar) {
+                status.className = 'auth-status error';
+                status.textContent = 'Preencha todos os campos.';
+                status.style.display = 'block';
+                return;
             }
-        });
+
+            if (senha.length < 6) {
+                status.className = 'auth-status error';
+                status.textContent = 'A senha deve ter no mínimo 6 caracteres.';
+                status.style.display = 'block';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                status.className = 'auth-status error';
+                status.textContent = 'As senhas não coincidem.';
+                status.style.display = 'block';
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, senha)
+                .then(async (userCredential) => {
+                    // Salvar informações do usuário no Firestore
+                    await db.collection('users').doc(userCredential.user.uid).set({
+                        nome: nome,
+                        email: email,
+                        criado: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    status.className = 'auth-status success';
+                    status.textContent = '✅ Conta criada com sucesso!';
+                    status.style.display = 'block';
+                    setTimeout(() => {
+                        fecharAuthModal();
+                        document.getElementById('registroNome').value = '';
+                        document.getElementById('registroEmail').value = '';
+                        document.getElementById('registroSenha').value = '';
+                        document.getElementById('registroConfirmar').value = '';
+                        status.style.display = 'none';
+                    }, 1000);
+                })
+                .catch((error) => {
+                    status.className = 'auth-status error';
+                    status.textContent = '❌ ' + error.message;
+                    status.style.display = 'block';
+                });
+        }
 
         // ===== OBSERVADOR DE AUTENTICAÇÃO =====
         auth.onAuthStateChanged(async (user) => {
@@ -861,33 +1134,21 @@
                 currentUser = user;
                 const docRef = db.collection('users').doc(user.uid);
                 const docSnap = await docRef.get();
-                if (!docSnap.exists) {
-                    await docRef.set({
-                        nome: user.displayName || 'Usuário',
-                        email: user.email,
-                        foto: user.photoURL || '',
-                        criado: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+                if (docSnap.exists) {
+                    currentUserDoc = docSnap.data();
+                } else {
+                    currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
                 }
-                currentUserDoc = (await docRef.get()).data();
                 // Atualizar UI
                 loginSection.style.display = 'none';
                 userSection.style.display = 'flex';
-                const initial = (currentUserDoc?.nome || user.displayName || 'U')[0].toUpperCase();
+                const initial = (currentUserDoc?.nome || 'U')[0].toUpperCase();
                 avatarLetter.textContent = initial;
-                if (user.photoURL) {
-                    avatarLetter.innerHTML = `<img src="${user.photoURL}" style="width:100%;height:100%;object-fit:cover;" />`;
-                }
-                profileNome.textContent = currentUserDoc?.nome || user.displayName || 'Usuário';
+                profileNome.textContent = currentUserDoc?.nome || 'Usuário';
                 profileEmail.textContent = user.email;
                 profileAvatarLetter.textContent = initial;
-                if (currentUserDoc?.foto || user.photoURL) {
-                    const foto = currentUserDoc?.foto || user.photoURL;
-                    profileAvatarLetter.style.display = 'none';
-                    profileAvatarImg.style.display = 'block';
-                    profileAvatarImg.src = foto;
-                }
                 document.getElementById('emailCompra').value = user.email;
+                // Verificar se é proprietário
                 if (user.email === PROPRIETARIO_EMAIL) {
                     adminLink.style.display = 'block';
                     adminPanel.style.display = 'block';
@@ -919,8 +1180,6 @@
                 keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
                 profileNome.textContent = 'Usuário';
                 profileEmail.textContent = 'email@email.com';
-                profileAvatarLetter.style.display = 'block';
-                profileAvatarImg.style.display = 'none';
                 profileAvatarLetter.textContent = 'U';
             }
         });
@@ -952,7 +1211,7 @@
         async function carregarAdminCompras() {
             const snapshot = await db.collection('compras').orderBy('data', 'desc').get();
             if (snapshot.empty) {
-                adminTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Nenhuma compra registrada.</td></tr>';
+                adminTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Nenhuma compra registrada.</td></tr>';
                 return;
             }
             let html = '';
@@ -964,11 +1223,12 @@
                     <tr>
                         <td>${dataStr}</td>
                         <td>${d.nome || '--'}</td>
+                        <td>${d.email || '--'}</td>
                         <td>${d.plano || '--'}</td>
                         <td><span class="status-badge ${statusClass}">${d.status || 'pendente'}</span></td>
                         <td><code style="font-size:0.7rem;">${d.key || '--'}</code></td>
                         <td>
-                            <button class="btn-small key" onclick="gerarKey('${doc.id}')"><i class="fas fa-key"></i> Gerar Key</button>
+                            <button class="btn-small key" onclick="gerarKey('${doc.id}')"><i class="fas fa-key"></i> Enviar Key</button>
                             <button class="btn-small success" onclick="aprovarCompra('${doc.id}')"><i class="fas fa-check"></i></button>
                             <button class="btn-small danger" onclick="cancelarCompra('${doc.id}')"><i class="fas fa-times"></i></button>
                         </td>
@@ -978,6 +1238,7 @@
             adminTableBody.innerHTML = html;
         }
 
+        // ===== FUNÇÃO PRINCIPAL: GERAR E ENVIAR KEY =====
         window.gerarKey = async function(compraId) {
             const key = 'KZN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
             const expiracao = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -986,6 +1247,7 @@
             const compraData = compraDoc.data();
             if (!compraData) return alert('Compra não encontrada.');
 
+            // Salvar key no Firestore
             await db.collection('keys').add({
                 uid: compraData.uid || '--',
                 key: key,
@@ -995,16 +1257,22 @@
                 compraId: compraId
             });
 
+            // Atualizar compra
             await compraRef.update({
                 key: key,
                 status: 'aprovado',
                 dataExpiracao: firebase.firestore.Timestamp.fromDate(expiracao)
             });
 
-            await enviarNotificacao(compraData.uid, `🔑 Sua key foi gerada: <strong>${key}</strong>. Expira em 24h.`);
+            // Notificar usuário (se tiver UID)
+            if (compraData.uid) {
+                await enviarNotificacao(compraData.uid, `🔑 Sua key foi gerada: <strong>${key}</strong>. Expira em 24h.`);
+            }
+
+            // Enviar e-mail com a key
             enviarEmailKey(compraData.email, compraData.nome, key, expiracao);
 
-            alert(`Key ${key} gerada e enviada ao usuário!`);
+            alert(`✅ Key ${key} gerada e enviada para ${compraData.email}!`);
             carregarAdminCompras();
         };
 
@@ -1039,11 +1307,11 @@
             form.target = '_blank';
             const fields = {
                 '_subject': '🔑 Sua Key de Acesso - Graal Classic BETA',
-                'Nome': nome,
+                'Nome': nome || 'Cliente',
                 'E-mail': email,
                 'Key': key,
                 'Expira em': expiracao.toLocaleString(),
-                'Mensagem': `Olá ${nome}, sua key de acesso ao Graal Classic Test BETA foi gerada com sucesso! Use a key: ${key}. Ela expira em 24h.`
+                'Mensagem': `Olá ${nome || 'Cliente'}, sua key de acesso ao Graal Classic Test BETA foi gerada com sucesso! Use a key: ${key}. Ela expira em 24h.`
             };
             for (const [name, value] of Object.entries(fields)) {
                 const input = document.createElement('input');
@@ -1057,6 +1325,7 @@
             document.body.removeChild(form);
         }
 
+        // ===== NOTIFICAÇÕES =====
         async function carregarNotificacoes(uid) {
             const snapshot = await db.collection('notificacoes')
                 .where('uid', '==', uid)
@@ -1109,6 +1378,7 @@
             }
         };
 
+        // ===== CHAT PRIVADO =====
         function iniciarChat(uid) {
             if (chatListener) { chatListener(); chatListener = null; }
             db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get().then(snapshot => {
@@ -1169,7 +1439,7 @@
             input.value = '';
         }
 
-        // ===== ENVIO DO FORMULÁRIO =====
+        // ===== ENVIO DO FORMULÁRIO DE COMPRA =====
         document.getElementById('formCompra').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnComprar');
@@ -1207,6 +1477,7 @@
                         data: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
+                    // Enviar e-mail para o proprietário
                     const formEmail = document.createElement('form');
                     formEmail.method = 'POST';
                     formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -1230,9 +1501,8 @@
                     formEmail.submit();
                     document.body.removeChild(formEmail);
 
-                    if (currentUser && currentUser.email === PROPRIETARIO_EMAIL) {
-                        // próprio prop
-                    } else {
+                    // Notificar proprietário
+                    if (currentUser && currentUser.email !== PROPRIETARIO_EMAIL) {
                         const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
                         if (!propSnapshot.empty) {
                             const propUid = propSnapshot.docs[0].id;
@@ -1272,33 +1542,14 @@
                         profileAvatarLetter.textContent = initial;
                         avatarLetter.textContent = initial;
                         currentUserDoc.nome = nome;
-                        alert('Nome atualizado!');
+                        alert('✅ Nome atualizado!');
                     }).catch(err => alert('Erro: ' + err.message));
                 }
             }
         };
 
-        document.getElementById('avatarUpload').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (!file.type.startsWith('image/')) return alert('Envie uma imagem.');
-            if (file.size > 2 * 1024 * 1024) return alert('Máximo 2MB.');
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                const img = ev.target.result;
-                if (currentUser) {
-                    db.collection('users').doc(currentUser.uid).update({ foto: img }).then(() => {
-                        profileAvatarImg.src = img;
-                        profileAvatarImg.style.display = 'block';
-                        profileAvatarLetter.style.display = 'none';
-                        avatarLetter.innerHTML = `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" />`;
-                        alert('Avatar atualizado!');
-                    }).catch(err => alert('Erro: ' + err.message));
-                }
-            };
-            reader.readAsDataURL(file);
-        });
-
+        // ===== EVENTOS =====
+        document.getElementById('openLoginBtn').addEventListener('click', abrirAuthModal);
         document.getElementById('menuToggle').addEventListener('click', function() {
             document.getElementById('navLinks').classList.toggle('open');
         });
@@ -1307,13 +1558,20 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== BOTÃO DE LOGIN =====
-        googleLoginBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            loginGoogle();
+        // Fechar modal ao clicar fora
+        authModal.addEventListener('click', function(e) {
+            if (e.target === this) fecharAuthModal();
+        });
+
+        // Fechar modal com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharAuthModal();
         });
 
         console.log('🚀 Graal Classic BETA carregado!');
+        console.log('📧 Proprietário:', PROPRIETARIO_EMAIL);
+        console.log('🔐 Login/Registro próprio (sem Google)');
+        console.log('📊 Painel admin para gerenciar compras e enviar keys');
     </script>
 </body>
 </html>
