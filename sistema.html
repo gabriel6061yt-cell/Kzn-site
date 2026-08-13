@@ -6,7 +6,7 @@
     <title>Graal Online Classic Test Beta</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <!-- Font Awesome 6 (gratuito) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js">
@@ -117,6 +117,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            position: relative;
         }
         .topbar .right-icons .icon-btn {
             background: transparent;
@@ -203,15 +204,6 @@
         .bottom-nav .nav-item.active i {
             text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
         }
-        .bottom-nav .nav-item .nav-badge {
-            background: #ef4444;
-            color: #fff;
-            font-size: 0.55rem;
-            font-weight: 700;
-            padding: 1px 7px;
-            border-radius: 20px;
-            margin-left: 4px;
-        }
 
         /* ----- CARDS GLASSMORPHISM ----- */
         .glass-card {
@@ -281,34 +273,6 @@
         .btn-secondary:hover {
             background: rgba(124, 58, 237, 0.15);
             border-color: #7c3aed;
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            border: none;
-            color: #fff;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-danger:hover {
-            transform: scale(1.03);
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            border: none;
-            color: #fff;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Inter', sans-serif;
-        }
-        .btn-success:hover {
-            transform: scale(1.03);
         }
 
         /* ----- INPUTS ----- */
@@ -406,6 +370,7 @@
             margin-bottom: 12px;
             background: #1a1a3a;
             box-shadow: 0 0 30px rgba(124, 58, 237, 0.25);
+            cursor: pointer;
         }
         .profile-avatar-wrapper img {
             width: 100%;
@@ -421,7 +386,6 @@
             justify-content: center;
             opacity: 0;
             transition: 0.3s;
-            cursor: pointer;
         }
         .profile-avatar-wrapper:hover .avatar-overlay {
             opacity: 1;
@@ -455,6 +419,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 12px;
             margin-top: 16px;
+            width: 100%;
         }
         .profile-info-grid .info-item {
             background: rgba(255, 255, 255, 0.04);
@@ -873,8 +838,8 @@
                     <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=120" alt="Avatar" />
                     <div class="avatar-overlay" id="avatarOverlay">
                         <i class="fas fa-camera"></i>
-                        <input type="file" id="avatarInput" accept="image/*" style="display:none;" />
                     </div>
+                    <input type="file" id="avatarInput" accept="image/*" style="display:none;" />
                 </div>
                 <div class="profile-name" id="profileName">Usuário</div>
                 <div class="profile-email" id="profileEmail">email@exemplo.com</div>
@@ -1082,7 +1047,6 @@
             navItems.forEach(item => {
                 item.classList.toggle('active', item.dataset.page === pageId);
             });
-            // Fecha dropdown notif
             notifDropdown.classList.remove('open');
         }
 
@@ -1093,7 +1057,6 @@
             });
         });
 
-        // Botões home
         $('goToCompras').addEventListener('click', () => navigateTo('page-compras'));
         $('goToChatHome').addEventListener('click', () => navigateTo('page-chat'));
 
@@ -1118,47 +1081,31 @@
                 currentUser = user;
                 await loadUserProfile(user);
                 setupRealtimeListeners(user);
-                // Mostra admin se for proprietário
                 if (user.email === PROPR_EMAIL) {
                     adminNavBtn.style.display = 'flex';
                     loadAdminCompras();
                 } else {
                     adminNavBtn.style.display = 'none';
                 }
-                // Navega para home se estiver em login/register (não temos página de login, mas pode ficar)
                 navigateTo('page-home');
-                // Chat
                 setupChat(user);
-                // Notificações
                 loadNotificacoes(user.uid);
-                // Avatar
-                if (currentUserDoc && currentUserDoc.avatar) {
-                    topAvatar.src = currentUserDoc.avatar;
-                    profileAvatar.src = currentUserDoc.avatar;
-                } else {
-                    const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserDoc?.nome || user.displayName || 'User')}&background=7c3aed&color=fff&size=120`;
-                    topAvatar.src = fallback;
-                    profileAvatar.src = fallback;
-                }
+                updateAvatarUI();
             } else {
-                // Não logado: mostra tela de login/registro embutida
                 currentUser = null;
                 currentUserDoc = null;
                 if (unsubscribeCompras) unsubscribeCompras();
                 if (unsubscribeNotifs) unsubscribeNotifs();
                 if (chatRoomRef) chatRoomRef.off();
-                // Limpa e mostra auth
                 showAuthScreen();
             }
         });
 
         // ============================================================
-        // TELA DE LOGIN / REGISTRO (simples, embutida)
+        // TELA DE LOGIN / REGISTRO
         // ============================================================
         function showAuthScreen() {
-            // Esconde todas as páginas e mostra um overlay de auth
             pages.forEach(p => p.classList.remove('active'));
-            // Cria ou mostra auth container
             let authContainer = document.getElementById('authContainer');
             if (!authContainer) {
                 authContainer = document.createElement('div');
@@ -1184,7 +1131,6 @@
                     </div>
                 </div>
             `;
-            // Login
             const loginForm = document.getElementById('loginForm');
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
@@ -1254,37 +1200,22 @@
                     } else {
                         profileSince.textContent = '---';
                     }
-                    // Badge proprietário
                     if (user.email === PROPR_EMAIL) {
                         profileBadge.innerHTML = '<span class="profile-badge"><i class="fas fa-crown"></i> Proprietário</span>';
                     } else {
                         profileBadge.innerHTML = '';
                     }
-                    // Contar keys ativas
                     const keysSnap = await db.collection('keys')
                         .where('uid', '==', user.uid)
                         .where('ativa', '==', true)
                         .get();
                     profileKeys.textContent = keysSnap.size;
-                    // Contar compras
                     const comprasSnap = await db.collection('compras')
                         .where('uid', '==', user.uid)
                         .get();
                     profileCompras.textContent = comprasSnap.size;
-                    // Listar keys do usuário
                     renderUserKeys(user.uid);
-                    // Avatar
-                    if (currentUserDoc.avatar) {
-                        topAvatar.src = currentUserDoc.avatar;
-                        profileAvatar.src = currentUserDoc.avatar;
-                    } else {
-                        const fallback =
-                            `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserDoc.nome || 'User')}&background=7c3aed&color=fff&size=120`;
-                        topAvatar.src = fallback;
-                        profileAvatar.src = fallback;
-                    }
                 } else {
-                    // Se não existe, criar
                     await db.collection('users').doc(user.uid).set({
                         nome: user.displayName || 'Usuário',
                         email: user.email,
@@ -1298,9 +1229,26 @@
                     profileKeys.textContent = '0';
                     profileCompras.textContent = '0';
                 }
+                updateAvatarUI();
             } catch (e) {
                 console.error('loadUserProfile', e);
                 showToast('Erro ao carregar perfil.');
+            }
+        }
+
+        // ============================================================
+        // UPDATE AVATAR UI
+        // ============================================================
+        function updateAvatarUI() {
+            if (!currentUserDoc) return;
+            const nome = currentUserDoc.nome || 'User';
+            if (currentUserDoc.avatar) {
+                topAvatar.src = currentUserDoc.avatar;
+                profileAvatar.src = currentUserDoc.avatar;
+            } else {
+                const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=7c3aed&color=fff&size=120`;
+                topAvatar.src = fallback;
+                profileAvatar.src = fallback;
             }
         }
 
@@ -1340,7 +1288,7 @@
         }
 
         // ============================================================
-        // EDIÇÃO DE PERFIL (nome, senha, avatar)
+        // EDIÇÃO DE PERFIL (nome, senha, avatar) - CORRIGIDO
         // ============================================================
         editProfileBtn.addEventListener('click', () => {
             editNameCard.classList.toggle('hidden');
@@ -1352,22 +1300,39 @@
 
         saveNameBtn.addEventListener('click', async () => {
             const novo = editNameInput.value.trim();
-            if (!novo) { showToast('Digite um nome válido.'); return; }
+            if (!novo) {
+                showToast('Digite um nome válido.');
+                return;
+            }
+            if (!currentUser) {
+                showToast('Usuário não autenticado.');
+                return;
+            }
+
+            saveNameBtn.disabled = true;
+            saveNameBtn.innerHTML = '<span class="loading-spinner"></span> Salvando...';
+
             try {
                 await db.collection('users').doc(currentUser.uid).update({ nome: novo });
                 currentUserDoc.nome = novo;
                 profileName.textContent = novo;
-                editNameCard.classList.add('hidden');
-                showToast('Nome atualizado!');
-                // Atualiza avatar fallback se não tiver foto
+                await currentUser.updateProfile({ displayName: novo });
+
                 if (!currentUserDoc.avatar) {
-                    const fallback =
-                        `https://ui-avatars.com/api/?name=${encodeURIComponent(novo)}&background=7c3aed&color=fff&size=120`;
+                    const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(novo)}&background=7c3aed&color=fff&size=120`;
                     topAvatar.src = fallback;
                     profileAvatar.src = fallback;
                 }
-            } catch (e) {
-                showToast('Erro ao atualizar nome.');
+
+                editNameCard.classList.add('hidden');
+                showToast('✅ Nome atualizado com sucesso!');
+
+            } catch (error) {
+                console.error('Erro ao atualizar nome:', error);
+                showToast('❌ Erro ao atualizar nome: ' + error.message);
+            } finally {
+                saveNameBtn.disabled = false;
+                saveNameBtn.innerHTML = '<i class="fas fa-save"></i> Salvar';
             }
         });
 
@@ -1394,12 +1359,13 @@
             }
         });
 
-        // Avatar upload
+        // Avatar upload - CORRIGIDO
         avatarOverlay.addEventListener('click', () => avatarInput.click());
         avatarInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (!file) return;
             try {
+                showToast('Enviando foto...');
                 const ref = storage.ref(`avatars/${currentUser.uid}`);
                 await ref.put(file);
                 const url = await ref.getDownloadURL();
@@ -1407,15 +1373,16 @@
                 currentUserDoc.avatar = url;
                 topAvatar.src = url;
                 profileAvatar.src = url;
-                showToast('Avatar atualizado!');
+                showToast('✅ Avatar atualizado!');
             } catch (err) {
-                showToast('Erro no upload: ' + err.message);
+                console.error('Upload avatar error:', err);
+                showToast('❌ Erro no upload: ' + err.message);
             }
             avatarInput.value = '';
         });
 
         // ============================================================
-        // COMPRAS (formulário)
+        // COMPRAS (formulário) - COM ENVIO DE E-MAIL
         // ============================================================
         compraComprovante.addEventListener('change', () => {
             const file = compraComprovante.files[0];
@@ -1439,11 +1406,12 @@
             compraFeedback.textContent = '';
 
             try {
-                // Upload comprovante
+                // 1. Upload do comprovante
                 const ref = storage.ref(`comprovantes/${Date.now()}_${file.name}`);
                 await ref.put(file);
                 const comprovanteUrl = await ref.getDownloadURL();
 
+                // 2. Salvar no Firestore
                 await db.collection('compras').add({
                     uid: currentUser.uid,
                     nome,
@@ -1456,12 +1424,39 @@
                     dataExpiracao: null
                 });
 
-                compraFeedback.innerHTML = '<span style="color:#22c55e;">✅ Pedido enviado com sucesso! Aguarde a aprovação.</span>';
+                // 3. ENVIAR E-MAIL via FormSubmit
+                const formData = new FormData();
+                formData.append('_subject', '📦 Nova Compra - Graal Online');
+                formData.append('_captcha', 'false');
+                formData.append('_template', 'table');
+                formData.append('Nome', nome);
+                formData.append('E-mail', email);
+                formData.append('Plano', plano);
+                formData.append('Comprovante', comprovanteUrl);
+
+                await fetch('https://formsubmit.co/ajax/gabriel6061yt@gmail.com', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                compraFeedback.innerHTML = '<span style="color:#22c55e;">✅ Pedido enviado com sucesso! Você receberá um e-mail de confirmação em breve.</span>';
                 compraForm.reset();
                 fileChosen.textContent = 'Nenhum arquivo selecionado';
-                showToast('Pedido enviado!');
+                showToast('✅ Pedido enviado!');
+
+                // Notificar proprietário
+                await db.collection('notificacoes').add({
+                    uid: 'proprietario',
+                    mensagem: `Nova compra de ${nome} (${email}) - Plano ${plano}`,
+                    lida: false,
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    tipo: 'compra'
+                });
+
             } catch (err) {
-                compraFeedback.textContent = 'Erro: ' + err.message;
+                console.error('Erro no pedido:', err);
+                compraFeedback.textContent = '❌ Erro: ' + err.message;
+                showToast('❌ Erro ao enviar pedido.');
             } finally {
                 isSending = false;
                 submitCompraBtn.disabled = false;
@@ -1528,7 +1523,6 @@
             }
             adminTableBody.innerHTML = html;
 
-            // Eventos nos botões
             document.querySelectorAll('.admin-table .btn-sm').forEach(btn => {
                 btn.addEventListener('click', async (e) => {
                     const id = btn.dataset.id;
@@ -1537,11 +1531,11 @@
                     if (action === 'aprovar') {
                         if (!confirm('Aprovar esta compra?')) return;
                         await db.collection('compras').doc(id).update({ status: 'aprovado' });
-                        showToast('Compra aprovada!');
+                        showToast('✅ Compra aprovada!');
                     } else if (action === 'cancelar') {
                         if (!confirm('Cancelar esta compra?')) return;
                         await db.collection('compras').doc(id).update({ status: 'cancelado' });
-                        showToast('Compra cancelada.');
+                        showToast('❌ Compra cancelada.');
                     } else if (action === 'key') {
                         if (!confirm('Gerar e enviar key para este usuário?')) return;
                         await gerarKey(id);
@@ -1574,20 +1568,17 @@
                 });
                 await docRef.update({ key: key, dataExpiracao: expiracao, status: 'aprovado' });
 
-                // Notificar usuário
                 await db.collection('notificacoes').add({
                     uid: data.uid,
-                    mensagem: `Sua key foi gerada: ${key}`,
+                    mensagem: `🔑 Sua key foi gerada: ${key}`,
                     lida: false,
                     data: firebase.firestore.FieldValue.serverTimestamp(),
                     tipo: 'key'
                 });
 
-                showToast(`Key ${key} gerada e enviada!`);
-                // Enviar e-mail via FormSubmit (opcional)
-                // ...
+                showToast(`🔑 Key ${key} gerada com sucesso!`);
             } catch (e) {
-                showToast('Erro ao gerar key: ' + e.message);
+                showToast('❌ Erro ao gerar key: ' + e.message);
             }
         }
 
@@ -1625,10 +1616,6 @@
         notifBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             notifDropdown.classList.toggle('open');
-            // Marcar todas como lidas
-            if (notifDropdown.classList.contains('open')) {
-                // Opcional: marcar lidas
-            }
         });
         document.addEventListener('click', () => notifDropdown.classList.remove('open'));
 
@@ -1637,13 +1624,9 @@
         // ============================================================
         function setupChat(user) {
             if (chatRoomRef) chatRoomRef.off();
-            const chatId = user.uid < PROPR_EMAIL ? user.uid + '_' + PROPR_EMAIL : PROPR_EMAIL + '_' + user.uid;
-            // Para simplificar, usamos o uid do usuário e o proprietário
-            // Na prática, seria um ID único por par
             const roomId = [user.uid, 'proprietario'].sort().join('_');
             chatRoomRef = rtdb.ref('chats/' + roomId);
 
-            // Carregar mensagens
             chatRoomRef.limitToLast(50).on('value', (snap) => {
                 const msgs = snap.val();
                 chatMessages.innerHTML = '';
@@ -1661,7 +1644,6 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             });
 
-            // Typing
             const typingRef = rtdb.ref('typing/' + roomId);
             typingRef.on('value', (snap) => {
                 const val = snap.val();
@@ -1676,7 +1658,6 @@
         chatSendBtn.addEventListener('click', sendChatMessage);
         chatInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') sendChatMessage();
-            // Typing
             if (chatRoomRef && currentUser) {
                 const roomId = [currentUser.uid, 'proprietario'].sort().join('_');
                 const typingRef = rtdb.ref('typing/' + roomId);
@@ -1697,11 +1678,10 @@
                     time: new Date().toLocaleTimeString('pt-BR'),
                     timestamp: Date.now()
                 });
-                // Notificar proprietário se não for ele
                 if (currentUser.email !== PROPR_EMAIL) {
                     await db.collection('notificacoes').add({
-                        uid: 'proprietario', // simplificado
-                        mensagem: `Nova mensagem de ${currentUserDoc?.nome || currentUser.email}`,
+                        uid: 'proprietario',
+                        mensagem: `💬 Nova mensagem de ${currentUserDoc?.nome || currentUser.email}`,
                         lida: false,
                         data: firebase.firestore.FieldValue.serverTimestamp(),
                         tipo: 'chat'
@@ -1720,7 +1700,6 @@
                 try {
                     await auth.signOut();
                     showToast('Deslogado.');
-                    // Recarrega auth screen
                 } catch (e) {
                     showToast('Erro ao sair.');
                 }
@@ -1728,12 +1707,10 @@
         });
 
         // ============================================================
-        // ADMIN SEARCH
+        // ADMIN SEARCH & REFRESH
         // ============================================================
         adminSearch.addEventListener('input', () => {
-            // A tabela já é filtrada no snapshot, mas forçamos re-render
             if (unsubscribeCompras) {
-                // Desinscreve e reinscreve para forçar
                 unsubscribeCompras();
                 loadAdminCompras();
             }
@@ -1747,9 +1724,24 @@
         });
 
         // ============================================================
+        // SETUP LISTENERS
+        // ============================================================
+        function setupRealtimeListeners(user) {
+            // Escuta mudanças no perfil para atualizar UI
+            db.collection('users').doc(user.uid).onSnapshot((doc) => {
+                if (doc.exists) {
+                    currentUserDoc = doc.data();
+                    profileName.textContent = currentUserDoc.nome || 'Usuário';
+                    updateAvatarUI();
+                    renderUserKeys(user.uid);
+                }
+            });
+        }
+
+        // ============================================================
         // INICIAR
         // ============================================================
-        console.log('Graal Online Classic Test Beta - carregado');
+        console.log('🚀 Graal Online Classic Test Beta - carregado com sucesso!');
     </script>
 
 </body>
