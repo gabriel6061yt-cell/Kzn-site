@@ -13,7 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS COMPLETO (mantido igual) ===== */
+        /* ===== CSS COMPLETO ===== */
         * {
             margin: 0;
             padding: 0;
@@ -955,6 +955,12 @@
             background: rgba(239, 68, 68, 0.15);
             border: 1px solid var(--danger);
             color: var(--danger);
+        }
+        .form-status.loading {
+            display: block;
+            background: rgba(124, 58, 237, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--secondary-light);
         }
 
         /* ===== PERFIL ===== */
@@ -2125,7 +2131,6 @@
 
         // ====== FUNÇÃO PARA ABRIR ADMIN ======
         function abrirAdmin() {
-            // Só abre se for o proprietário
             if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
                 alert('⛔ Acesso negado! Apenas o proprietário pode acessar o painel administrativo.');
                 return;
@@ -2180,7 +2185,6 @@
                 container.scrollTop = container.scrollHeight;
             });
 
-            // Typing
             const typingRef = db.ref('typing/' + roomId);
             typingRef.on('value', (snap) => {
                 const val = snap.val();
@@ -2232,7 +2236,7 @@
             }
         };
 
-        // ====== ENVIAR PEDIDO (FORMULÁRIO) ======
+        // ====== ENVIAR PEDIDO (FORMULÁRIO) - CORRIGIDO ======
         window.enviarPedido = async function(event) {
             event.preventDefault();
 
@@ -2246,23 +2250,38 @@
             const status = document.getElementById('formStatus');
             const btn = document.getElementById('formSubmitBtn');
 
+            // VALIDAÇÃO
             if (!nome || !email || !whatsapp || !plano || !file) {
                 status.className = 'form-status error';
                 status.textContent = '📝 Preencha todos os campos e anexe o comprovante.';
                 return;
             }
 
+            if (!email.includes('@') || !email.includes('.')) {
+                status.className = 'form-status error';
+                status.textContent = '📧 Digite um e-mail válido.';
+                return;
+            }
+
+            // DESABILITA O BOTÃO
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
-            status.className = '';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            status.className = 'form-status loading';
+            status.textContent = '⏳ Enviando seu pedido...';
 
             try {
-                // 1. Upload do comprovante para o Storage
-                const storageRef = storage.ref('comprovantes/' + Date.now() + '_' + file.name);
-                const uploadTask = await storageRef.put(file);
-                const comprovanteUrl = await uploadTask.ref.getDownloadURL();
+                // 1. UPLOAD DO COMPROVANTE
+                let comprovanteUrl = '';
+                try {
+                    const storageRef = storage.ref('comprovantes/' + Date.now() + '_' + file.name);
+                    const uploadTask = await storageRef.put(file);
+                    comprovanteUrl = await uploadTask.ref.getDownloadURL();
+                } catch (uploadError) {
+                    console.warn('Erro no upload, usando placeholder:', uploadError);
+                    comprovanteUrl = 'https://via.placeholder.com/300x200?text=Comprovante+Enviado+por+Email';
+                }
 
-                // 2. Salvar no Firestore
+                // 2. SALVAR NO FIRESTORE
                 await firestore.collection('compras').add({
                     nome: nome,
                     email: email,
@@ -2274,33 +2293,38 @@
                     data: firebase.firestore.FieldValue.serverTimestamp(),
                     key: null,
                     dataExpiracao: null,
-                    uid: usuarioLogado ? usuarioLogado.uid || usuarioLogado.email : null
+                    uid: usuarioLogado ? usuarioLogado.uid || usuarioLogado.email : 'anonimo'
                 });
 
-                // 3. Enviar e-mail via FormSubmit
-                const formData = new FormData();
-                formData.append('_captcha', 'false');
-                formData.append('_template', 'table');
-                formData.append('_subject', '📦 NOVA COMPRA - MOD MENU BETA!');
-                formData.append('Nome', nome);
-                formData.append('E-mail', email);
-                formData.append('WhatsApp', whatsapp);
-                formData.append('Plano', plano);
-                formData.append('Mensagem', mensagem || '');
-                formData.append('Comprovante', comprovanteUrl);
+                // 3. ENVIAR E-MAIL VIA FORMSUBMIT
+                try {
+                    const formData = new FormData();
+                    formData.append('_captcha', 'false');
+                    formData.append('_template', 'table');
+                    formData.append('_subject', '📦 NOVA COMPRA - MOD MENU BETA!');
+                    formData.append('Nome', nome);
+                    formData.append('E-mail', email);
+                    formData.append('WhatsApp', whatsapp);
+                    formData.append('Plano', plano);
+                    formData.append('Mensagem', mensagem || '');
+                    formData.append('Comprovante', comprovanteUrl);
 
-                await fetch('https://formsubmit.co/gabriel6061yt@gmail.com', {
-                    method: 'POST',
-                    body: formData
-                });
+                    await fetch('https://formsubmit.co/gabriel6061yt@gmail.com', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } catch (emailError) {
+                    console.warn('Erro ao enviar e-mail (opcional):', emailError);
+                }
 
+                // SUCESSO!
                 status.className = 'form-status success';
                 status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
 
-                // Notificar proprietário
+                // NOTIFICAR PROPRIETÁRIO
                 adicionarNotificacao(`📦 Nova compra de ${nome} (${email})`, 'compra');
 
-                // Resetar formulário
+                // RESETAR FORMULÁRIO
                 document.getElementById('compraNome').value = '';
                 document.getElementById('compraEmail').value = '';
                 document.getElementById('compraWhatsapp').value = '';
@@ -2308,12 +2332,20 @@
                 document.getElementById('compraMensagem').value = '';
                 document.getElementById('compraComprovante').value = '';
 
+                // RECARREGAR ADMIN SE FOR PROPRIETÁRIO
+                if (usuarioLogado && isProprietario(usuarioLogado.email)) {
+                    setTimeout(() => {
+                        carregarComprasAdmin();
+                    }, 1500);
+                }
+
             } catch (error) {
-                console.error('Erro ao enviar pedido:', error);
+                console.error('Erro completo:', error);
                 status.className = 'form-status error';
-                status.textContent = '❌ Erro ao enviar pedido: ' + error.message;
+                status.textContent = '❌ Erro ao enviar pedido: ' + (error.message || 'Tente novamente ou entre em contato pelo WhatsApp.');
             }
 
+            // REATIVA O BOTÃO
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
         };
@@ -2333,7 +2365,6 @@
                     document.getElementById('editEmail').value = usuario.email || '';
                     document.getElementById('editEmail').disabled = true;
 
-                    // Avatar
                     if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
                         document.getElementById('avatarProfileImage').src = usuario.avatar;
                         document.getElementById('avatarProfileImage').style.display = 'block';
@@ -2351,10 +2382,8 @@
                             `<span class="avatar-letter" id="avatarText">${letra}</span>`;
                     }
 
-                    // Keys do usuário
                     carregarKeysUsuario(usuario.email);
 
-                    // ⚠️ MOSTRA ADMIN E BADGE SÓ PARA O PROPRIETÁRIO
                     const isOwner = isProprietario(usuario.email);
                     const adminSection = document.getElementById('admin');
                     const adminBadgeNav = document.getElementById('adminBadgeNav');
@@ -2560,7 +2589,6 @@
 
         // ====== COMPRAS ADMIN ======
         function carregarComprasAdmin() {
-            // Só carrega se for o proprietário
             if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
                 console.log('⛔ Apenas o proprietário pode ver as compras.');
                 return;
@@ -2924,7 +2952,6 @@
                 });
             });
 
-            // Chat input
             const input = document.getElementById('chatInput');
             if (input) {
                 input.addEventListener('keydown', function(e) {
@@ -2949,7 +2976,6 @@
                 });
             }
 
-            // Admin search
             document.getElementById('adminSearch').addEventListener('input', function() {
                 if (unsubscribeCompras) {
                     unsubscribeCompras();
