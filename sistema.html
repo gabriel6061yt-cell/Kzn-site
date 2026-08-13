@@ -52,10 +52,6 @@
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(124,58,237,0.2); }
-            50% { box-shadow: 0 0 40px rgba(124,58,237,0.6); }
-        }
         .fade-up { animation: fadeUp 0.6s ease forwards; }
 
         /* ========== HEADER PROFISSIONAL ========== */
@@ -135,7 +131,6 @@
             transition: 0.3s;
         }
         .btn-google:hover { border-color: var(--primary); background: rgba(124,58,237,0.1); }
-        .btn-google img { width: 20px; height: 20px; border-radius: 50%; }
 
         .user-avatar {
             width: 38px;
@@ -646,7 +641,7 @@
                     <div class="notif-dropdown" id="notifDropdown"></div>
                 </div>
                 <div id="loginSection">
-                    <button class="btn-google" onclick="loginGoogle()">
+                    <button class="btn-google" id="googleLoginBtn">
                         <i class="fab fa-google"></i> Entrar com Google
                     </button>
                 </div>
@@ -834,6 +829,7 @@
 
         // ===== VARIÁVEIS GLOBAIS =====
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
+        const CLIENT_ID = '642206758344-ma2e07eu08dokkui9d28cfiqfnrss50v.apps.googleusercontent.com';
         let currentUser = null;
         let currentUserDoc = null;
         let chatRoomId = null;
@@ -845,7 +841,6 @@
         const loginSection = document.getElementById('loginSection');
         const userSection = document.getElementById('userSection');
         const avatarLetter = document.getElementById('avatarLetter');
-        const userAvatarImg = document.getElementById('userAvatarImg');
         const profileAvatarLetter = document.getElementById('profileAvatarLetter');
         const profileAvatarImg = document.getElementById('profileAvatarImg');
         const profileNome = document.getElementById('profileNome');
@@ -860,15 +855,67 @@
         const formStatus = document.getElementById('formStatus');
         const notifDropdown = document.getElementById('notifDropdown');
         const notifCount = document.getElementById('notifCount');
+        const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-        // ===== FUNÇÃO DE LOGIN GOOGLE =====
-        window.loginGoogle = function() {
+        // ===== INICIALIZAR GSI =====
+        function initGoogleSignIn() {
+            if (typeof google !== 'undefined') {
+                google.accounts.id.initialize({
+                    client_id: CLIENT_ID,
+                    callback: handleCredentialResponse,
+                    cancel_on_tap_outside: false,
+                    auto_select: false
+                });
+                // Renderizar botão customizado
+                googleLoginBtn.addEventListener('click', () => {
+                    google.accounts.id.prompt(); // Mostra o popup de seleção de conta
+                });
+                // Fallback: se o prompt não aparecer, usar popup manual
+                // Mas o prompt já é suficiente
+            } else {
+                console.warn('GSI não carregado, usando Firebase popup fallback.');
+                googleLoginBtn.addEventListener('click', () => {
+                    loginWithFirebasePopup();
+                });
+            }
+        }
+
+        // ===== CALLBACK DO GSI =====
+        async function handleCredentialResponse(response) {
+            try {
+                // Decodificar o token JWT para obter informações
+                const payload = parseJwt(response.credential);
+                // Criar credencial do Firebase com o token do Google
+                const credential = firebase.auth.GoogleAuthProvider.credential(null, response.credential);
+                // Fazer login no Firebase com a credencial
+                const result = await auth.signInWithCredential(credential);
+                // O observer já vai tratar
+            } catch (error) {
+                console.error('Erro no login GSI:', error);
+                alert('Falha ao fazer login. Tente novamente.');
+                // Fallback: tentar popup
+                loginWithFirebasePopup();
+            }
+        }
+
+        // ===== FALLBACK: LOGIN COM POPUP FIREBASE =====
+        function loginWithFirebasePopup() {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).catch(err => {
-                console.error(err);
+                console.error('Popup falhou:', err);
                 alert('Erro ao fazer login: ' + err.message);
             });
-        };
+        }
+
+        // ===== FUNÇÃO PARA DECODIFICAR JWT =====
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
 
         // ===== OBSERVADOR DE AUTENTICAÇÃO =====
         auth.onAuthStateChanged(async (user) => {
@@ -878,7 +925,7 @@
                 const docRef = db.collection('users').doc(user.uid);
                 const docSnap = await docRef.get();
                 if (!docSnap.exists) {
-                    // Criar perfil
+                    // Criar perfil com dados do Google
                     await docRef.set({
                         nome: user.displayName || 'Usuário',
                         email: user.email,
@@ -964,7 +1011,7 @@
             let html = '<p style="font-weight:600;margin-bottom:8px;">🔑 Suas Keys Ativas:</p>';
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao).toLocaleString() : 'Indeterminada';
+                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao.seconds * 1000).toLocaleString() : 'Indeterminada';
                 html += `
                     <div class="key-item">
                         <span class="key-code">${data.key}</span>
@@ -1019,7 +1066,7 @@
                 uid: compraData.uid || '--',
                 key: key,
                 dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
-                dataExpiracao: expiracao,
+                dataExpiracao: firebase.firestore.Timestamp.fromDate(expiracao),
                 ativa: true,
                 compraId: compraId
             });
@@ -1028,7 +1075,7 @@
             await compraRef.update({
                 key: key,
                 status: 'aprovado',
-                dataExpiracao: expiracao
+                dataExpiracao: firebase.firestore.Timestamp.fromDate(expiracao)
             });
 
             // Enviar notificação ao usuário
@@ -1061,7 +1108,6 @@
                 lida: false,
                 data: firebase.firestore.FieldValue.serverTimestamp()
             });
-            // Se o usuário estiver logado e for o mesmo, atualiza em tempo real
             if (currentUser && currentUser.uid === uid) {
                 carregarNotificacoes(uid);
             }
@@ -1151,28 +1197,21 @@
         // ===== CHAT PRIVADO =====
         function iniciarChat(uid) {
             if (chatListener) { chatListener(); chatListener = null; }
-            // Sala: uid do usuário + uid do proprietário (fixo, mas aqui usamos o email do prop)
-            // Vamos buscar o uid do proprietário pelo email
             db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get().then(snapshot => {
                 let propUid = null;
                 if (!snapshot.empty) {
                     propUid = snapshot.docs[0].id;
                 } else {
-                    // fallback: usar um uid fictício
                     propUid = 'proprietario_fixo';
                 }
-                // Ordenar para ter sempre a mesma sala
                 const ids = [uid, propUid].sort();
                 chatRoomId = ids.join('_');
-                // Escutar mensagens
                 const chatRef = rtdb.ref('chats/' + chatRoomId + '/mensagens');
                 chatListener = chatRef.on('child_added', (snap) => {
                     const msg = snap.val();
                     adicionarMensagemChat(msg.texto, msg.remetente === uid ? 'me' : 'other', msg.timestamp);
                 });
-                // Limpar mensagens antigas se estiver vazio
                 chatMessagesDiv.innerHTML = '';
-                // Carregar últimas 50 mensagens
                 chatRef.orderByChild('timestamp').limitToLast(50).once('value', (snap) => {
                     const msgs = [];
                     snap.forEach(child => msgs.push(child.val()));
@@ -1198,7 +1237,6 @@
             chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
         }
 
-        // Enviar mensagem chat
         document.getElementById('chatSendBtn').addEventListener('click', enviarMensagemChat);
         document.getElementById('chatInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') enviarMensagemChat();
@@ -1241,23 +1279,20 @@
                 return;
             }
 
-            // Upload do comprovante para Firestore (base64)
             const reader = new FileReader();
             reader.onload = async function(ev) {
                 const base64 = ev.target.result;
                 try {
-                    // Salvar compra no Firestore
                     const compraRef = await db.collection('compras').add({
                         uid: currentUser ? currentUser.uid : 'anonimo',
                         nome: nome,
                         email: email,
                         plano: plano,
-                        comprovante: base64, // cuidado: pode ser grande, mas para demo ok
+                        comprovante: base64,
                         status: 'pendente',
                         data: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
-                    // Enviar e-mail via FormSubmit
                     const formEmail = document.createElement('form');
                     formEmail.method = 'POST';
                     formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -1281,11 +1316,9 @@
                     formEmail.submit();
                     document.body.removeChild(formEmail);
 
-                    // Notificação para o proprietário
                     if (currentUser && currentUser.email === PROPRIETARIO_EMAIL) {
-                        // se o próprio prop comprou, não precisa notificar
+                        // próprio prop
                     } else {
-                        // Enviar notificação para o proprietário (seu uid)
                         const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
                         if (!propSnapshot.empty) {
                             const propUid = propSnapshot.docs[0].id;
@@ -1299,7 +1332,6 @@
                     document.getElementById('formCompra').reset();
                     document.getElementById('nomeCompra').value = '';
                     if (currentUser) document.getElementById('emailCompra').value = currentUser.email;
-                    // Recarregar admin se for proprietário
                     if (currentUser && currentUser.email === PROPRIETARIO_EMAIL) {
                         carregarAdminCompras();
                     }
@@ -1326,7 +1358,6 @@
                         const initial = nome[0].toUpperCase();
                         profileAvatarLetter.textContent = initial;
                         avatarLetter.textContent = initial;
-                        // atualizar currentUserDoc
                         currentUserDoc.nome = nome;
                         alert('Nome atualizado!');
                     }).catch(err => alert('Erro: ' + err.message));
@@ -1366,7 +1397,15 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== INICIAR (já chamado pelo observer) =====
+        // ===== INICIALIZAR =====
+        // Aguardar o carregamento do GSI
+        if (typeof google !== 'undefined') {
+            initGoogleSignIn();
+        } else {
+            // Se o GSI não carregar, usar fallback
+            googleLoginBtn.addEventListener('click', loginWithFirebasePopup);
+        }
+
         console.log('🚀 Graal Classic BETA carregado!');
     </script>
 </body>
