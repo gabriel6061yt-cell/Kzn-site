@@ -11,10 +11,10 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <!-- Google Identity Services -->
+    <!-- Google Identity Services (GSI) -->
     <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
-        /* ========== MESMO CSS DO SITE PRINCIPAL ========== */
+        /* ====== CSS igual ao site principal ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
@@ -49,7 +49,6 @@
         }
         .fade-up { animation: fadeUp 0.6s ease forwards; }
 
-        /* ===== HEADER ===== */
         .header {
             background: rgba(11,11,26,0.85);
             backdrop-filter: blur(16px);
@@ -154,7 +153,6 @@
             font-size: 1.6rem;
         }
 
-        /* ===== HERO ===== */
         .hero {
             padding: 140px 0 80px;
             background: radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.15), transparent 60%),
@@ -191,7 +189,6 @@
             letter-spacing: 1px;
         }
 
-        /* ===== PLANOS ===== */
         .section {
             padding: 60px 0;
         }
@@ -279,7 +276,6 @@
         }
         .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
 
-        /* ===== FORMULÁRIO ===== */
         .form-container {
             max-width: 560px;
             margin: 0 auto;
@@ -342,7 +338,6 @@
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #22c55e; }
         .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #ef4444; }
 
-        /* ===== ADMIN ===== */
         .admin-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -401,7 +396,6 @@
         .btn-small.success { background: #22c55e; color: #fff; }
         .btn-small.success:hover { background: #16a34a; }
 
-        /* ===== PERFIL ===== */
         .profile-card {
             max-width: 600px;
             margin: 0 auto;
@@ -449,7 +443,6 @@
         .profile-card .keys-list .key-item:last-child { border-bottom: none; }
         .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); }
 
-        /* ===== CHAT ===== */
         .chat-container {
             max-width: 700px;
             margin: 0 auto;
@@ -537,7 +530,6 @@
         }
         .chat-input-area button:hover { background: var(--primary-dark); }
 
-        /* ===== NOTIFICAÇÕES ===== */
         .notification-badge {
             position: relative;
             cursor: pointer;
@@ -581,7 +573,6 @@
         .notif-item:last-child { border-bottom: none; }
         .notif-item .notif-time { font-size: 0.6rem; color: var(--text-muted); display: block; margin-top: 4px; }
 
-        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-links {
@@ -796,7 +787,7 @@
     </footer>
 
     <script>
-        // ===== CONFIGURAÇÃO FIREBASE (MESMA DO SITE PRINCIPAL) =====
+        // ===== FIREBASE CONFIG =====
         const firebaseConfig = {
             apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
             authDomain: "chat-kzn.firebaseapp.com",
@@ -840,47 +831,62 @@
         const notifCount = document.getElementById('notifCount');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-        // ===== INICIALIZAR GSI (IGUAL AO SITE PRINCIPAL) =====
+        // ===== FUNÇÃO PARA INICIALIZAR O GSI (IGUAL AO SITE PRINCIPAL) =====
         function initGoogleSignIn() {
-            if (typeof google !== 'undefined') {
+            if (typeof google !== 'undefined' && google.accounts) {
                 google.accounts.id.initialize({
                     client_id: CLIENT_ID,
                     callback: handleCredentialResponse,
                     cancel_on_tap_outside: false,
-                    auto_select: false
+                    auto_select: false,
+                    context: 'signin'
                 });
-                googleLoginBtn.addEventListener('click', () => {
-                    google.accounts.id.prompt(); // Abre o popup
+
+                // Ao clicar no botão, chamamos o prompt do GSI
+                googleLoginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    google.accounts.id.prompt(); // Abre a janela de seleção de conta
                 });
             } else {
-                // Fallback: Firebase popup
-                googleLoginBtn.addEventListener('click', loginWithFirebasePopup);
+                // Fallback: se o GSI não carregar, usar redirect (mais confiável que popup)
+                googleLoginBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    auth.signInWithRedirect(provider);
+                });
             }
         }
 
-        // ===== CALLBACK DO GSI =====
+        // ===== CALLBACK DO GSI (quando o usuário seleciona uma conta) =====
         async function handleCredentialResponse(response) {
             try {
+                // O token do Google é recebido, usamos para criar credencial Firebase
                 const credential = firebase.auth.GoogleAuthProvider.credential(null, response.credential);
-                await auth.signInWithCredential(credential);
+                const result = await auth.signInWithCredential(credential);
+                // O usuário está logado, o observer vai tratar
             } catch (error) {
-                console.error('Erro no GSI:', error);
-                loginWithFirebasePopup(); // Fallback
+                console.error('Erro no login GSI:', error);
+                alert('Falha ao fazer login. Tente novamente.');
+                // Fallback para redirect caso o GSI falhe
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithRedirect(provider);
             }
         }
 
-        // ===== FALLBACK: POPUP FIREBASE =====
-        function loginWithFirebasePopup() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).catch(err => {
-                alert('Erro ao fazer login: ' + err.message);
-            });
-        }
+        // ===== PROCESSAR RESULTADO DO REDIRECT (caso o GSI não funcione) =====
+        auth.getRedirectResult().then((result) => {
+            if (result.user) {
+                // Login via redirect bem-sucedido, o observer vai tratar
+            }
+        }).catch((error) => {
+            console.error('Erro no redirect login:', error);
+        });
 
         // ===== OBSERVADOR DE AUTENTICAÇÃO =====
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
+                // Buscar/ criar documento do usuário no Firestore
                 const docRef = db.collection('users').doc(user.uid);
                 const docSnap = await docRef.get();
                 if (!docSnap.exists) {
@@ -892,6 +898,7 @@
                     });
                 }
                 currentUserDoc = (await docRef.get()).data();
+                // Atualizar UI
                 loginSection.style.display = 'none';
                 userSection.style.display = 'flex';
                 const initial = (currentUserDoc?.nome || user.displayName || 'U')[0].toUpperCase();
@@ -946,7 +953,7 @@
             }
         });
 
-        // ===== FUNÇÕES AUXILIARES (MESMAS DO SITE PRINCIPAL) =====
+        // ===== FUNÇÕES AUXILIARES (mesmas do site principal) =====
         async function carregarKeysUsuario(uid) {
             const snapshot = await db.collection('keys')
                 .where('uid', '==', uid)
@@ -1328,11 +1335,17 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== INICIALIZAR =====
+        // ===== INICIALIZAR GSI =====
+        // Aguardar o carregamento do GSI (o script é async)
         if (typeof google !== 'undefined') {
             initGoogleSignIn();
         } else {
-            googleLoginBtn.addEventListener('click', loginWithFirebasePopup);
+            // Se o GSI não carregar, usar fallback com redirect
+            googleLoginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithRedirect(provider);
+            });
         }
 
         console.log('🚀 Graal Classic BETA carregado!');
