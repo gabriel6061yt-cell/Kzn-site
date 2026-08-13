@@ -1,1325 +1,1373 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KZN MENU - Sistema de Keys</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Graal Online Classic Test BETA</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* ========== RESET & VARIÁVEIS ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #5b21b6;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --bg: #0b0b1a;
+            --bg-card: #14142b;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #2d2d5e;
+            --shadow: 0 20px 60px rgba(0,0,0,0.6);
+            --radius: 16px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: #0f0f1a;
-            color: #e2e8f0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        .system-container {
-            max-width: 1000px;
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; font-family: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ========== SCROLLBAR ========== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        /* ========== ANIMAÇÕES ========== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(124,58,237,0.2); }
+            50% { box-shadow: 0 0 40px rgba(124,58,237,0.6); }
+        }
+        .fade-up { animation: fadeUp 0.6s ease forwards; }
+
+        /* ========== HEADER PROFISSIONAL ========== */
+        .header {
+            background: rgba(11,11,26,0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
             width: 100%;
-            background: #1a1a2e;
-            border-radius: 20px;
-            border: 1px solid #2d2d44;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            transition: all 0.3s ease;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+            transition: 0.3s;
         }
-        .system-header {
+        .header.scrolled { box-shadow: var(--shadow); }
+        .header .container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 12px;
         }
-        .system-title {
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+        }
+        .logo i { color: var(--secondary); font-size: 1.8rem; }
+        .logo span { background: linear-gradient(135deg, var(--secondary), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo small { font-size: 0.6rem; font-weight: 400; color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); display: block; margin-top: -4px; letter-spacing: 1px; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover::after { width: 100%; }
+
+        .header-actions {
             display: flex;
             align-items: center;
             gap: 12px;
         }
-        .system-title i {
-            font-size: 1.8rem;
-            color: #7c3aed;
+        .btn-google {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.3s;
         }
-        .system-title h1 {
-            font-size: 1.5rem;
+        .btn-google:hover { border-color: var(--primary); background: rgba(124,58,237,0.1); }
+        .btn-google img { width: 20px; height: 20px; border-radius: 50%; }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 700;
-            background: linear-gradient(135deg, #dc2626, #7c3aed);
+            font-size: 0.9rem;
+            color: #fff;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .user-avatar:hover { border-color: var(--secondary); transform: scale(1.05); }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.6rem;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            padding: 140px 0 80px;
+            background: radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.15), transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(6,182,212,0.08), transparent 50%),
+                        var(--bg);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .system-user {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px 8px 12px;
-            border-radius: 50px;
-            border: 1px solid #2d2d44;
-        }
-        .system-user .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #dc2626, #7c3aed);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: #fff;
-        }
-        .system-user .user-info {
-            font-size: 0.85rem;
-        }
-        .system-user .user-info .name {
-            font-weight: 600;
-        }
-        .system-user .user-info .role {
-            font-size: 0.65rem;
-            color: #94a3b8;
-        }
-        .btn-sair {
-            background: none;
-            border: 1px solid #2d2d44;
-            color: #94a3b8;
-            padding: 4px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.75rem;
-        }
-        .btn-sair:hover {
-            border-color: #dc2626;
-            color: #dc2626;
-        }
-
-        .system-body {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .filter-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .filter-section .search-box {
-            display: flex;
-            gap: 8px;
-            flex: 1;
-            min-width: 200px;
-        }
-        .filter-section .search-box input {
-            flex: 1;
-            padding: 8px 14px;
-            border-radius: 10px;
-            border: 1px solid #2d2d44;
-            background: #0f0f1a;
-            color: #e2e8f0;
-            outline: none;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-        .filter-section .search-box input:focus {
-            border-color: #7c3aed;
-            box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
-        }
-        .filter-section .search-box button {
-            padding: 8px 16px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 0.85rem;
-        }
-        .filter-section .search-box button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
-        }
-        .filter-section .status-filter {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .filter-section .status-filter button {
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid #2d2d44;
-            background: transparent;
-            color: #94a3b8;
-            font-size: 0.7rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .filter-section .status-filter button:hover,
-        .filter-section .status-filter button.active {
-            border-color: #7c3aed;
-            color: #e2e8f0;
-            background: rgba(124, 58, 237, 0.1);
-        }
-        .filter-section .status-filter button.active {
-            border-color: #dc2626;
-            background: rgba(220, 38, 38, 0.1);
-            color: #dc2626;
-        }
-
-        .compras-lista {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            max-height: 520px;
-            overflow-y: auto;
-            padding-right: 4px;
-        }
-        .compras-lista::-webkit-scrollbar {
-            width: 4px;
-        }
-        .compras-lista::-webkit-scrollbar-thumb {
-            background: #7c3aed;
-            border-radius: 10px;
-        }
-
-        .compra-card {
-            background: #13132a;
-            border: 1px solid #2d2d44;
-            border-radius: 14px;
-            padding: 1rem 1.2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            transition: 0.3s;
-            cursor: pointer;
-        }
-        .compra-card:hover {
-            border-color: #7c3aed;
-            background: #1a1a32;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-        .compra-card .info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px 18px;
-            flex: 1;
-        }
-        .compra-card .info .item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            color: #cbd5e1;
-        }
-        .compra-card .info .item i {
-            color: #7c3aed;
-            width: 16px;
-            font-size: 0.7rem;
-        }
-        .compra-card .info .item strong {
-            color: #e2e8f0;
-            font-weight: 600;
-        }
-        .compra-card .status-badge {
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .status-badge.pendente {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-        }
-        .status-badge.enviado {
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
-        }
-        .status-badge.cancelado {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-        .status-badge.aguardando {
-            background: rgba(124, 58, 237, 0.2);
-            color: #a78bfa;
-        }
-        .compra-card .btn-key {
-            padding: 8px 20px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .compra-card .btn-key:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
-        }
-        .compra-card .btn-key:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .compra-card .btn-ver {
-            padding: 8px 16px;
-            border-radius: 10px;
-            border: 1px solid #7c3aed;
-            background: transparent;
-            color: #a78bfa;
-            font-weight: 600;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .compra-card .btn-ver:hover {
-            background: rgba(124, 58, 237, 0.15);
-            transform: scale(1.05);
-        }
-        .compra-card .key-display {
-            font-family: monospace;
-            background: #0f0f1a;
-            padding: 4px 12px;
-            border-radius: 6px;
-            border: 1px solid #22c55e;
-            color: #22c55e;
-            font-size: 0.7rem;
-            word-break: break-all;
-            max-width: 180px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: #64748b;
-        }
-        .empty-state i {
-            font-size: 3rem;
-            display: block;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
-
-        .info-aguardando {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid #f59e0b;
-            border-radius: 10px;
-            padding: 0.6rem 1rem;
-            font-size: 0.8rem;
-            color: #f59e0b;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        /* MODAL CRIAR KEY PERSONALIZADA */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(6px);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-overlay.open {
-            display: flex;
-        }
-        .modal-key {
-            background: #1a1a2e;
-            border: 2px solid #f59e0b;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 540px;
-            width: 100%;
-            animation: modalIn 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
-            max-height: 95vh;
-            overflow-y: auto;
-        }
-        @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        .modal-key .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
-        }
-        .modal-key .modal-header h3 {
+        .hero p {
             font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(124,58,237,0.2);
+            border: 1px solid var(--primary);
+            padding: 4px 18px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* ========== PLANOS ========== */
+        .section {
+            padding: 60px 0;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .plan-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 20px 60px rgba(124,58,237,0.15); }
+        .plan-card.popular { border-color: var(--accent); }
+        .plan-card.popular::before {
+            content: '🔥 MAIS VENDIDO';
+            position: absolute;
+            top: 12px;
+            right: -30px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            font-size: 0.6rem;
+            padding: 4px 40px;
+            transform: rotate(45deg);
+            letter-spacing: 1px;
+        }
+        .plan-card .icon { font-size: 2.8rem; margin-bottom: 8px; }
+        .plan-card h3 { font-size: 1.4rem; margin-bottom: 4px; }
+        .plan-card .price {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin: 12px 0;
+        }
+        .plan-card .price small { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+        .plan-card .desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .plan-card .features {
+            list-style: none;
+            text-align: left;
+            margin: 16px 0;
+        }
+        .plan-card .features li {
+            padding: 6px 0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
-        .modal-key .modal-header h3 i {
-            color: #f59e0b;
-        }
-        .modal-key .modal-header .close {
-            background: none;
+        .plan-card .features li i { color: var(--secondary); width: 20px; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
             border: none;
-            color: #94a3b8;
-            font-size: 1.4rem;
-            cursor: pointer;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
             transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
-        .modal-key .modal-header .close:hover {
-            color: #dc2626;
+        .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
+
+        /* ========== FORMULÁRIO ========== */
+        .form-container {
+            max-width: 560px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 32px;
         }
-        .modal-key .comprador-info {
-            background: #0f0f1a;
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #2d2d44;
+        .form-container .form-group {
+            margin-bottom: 18px;
         }
-        .modal-key .comprador-info p {
-            font-size: 0.85rem;
-            color: #94a3b8;
-        }
-        .modal-key .comprador-info p strong {
-            color: #e2e8f0;
-        }
-        .modal-key .comprador-info .detalhes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 16px;
-            margin-top: 4px;
-        }
-        .modal-key .comprador-info .detalhes span {
-            font-size: 0.75rem;
-            color: #94a3b8;
-        }
-        .modal-key .form-group {
-            margin-bottom: 1rem;
-        }
-        .modal-key .form-group label {
+        .form-container label {
             display: block;
-            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 4px;
-            color: #cbd5e1;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text);
         }
-        .modal-key .form-group label .hint {
-            font-weight: 400;
-            color: #94a3b8;
-            font-size: 0.7rem;
-        }
-        .modal-key .form-group input {
+        .form-container input, .form-container select, .form-container textarea {
             width: 100%;
             padding: 12px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 10px;
-            border: 2px solid #2d2d44;
-            background: #0f0f1a;
-            color: #e2e8f0;
-            font-size: 1rem;
-            font-family: monospace;
+            color: var(--text);
+            font-size: 0.95rem;
             outline: none;
             transition: 0.3s;
-            letter-spacing: 0.5px;
+            font-family: inherit;
         }
-        .modal-key .form-group input:focus {
-            border-color: #f59e0b;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+        .form-container input:focus, .form-container select:focus, .form-container textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124,58,237,0.2);
         }
-        .modal-key .form-group input::placeholder {
-            color: #4a4a6a;
-            font-size: 0.85rem;
-        }
-        .modal-key .form-group .exemplos {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: 6px;
-        }
-        .modal-key .form-group .exemplos span {
-            background: rgba(124, 58, 237, 0.15);
-            padding: 2px 10px;
-            border-radius: 4px;
-            font-size: 0.65rem;
-            color: #a78bfa;
-            font-family: monospace;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-        .modal-key .form-group .exemplos span:hover {
-            border-color: #7c3aed;
-            background: rgba(124, 58, 237, 0.25);
-        }
-        .modal-key .form-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 0.5rem;
-        }
-        .modal-key .form-actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
+        .form-container input[type="file"] { padding: 10px; background: var(--bg); }
+        .form-container .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
             border: none;
+            border-radius: 12px;
+            color: #fff;
             font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
+            font-size: 1rem;
             transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
-        .modal-key .form-actions .btn-enviar {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff;
-        }
-        .modal-key .form-actions .btn-enviar:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 30px rgba(245, 158, 11, 0.4);
-        }
-        .modal-key .form-actions .btn-enviar:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .modal-key .form-actions .btn-cancelar {
-            background: transparent;
-            border: 1px solid #2d2d44;
-            color: #94a3b8;
-        }
-        .modal-key .form-actions .btn-cancelar:hover {
-            border-color: #dc2626;
-            color: #dc2626;
-        }
-        .modal-key .status-msg {
-            margin-top: 0.8rem;
-            padding: 0.6rem;
+        .form-container .btn-submit:hover { transform: scale(1.02); box-shadow: 0 8px 30px rgba(6,182,212,0.3); }
+        .form-status {
+            margin-top: 16px;
+            padding: 12px;
             border-radius: 8px;
-            text-align: center;
-            font-size: 0.85rem;
             display: none;
+            text-align: center;
+            font-size: 0.9rem;
         }
-        .modal-key .status-msg.success {
-            display: block;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #22c55e;
-        }
-        .modal-key .status-msg.error {
-            display: block;
-            background: rgba(239, 68, 68, 0.15);
-            border: 1px solid #ef4444;
-            color: #ef4444;
-        }
-        .modal-key .status-msg.warning {
-            display: block;
-            background: rgba(245, 158, 11, 0.15);
-            border: 1px solid #f59e0b;
-            color: #f59e0b;
-        }
+        .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #22c55e; }
+        .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #ef4444; }
 
-        /* MODAL VER DADOS DO COMPRADOR */
-        .modal-ver-dados .comprador-dados {
-            background: #0f0f1a;
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid #2d2d44;
+        /* ========== PAINEL ADMIN ========== */
+        .admin-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-top: 40px;
         }
-        .modal-ver-dados .comprador-dados .linha {
+        .admin-panel h2 {
+            font-size: 1.6rem;
             display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            font-size: 0.85rem;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
         }
-        .modal-ver-dados .comprador-dados .linha:last-child {
-            border-bottom: none;
+        .admin-panel h2 i { color: var(--accent); }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
         }
-        .modal-ver-dados .comprador-dados .label {
-            color: #94a3b8;
+        .admin-table th {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border);
+            color: var(--text-muted);
+            font-weight: 600;
         }
-        .modal-ver-dados .comprador-dados .valor {
-            color: #e2e8f0;
-            font-weight: 500;
-            text-align: right;
-            max-width: 60%;
-            word-break: break-all;
+        .admin-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
         }
-        .modal-ver-dados .comprovante-area {
-            margin-top: 1rem;
+        .admin-table .status-badge {
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-pendente { background: rgba(245,158,11,0.2); color: var(--accent); }
+        .status-aprovado { background: rgba(34,197,94,0.2); color: #22c55e; }
+        .status-cancelado { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+        .btn-small {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: 0.3s;
+        }
+        .btn-small.key { background: var(--secondary); color: #fff; }
+        .btn-small.key:hover { background: #0891b2; }
+        .btn-small.danger { background: #ef4444; color: #fff; }
+        .btn-small.danger:hover { background: #dc2626; }
+        .btn-small.success { background: #22c55e; color: #fff; }
+        .btn-small.success:hover { background: #16a34a; }
+
+        /* ========== PERFIL ========== */
+        .profile-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
             text-align: center;
         }
-        .modal-ver-dados .comprovante-area img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 10px;
-            border: 1px solid #2d2d44;
+        .profile-card .avatar-lg {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #fff;
+            overflow: hidden;
+            border: 4px solid var(--secondary);
             cursor: pointer;
             transition: 0.3s;
         }
-        .modal-ver-dados .comprovante-area img:hover {
-            transform: scale(1.02);
-            border-color: #7c3aed;
+        .profile-card .avatar-lg:hover { border-color: var(--primary); }
+        .profile-card .avatar-lg img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-card h3 { font-size: 1.6rem; }
+        .profile-card p { color: var(--text-muted); }
+        .profile-card .keys-list {
+            margin-top: 20px;
+            text-align: left;
+            background: var(--bg);
+            border-radius: 10px;
+            padding: 16px;
         }
-        .modal-ver-dados .comprovante-area .no-comprovante {
-            color: #64748b;
-            font-size: 0.85rem;
-            padding: 1rem;
-            background: #0f0f1a;
-            border-radius: 8px;
-            border: 1px dashed #2d2d44;
+        .profile-card .keys-list .key-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
         }
+        .profile-card .keys-list .key-item:last-child { border-bottom: none; }
+        .profile-card .keys-list .key-code { font-family: monospace; color: var(--secondary); }
 
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1a1a2e;
-            border: 1px solid #2d2d44;
-            border-radius: 12px;
-            padding: 12px 20px;
-            color: #e2e8f0;
-            font-size: 0.85rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            z-index: 99999;
-            display: none;
-            animation: toastIn 0.4s ease;
-            max-width: 350px;
+        /* ========== CHAT SUPORTE ========== */
+        .chat-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
         }
-        .toast.show {
+        .chat-header {
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .chat-header span { font-weight: 700; }
+        .chat-header span i { color: var(--secondary); margin-right: 8px; }
+        .chat-messages {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--bg);
+        }
+        .chat-msg {
+            max-width: 75%;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            word-wrap: break-word;
+            animation: fadeUp 0.2s ease;
+        }
+        .chat-msg.me {
+            background: var(--primary);
+            color: #fff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-msg.other {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-msg .time {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            display: block;
+            margin-top: 4px;
+        }
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding: 12px 20px;
+            border-top: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+            flex-shrink: 0;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            outline: none;
+            font-size: 0.9rem;
+        }
+        .chat-input-area input:focus { border-color: var(--primary); }
+        .chat-input-area button {
+            padding: 0 20px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: #fff;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .chat-input-area button:hover { background: var(--primary-dark); }
+
+        /* ========== NOTIFICAÇÕES ========== */
+        .notification-badge {
+            position: relative;
+            cursor: pointer;
+        }
+        .notification-badge .badge {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background: var(--accent);
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
         }
-        .toast i {
-            font-size: 1.2rem;
+        .notif-dropdown {
+            position: absolute;
+            right: 0;
+            top: 48px;
+            width: 340px;
+            max-height: 360px;
+            overflow-y: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            padding: 12px;
+            z-index: 999;
         }
-        .toast.success i {
-            color: #22c55e;
+        .notif-dropdown.open { display: block; }
+        .notif-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
         }
-        .toast.error i {
-            color: #ef4444;
-        }
-        .toast.info i {
-            color: #7c3aed;
-        }
+        .notif-item:last-child { border-bottom: none; }
+        .notif-item .notif-time { font-size: 0.6rem; color: var(--text-muted); display: block; margin-top: 4px; }
 
-        @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* ========== RESPONSIVO ========== */
         @media (max-width: 768px) {
-            .system-container {
-                padding: 1rem;
-            }
-            .system-title h1 {
-                font-size: 1.1rem;
-            }
-            .system-user .user-info .name {
-                font-size: 0.75rem;
-            }
-            .compra-card {
+            .menu-toggle { display: block; }
+            .nav-links {
+                display: none;
                 flex-direction: column;
-                align-items: stretch;
-                padding: 0.8rem 1rem;
-            }
-            .compra-card .info {
-                flex-direction: column;
-                gap: 4px;
-            }
-            .compra-card .info .item {
-                font-size: 0.7rem;
-            }
-            .compra-card .btn-key,
-            .compra-card .btn-ver {
                 width: 100%;
-                justify-content: center;
-                padding: 8px;
+                background: var(--bg-card);
+                padding: 20px;
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                margin-top: 8px;
             }
-            .filter-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-section .search-box {
-                min-width: 100%;
-            }
-            .modal-key {
-                padding: 1.2rem;
-            }
-            .modal-key .form-actions {
-                flex-direction: column;
-            }
-            .toast {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                max-width: none;
-            }
-            .modal-ver-dados .comprador-dados .linha {
-                flex-direction: column;
-                gap: 2px;
-            }
-            .modal-ver-dados .comprador-dados .valor {
-                text-align: left;
-                max-width: 100%;
-            }
+            .nav-links.open { display: flex; }
+            .header .container { flex-wrap: wrap; }
+            .hero h1 { font-size: 2.4rem; }
+            .plans-grid { grid-template-columns: 1fr; }
+            .admin-table { font-size: 0.7rem; }
+            .admin-table th, .admin-table td { padding: 6px 8px; }
+            .chat-container { height: 400px; }
+            .notif-dropdown { width: 280px; right: -10px; }
         }
-
         @media (max-width: 480px) {
-            .system-container {
-                padding: 0.8rem;
-                border-radius: 12px;
-            }
-            .system-title i {
-                font-size: 1.2rem;
-            }
-            .system-title h1 {
-                font-size: 0.95rem;
-            }
-            .system-user {
-                padding: 4px 10px 4px 8px;
-            }
-            .system-user .avatar {
-                width: 26px;
-                height: 26px;
-                font-size: 0.65rem;
-            }
-            .compra-card .info .item {
-                font-size: 0.65rem;
-            }
-            .status-badge {
-                font-size: 0.55rem;
-                padding: 2px 10px;
-            }
+            .hero h1 { font-size: 1.8rem; }
+            .form-container { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== TOAST ===== -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMsg">Mensagem</span>
-    </div>
-
-    <!-- ===== SISTEMA ===== -->
-    <div class="system-container" id="systemContainer">
-        <div class="system-header">
-            <div class="system-title">
-                <i class="fas fa-key"></i>
-                <h1>Gerenciamento de Keys</h1>
-            </div>
-            <div class="system-user">
-                <div class="avatar" id="adminAvatar">P</div>
-                <div class="user-info">
-                    <div class="name" id="adminName">Proprietário</div>
-                    <div class="role"><i class="fas fa-crown"></i> Proprietário</div>
-                </div>
-                <button class="btn-sair" onclick="sairSistema()"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
-        </div>
-
-        <div class="system-body">
-            <!-- Filtros -->
-            <div class="filter-section">
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Buscar comprador, e-mail ou produto..." oninput="filtrarCompras()">
-                    <button onclick="filtrarCompras()"><i class="fas fa-search"></i></button>
-                </div>
-                <div class="status-filter" id="statusFilter">
-                    <button class="active" data-status="todos" onclick="setFiltroStatus('todos')">Todos</button>
-                    <button data-status="aguardando" onclick="setFiltroStatus('aguardando')">Aguardando</button>
-                    <button data-status="enviado" onclick="setFiltroStatus('enviado')">Enviado</button>
-                    <button data-status="cancelado" onclick="setFiltroStatus('cancelado')">Cancelado</button>
+    <!-- ===== HEADER ===== -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <div>
+                    <span>Graal Classic</span>
+                    <small>TEST BETA</small>
                 </div>
             </div>
-
-            <!-- Info: quantidade de compras aguardando -->
-            <div class="info-aguardando" id="infoAguardando">
-                <i class="fas fa-clock"></i> <span id="contAguardando">0</span> compra(s) aguardando Key personalizada.
-            </div>
-
-            <!-- Lista de Compras -->
-            <div class="compras-lista" id="comprasList">
-                <div class="empty-state">
-                    <i class="fas fa-inbox"></i>
-                    <p>Carregando compras...</p>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#comprar">Comprar</a></li>
+                <li><a href="#perfil">Perfil</a></li>
+                <li><a href="#suporte">Suporte</a></li>
+                <li><a href="#admin" id="adminLink" style="display:none;">Painel</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="notification-badge" id="notifBadgeWrap">
+                    <i class="fas fa-bell" style="font-size:1.3rem;color:var(--text-muted);" onclick="toggleNotificacoes()"></i>
+                    <span class="badge" id="notifCount" style="display:none;">0</span>
+                    <div class="notif-dropdown" id="notifDropdown"></div>
+                </div>
+                <div id="loginSection">
+                    <button class="btn-google" onclick="loginGoogle()">
+                        <i class="fab fa-google"></i> Entrar com Google
+                    </button>
+                </div>
+                <div id="userSection" style="display:none;">
+                    <div class="user-avatar" id="userAvatar" onclick="window.location.href='#perfil'">
+                        <span id="avatarLetter">U</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <!-- ===== MODAL CRIAR KEY PERSONALIZADA ===== -->
-    <div class="modal-overlay" id="modalKey">
-        <div class="modal-key">
-            <div class="modal-header">
-                <h3><i class="fas fa-pen-fancy"></i> Criar Key Personalizada</h3>
-                <button class="close" onclick="fecharModalKey()">&times;</button>
-            </div>
-            <div class="comprador-info">
-                <p><strong id="modalCompradorNome">Carregando...</strong></p>
-                <div class="detalhes">
-                    <span><i class="fas fa-envelope"></i> <span id="modalCompradorEmail">email@exemplo.com</span></span>
-                    <span><i class="fas fa-tag"></i> <span id="modalCompradorProduto">Produto</span></span>
-                    <span><i class="fas fa-calendar"></i> <span id="modalCompradorData">00/00/0000</span></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="keyInput"><i class="fas fa-key"></i> Digite a Key personalizada <span class="hint">(crie qualquer formato)</span></label>
-                <input type="text" id="keyInput" placeholder="Ex: KZN-BETA-2026-ABCD-1234" autocomplete="off">
-                <div class="exemplos">
-                    <span onclick="document.getElementById('keyInput').value='KZN-CLASSIC-2026-ABCD-1234'">KZN-CLASSIC-2026-ABCD-1234</span>
-                    <span onclick="document.getElementById('keyInput').value='BETA-TESTE-7H-XXXX-YYYY'">BETA-TESTE-7H-XXXX-YYYY</span>
-                    <span onclick="document.getElementById('keyInput').value='ERA-AUTO-2026-9999'">ERA-AUTO-2026-9999</span>
-                    <span onclick="document.getElementById('keyInput').value='VIP-PERMANENTE-0001'">VIP-PERMANENTE-0001</span>
-                </div>
-            </div>
-            <div class="form-actions">
-                <button class="btn-cancelar" onclick="fecharModalKey()">Cancelar</button>
-                <button class="btn-enviar" id="btnEnviarKey" onclick="enviarKey()">
-                    <i class="fas fa-save"></i> Criar e Enviar Key
-                </button>
-            </div>
-            <div class="status-msg" id="modalStatus"></div>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-badge"><i class="fas fa-flask"></i> Fase BETA</div>
+            <h1>
+                <span class="gradient">Graal Online</span><br />
+                Classic Test BETA
+            </h1>
+            <p>Adquira seu acesso de 24 horas por apenas <strong style="color:var(--secondary);">R$ 15,00</strong> e experimente o servidor clássico com exclusividade.</p>
+            <a href="#comprar" class="btn-primary"><i class="fas fa-rocket"></i> Comprar Agora</a>
         </div>
-    </div>
+    </section>
 
-    <!-- ===== MODAL VER DADOS DO COMPRADOR ===== -->
-    <div class="modal-overlay" id="modalVerDados">
-        <div class="modal-key modal-ver-dados">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-circle"></i> Dados do Comprador</h3>
-                <button class="close" onclick="fecharModalVerDados()">&times;</button>
-            </div>
-            <div class="comprador-dados" id="dadosComprador">
-                <div class="linha"><span class="label"><i class="fas fa-user"></i> Nome</span><span class="valor" id="vdNome">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-envelope"></i> E-mail</span><span class="valor" id="vdEmail">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-tag"></i> Produto</span><span class="valor" id="vdProduto">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-dollar-sign"></i> Valor</span><span class="valor" id="vdValor">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-calendar"></i> Data da Compra</span><span class="valor" id="vdData">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-clock"></i> Hora</span><span class="valor" id="vdHora">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-info-circle"></i> Status</span><span class="valor" id="vdStatus">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-key"></i> Key</span><span class="valor" id="vdKey" style="color:#22c55e;font-family:monospace;">-</span></div>
-                <div class="linha"><span class="label"><i class="fas fa-clock"></i> Enviada em</span><span class="valor" id="vdDataEnvio">-</span></div>
-            </div>
-            <div class="comprovante-area">
-                <div id="comprovanteContainer">
-                    <div class="no-comprovante"><i class="fas fa-image"></i> Nenhum comprovante anexado</div>
+    <!-- ===== PLANOS ===== -->
+    <section class="section" id="planos">
+        <div class="container">
+            <h2 class="section-title">Planos Disponíveis</h2>
+            <p class="section-sub">Escolha o plano ideal para sua experiência</p>
+            <div class="plans-grid">
+                <div class="plan-card popular">
+                    <div class="icon">⚡</div>
+                    <h3>Acesso 24h</h3>
+                    <div class="price">R$ 15,00 <small> / 24h</small></div>
+                    <p class="desc">Teste completo do servidor clássico com todas as funcionalidades liberadas.</p>
+                    <ul class="features">
+                        <li><i class="fas fa-check"></i> Servidor exclusivo</li>
+                        <li><i class="fas fa-check"></i> Suporte prioritário</li>
+                        <li><i class="fas fa-check"></i> Key personalizada</li>
+                        <li><i class="fas fa-check"></i> Renovação automática (opcional)</li>
+                    </ul>
+                    <a href="#comprar" class="btn-primary" style="width:100%;justify-content:center;">Adquirir Agora</a>
                 </div>
             </div>
-            <div class="form-actions" style="margin-top:1rem;">
-                <button class="btn-cancelar" onclick="fecharModalVerDados()" style="flex:1;">Fechar</button>
-                <button class="btn-enviar" id="btnAbrirKey" onclick="abrirKeyDoModal()" style="flex:1; background: linear-gradient(135deg, #f59e0b, #d97706);">
-                    <i class="fas fa-key"></i> Criar Key
-                </button>
-            </div>
-            <div class="status-msg" id="modalVerStatus"></div>
         </div>
-    </div>
+    </section>
 
+    <!-- ===== COMPRAR (FORMULÁRIO) ===== -->
+    <section class="section" id="comprar">
+        <div class="container">
+            <h2 class="section-title">Finalizar Compra</h2>
+            <p class="section-sub">Preencha o formulário e envie o comprovante PIX</p>
+            <div class="form-container">
+                <form id="formCompra" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Seu Nome</label>
+                        <input type="text" id="nomeCompra" placeholder="Digite seu nome" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> E-mail</label>
+                        <input type="email" id="emailCompra" placeholder="Digite seu e-mail" required />
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Plano</label>
+                        <select id="planoCompra" required>
+                            <option value="Acesso 24h - R$ 15,00">Acesso 24h - R$ 15,00</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-image"></i> Comprovante PIX</label>
+                        <input type="file" id="comprovante" accept="image/*,.pdf" required />
+                        <p style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">Envie imagem ou PDF do comprovante</p>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btnComprar">
+                        <i class="fas fa-paper-plane"></i> Enviar Pedido
+                    </button>
+                    <div class="form-status" id="formStatus"></div>
+                </form>
+                <div style="margin-top:20px;padding:16px;background:var(--bg);border-radius:10px;border:1px solid var(--border);">
+                    <p style="font-weight:700;color:var(--secondary);"><i class="fas fa-qrcode"></i> Chave PIX:</p>
+                    <code style="background:#000;padding:8px 12px;border-radius:6px;display:block;margin:6px 0;font-size:0.85rem;color:var(--accent);word-break:break-all;">6c80021c-957b-49c0-9a5d-98371bf67120</code>
+                    <button onclick="navigator.clipboard.writeText('6c80021c-957b-49c0-9a5d-98371bf67120').then(()=>alert('Chave copiada!'))" style="background:var(--primary);border:none;color:#fff;padding:6px 16px;border-radius:6px;font-weight:600;cursor:pointer;">Copiar Chave</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PERFIL ===== -->
+    <section class="section" id="perfil">
+        <div class="container">
+            <h2 class="section-title">Meu Perfil</h2>
+            <p class="section-sub">Gerencie suas informações e keys ativas</p>
+            <div class="profile-card" id="profileCard">
+                <div class="avatar-lg" id="profileAvatar" onclick="document.getElementById('avatarUpload').click()">
+                    <span id="profileAvatarLetter">U</span>
+                    <img id="profileAvatarImg" style="display:none;width:100%;height:100%;object-fit:cover;" />
+                </div>
+                <input type="file" id="avatarUpload" accept="image/*" style="display:none;" />
+                <h3 id="profileNome">Usuário</h3>
+                <p id="profileEmail">email@email.com</p>
+                <div style="margin:16px 0;">
+                    <button class="btn-primary" onclick="editarPerfil()" style="font-size:0.8rem;padding:8px 20px;"><i class="fas fa-edit"></i> Editar Nome</button>
+                </div>
+                <div class="keys-list" id="keysList">
+                    <p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SUPORTE CHAT ===== -->
+    <section class="section" id="suporte">
+        <div class="container">
+            <h2 class="section-title">Suporte ao Cliente</h2>
+            <p class="section-sub">Converse diretamente com o proprietário</p>
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-header">
+                    <span><i class="fas fa-headset"></i> Suporte Privado</span>
+                    <span style="font-size:0.8rem;color:var(--text-muted);">Resposta rápida</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div style="text-align:center;color:var(--text-muted);padding:20px;">Faça login para iniciar o chat</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Digite sua mensagem..." disabled />
+                    <button id="chatSendBtn" disabled><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PAINEL ADMIN (somente proprietário) ===== -->
+    <section class="section" id="admin" style="display:none;">
+        <div class="container">
+            <div class="admin-panel">
+                <h2><i class="fas fa-shield-alt"></i> Painel do Proprietário</h2>
+                <div style="overflow-x:auto;">
+                    <table class="admin-table" id="adminTable">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Usuário</th>
+                                <th>Plano</th>
+                                <th>Status</th>
+                                <th>Key</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody">
+                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Carregando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer style="border-top:1px solid var(--border);padding:30px 0;text-align:center;color:var(--text-muted);font-size:0.8rem;margin-top:40px;">
+        <div class="container">
+            <p>&copy; 2026 Graal Online Classic Test BETA. Todos os direitos reservados.</p>
+            <p style="margin-top:6px;">Desenvolvido com <i class="fas fa-heart" style="color:var(--secondary);"></i> para a comunidade</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================= -->
+    <!-- ====================== FIREBASE & SCRIPTS ===================== -->
+    <!-- ============================================================= -->
     <script>
-        // ===== FIREBASE CONFIG =====
+        // ===== CONFIGURAÇÃO FIREBASE =====
         const firebaseConfig = {
             apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
             authDomain: "chat-kzn.firebaseapp.com",
-            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
             projectId: "chat-kzn",
             storageBucket: "chat-kzn.firebasestorage.app",
             messagingSenderId: "641963268535",
             appId: "1:641963268535:web:b1f8b26f69840f527a7032",
-            measurementId: "G-JZHCPK3VRP"
+            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const rtdb = firebase.database();
+
+        // ===== VARIÁVEIS GLOBAIS =====
+        const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
+        let currentUser = null;
+        let currentUserDoc = null;
+        let chatRoomId = null;
+        let chatListener = null;
+        let notificacoes = [];
+        let notifLidas = 0;
+
+        // ===== DOM REFS =====
+        const loginSection = document.getElementById('loginSection');
+        const userSection = document.getElementById('userSection');
+        const avatarLetter = document.getElementById('avatarLetter');
+        const userAvatarImg = document.getElementById('userAvatarImg');
+        const profileAvatarLetter = document.getElementById('profileAvatarLetter');
+        const profileAvatarImg = document.getElementById('profileAvatarImg');
+        const profileNome = document.getElementById('profileNome');
+        const profileEmail = document.getElementById('profileEmail');
+        const keysList = document.getElementById('keysList');
+        const adminLink = document.getElementById('adminLink');
+        const adminPanel = document.getElementById('admin');
+        const adminTableBody = document.getElementById('adminTableBody');
+        const chatMessagesDiv = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const formStatus = document.getElementById('formStatus');
+        const notifDropdown = document.getElementById('notifDropdown');
+        const notifCount = document.getElementById('notifCount');
+
+        // ===== FUNÇÃO DE LOGIN GOOGLE =====
+        window.loginGoogle = function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(err => {
+                console.error(err);
+                alert('Erro ao fazer login: ' + err.message);
+            });
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const auth = firebase.auth();
-
-        // ===== CONSTANTES =====
-        const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
-        const STORAGE_KEY = 'kzn_sistema_key';
-
-        // ===== ESTADO =====
-        let usuarioAtual = null;
-        let compras = [];
-        let compraSelecionada = null;
-        let compraVisualizando = null;
-        let filtroStatus = 'todos';
-        let termoBusca = '';
-
-        // ===== TOAST =====
-        function showToast(msg, tipo = 'info') {
-            const toast = document.getElementById('toast');
-            const toastMsg = document.getElementById('toastMsg');
-            const icon = toast.querySelector('i');
-
-            toast.className = 'toast';
-            toastMsg.textContent = msg;
-
-            if (tipo === 'success') {
-                toast.classList.add('success');
-                icon.className = 'fas fa-check-circle';
-            } else if (tipo === 'error') {
-                toast.classList.add('error');
-                icon.className = 'fas fa-times-circle';
+        // ===== OBSERVADOR DE AUTENTICAÇÃO =====
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = user;
+                // Buscar documento do usuário no Firestore
+                const docRef = db.collection('users').doc(user.uid);
+                const docSnap = await docRef.get();
+                if (!docSnap.exists) {
+                    // Criar perfil
+                    await docRef.set({
+                        nome: user.displayName || 'Usuário',
+                        email: user.email,
+                        foto: user.photoURL || '',
+                        criado: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                currentUserDoc = (await docRef.get()).data();
+                // Atualizar UI
+                loginSection.style.display = 'none';
+                userSection.style.display = 'flex';
+                const initial = (currentUserDoc?.nome || user.displayName || 'U')[0].toUpperCase();
+                avatarLetter.textContent = initial;
+                if (user.photoURL) {
+                    avatarLetter.innerHTML = `<img src="${user.photoURL}" style="width:100%;height:100%;object-fit:cover;" />`;
+                }
+                // Perfil
+                profileNome.textContent = currentUserDoc?.nome || user.displayName || 'Usuário';
+                profileEmail.textContent = user.email;
+                profileAvatarLetter.textContent = initial;
+                if (currentUserDoc?.foto || user.photoURL) {
+                    const foto = currentUserDoc?.foto || user.photoURL;
+                    profileAvatarLetter.style.display = 'none';
+                    profileAvatarImg.style.display = 'block';
+                    profileAvatarImg.src = foto;
+                }
+                // Preencher email no formulário
+                document.getElementById('emailCompra').value = user.email;
+                // Verificar se é proprietário
+                if (user.email === PROPRIETARIO_EMAIL) {
+                    adminLink.style.display = 'block';
+                    adminPanel.style.display = 'block';
+                    carregarAdminCompras();
+                } else {
+                    adminLink.style.display = 'none';
+                    adminPanel.style.display = 'none';
+                }
+                // Carregar keys do usuário
+                carregarKeysUsuario(user.uid);
+                // Iniciar chat (sala com proprietário)
+                iniciarChat(user.uid);
+                // Carregar notificações
+                carregarNotificacoes(user.uid);
+                // Habilitar chat
+                chatInput.disabled = false;
+                chatSendBtn.disabled = false;
+                // Mostrar mensagem de boas-vindas no chat
+                if (chatMessagesDiv.querySelector('div')?.textContent.includes('Faça login')) {
+                    chatMessagesDiv.innerHTML = '';
+                }
             } else {
-                toast.classList.add('info');
-                icon.className = 'fas fa-info-circle';
+                currentUser = null;
+                currentUserDoc = null;
+                loginSection.style.display = 'block';
+                userSection.style.display = 'none';
+                document.getElementById('emailCompra').value = '';
+                chatInput.disabled = true;
+                chatSendBtn.disabled = true;
+                chatMessagesDiv.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px;">Faça login para iniciar o chat</div>';
+                if (chatListener) { chatListener(); chatListener = null; }
+                adminLink.style.display = 'none';
+                adminPanel.style.display = 'none';
+                keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
+                // Reset perfil
+                profileNome.textContent = 'Usuário';
+                profileEmail.textContent = 'email@email.com';
+                profileAvatarLetter.style.display = 'block';
+                profileAvatarImg.style.display = 'none';
+                profileAvatarLetter.textContent = 'U';
             }
+        });
 
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        }
-
-        // ===== VERIFICAR AUTENTICAÇÃO =====
-        function verificarAutenticacao() {
-            return new Promise((resolve) => {
-                const usuarioSalvo = localStorage.getItem(STORAGE_KEY);
-                if (usuarioSalvo) {
-                    try {
-                        const dados = JSON.parse(usuarioSalvo);
-                        if (dados.email === PROPRIETARIO_EMAIL) {
-                            usuarioAtual = dados;
-                            document.getElementById('adminName').textContent = dados.nome || 'Proprietário';
-                            const avatar = document.getElementById('adminAvatar');
-                            avatar.textContent = (dados.nome || 'P')[0].toUpperCase();
-                            resolve(true);
-                            return;
-                        }
-                    } catch (e) {}
-                }
-
-                const siteUser = localStorage.getItem('kzn_usuario_logado');
-                if (siteUser) {
-                    try {
-                        const dados = JSON.parse(siteUser);
-                        if (dados.email === PROPRIETARIO_EMAIL) {
-                            usuarioAtual = dados;
-                            localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
-                            document.getElementById('adminName').textContent = dados.nome || 'Proprietário';
-                            const avatar = document.getElementById('adminAvatar');
-                            avatar.textContent = (dados.nome || 'P')[0].toUpperCase();
-                            resolve(true);
-                            return;
-                        }
-                    } catch (e) {}
-                }
-
-                auth.onAuthStateChanged((user) => {
-                    if (user && user.email === PROPRIETARIO_EMAIL) {
-                        usuarioAtual = {
-                            email: user.email,
-                            nome: user.displayName || 'Proprietário',
-                            uid: user.uid
-                        };
-                        localStorage.setItem(STORAGE_KEY, JSON.stringify(usuarioAtual));
-                        document.getElementById('adminName').textContent = usuarioAtual.nome;
-                        const avatar = document.getElementById('adminAvatar');
-                        avatar.textContent = (usuarioAtual.nome || 'P')[0].toUpperCase();
-                        resolve(true);
-                    } else {
-                        if (!user) {
-                            window.location.href = '/';
-                        } else {
-                            showToast('Acesso negado. Apenas o proprietário pode acessar.', 'error');
-                            setTimeout(() => { window.location.href = '/'; }, 2000);
-                            resolve(false);
-                        }
-                    }
-                });
-            });
-        }
-
-        // ===== SAIR =====
-        function sairSistema() {
-            if (confirm('Deseja sair do sistema?')) {
-                localStorage.removeItem(STORAGE_KEY);
-                auth.signOut().catch(() => {});
-                window.location.href = '/';
+        // ===== CARREGAR KEYS DO USUÁRIO =====
+        async function carregarKeysUsuario(uid) {
+            const snapshot = await db.collection('keys')
+                .where('uid', '==', uid)
+                .where('ativa', '==', true)
+                .get();
+            if (snapshot.empty) {
+                keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
+                return;
             }
-        }
-
-        // ===== CARREGAR COMPRAS =====
-        function carregarCompras() {
-            const comprasRef = db.ref('compras');
-            comprasRef.on('value', (snapshot) => {
-                const dados = snapshot.val() || {};
-                compras = [];
-                Object.keys(dados).forEach(key => {
-                    const compra = dados[key];
-                    compra.id = key;
-                    if (compra.userId) {
-                        const userRef = db.ref('usuarios/' + compra.userId);
-                        userRef.once('value', (userSnap) => {
-                            const userData = userSnap.val() || {};
-                            compra.usuario = userData;
-                            compra.usuarioId = compra.userId;
-                            renderizarCompras();
-                        });
-                    } else {
-                        compra.usuario = { nome: 'Desconhecido', email: compra.email || 'sem@email' };
-                        compras.push(compra);
-                    }
-                });
-                setTimeout(() => {
-                    renderizarCompras();
-                }, 500);
-            });
-        }
-
-        // ===== RENDERIZAR COMPRAS =====
-        function renderizarCompras() {
-            const container = document.getElementById('comprasList');
-            const filtrados = compras.filter(compra => {
-                if (filtroStatus !== 'todos' && compra.status !== filtroStatus) return false;
-                if (termoBusca) {
-                    const busca = termoBusca.toLowerCase();
-                    const nome = (compra.usuario?.nome || '').toLowerCase();
-                    const email = (compra.usuario?.email || compra.email || '').toLowerCase();
-                    const produto = (compra.produto || '').toLowerCase();
-                    if (!nome.includes(busca) && !email.includes(busca) && !produto.includes(busca)) return false;
-                }
-                return true;
-            });
-
-            const aguardando = compras.filter(c => c.status === 'aguardando' && (!c.key || c.key.trim() === ''));
-            document.getElementById('contAguardando').textContent = aguardando.length;
-
-            if (filtrados.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <p>Nenhuma compra encontrada</p>
+            let html = '<p style="font-weight:600;margin-bottom:8px;">🔑 Suas Keys Ativas:</p>';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao).toLocaleString() : 'Indeterminada';
+                html += `
+                    <div class="key-item">
+                        <span class="key-code">${data.key}</span>
+                        <span style="font-size:0.75rem;color:var(--text-muted);">Expira: ${expiracao}</span>
                     </div>
                 `;
-                return;
-            }
-
-            container.innerHTML = filtrados.map(compra => {
-                const statusClass = compra.status || 'aguardando';
-                const statusLabel = statusClass === 'aguardando' ? 'Aguardando Key' :
-                    statusClass === 'enviado' ? 'Key Enviada' :
-                    statusClass === 'cancelado' ? 'Cancelado' : statusClass;
-
-                const nomeUsuario = compra.usuario?.nome || compra.nome || 'Usuário';
-                const emailUsuario = compra.usuario?.email || compra.email || 'sem@email';
-                const dataCompra = compra.data ? new Date(compra.data).toLocaleDateString('pt-BR') : '--/--/----';
-                const horaCompra = compra.hora || '--:--';
-
-                const keyEnviada = compra.key && compra.key.trim() !== '';
-                const podeEnviar = !keyEnviada && compra.status !== 'cancelado' && compra.status !== 'enviado';
-
-                return `
-                    <div class="compra-card" onclick="selecionarCompra('${compra.id}')">
-                        <div class="info">
-                            <span class="item"><i class="fas fa-user"></i> <strong>${nomeUsuario}</strong></span>
-                            <span class="item"><i class="fas fa-envelope"></i> ${emailUsuario}</span>
-                            <span class="item"><i class="fas fa-tag"></i> ${compra.produto || 'Produto'}</span>
-                            <span class="item"><i class="fas fa-calendar"></i> ${dataCompra} ${horaCompra}</span>
-                            <span class="item"><i class="fas ${keyEnviada ? 'fa-check-circle' : 'fa-clock'}"></i> ${keyEnviada ? 'Key enviada' : 'Aguardando key'}</span>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                            <span class="status-badge ${statusClass}">${statusLabel}</span>
-                            ${podeEnviar ? `<button class="btn-key" onclick="event.stopPropagation(); abrirModalKey('${compra.id}')"><i class="fas fa-pen-fancy"></i> Criar Key</button>` : ''}
-                            ${keyEnviada ? `<span class="key-display">${compra.key}</span>` : ''}
-                            <button class="btn-ver" onclick="event.stopPropagation(); abrirModalVerDados('${compra.id}')"><i class="fas fa-eye"></i> Ver Dados</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ===== FILTROS =====
-        function setFiltroStatus(status) {
-            filtroStatus = status;
-            document.querySelectorAll('#statusFilter button').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.status === status);
             });
-            renderizarCompras();
+            keysList.innerHTML = html;
         }
 
-        function filtrarCompras() {
-            termoBusca = document.getElementById('searchInput').value.trim();
-            renderizarCompras();
+        // ===== CARREGAR COMPRAS (ADMIN) =====
+        async function carregarAdminCompras() {
+            const snapshot = await db.collection('compras').orderBy('data', 'desc').get();
+            if (snapshot.empty) {
+                adminTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Nenhuma compra registrada.</td></tr>';
+                return;
+            }
+            let html = '';
+            snapshot.forEach(doc => {
+                const d = doc.data();
+                const dataStr = d.data ? new Date(d.data.seconds * 1000).toLocaleString() : '--';
+                const statusClass = d.status === 'aprovado' ? 'status-aprovado' : d.status === 'cancelado' ? 'status-cancelado' : 'status-pendente';
+                html += `
+                    <tr>
+                        <td>${dataStr}</td>
+                        <td>${d.nome || '--'}</td>
+                        <td>${d.plano || '--'}</td>
+                        <td><span class="status-badge ${statusClass}">${d.status || 'pendente'}</span></td>
+                        <td><code style="font-size:0.7rem;">${d.key || '--'}</code></td>
+                        <td>
+                            <button class="btn-small key" onclick="gerarKey('${doc.id}')"><i class="fas fa-key"></i> Gerar Key</button>
+                            <button class="btn-small success" onclick="aprovarCompra('${doc.id}')"><i class="fas fa-check"></i></button>
+                            <button class="btn-small danger" onclick="cancelarCompra('${doc.id}')"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+            adminTableBody.innerHTML = html;
         }
 
-        // ===== MODAL CRIAR KEY PERSONALIZADA =====
-        function abrirModalKey(compraId) {
-            const compra = compras.find(c => c.id === compraId);
-            if (!compra) {
-                showToast('Compra não encontrada.', 'error');
-                return;
-            }
+        // ===== GERAR KEY PERSONALIZADA =====
+        window.gerarKey = async function(compraId) {
+            const key = 'KZN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+            const expiracao = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
+            const compraRef = db.collection('compras').doc(compraId);
+            const compraDoc = await compraRef.get();
+            const compraData = compraDoc.data();
+            if (!compraData) return alert('Compra não encontrada.');
 
-            if (compra.status === 'cancelado' || compra.status === 'enviado') {
-                showToast('Esta compra não pode receber Key.', 'error');
-                return;
-            }
-
-            if (compra.key && compra.key.trim() !== '') {
-                showToast('Esta compra já possui uma Key.', 'error');
-                return;
-            }
-
-            compraSelecionada = compra;
-            document.getElementById('modalCompradorNome').textContent = compra.usuario?.nome || compra.nome || 'Usuário';
-            document.getElementById('modalCompradorEmail').textContent = compra.usuario?.email || compra.email || 'sem@email';
-            document.getElementById('modalCompradorProduto').textContent = compra.produto || 'Produto';
-            document.getElementById('modalCompradorData').textContent = compra.data ? new Date(compra.data).toLocaleDateString(
-                'pt-BR') : '--/--/----';
-            document.getElementById('keyInput').value = '';
-            document.getElementById('modalStatus').className = 'status-msg';
-            document.getElementById('modalStatus').textContent = '';
-            document.getElementById('btnEnviarKey').disabled = false;
-            document.getElementById('modalKey').classList.add('open');
-            setTimeout(() => document.getElementById('keyInput').focus(), 300);
-        }
-
-        function fecharModalKey() {
-            document.getElementById('modalKey').classList.remove('open');
-            compraSelecionada = null;
-        }
-
-        // ===== ENVIAR KEY PERSONALIZADA =====
-        function enviarKey() {
-            const key = document.getElementById('keyInput').value.trim();
-            const statusMsg = document.getElementById('modalStatus');
-
-            if (!key) {
-                statusMsg.className = 'status-msg warning';
-                statusMsg.textContent = '⚠️ Digite a Key personalizada antes de criar.';
-                return;
-            }
-
-            if (key.length < 4) {
-                statusMsg.className = 'status-msg warning';
-                statusMsg.textContent = '⚠️ A Key deve ter pelo menos 4 caracteres.';
-                return;
-            }
-
-            if (!compraSelecionada) {
-                statusMsg.className = 'status-msg error';
-                statusMsg.textContent = '❌ Nenhuma compra selecionada.';
-                return;
-            }
-
-            if (compraSelecionada.status === 'cancelado' || compraSelecionada.status === 'enviado') {
-                statusMsg.className = 'status-msg error';
-                statusMsg.textContent = '❌ Esta compra não pode receber Key.';
-                return;
-            }
-
-            if (compraSelecionada.key && compraSelecionada.key.trim() !== '') {
-                statusMsg.className = 'status-msg error';
-                statusMsg.textContent = '❌ Esta compra já possui uma Key.';
-                return;
-            }
-
-            // Confirmar antes de enviar
-            if (!confirm(`⚠️ Confirmar envio da Key personalizada para ${compraSelecionada.usuario?.nome || compraSelecionada.nome}?\n\nKey: ${key}`)) {
-                return;
-            }
-
-            document.getElementById('btnEnviarKey').disabled = true;
-            statusMsg.className = 'status-msg';
-            statusMsg.textContent = 'Salvando Key personalizada...';
-
-            const agora = new Date();
-            const dataEnvio = agora.toISOString();
-            const horaEnvio = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-            const compraRef = db.ref('compras/' + compraSelecionada.id);
-            const updates = {
+            // Salvar key na subcoleção keys
+            await db.collection('keys').add({
+                uid: compraData.uid || '--',
                 key: key,
-                dataEnvio: dataEnvio,
-                horaEnvio: horaEnvio,
-                status: 'enviado'
-            };
+                dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
+                dataExpiracao: expiracao,
+                ativa: true,
+                compraId: compraId
+            });
 
-            compraRef.update(updates)
-                .then(() => {
-                    statusMsg.className = 'status-msg success';
-                    statusMsg.textContent = '✅ Key personalizada criada e enviada com sucesso!';
-                    document.getElementById('btnEnviarKey').disabled = false;
+            // Atualizar compra com key e status
+            await compraRef.update({
+                key: key,
+                status: 'aprovado',
+                dataExpiracao: expiracao
+            });
 
-                    const userId = compraSelecionada.usuarioId || compraSelecionada.userId;
-                    if (userId) {
-                        const notifRef = db.ref('notificacoes').push();
-                        notifRef.set({
-                            userId: userId,
-                            tipo: 'key_enviada',
-                            titulo: '🔑 Nova Key disponível!',
-                            mensagem: `Sua Key para "${compraSelecionada.produto || 'seu produto'}" foi criada e está disponível na sua área de compras.`,
-                            data: new Date().toISOString(),
-                            lida: false,
-                            compraId: compraSelecionada.id
-                        });
-                    }
+            // Enviar notificação ao usuário
+            await enviarNotificacao(compraData.uid, `🔑 Sua key foi gerada: <strong>${key}</strong>. Expira em 24h.`);
 
-                    showToast(`✅ Key "${key}" enviada com sucesso!`, 'success');
+            // Enviar e-mail (usando FormSubmit)
+            enviarEmailKey(compraData.email, compraData.nome, key, expiracao);
 
-                    setTimeout(() => {
-                        fecharModalKey();
-                        renderizarCompras();
-                    }, 1200);
-                })
-                .catch((error) => {
-                    statusMsg.className = 'status-msg error';
-                    statusMsg.textContent = '❌ Erro ao salvar Key: ' + error.message;
-                    document.getElementById('btnEnviarKey').disabled = false;
-                    showToast('Erro ao salvar Key.', 'error');
-                });
+            alert(`Key ${key} gerada e enviada ao usuário!`);
+            carregarAdminCompras();
+        };
+
+        window.aprovarCompra = async function(id) {
+            await db.collection('compras').doc(id).update({ status: 'aprovado' });
+            carregarAdminCompras();
+        };
+
+        window.cancelarCompra = async function(id) {
+            if (!confirm('Cancelar esta compra?')) return;
+            await db.collection('compras').doc(id).update({ status: 'cancelado' });
+            carregarAdminCompras();
+        };
+
+        // ===== ENVIAR NOTIFICAÇÃO =====
+        async function enviarNotificacao(uid, mensagem) {
+            if (!uid) return;
+            await db.collection('notificacoes').add({
+                uid: uid,
+                mensagem: mensagem,
+                lida: false,
+                data: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            // Se o usuário estiver logado e for o mesmo, atualiza em tempo real
+            if (currentUser && currentUser.uid === uid) {
+                carregarNotificacoes(uid);
+            }
         }
 
-        // ===== MODAL VER DADOS DO COMPRADOR =====
-        function abrirModalVerDados(compraId) {
-            const compra = compras.find(c => c.id === compraId);
-            if (!compra) {
-                showToast('Compra não encontrada.', 'error');
+        // ===== ENVIAR E-MAIL COM KEY (via FormSubmit) =====
+        function enviarEmailKey(email, nome, key, expiracao) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
+            form.target = '_blank';
+
+            const fields = {
+                '_subject': '🔑 Sua Key de Acesso - Graal Classic BETA',
+                'Nome': nome,
+                'E-mail': email,
+                'Key': key,
+                'Expira em': expiracao.toLocaleString(),
+                'Mensagem': `Olá ${nome}, sua key de acesso ao Graal Classic Test BETA foi gerada com sucesso! Use a key: ${key}. Ela expira em 24h.`
+            };
+            for (const [name, value] of Object.entries(fields)) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+
+        // ===== CARREGAR NOTIFICAÇÕES =====
+        async function carregarNotificacoes(uid) {
+            const snapshot = await db.collection('notificacoes')
+                .where('uid', '==', uid)
+                .orderBy('data', 'desc')
+                .limit(20)
+                .get();
+            notificacoes = [];
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                notificacoes.push({ id: doc.id, ...data });
+            });
+            const naoLidas = notificacoes.filter(n => !n.lida).length;
+            if (naoLidas > 0) {
+                notifCount.style.display = 'flex';
+                notifCount.textContent = naoLidas;
+            } else {
+                notifCount.style.display = 'none';
+            }
+            renderizarNotificacoes();
+        }
+
+        function renderizarNotificacoes() {
+            if (notificacoes.length === 0) {
+                notifDropdown.innerHTML = '<div style="padding:12px;color:var(--text-muted);">Nenhuma notificação</div>';
+                return;
+            }
+            let html = '';
+            notificacoes.forEach(n => {
+                const dataStr = n.data ? new Date(n.data.seconds * 1000).toLocaleString() : '';
+                html += `
+                    <div class="notif-item">
+                        <div>${n.mensagem}</div>
+                        <span class="notif-time">${dataStr}</span>
+                    </div>
+                `;
+            });
+            notifDropdown.innerHTML = html;
+            // Marcar como lidas ao abrir
+            notificacoes.forEach(n => {
+                if (!n.lida) {
+                    db.collection('notificacoes').doc(n.id).update({ lida: true });
+                }
+            });
+            notifCount.style.display = 'none';
+        }
+
+        window.toggleNotificacoes = function() {
+            notifDropdown.classList.toggle('open');
+            if (notifDropdown.classList.contains('open')) {
+                renderizarNotificacoes();
+            }
+        };
+
+        // ===== CHAT PRIVADO =====
+        function iniciarChat(uid) {
+            if (chatListener) { chatListener(); chatListener = null; }
+            // Sala: uid do usuário + uid do proprietário (fixo, mas aqui usamos o email do prop)
+            // Vamos buscar o uid do proprietário pelo email
+            db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get().then(snapshot => {
+                let propUid = null;
+                if (!snapshot.empty) {
+                    propUid = snapshot.docs[0].id;
+                } else {
+                    // fallback: usar um uid fictício
+                    propUid = 'proprietario_fixo';
+                }
+                // Ordenar para ter sempre a mesma sala
+                const ids = [uid, propUid].sort();
+                chatRoomId = ids.join('_');
+                // Escutar mensagens
+                const chatRef = rtdb.ref('chats/' + chatRoomId + '/mensagens');
+                chatListener = chatRef.on('child_added', (snap) => {
+                    const msg = snap.val();
+                    adicionarMensagemChat(msg.texto, msg.remetente === uid ? 'me' : 'other', msg.timestamp);
+                });
+                // Limpar mensagens antigas se estiver vazio
+                chatMessagesDiv.innerHTML = '';
+                // Carregar últimas 50 mensagens
+                chatRef.orderByChild('timestamp').limitToLast(50).once('value', (snap) => {
+                    const msgs = [];
+                    snap.forEach(child => msgs.push(child.val()));
+                    msgs.sort((a, b) => a.timestamp - b.timestamp);
+                    msgs.forEach(m => {
+                        adicionarMensagemChat(m.texto, m.remetente === uid ? 'me' : 'other', m.timestamp);
+                    });
+                    if (msgs.length === 0) {
+                        chatMessagesDiv.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:20px;">Inicie uma conversa com o suporte</div>';
+                    }
+                });
+            }).catch(err => {
+                console.error('Erro ao buscar proprietário:', err);
+            });
+        }
+
+        function adicionarMensagemChat(texto, tipo, timestamp) {
+            const div = document.createElement('div');
+            div.className = `chat-msg ${tipo}`;
+            const time = timestamp ? new Date(timestamp).toLocaleTimeString() : '';
+            div.innerHTML = `${texto} <span class="time">${time}</span>`;
+            chatMessagesDiv.appendChild(div);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+        }
+
+        // Enviar mensagem chat
+        document.getElementById('chatSendBtn').addEventListener('click', enviarMensagemChat);
+        document.getElementById('chatInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') enviarMensagemChat();
+        });
+
+        function enviarMensagemChat() {
+            const input = document.getElementById('chatInput');
+            const texto = input.value.trim();
+            if (!texto || !currentUser || !chatRoomId) return;
+            const chatRef = rtdb.ref('chats/' + chatRoomId + '/mensagens');
+            chatRef.push({
+                texto: texto,
+                remetente: currentUser.uid,
+                timestamp: Date.now()
+            });
+            input.value = '';
+        }
+
+        // ===== ENVIO DO FORMULÁRIO =====
+        document.getElementById('formCompra').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnComprar');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            formStatus.className = 'form-status';
+            formStatus.style.display = 'none';
+
+            const nome = document.getElementById('nomeCompra').value.trim();
+            const email = document.getElementById('emailCompra').value.trim();
+            const plano = document.getElementById('planoCompra').value;
+            const fileInput = document.getElementById('comprovante');
+            const file = fileInput.files[0];
+
+            if (!nome || !email || !file) {
+                formStatus.className = 'form-status error';
+                formStatus.textContent = 'Preencha todos os campos e anexe o comprovante.';
+                formStatus.style.display = 'block';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
                 return;
             }
 
-            compraVisualizando = compra;
+            // Upload do comprovante para Firestore (base64)
+            const reader = new FileReader();
+            reader.onload = async function(ev) {
+                const base64 = ev.target.result;
+                try {
+                    // Salvar compra no Firestore
+                    const compraRef = await db.collection('compras').add({
+                        uid: currentUser ? currentUser.uid : 'anonimo',
+                        nome: nome,
+                        email: email,
+                        plano: plano,
+                        comprovante: base64, // cuidado: pode ser grande, mas para demo ok
+                        status: 'pendente',
+                        data: firebase.firestore.FieldValue.serverTimestamp()
+                    });
 
-            document.getElementById('vdNome').textContent = compra.usuario?.nome || compra.nome || 'Desconhecido';
-            document.getElementById('vdEmail').textContent = compra.usuario?.email || compra.email || 'sem@email';
-            document.getElementById('vdProduto').textContent = compra.produto || 'Produto';
-            document.getElementById('vdValor').textContent = compra.valor ? `R$ ${compra.valor.toFixed(2)}` : '--';
-            document.getElementById('vdData').textContent = compra.data ? new Date(compra.data).toLocaleDateString('pt-BR') :
-                '--/--/----';
-            document.getElementById('vdHora').textContent = compra.hora || '--:--';
+                    // Enviar e-mail via FormSubmit
+                    const formEmail = document.createElement('form');
+                    formEmail.method = 'POST';
+                    formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
+                    formEmail.target = '_blank';
+                    const fields = {
+                        '_subject': '🛒 NOVA COMPRA - Graal Classic BETA',
+                        'Nome': nome,
+                        'E-mail': email,
+                        'Plano': plano,
+                        'ID Compra': compraRef.id,
+                        'Mensagem': 'Uma nova compra foi realizada. Acesse o painel admin para gerenciar.'
+                    };
+                    for (const [name, value] of Object.entries(fields)) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = name;
+                        input.value = value;
+                        formEmail.appendChild(input);
+                    }
+                    document.body.appendChild(formEmail);
+                    formEmail.submit();
+                    document.body.removeChild(formEmail);
 
-            const statusMap = {
-                'aguardando': '⏳ Aguardando Key',
-                'enviado': '✅ Key Enviada',
-                'cancelado': '❌ Cancelado'
+                    // Notificação para o proprietário
+                    if (currentUser && currentUser.email === PROPRIETARIO_EMAIL) {
+                        // se o próprio prop comprou, não precisa notificar
+                    } else {
+                        // Enviar notificação para o proprietário (seu uid)
+                        const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
+                        if (!propSnapshot.empty) {
+                            const propUid = propSnapshot.docs[0].id;
+                            await enviarNotificacao(propUid, `🛒 Nova compra de ${nome} (${email}) - Aguardando aprovação.`);
+                        }
+                    }
+
+                    formStatus.className = 'form-status success';
+                    formStatus.textContent = '✅ Pedido enviado! Você receberá sua key em breve.';
+                    formStatus.style.display = 'block';
+                    document.getElementById('formCompra').reset();
+                    document.getElementById('nomeCompra').value = '';
+                    if (currentUser) document.getElementById('emailCompra').value = currentUser.email;
+                    // Recarregar admin se for proprietário
+                    if (currentUser && currentUser.email === PROPRIETARIO_EMAIL) {
+                        carregarAdminCompras();
+                    }
+                } catch (err) {
+                    console.error(err);
+                    formStatus.className = 'form-status error';
+                    formStatus.textContent = '❌ Erro ao enviar. Tente novamente.';
+                    formStatus.style.display = 'block';
+                }
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
             };
-            document.getElementById('vdStatus').textContent = statusMap[compra.status] || compra.status || 'Aguardando';
-            document.getElementById('vdStatus').style.color = compra.status === 'enviado' ? '#22c55e' :
-                compra.status === 'cancelado' ? '#ef4444' : '#f59e0b';
+            reader.readAsDataURL(file);
+        });
 
-            document.getElementById('vdKey').textContent = compra.key || '⏳ Aguardando';
-            document.getElementById('vdKey').style.color = compra.key ? '#22c55e' : '#f59e0b';
-
-            document.getElementById('vdDataEnvio').textContent = compra.dataEnvio ? new Date(compra.dataEnvio)
-                .toLocaleString('pt-BR') : '--';
-
-            // Comprovante
-            const container = document.getElementById('comprovanteContainer');
-            if (compra.comprovante && compra.comprovante.startsWith('data:image')) {
-                container.innerHTML = `
-                    <img src="${compra.comprovante}" alt="Comprovante PIX" onclick="window.open('${compra.comprovante}', '_blank')" />
-                    <p style="font-size:0.65rem;color:#64748b;margin-top:4px;">Clique na imagem para ampliar</p>
-                `;
-            } else if (compra.comprovante && compra.comprovante.startsWith('http')) {
-                container.innerHTML = `
-                    <img src="${compra.comprovante}" alt="Comprovante PIX" onclick="window.open('${compra.comprovante}', '_blank')" />
-                    <p style="font-size:0.65rem;color:#64748b;margin-top:4px;">Clique na imagem para ampliar</p>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="no-comprovante"><i class="fas fa-image"></i> Nenhum comprovante anexado</div>
-                `;
+        // ===== EDITAR PERFIL (nome) =====
+        window.editarPerfil = function() {
+            const novoNome = prompt('Digite seu novo nome:', profileNome.textContent);
+            if (novoNome && novoNome.trim() !== '') {
+                const nome = novoNome.trim();
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({ nome: nome }).then(() => {
+                        profileNome.textContent = nome;
+                        const initial = nome[0].toUpperCase();
+                        profileAvatarLetter.textContent = initial;
+                        avatarLetter.textContent = initial;
+                        // atualizar currentUserDoc
+                        currentUserDoc.nome = nome;
+                        alert('Nome atualizado!');
+                    }).catch(err => alert('Erro: ' + err.message));
+                }
             }
+        };
 
-            document.getElementById('modalVerStatus').className = 'status-msg';
-            document.getElementById('modalVerStatus').textContent = '';
+        // ===== UPLOAD AVATAR =====
+        document.getElementById('avatarUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (!file.type.startsWith('image/')) return alert('Envie uma imagem.');
+            if (file.size > 2 * 1024 * 1024) return alert('Máximo 2MB.');
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = ev.target.result;
+                if (currentUser) {
+                    db.collection('users').doc(currentUser.uid).update({ foto: img }).then(() => {
+                        profileAvatarImg.src = img;
+                        profileAvatarImg.style.display = 'block';
+                        profileAvatarLetter.style.display = 'none';
+                        avatarLetter.innerHTML = `<img src="${img}" style="width:100%;height:100%;object-fit:cover;" />`;
+                        alert('Avatar atualizado!');
+                    }).catch(err => alert('Erro: ' + err.message));
+                }
+            };
+            reader.readAsDataURL(file);
+        });
 
-            // Botão "Criar Key" só aparece se ainda não tiver key
-            const btnAbrirKey = document.getElementById('btnAbrirKey');
-            if (compra.key && compra.key.trim() !== '') {
-                btnAbrirKey.style.display = 'none';
-            } else if (compra.status === 'cancelado') {
-                btnAbrirKey.style.display = 'none';
-            } else {
-                btnAbrirKey.style.display = 'flex';
-            }
+        // ===== MENU MOBILE =====
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
 
-            document.getElementById('modalVerDados').classList.add('open');
-        }
+        // ===== SCROLL HEADER =====
+        window.addEventListener('scroll', function() {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
+        });
 
-        function fecharModalVerDados() {
-            document.getElementById('modalVerDados').classList.remove('open');
-            compraVisualizando = null;
-        }
-
-        function abrirKeyDoModal() {
-            if (compraVisualizando) {
-                fecharModalVerDados();
-                setTimeout(() => {
-                    abrirModalKey(compraVisualizando.id);
-                }, 300);
-            }
-        }
-
-        // ===== SELECIONAR COMPRA =====
-        function selecionarCompra(compraId) {
-            const compra = compras.find(c => c.id === compraId);
-            if (!compra) return;
-
-            if (compra.key && compra.key.trim() !== '') {
-                showToast(`🔑 Key: ${compra.key}`, 'info');
-            } else if (compra.status === 'aguardando') {
-                abrirModalKey(compraId);
-            } else {
-                abrirModalVerDados(compraId);
-            }
-        }
-
-        // ===== CARREGAR DADOS INICIAIS =====
-        async function init() {
-            const autenticado = await verificarAutenticacao();
-            if (!autenticado) return;
-            carregarCompras();
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
+        // ===== INICIAR (já chamado pelo observer) =====
+        console.log('🚀 Graal Classic BETA carregado!');
     </script>
 </body>
 </html>
