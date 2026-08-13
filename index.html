@@ -18,7 +18,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS COMPLETO (mantido integralmente) ===== */
+        /* ===== CSS COMPLETO ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #dc2626;
@@ -375,7 +375,7 @@
             position: absolute;
             top: calc(100% + 8px);
             right: 0;
-            width: 360px;
+            width: 380px;
             max-height: 420px;
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -447,6 +447,17 @@
             background: rgba(220,38,38,0.04);
         }
         .dropdown-item.unread .item-text { font-weight: 600; }
+        .dropdown-item .item-key {
+            display: block;
+            font-family: monospace;
+            background: rgba(34,197,94,0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            color: var(--success);
+            font-size: 0.75rem;
+            margin-top: 4px;
+            border: 1px solid rgba(34,197,94,0.2);
+        }
         .empty-state {
             text-align: center;
             padding: 2rem 1rem;
@@ -749,7 +760,6 @@
         .section-header h2 i { color: var(--primary); }
         .section-header p { color: var(--text-muted); font-size: 1.1rem; margin-top: 0.5rem; }
 
-        .tabs-container { max-width: 950px; margin: 0 auto; }
         .tabs-nav {
             display: flex;
             gap: 0.5rem;
@@ -1560,11 +1570,6 @@
             overflow: hidden;
         }
         .chat-window.open { display: flex; }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
 
         .chat-header {
             display: flex;
@@ -2413,11 +2418,7 @@
         }
         @media (max-width: 768px) {
             .navbar { padding: 0 0.5rem; }
-            .nav-container {
-                height: 60px;
-                gap: 4px;
-                padding: 0 2px;
-            }
+            .nav-container { height: 60px; gap: 4px; padding: 0 2px; }
             .nav-logo-wrapper { gap: 4px; flex-shrink: 0; }
             .nav-logo img { width: 30px; height: 30px; }
             .nav-logo .logo-text span { font-size: 0.75rem; }
@@ -2427,51 +2428,16 @@
             .nav-xcore .xcore-text .name { font-size: 0.8rem; }
             .nav-xcore .xcore-text .team { font-size: 0.6rem; }
             .nav-menu:not(.mobile-menu) { display: none; }
-            .nav-toggle {
-                display: flex !important;
-                font-size: 1.1rem;
-                padding: 2px 6px;
-            }
+            .nav-toggle { display: flex !important; font-size: 1.1rem; padding: 2px 6px; }
             .nav-actions { gap: 4px; flex-shrink: 0; }
-            .nav-icon-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.75rem;
-            }
-            .nav-icon-btn .badge {
-                min-width: 14px;
-                height: 14px;
-                font-size: 0.4rem;
-                top: -3px;
-                right: -3px;
-            }
-            .profile-btn {
-                padding: 0.15rem 0.4rem 0.15rem 0.15rem;
-                font-size: 0.55rem;
-                gap: 3px;
-            }
-            .profile-btn .avatar {
-                width: 20px;
-                height: 20px;
-                font-size: 0.45rem;
-            }
+            .nav-icon-btn { width: 30px; height: 30px; font-size: 0.75rem; }
+            .nav-icon-btn .badge { min-width: 14px; height: 14px; font-size: 0.4rem; top: -3px; right: -3px; }
+            .profile-btn { padding: 0.15rem 0.4rem 0.15rem 0.15rem; font-size: 0.55rem; gap: 3px; }
+            .profile-btn .avatar { width: 20px; height: 20px; font-size: 0.45rem; }
             .profile-btn .user-name { display: none; }
-            .profile-btn .cart-count {
-                width: 12px;
-                height: 12px;
-                font-size: 0.35rem;
-                top: -4px;
-                right: -6px;
-            }
-            .dropdown {
-                width: 260px;
-                right: -50px;
-                max-height: 350px;
-            }
-            .cart-dropdown {
-                width: 240px;
-                right: -30px;
-            }
+            .profile-btn .cart-count { width: 12px; height: 12px; font-size: 0.35rem; top: -4px; right: -6px; }
+            .dropdown { width: 300px; right: -30px; max-height: 350px; }
+            .cart-dropdown { width: 240px; right: -30px; }
             .hero h1 { font-size: 2.2rem; }
             .section-header h2 { font-size: 1.8rem; }
             .plans-grid { grid-template-columns: 1fr; }
@@ -2482,35 +2448,11 @@
             .script-features { grid-template-columns: 1fr; }
             .xcore-restrictions-grid { grid-template-columns: 1fr; }
             .xcore-obrigatorio p { font-size: 0.8rem; }
-            .chat-window {
-                width: 320px;
-                max-height: 420px;
-                height: 420px;
-                bottom: 200px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 48px;
-                height: 48px;
-                font-size: 1.2rem;
-                bottom: 140px;
-                left: 14px;
-            }
-            .btn-whatsapp-fixo {
-                width: 48px;
-                height: 48px;
-                font-size: 22px;
-                bottom: 80px;
-                left: 14px;
-            }
-            .welcome-content {
-                padding: 1.5rem;
-                max-height: 90vh;
-            }
-            .search-box {
-                width: 200px;
-                right: 0;
-            }
+            .chat-window { width: 320px; max-height: 420px; height: 420px; bottom: 200px; left: 10px; }
+            .chat-toggle-btn { width: 48px; height: 48px; font-size: 1.2rem; bottom: 140px; left: 14px; }
+            .btn-whatsapp-fixo { width: 48px; height: 48px; font-size: 22px; bottom: 80px; left: 14px; }
+            .welcome-content { padding: 1.5rem; max-height: 90vh; }
+            .search-box { width: 200px; right: 0; }
             .search-box input { width: 120px; }
         }
         @media (max-width: 480px) {
@@ -2528,30 +2470,10 @@
             .nav-xcore .xcore-text .team { font-size: 0.5rem; }
             .profile-btn .avatar { width: 18px; height: 18px; }
             .nav-icon-btn { width: 26px; height: 26px; font-size: 0.65rem; }
-            .chat-window {
-                width: 340px;
-                max-height: 450px;
-                height: 450px;
-                bottom: 180px;
-                left: 10px;
-            }
-            .chat-toggle-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-                bottom: 120px;
-                left: 10px;
-            }
-            .btn-whatsapp-fixo {
-                width: 44px;
-                height: 44px;
-                font-size: 20px;
-                bottom: 70px;
-                left: 10px;
-            }
-            .welcome-content {
-                padding: 1.2rem;
-            }
+            .chat-window { width: 340px; max-height: 450px; height: 450px; bottom: 180px; left: 10px; }
+            .chat-toggle-btn { width: 44px; height: 44px; font-size: 1rem; bottom: 120px; left: 10px; }
+            .btn-whatsapp-fixo { width: 44px; height: 44px; font-size: 20px; bottom: 70px; left: 10px; }
+            .welcome-content { padding: 1.2rem; }
         }
     </style>
 </head>
@@ -3041,11 +2963,16 @@
                             <li><i class="fas fa-check"></i> Teste exclusivo</li>
                         </ul>
 
-                        <!-- Formulário de compra -->
+                        <!-- Formulário de compra com comprovante -->
                         <form id="formCompraBeta" onsubmit="return false;">
                             <div class="form-group">
                                 <label><i class="fas fa-envelope"></i> Seu e-mail (automático)</label>
                                 <input type="email" id="betaEmail" readonly style="opacity:0.7; cursor:not-allowed; background: var(--bg);">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-image"></i> Comprovante PIX <span style="color:var(--primary);">*</span></label>
+                                <input type="file" id="betaComprovante" accept="image/*" required>
+                                <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.3rem;">Envie uma foto do comprovante PIX (JPG, PNG - até 2MB)</p>
                             </div>
                             <button type="button" class="btn-buy" onclick="comprarBeta()" style="margin-top: 0.5rem;">
                                 <i class="fas fa-shopping-cart"></i> Comprar R$ 10,00
@@ -5027,6 +4954,11 @@
             registrarServiceWorker();
             carregarAdmins();
             atualizarBotaoSistema();
+            
+            // Atualizar email na aba beta
+            if (usuarioLogado) {
+                document.getElementById('betaEmail').value = usuarioLogado.email;
+            }
         }
 
         window.fazerLogin = function() {
@@ -5262,28 +5194,52 @@
             renderizarNotificacoes();
             atualizarBadgeNotificacoes();
 
+            // 🔔 ESCUTAR NOTIFICAÇÕES DO FIREBASE EM TEMPO REAL
             if (usuarioLogado) {
                 const userId = usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_');
                 const notifRef = db.ref('notificacoes').orderByChild('userId').equalTo(userId);
                 notifRef.on('child_added', (snapshot) => {
                     const data = snapshot.val();
                     if (!data) return;
+                    
+                    // Evitar duplicatas
                     const exists = notificacoes.some(n => n.id === snapshot.key);
                     if (!exists) {
-                        const mensagem = `🔑 ${data.titulo}: ${data.mensagem}`;
-                        notificacoes.unshift({
-                            id: snapshot.key,
-                            mensagem: mensagem,
-                            data: new Date(data.data).toLocaleString('pt-BR'),
-                            lida: data.lida || false,
-                            tipo: data.tipo || 'info'
-                        });
-                        salvarNotificacoes();
-                        atualizarBadgeNotificacoes();
-                        renderizarNotificacoes();
-                        playNotificationSound();
+                        let mensagem = `🔑 ${data.titulo}: ${data.mensagem}`;
+                        
+                        // Se tiver compraId, buscar a Key para mostrar
+                        if (data.compraId) {
+                            db.ref('compras/' + data.compraId).once('value', (compraSnap) => {
+                                const compra = compraSnap.val();
+                                if (compra && compra.key) {
+                                    mensagem = `🔑 ${data.titulo}: ${data.mensagem}\n\n📌 Sua Key: ${compra.key}`;
+                                }
+                                adicionarNotificacaoFirebase(snapshot.key, mensagem, data);
+                            });
+                        } else {
+                            adicionarNotificacaoFirebase(snapshot.key, mensagem, data);
+                        }
                     }
                 });
+            }
+        }
+
+        function adicionarNotificacaoFirebase(id, mensagem, data) {
+            notificacoes.unshift({
+                id: id,
+                mensagem: mensagem,
+                data: new Date(data.data).toLocaleString('pt-BR'),
+                lida: data.lida || false,
+                tipo: data.tipo || 'info'
+            });
+            salvarNotificacoes();
+            atualizarBadgeNotificacoes();
+            renderizarNotificacoes();
+            playNotificationSound();
+            
+            // Forçar atualização do dropdown se estiver aberto
+            if (document.getElementById('notifDropdown').classList.contains('open')) {
+                renderizarNotificacoes();
             }
         }
 
@@ -5335,12 +5291,23 @@
                 list.innerHTML = `<div class="empty-state"><i class="fas fa-bell-slash"></i>Nenhuma notificação</div>`;
                 return;
             }
-            list.innerHTML = notificacoes.map(n => `
-                <div class="dropdown-item ${n.lida ? '' : 'unread'}">
-                    <span class="item-text">${n.mensagem}</span>
-                    <span class="item-time">${n.data}</span>
-                </div>
-            `).join('');
+            list.innerHTML = notificacoes.map(n => {
+                // Verificar se tem Key na mensagem
+                let keyHtml = '';
+                if (n.mensagem.includes('Sua Key:')) {
+                    const keyMatch = n.mensagem.match(/Sua Key: ([^\n]+)/);
+                    if (keyMatch) {
+                        keyHtml = `<span class="item-key">🔑 ${keyMatch[1]}</span>`;
+                    }
+                }
+                return `
+                    <div class="dropdown-item ${n.lida ? '' : 'unread'}">
+                        <span class="item-text">${n.mensagem}</span>
+                        ${keyHtml}
+                        <span class="item-time">${n.data}</span>
+                    </div>
+                `;
+            }).join('');
         }
 
         window.marcarTodasNotificacoesLidas = function() {
@@ -5348,6 +5315,115 @@
             salvarNotificacoes();
             atualizarBadgeNotificacoes();
             renderizarNotificacoes();
+        };
+
+        // ====== COMPRA BETA COM COMPROVANTE ======
+        function comprarBeta() {
+            if (!usuarioLogado) {
+                document.getElementById('betaStatus').className = 'form-status error';
+                document.getElementById('betaStatus').textContent = '⚠️ Faça login para comprar.';
+                return;
+            }
+
+            const email = usuarioLogado.email;
+            const nome = usuarioLogado.nome || 'Usuário';
+            const produto = 'MOD MENU BETA CLASSIC - TESTE 7h';
+            const valor = 10.00;
+
+            const fileInput = document.getElementById('betaComprovante');
+            const file = fileInput.files[0];
+            if (!file) {
+                document.getElementById('betaStatus').className = 'form-status error';
+                document.getElementById('betaStatus').textContent = '⚠️ Envie o comprovante PIX.';
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                document.getElementById('betaStatus').className = 'form-status error';
+                document.getElementById('betaStatus').textContent = '⚠️ Envie uma imagem (JPG, PNG).';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                document.getElementById('betaStatus').className = 'form-status error';
+                document.getElementById('betaStatus').textContent = '⚠️ A imagem deve ter no máximo 2MB.';
+                return;
+            }
+
+            document.getElementById('betaStatus').className = 'form-status';
+            document.getElementById('betaStatus').textContent = '📤 Enviando comprovante...';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const comprovanteBase64 = e.target.result;
+
+                const compraRef = db.ref('compras').push();
+                compraRef.set({
+                    userId: usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'),
+                    email: email,
+                    nome: nome,
+                    produto: produto,
+                    valor: valor,
+                    data: new Date().toISOString(),
+                    hora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+                    status: 'aguardando',
+                    key: '',
+                    dataEnvio: '',
+                    horaEnvio: '',
+                    comprovante: comprovanteBase64
+                }).then(() => {
+                    document.getElementById('betaStatus').className = 'form-status success';
+                    document.getElementById('betaStatus').textContent = '✅ Compra registrada! Aguarde o envio da Key.';
+                    adicionarNotificacao('🛒 Compra do MOD MENU BETA CLASSIC registrada com sucesso!', 'compra');
+                    document.getElementById('betaComprovante').value = '';
+                }).catch((err) => {
+                    document.getElementById('betaStatus').className = 'form-status error';
+                    document.getElementById('betaStatus').textContent = '❌ Erro ao registrar compra: ' + err.message;
+                });
+            };
+
+            reader.onerror = function() {
+                document.getElementById('betaStatus').className = 'form-status error';
+                document.getElementById('betaStatus').textContent = '❌ Erro ao ler o comprovante. Tente novamente.';
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        // ====== ATUALIZAR BOTÃO SISTEMA ======
+        function atualizarBotaoSistema() {
+            const isOwner = usuarioLogado && usuarioLogado.email === PROPRIETARIO_EMAIL;
+            const btnSistema = document.getElementById('btnSistema');
+            const btnSistemaMobile = document.getElementById('btnSistemaMobile');
+            if (btnSistema) btnSistema.style.display = isOwner ? 'inline-block' : 'none';
+            if (btnSistemaMobile) btnSistemaMobile.style.display = isOwner ? 'block' : 'none';
+        }
+
+        // ====== TROCAR ABA ======
+        window.trocarAba = function(aba) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + aba).classList.add('active');
+            document.querySelector('.tab-btn.' + aba).classList.add('active');
+            
+            if (aba === 'beta' && usuarioLogado) {
+                document.getElementById('betaEmail').value = usuarioLogado.email;
+            }
+        };
+
+        // ====== OUTRAS FUNÇÕES ======
+        window.toggleFaq = function(el) {
+            el.classList.toggle('open');
+        };
+
+        window.aplicarCupom = function() {
+            const input = document.getElementById('cupomInput');
+            const codigo = input.value.trim();
+            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto!'); } 
+            else if (codigo === 'KZN20') { alert('🎉 Cupom aplicado! 20% de desconto!'); } 
+            else if (codigo) { alert('❌ Código inválido.'); } 
+            else { alert('📝 Digite um código.'); }
+            input.value = '';
         };
 
         // ====== MODAIS PIX ======
@@ -5383,78 +5459,6 @@
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
                 setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copiar Chave PIX'; }, 2000);
             });
-        };
-
-        // ====== COMPRA BETA ======
-        function comprarBeta() {
-            if (!usuarioLogado) {
-                document.getElementById('betaStatus').className = 'form-status error';
-                document.getElementById('betaStatus').textContent = '⚠️ Faça login para comprar.';
-                return;
-            }
-
-            const email = usuarioLogado.email;
-            const nome = usuarioLogado.nome || 'Usuário';
-            const produto = 'MOD MENU BETA CLASSIC';
-            const valor = 10.00;
-
-            const compraRef = db.ref('compras').push();
-            compraRef.set({
-                userId: usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g, '_'),
-                email: email,
-                nome: nome,
-                produto: produto,
-                valor: valor,
-                data: new Date().toISOString(),
-                hora: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
-                status: 'aguardando',
-                key: '',
-                dataEnvio: '',
-                horaEnvio: ''
-            }).then(() => {
-                document.getElementById('betaStatus').className = 'form-status success';
-                document.getElementById('betaStatus').textContent = '✅ Compra registrada! Aguarde o envio da Key.';
-                adicionarNotificacao('🛒 Compra do MOD MENU BETA CLASSIC registrada com sucesso!', 'compra');
-            }).catch((err) => {
-                document.getElementById('betaStatus').className = 'form-status error';
-                document.getElementById('betaStatus').textContent = '❌ Erro ao registrar compra: ' + err.message;
-            });
-        }
-
-        // ====== ATUALIZAR BOTÃO SISTEMA ======
-        function atualizarBotaoSistema() {
-            const isOwner = usuarioLogado && usuarioLogado.email === PROPRIETARIO_EMAIL;
-            const btnSistema = document.getElementById('btnSistema');
-            const btnSistemaMobile = document.getElementById('btnSistemaMobile');
-            if (btnSistema) btnSistema.style.display = isOwner ? 'inline-block' : 'none';
-            if (btnSistemaMobile) btnSistemaMobile.style.display = isOwner ? 'block' : 'none';
-        }
-
-        // ====== OUTRAS FUNÇÕES ======
-        window.trocarAba = function(aba) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + aba).classList.add('active');
-            document.querySelector('.tab-btn.' + aba).classList.add('active');
-            
-            // Atualizar email no formulário beta quando a aba for aberta
-            if (aba === 'beta' && usuarioLogado) {
-                document.getElementById('betaEmail').value = usuarioLogado.email;
-            }
-        };
-
-        window.toggleFaq = function(el) {
-            el.classList.toggle('open');
-        };
-
-        window.aplicarCupom = function() {
-            const input = document.getElementById('cupomInput');
-            const codigo = input.value.trim();
-            if (codigo === 'KZN10') { alert('🎉 Cupom aplicado! 10% de desconto!'); } 
-            else if (codigo === 'KZN20') { alert('🎉 Cupom aplicado! 20% de desconto!'); } 
-            else if (codigo) { alert('❌ Código inválido.'); } 
-            else { alert('📝 Digite um código.'); }
-            input.value = '';
         };
 
         // ====== EVENTO DE MENÇÃO (@) ======
@@ -5600,7 +5604,6 @@
                 usuarioLogado = JSON.parse(usuario);
                 setLoggedIn();
                 carregarPerfil();
-                // Atualizar email no beta
                 document.getElementById('betaEmail').value = usuarioLogado.email;
             } else {
                 loginProcessed = false;
@@ -5624,6 +5627,8 @@
             console.log('✏️ Mensagens editáveis: clique em ✏️');
             console.log('🎤 Áudio: clique no microfone');
             console.log('📌 Fixar: administradores podem fixar mensagens');
+            console.log('🔔 Notificações em tempo real via Firebase!');
+            console.log('📸 Comprovante PIX enviado com a compra!');
         });
     </script>
 </body>
