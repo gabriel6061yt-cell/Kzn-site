@@ -3393,29 +3393,31 @@
         </div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script>
-        // ====== FIREBASE CONFIG ======
-        const firebaseConfig = {
-            apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
-            authDomain: "chat-kzn.firebaseapp.com",
-            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
-            projectId: "chat-kzn",
-            storageBucket: "chat-kzn.firebasestorage.app",
-            messagingSenderId: "641963268535",
-            appId: "1:641963268535:web:b1f8b26f69840f527a7032",
-            measurementId: "G-JZHCPK3VRP"
-        };
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
+        authDomain: "chat-kzn.firebaseapp.com",
+        databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com",
+        projectId: "chat-kzn",
+        storageBucket: "chat-kzn.firebasestorage.app",
+        messagingSenderId: "641963268535",
+        appId: "1:641963268535:web:b1f8b26f69840f527a7032",
+        measurementId: "G-JZHCPK3VRP"
+    };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const mensagensRef = db.ref('chat/mensagens');
-        const usuariosRef = db.ref('chat/usuarios');
-        const bansRef = db.ref('chat/bans');
-        const mutesRef = db.ref('chat/mutes');
-        const adminsRef = db.ref('chat/admins');
-        const modLogRef = db.ref('chat/mod_log');
-        const typingRef = db.ref('chat/typing');
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const mensagensRef = db.ref('chat/mensagens');
+    const usuariosRef = db.ref('chat/usuarios');
+    const bansRef = db.ref('chat/bans');
+    const mutesRef = db.ref('chat/mutes');
+    const adminsRef = db.ref('chat/admins');
+    const modLogRef = db.ref('chat/mod_log');
+    const typingRef = db.ref('chat/typing');
+</script>
+
+<script src="keys-system.js"></script>
 
         // ====== CONSTANTES ======
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
