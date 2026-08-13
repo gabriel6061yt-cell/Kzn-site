@@ -6,13 +6,11 @@
     <title>Graal Online Classic Test BETA</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        /* ====== CSS ====== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --primary: #7c3aed;
@@ -209,7 +207,6 @@
         }
         .btn-primary:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(124,58,237,0.4); }
 
-        /* Formulários */
         .form-container {
             max-width: 560px;
             margin: 0 auto;
@@ -257,7 +254,6 @@
         .form-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
         .form-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid var(--danger); color: var(--danger); }
 
-        /* Modal Auth */
         .auth-modal {
             display: none;
             position: fixed;
@@ -361,7 +357,6 @@
         .auth-modal .modal-box .auth-status.success { display: block; background: rgba(34,197,94,0.15); border: 1px solid var(--success); color: var(--success); }
         .auth-modal .modal-box .auth-status.error { display: block; background: rgba(239,68,68,0.15); border: 1px solid var(--danger); color: var(--danger); }
 
-        /* ADMIN */
         .admin-panel {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -394,7 +389,6 @@
         .btn-small.success { background: var(--success); color: #fff; }
         .btn-small.success:hover { background: #16a34a; }
 
-        /* PERFIL */
         .profile-card {
             max-width: 600px;
             margin: 0 auto;
@@ -514,7 +508,6 @@
         .key-active { background: rgba(34,197,94,0.2); color: var(--success); }
         .key-expired { background: rgba(239,68,68,0.2); color: var(--danger); }
 
-        /* CHAT */
         .chat-container {
             max-width: 700px;
             margin: 0 auto;
@@ -587,7 +580,6 @@
         }
         .chat-input-area button:hover { background: var(--primary-dark); }
 
-        /* NOTIFICAÇÕES */
         .notification-badge { position: relative; cursor: pointer; }
         .notification-badge .badge {
             position: absolute;
@@ -918,6 +910,7 @@
         let chatRoomId = null;
         let chatListener = null;
         let notificacoes = [];
+        let formSubmitting = false;
 
         // ===== DOM REFS =====
         const loginSection = document.getElementById('loginSection');
@@ -949,6 +942,7 @@
         // ===== FUNÇÕES DE AUTENTICAÇÃO =====
         function abrirAuthModal() { authModal.classList.add('open'); document.body.style.overflow = 'hidden'; }
         function fecharAuthModal() { authModal.classList.remove('open'); document.body.style.overflow = ''; }
+
         function trocarAuthTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
@@ -960,6 +954,7 @@
             document.getElementById('registroStatus').style.display = 'none';
         }
 
+        // ===== LOGIN =====
         function fazerLogin() {
             const email = document.getElementById('loginEmail').value.trim();
             const senha = document.getElementById('loginSenha').value.trim();
@@ -990,6 +985,7 @@
                 });
         }
 
+        // ===== REGISTRO =====
         function fazerRegistro() {
             const nome = document.getElementById('registroNome').value.trim();
             const email = document.getElementById('registroEmail').value.trim();
@@ -1041,6 +1037,7 @@
                 });
         }
 
+        // ===== LOGOUT =====
         function logout() {
             if (confirm('Tem certeza que deseja sair?')) {
                 auth.signOut().catch((error) => alert('Erro ao sair: ' + error.message));
@@ -1099,6 +1096,7 @@
                     }
                     atualizarPerfilUI(currentUserDoc);
 
+                    // VERIFICAÇÃO CORRETA DO PROPRIETÁRIO
                     if (user.email === PROPRIETARIO_EMAIL) {
                         adminLink.style.display = 'block';
                         adminPanel.style.display = 'block';
@@ -1149,69 +1147,78 @@
                 keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
                 return;
             }
-            const snapshot = await db.collection('keys')
-                .where('uid', '==', uid)
-                .where('ativa', '==', true)
-                .get();
-            if (snapshot.empty) {
-                keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
-                infoKeys.textContent = '0';
-                return;
-            }
-            let html = '<p style="font-weight:600;margin-bottom:8px;">🔑 Suas Keys Ativas:</p>';
-            let count = 0;
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao.seconds * 1000) : null;
-                const isExpired = expiracao && expiracao < new Date();
-                const statusClass = isExpired ? 'key-expired' : 'key-active';
-                const statusText = isExpired ? 'Expirada' : 'Ativa';
-                count++;
-                html += `
-                    <div class="key-item">
-                        <span class="key-code">${data.key}</span>
-                        <span>
-                            <span class="key-status ${statusClass}">${statusText}</span>
-                            <span style="font-size:0.7rem;color:var(--text-muted);margin-left:8px;">
-                                ${expiracao ? expiracao.toLocaleString() : 'Indeterminada'}
+            try {
+                const snapshot = await db.collection('keys')
+                    .where('uid', '==', uid)
+                    .where('ativa', '==', true)
+                    .get();
+                if (snapshot.empty) {
+                    keysList.innerHTML = '<p style="color:var(--text-muted);text-align:center;">Nenhuma key ativa no momento.</p>';
+                    infoKeys.textContent = '0';
+                    return;
+                }
+                let html = '<p style="font-weight:600;margin-bottom:8px;">🔑 Suas Keys Ativas:</p>';
+                let count = 0;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const expiracao = data.dataExpiracao ? new Date(data.dataExpiracao.seconds * 1000) : null;
+                    const isExpired = expiracao && expiracao < new Date();
+                    const statusClass = isExpired ? 'key-expired' : 'key-active';
+                    const statusText = isExpired ? 'Expirada' : 'Ativa';
+                    count++;
+                    html += `
+                        <div class="key-item">
+                            <span class="key-code">${data.key}</span>
+                            <span>
+                                <span class="key-status ${statusClass}">${statusText}</span>
+                                <span style="font-size:0.7rem;color:var(--text-muted);margin-left:8px;">
+                                    ${expiracao ? expiracao.toLocaleString() : 'Indeterminada'}
+                                </span>
                             </span>
-                        </span>
-                    </div>
-                `;
-            });
-            keysList.innerHTML = html;
-            infoKeys.textContent = count;
+                        </div>
+                    `;
+                });
+                keysList.innerHTML = html;
+                infoKeys.textContent = count;
+            } catch (err) {
+                console.error('Erro ao carregar keys:', err);
+            }
         }
 
         // ===== CARREGAR ADMIN COMPRAS =====
         async function carregarAdminCompras() {
-            const snapshot = await db.collection('compras').orderBy('data', 'desc').get();
-            if (snapshot.empty) {
-                adminTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Nenhuma compra registrada.</td></tr>';
-                return;
+            try {
+                const snapshot = await db.collection('compras').orderBy('data', 'desc').get();
+                if (snapshot.empty) {
+                    adminTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Nenhuma compra registrada.</td></tr>';
+                    return;
+                }
+                let html = '';
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    const dataStr = d.data ? new Date(d.data.seconds * 1000).toLocaleString() : '--';
+                    const statusClass = d.status === 'aprovado' ? 'status-aprovado' : d.status === 'cancelado' ? 'status-cancelado' : 'status-pendente';
+                    html += `
+                        <tr>
+                            <td>${dataStr}</td>
+                            <td>${d.nome || '--'}</td>
+                            <td>${d.email || '--'}</td>
+                            <td>${d.plano || '--'}</td>
+                            <td><span class="status-badge ${statusClass}">${d.status || 'pendente'}</span></td>
+                            <td><code style="font-size:0.7rem;">${d.key || '--'}</code></td>
+                            <td>
+                                <button class="btn-small key" onclick="gerarKey('${doc.id}')"><i class="fas fa-key"></i> Enviar Key</button>
+                                <button class="btn-small success" onclick="aprovarCompra('${doc.id}')"><i class="fas fa-check"></i></button>
+                                <button class="btn-small danger" onclick="cancelarCompra('${doc.id}')"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                adminTableBody.innerHTML = html;
+            } catch (err) {
+                console.error('Erro ao carregar compras:', err);
+                adminTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);">Erro ao carregar compras.</td></tr>';
             }
-            let html = '';
-            snapshot.forEach(doc => {
-                const d = doc.data();
-                const dataStr = d.data ? new Date(d.data.seconds * 1000).toLocaleString() : '--';
-                const statusClass = d.status === 'aprovado' ? 'status-aprovado' : d.status === 'cancelado' ? 'status-cancelado' : 'status-pendente';
-                html += `
-                    <tr>
-                        <td>${dataStr}</td>
-                        <td>${d.nome || '--'}</td>
-                        <td>${d.email || '--'}</td>
-                        <td>${d.plano || '--'}</td>
-                        <td><span class="status-badge ${statusClass}">${d.status || 'pendente'}</span></td>
-                        <td><code style="font-size:0.7rem;">${d.key || '--'}</code></td>
-                        <td>
-                            <button class="btn-small key" onclick="gerarKey('${doc.id}')"><i class="fas fa-key"></i> Enviar Key</button>
-                            <button class="btn-small success" onclick="aprovarCompra('${doc.id}')"><i class="fas fa-check"></i></button>
-                            <button class="btn-small danger" onclick="cancelarCompra('${doc.id}')"><i class="fas fa-times"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-            adminTableBody.innerHTML = html;
         }
 
         // ===== GERAR KEY =====
@@ -1427,16 +1434,14 @@
                 alert('Você precisa estar logado.');
                 return;
             }
-            db.collection('users').doc(currentUser.uid).update({
-                nome: nome
-            }).then(() => {
-                currentUserDoc.nome = nome;
-                atualizarPerfilUI(currentUserDoc);
-                editArea.classList.remove('open');
-                alert('✅ Nome atualizado com sucesso!');
-            }).catch((err) => {
-                alert('❌ Erro ao atualizar: ' + err.message);
-            });
+            db.collection('users').doc(currentUser.uid).update({ nome: nome })
+                .then(() => {
+                    currentUserDoc.nome = nome;
+                    atualizarPerfilUI(currentUserDoc);
+                    editArea.classList.remove('open');
+                    alert('✅ Nome atualizado com sucesso!');
+                })
+                .catch((err) => alert('❌ Erro ao atualizar: ' + err.message));
         }
 
         // ===== UPLOAD AVATAR =====
@@ -1455,19 +1460,20 @@
             reader.onload = function(ev) {
                 const img = ev.target.result;
                 if (currentUser) {
-                    db.collection('users').doc(currentUser.uid).update({ avatar: img }).then(() => {
-                        currentUserDoc.avatar = img;
-                        atualizarPerfilUI(currentUserDoc);
-                        alert('✅ Avatar atualizado!');
-                    }).catch((err) => alert('❌ Erro: ' + err.message));
+                    db.collection('users').doc(currentUser.uid).update({ avatar: img })
+                        .then(() => {
+                            currentUserDoc.avatar = img;
+                            atualizarPerfilUI(currentUserDoc);
+                            alert('✅ Avatar atualizado!');
+                        })
+                        .catch((err) => alert('❌ Erro: ' + err.message));
                 }
             };
             reader.readAsDataURL(file);
             e.target.value = '';
         });
 
-        // ===== ENVIO DO FORMULÁRIO DE COMPRA (CORRIGIDO - SEM LOOP) =====
-        let formSubmitting = false;
+        // ===== ENVIO DO FORMULÁRIO DE COMPRA =====
         document.getElementById('formCompra').addEventListener('submit', async function(e) {
             e.preventDefault();
             if (formSubmitting) return;
@@ -1509,7 +1515,6 @@
                         data: firebase.firestore.FieldValue.serverTimestamp()
                     });
 
-                    // Enviar email para o proprietário
                     const formEmail = document.createElement('form');
                     formEmail.method = 'POST';
                     formEmail.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
@@ -1532,7 +1537,6 @@
                     formEmail.submit();
                     document.body.removeChild(formEmail);
 
-                    // Notificar proprietário se não for ele
                     if (currentUser && currentUser.email !== PROPRIETARIO_EMAIL) {
                         const propSnapshot = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
                         if (!propSnapshot.empty) {
