@@ -831,7 +831,7 @@
         const notifCount = document.getElementById('notifCount');
         const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-        // ===== FUNÇÃO PARA INICIALIZAR O GSI (IGUAL AO SITE PRINCIPAL) =====
+        // ===== INICIALIZAR GSI =====
         function initGoogleSignIn() {
             if (typeof google !== 'undefined' && google.accounts) {
                 google.accounts.id.initialize({
@@ -842,13 +842,15 @@
                     context: 'signin'
                 });
 
-                // Ao clicar no botão, chamamos o prompt do GSI
+                // O botão agora chama o prompt do GSI
                 googleLoginBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     google.accounts.id.prompt(); // Abre a janela de seleção de conta
                 });
+                console.log('GSI inicializado com sucesso.');
             } else {
-                // Fallback: se o GSI não carregar, usar redirect (mais confiável que popup)
+                // Fallback: se o GSI não carregar, usar redirect (nunca popup)
+                console.warn('GSI não disponível, usando fallback redirect.');
                 googleLoginBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     const provider = new firebase.auth.GoogleAuthProvider();
@@ -857,26 +859,25 @@
             }
         }
 
-        // ===== CALLBACK DO GSI (quando o usuário seleciona uma conta) =====
+        // ===== CALLBACK DO GSI =====
         async function handleCredentialResponse(response) {
             try {
-                // O token do Google é recebido, usamos para criar credencial Firebase
                 const credential = firebase.auth.GoogleAuthProvider.credential(null, response.credential);
-                const result = await auth.signInWithCredential(credential);
-                // O usuário está logado, o observer vai tratar
+                await auth.signInWithCredential(credential);
+                // O observer vai tratar
             } catch (error) {
                 console.error('Erro no login GSI:', error);
                 alert('Falha ao fazer login. Tente novamente.');
-                // Fallback para redirect caso o GSI falhe
+                // Fallback para redirect
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithRedirect(provider);
             }
         }
 
-        // ===== PROCESSAR RESULTADO DO REDIRECT (caso o GSI não funcione) =====
+        // ===== PROCESSAR RESULTADO DO REDIRECT =====
         auth.getRedirectResult().then((result) => {
             if (result.user) {
-                // Login via redirect bem-sucedido, o observer vai tratar
+                // Login via redirect bem-sucedido
             }
         }).catch((error) => {
             console.error('Erro no redirect login:', error);
@@ -886,7 +887,6 @@
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 currentUser = user;
-                // Buscar/ criar documento do usuário no Firestore
                 const docRef = db.collection('users').doc(user.uid);
                 const docSnap = await docRef.get();
                 if (!docSnap.exists) {
@@ -1335,17 +1335,18 @@
             document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
         });
 
-        // ===== INICIALIZAR GSI =====
-        // Aguardar o carregamento do GSI (o script é async)
+        // ===== INICIALIZAR =====
+        // Inicializar GSI quando o script carregar
         if (typeof google !== 'undefined') {
             initGoogleSignIn();
         } else {
-            // Se o GSI não carregar, usar fallback com redirect
-            googleLoginBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const provider = new firebase.auth.GoogleAuthProvider();
-                auth.signInWithRedirect(provider);
-            });
+            // Fallback: aguardar o carregamento do GSI
+            const checkGSI = setInterval(() => {
+                if (typeof google !== 'undefined') {
+                    clearInterval(checkGSI);
+                    initGoogleSignIn();
+                }
+            }, 500);
         }
 
         console.log('🚀 Graal Classic BETA carregado!');
