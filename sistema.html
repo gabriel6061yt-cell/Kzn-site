@@ -1,1177 +1,1756 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-  <title>GRAAL ONLINE CLASSIC TEST BETA</title>
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Google Fonts: Inter -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== RESET & BASE ===== */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0a1a;
-      color: #f1f5f9;
-      min-height: 100vh;
-      padding-top: 76px;
-      line-height: 1.6;
-    }
-    a { color: #7c3aed; text-decoration: none; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Graal Online Classic Test Beta</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Font Awesome 6 (gratuito) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-storage-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-database-compat.js">
+    </script>
+    <style>
+        /* ----- RESET & BASE ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a1a;
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a3a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #7c3aed;
+            border-radius: 10px;
+        }
 
-    /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0a0a1a; }
-    ::-webkit-scrollbar-thumb { background: #7c3aed; border-radius: 10px; }
+        /* ----- APP CONTAINER ----- */
+        #app {
+            width: 100%;
+            max-width: 1300px;
+            min-height: 100vh;
+            background: rgba(10, 10, 26, 0.92);
+            backdrop-filter: blur(4px);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 60px rgba(124, 58, 237, 0.15);
+            border-left: 1px solid rgba(124, 58, 237, 0.2);
+            border-right: 1px solid rgba(124, 58, 237, 0.2);
+        }
 
-    /* ===== HEADER ===== */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(10, 10, 26, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(45, 45, 94, 0.6);
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 1000;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .logo {
-      font-weight: 800;
-      font-size: 1.6rem;
-      background: linear-gradient(135deg, #7c3aed, #06b6d4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: -0.5px;
-    }
-    .logo small {
-      font-size: 0.65rem;
-      font-weight: 500;
-      -webkit-text-fill-color: #94a3b8;
-      background: none;
-      margin-left: 4px;
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .nav-actions button {
-      background: transparent;
-      border: none;
-      color: #f1f5f9;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: 0.2s;
-      padding: 6px;
-      border-radius: 8px;
-    }
-    .nav-actions button:hover { color: #7c3aed; background: rgba(124, 58, 237, 0.1); }
-    .avatar-small {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      background: #2d2d5e;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      border: 2px solid #7c3aed;
-      object-fit: cover;
-      transition: 0.3s;
-    }
-    .avatar-small:hover { border-color: #06b6d4; transform: scale(1.05); }
+        /* ----- PAGES (views) ----- */
+        .page {
+            display: none;
+            padding: 20px 16px 90px 16px;
+            flex: 1;
+            animation: fadeSlide 0.35s ease;
+        }
+        .page.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    /* ===== BADGE PROPRIETÁRIO ===== */
-    .badge-proprietario {
-      background: linear-gradient(135deg, #f59e0b, #fbbf24);
-      color: #0a0a1a;
-      font-size: 0.6rem;
-      padding: 2px 12px;
-      border-radius: 30px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      display: inline-block;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
-    }
+        /* ----- HEADER / TOPBAR ----- */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: rgba(20, 20, 43, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .topbar .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .topbar .logo i {
+            -webkit-text-fill-color: #7c3aed;
+            font-size: 1.5rem;
+        }
+        .topbar .right-icons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .topbar .right-icons .icon-btn {
+            background: transparent;
+            border: none;
+            color: #c4b5d4;
+            font-size: 1.3rem;
+            cursor: pointer;
+            position: relative;
+            transition: 0.2s;
+            padding: 4px;
+        }
+        .topbar .right-icons .icon-btn:hover {
+            color: #7c3aed;
+            transform: scale(1.1);
+        }
+        .topbar .right-icons .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+        .topbar .user-avatar-small {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #7c3aed;
+            object-fit: cover;
+            cursor: pointer;
+            background: #1a1a3a;
+        }
 
-    /* ===== NOTIFICAÇÕES ===== */
-    .notif-container { position: relative; cursor: pointer; }
-    .notif-count {
-      position: absolute;
-      top: -6px; right: -6px;
-      background: #ef4444;
-      color: #fff;
-      border-radius: 50%;
-      padding: 2px 7px;
-      font-size: 0.6rem;
-      font-weight: 700;
-      box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-    }
-    .notif-dropdown {
-      position: absolute;
-      right: 0; top: 44px;
-      background: rgba(20, 20, 43, 0.95);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid #2d2d5e;
-      border-radius: 16px;
-      width: 320px;
-      max-height: 340px;
-      overflow-y: auto;
-      padding: 8px 0;
-      display: none;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-      z-index: 200;
-    }
-    .notif-dropdown.open { display: block; }
-    .notif-item {
-      padding: 12px 18px;
-      border-bottom: 1px solid rgba(45, 45, 94, 0.4);
-      font-size: 0.9rem;
-      transition: 0.2s;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .notif-item:last-child { border: none; }
-    .notif-item.lida { opacity: 0.5; }
-    .notif-item .notif-icon { color: #7c3aed; font-size: 1.1rem; margin-top: 2px; }
-    .notif-item .notif-text { flex: 1; }
-    .notif-item .notif-time { font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px; }
+        /* ----- NAVEGAÇÃO INFERIOR (mobile first) ----- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(14, 14, 34, 0.92);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(124, 58, 237, 0.2);
+            display: flex;
+            justify-content: space-around;
+            padding: 6px 0 env(safe-area-inset-bottom, 6px) 0;
+            z-index: 200;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .bottom-nav .nav-item {
+            background: transparent;
+            border: none;
+            color: #6b6b8a;
+            font-size: 0.7rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .bottom-nav .nav-item i {
+            font-size: 1.4rem;
+            transition: 0.2s;
+        }
+        .bottom-nav .nav-item span {
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+        .bottom-nav .nav-item.active {
+            color: #7c3aed;
+        }
+        .bottom-nav .nav-item.active i {
+            text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+        }
+        .bottom-nav .nav-item .nav-badge {
+            background: #ef4444;
+            color: #fff;
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 20px;
+            margin-left: 4px;
+        }
 
-    /* ===== BOTÕES ===== */
-    .btn {
-      background: linear-gradient(135deg, #7c3aed, #6d28d9);
-      border: none;
-      color: #fff;
-      padding: 12px 28px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      font-size: 0.95rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
-      border: 1px solid rgba(124, 58, 237, 0.2);
-    }
-    .btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
-    }
-    .btn:active { transform: scale(0.97); }
-    .btn-secondary {
-      background: rgba(45, 45, 94, 0.8);
-      box-shadow: none;
-      border: 1px solid #2d2d5e;
-    }
-    .btn-secondary:hover { background: rgba(45, 45, 94, 1); box-shadow: 0 4px 20px rgba(45,45,94,0.4); }
-    .btn-success { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
-    .btn-success:hover { box-shadow: 0 8px 30px rgba(34, 197, 94, 0.5); }
-    .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
-    .btn-danger:hover { box-shadow: 0 8px 30px rgba(239, 68, 68, 0.5); }
-    .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); color: #0a0a1a; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-    .btn-warning:hover { box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5); }
-    .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
-    .btn-block { width: 100%; justify-content: center; }
+        /* ----- CARDS GLASSMORPHISM ----- */
+        .glass-card {
+            background: rgba(20, 20, 43, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            transition: 0.25s;
+            margin-bottom: 20px;
+        }
+        .glass-card:hover {
+            border-color: rgba(124, 58, 237, 0.45);
+            box-shadow: 0 16px 40px rgba(124, 58, 237, 0.15);
+        }
+        .glass-card .card-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e0d7f5;
+        }
+        .glass-card .card-title i {
+            color: #7c3aed;
+        }
 
-    /* ===== CARDS ===== */
-    .card {
-      background: rgba(20, 20, 43, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(45, 45, 94, 0.5);
-      border-radius: 24px;
-      padding: 28px;
-      margin: 24px 0;
-      transition: 0.4s;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
-    }
-    .card:hover { border-color: rgba(124, 58, 237, 0.3); box-shadow: 0 12px 50px rgba(124, 58, 237, 0.1); }
+        /* ----- BOTÕES ----- */
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            border: none;
+            color: #fff;
+            padding: 12px 26px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+        }
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: #d4c9f0;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-secondary:hover {
+            background: rgba(124, 58, 237, 0.15);
+            border-color: #7c3aed;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            border: none;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-danger:hover {
+            transform: scale(1.03);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border: none;
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-success:hover {
+            transform: scale(1.03);
+        }
 
-    /* ===== INPUTS ===== */
-    input, select, textarea, .file-upload {
-      background: rgba(11, 11, 26, 0.8);
-      border: 1px solid #2d2d5e;
-      border-radius: 14px;
-      padding: 12px 16px;
-      color: #f1f5f9;
-      width: 100%;
-      margin: 8px 0;
-      font-family: 'Inter', sans-serif;
-      transition: 0.3s;
-      font-size: 0.95rem;
-    }
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: #7c3aed;
-      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
-    }
-    label { font-weight: 500; font-size: 0.9rem; color: #94a3b8; display: block; margin-top: 8px; }
+        /* ----- INPUTS ----- */
+        .input-group {
+            margin-bottom: 16px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #b4a7d6;
+            margin-bottom: 4px;
+        }
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            border-radius: 14px;
+            color: #f1f5f9;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .input-group input:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+        .input-group input::placeholder {
+            color: #6b6b8a;
+        }
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
 
-    /* ===== MODAL ===== */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 26, 0.8);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-card {
-      max-width: 440px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      animation: fadeUp 0.4s ease;
-    }
+        /* ----- LOGIN / REGISTER ----- */
+        .auth-box {
+            max-width: 440px;
+            margin: 40px auto;
+            padding: 30px 24px;
+            background: rgba(20, 20, 43, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+        }
+        .auth-box .auth-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+        .auth-box .auth-sub {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+        .auth-box .auth-switch {
+            text-align: center;
+            margin-top: 16px;
+            color: #94a3b8;
+        }
+        .auth-box .auth-switch a {
+            color: #7c3aed;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .auth-box .auth-switch a:hover {
+            text-decoration: underline;
+        }
 
-    /* ===== SEÇÕES ===== */
-    section { padding: 20px 0; }
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .section-title i { color: #7c3aed; }
+        /* ----- PERFIL ----- */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .profile-avatar-wrapper {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #7c3aed;
+            overflow: hidden;
+            margin-bottom: 12px;
+            background: #1a1a3a;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.25);
+        }
+        .profile-avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-avatar-wrapper .avatar-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .profile-avatar-wrapper:hover .avatar-overlay {
+            opacity: 1;
+        }
+        .profile-avatar-wrapper .avatar-overlay i {
+            font-size: 2rem;
+            color: #fff;
+        }
+        .profile-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        .profile-email {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+        .profile-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #0a0a1a;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 2px 14px;
+            border-radius: 40px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .profile-info-grid .info-item {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+        .profile-info-grid .info-item .label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .profile-info-grid .info-item .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2px;
+        }
 
-    /* ===== HERO ===== */
-    .hero {
-      text-align: center;
-      padding: 60px 0 30px;
-      position: relative;
-    }
-    .hero h1 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero h1 i { -webkit-text-fill-color: #f59e0b; }
-    .hero p { font-size: 1.2rem; color: #94a3b8; margin-top: 8px; }
+        /* ----- ADMIN TABELA ----- */
+        .admin-table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 10px 0;
+        }
+        .admin-table {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        .admin-table th {
+            text-align: left;
+            padding: 12px 10px;
+            background: rgba(124, 58, 237, 0.15);
+            color: #c4b5d4;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(124, 58, 237, 0.2);
+        }
+        .admin-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            vertical-align: middle;
+        }
+        .admin-table .status-badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .status-pendente {
+            background: #f59e0b30;
+            color: #f59e0b;
+        }
+        .status-aprovado {
+            background: #22c55e30;
+            color: #22c55e;
+        }
+        .status-cancelado {
+            background: #ef444430;
+            color: #ef4444;
+        }
+        .admin-table .btn-sm {
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .admin-table .btn-sm:hover {
+            transform: scale(1.05);
+        }
+        .admin-table .btn-sm-aprovar {
+            background: #22c55e;
+            color: #fff;
+        }
+        .admin-table .btn-sm-cancelar {
+            background: #ef4444;
+            color: #fff;
+        }
+        .admin-table .btn-sm-key {
+            background: #06b6d4;
+            color: #fff;
+        }
 
-    /* ===== PLANOS ===== */
-    .plano-card {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .plano-card .preco { font-size: 1.8rem; font-weight: 700; color: #7c3aed; }
+        /* ----- CHAT ----- */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 420px;
+            max-height: 60vh;
+            background: rgba(10, 10, 26, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.15);
+            overflow: hidden;
+        }
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-messages .msg {
+            max-width: 82%;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+            animation: fadeSlide 0.2s ease;
+        }
+        .chat-messages .msg.me {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .chat-messages .msg.other {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.07);
+            color: #e0d7f5;
+            border-bottom-left-radius: 4px;
+        }
+        .chat-messages .msg .time {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            margin-top: 4px;
+            display: block;
+            text-align: right;
+        }
+        .chat-input-row {
+            display: flex;
+            gap: 10px;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(124, 58, 237, 0.1);
+        }
+        .chat-input-row input {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+        }
+        .chat-input-row input:focus {
+            border-color: #7c3aed;
+        }
+        .chat-input-row button {
+            background: #7c3aed;
+            border: none;
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .chat-input-row button:hover {
+            transform: scale(1.06);
+            background: #6d28d9;
+        }
+        .typing-indicator {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            padding: 4px 16px;
+            font-style: italic;
+            min-height: 24px;
+        }
 
-    /* ===== PERFIL ===== */
-    .perfil-grid {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .perfil-avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #7c3aed;
-      background: #2d2d5e;
-      transition: 0.3s;
-      box-shadow: 0 0 30px rgba(124, 58, 237, 0.2);
-    }
-    .perfil-avatar:hover { transform: scale(1.02); border-color: #06b6d4; }
-    .perfil-info h3 { font-size: 1.6rem; }
-    .perfil-info .text-muted { font-size: 0.95rem; }
-    .perfil-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-    .perfil-keys { margin-top: 20px; }
-    .key-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(45, 45, 94, 0.4);
-    }
-    .key-item:last-child { border: none; }
+        /* ----- NOTIFICAÇÕES DROPDOWN ----- */
+        .notif-dropdown {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: rgba(20, 20, 43, 0.96);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 20px;
+            width: 300px;
+            max-height: 340px;
+            overflow-y: auto;
+            padding: 12px 0;
+            display: none;
+            z-index: 300;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+        .notif-dropdown.open {
+            display: block;
+        }
+        .notif-dropdown .notif-item {
+            padding: 10px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.85rem;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .notif-dropdown .notif-item .notif-icon {
+            color: #7c3aed;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+        .notif-dropdown .notif-item .notif-text {
+            flex: 1;
+        }
+        .notif-dropdown .notif-item .notif-time {
+            font-size: 0.65rem;
+            color: #6b6b8a;
+        }
+        .notif-dropdown .notif-item.lida {
+            opacity: 0.5;
+        }
+        .notif-dropdown .notif-empty {
+            padding: 20px;
+            text-align: center;
+            color: #6b6b8a;
+        }
 
-    @media (max-width: 640px) {
-      .perfil-grid { grid-template-columns: 1fr; text-align: center; }
-      .perfil-avatar { margin: 0 auto; }
-      .perfil-actions { justify-content: center; }
-    }
+        /* ----- COMPRAS FORM ----- */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .file-upload-wrapper {
+            position: relative;
+            border: 2px dashed rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .file-upload-wrapper:hover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.05);
+        }
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-upload-wrapper .file-name {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
 
-    /* ===== ADMIN ===== */
-    .admin-stats {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    .stat-card {
-      background: rgba(11, 11, 26, 0.6);
-      border-radius: 16px;
-      padding: 12px 20px;
-      border: 1px solid #2d2d5e;
-      flex: 1;
-      min-width: 120px;
-      text-align: center;
-    }
-    .stat-card .num { font-size: 1.8rem; font-weight: 700; color: #7c3aed; }
-    .stat-card .label { font-size: 0.8rem; color: #94a3b8; }
+        /* ----- RESPONSIVIDADE GERAL ----- */
+        @media (min-width: 768px) {
+            .bottom-nav .nav-item {
+                font-size: 0.8rem;
+                padding: 8px 20px;
+            }
+            .bottom-nav .nav-item i {
+                font-size: 1.6rem;
+            }
+            .page {
+                padding: 30px 32px 100px 32px;
+            }
+            .topbar {
+                padding: 14px 32px;
+            }
+            .profile-info-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .notif-dropdown {
+                width: 360px;
+                right: 10px;
+            }
+        }
+        @media (min-width: 1024px) {
+            #app {
+                min-height: 90vh;
+                border-radius: 32px;
+                margin: 20px auto;
+            }
+            .bottom-nav {
+                position: sticky;
+                bottom: 0;
+                border-radius: 0 0 32px 32px;
+            }
+        }
 
-    .table-wrap { overflow-x: auto; margin-top: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 700px; }
-    th { text-align: left; padding: 12px 10px; border-bottom: 2px solid #2d2d5e; color: #94a3b8; font-weight: 600; }
-    td { padding: 12px 10px; border-bottom: 1px solid rgba(45, 45, 94, 0.4); vertical-align: middle; }
-    .admin-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-
-    /* ===== CHAT ===== */
-    .chat-box {
-      height: 300px;
-      overflow-y: auto;
-      background: rgba(11, 11, 26, 0.6);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid #2d2d5e;
-      margin: 12px 0;
-      display: flex;
-      flex-direction: column;
-    }
-    .chat-msg {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 12px;
-      align-items: flex-start;
-      animation: fadeUp 0.3s ease;
-    }
-    .chat-msg.proprietario { flex-direction: row-reverse; }
-    .chat-bubble {
-      background: rgba(20, 20, 43, 0.8);
-      padding: 10px 16px;
-      border-radius: 18px;
-      max-width: 78%;
-      border: 1px solid #2d2d5e;
-      word-break: break-word;
-    }
-    .chat-msg.proprietario .chat-bubble {
-      background: rgba(124, 58, 237, 0.2);
-      border-color: #7c3aed;
-    }
-    .chat-bubble .chat-name { font-weight: 600; font-size: 0.85rem; color: #7c3aed; }
-    .chat-bubble .chat-text { margin: 4px 0; }
-    .chat-bubble .chat-time { font-size: 0.6rem; color: #94a3b8; text-align: right; margin-top: 4px; }
-    .chat-input-row { display: flex; gap: 10px; margin-top: 8px; }
-    .chat-input-row input { flex: 1; }
-
-    /* ===== RESPONSIVIDADE ===== */
-    @media (max-width: 768px) {
-      body { padding-top: 70px; }
-      header { padding: 10px 16px; }
-      .logo { font-size: 1.3rem; }
-      .nav-actions { gap: 8px; }
-      .nav-actions button { font-size: 1rem; padding: 4px; }
-      .hero h1 { font-size: 2rem; }
-      .hero p { font-size: 1rem; }
-      .card { padding: 20px; }
-      .section-title { font-size: 1.5rem; }
-      .notif-dropdown { width: 280px; right: -20px; }
-      .perfil-avatar { width: 100px; height: 100px; }
-    }
-    @media (max-width: 480px) {
-      .hero h1 { font-size: 1.6rem; }
-      .btn { padding: 10px 20px; font-size: 0.85rem; }
-      .admin-actions .btn-sm { font-size: 0.7rem; padding: 4px 10px; }
-      .chat-box { height: 220px; }
-    }
-
-    /* ===== ANIMAÇÕES ===== */
-    @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-
-    /* ===== UTILIDADES ===== */
-    .hidden { display: none !important; }
-    .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .flex-center { justify-content: center; }
-    .gap-8 { gap: 8px; }
-    .mt-12 { margin-top: 12px; }
-    .mb-12 { margin-bottom: 12px; }
-    .text-muted { color: #94a3b8; }
-    .text-center { text-align: center; }
-    .w-full { width: 100%; }
-    .status-badge {
-      padding: 4px 14px;
-      border-radius: 40px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      display: inline-block;
-      text-transform: uppercase;
-    }
-    .status-pendente { background: #f59e0b; color: #0a0a1a; }
-    .status-aprovado { background: #22c55e; color: #0a0a1a; }
-    .status-cancelado { background: #ef4444; color: #fff; }
-
-    /* ===== LOADING ===== */
-    .spinner { animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      margin-top: 60px;
-      padding: 30px 0;
-      border-top: 1px solid #2d2d5e;
-      text-align: center;
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-  </style>
+        /* ----- MISC ----- */
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+        .gap-12 {
+            gap: 12px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+        .w-full {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .loading-spinner {
+            border: 3px solid rgba(124, 58, 237, 0.2);
+            border-top: 3px solid #7c3aed;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20, 20, 43, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 14px 28px;
+            border-radius: 40px;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: #f1f5f9;
+            font-weight: 500;
+            z-index: 999;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            animation: fadeSlide 0.3s ease;
+            max-width: 90%;
+        }
+    </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<header>
-  <div class="logo">GRAAL<span>CLASSIC</span><small>BETA</small></div>
-  <div class="nav-actions">
-    <button onclick="scrollToSection('comprar')" title="Comprar"><i class="fas fa-shopping-cart"></i></button>
-    <button onclick="scrollToSection('perfil')" title="Perfil"><i class="fas fa-user"></i></button>
-    <button onclick="scrollToSection('suporte')" title="Suporte"><i class="fas fa-headset"></i></button>
+    <div id="app">
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="logo">
+                <i class="fas fa-crown"></i> Graal<span style="font-weight:300;">Online</span>
+            </div>
+            <div class="right-icons">
+                <button class="icon-btn" id="notifBtn" title="Notificações">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge" id="notifBadge" style="display:none;">0</span>
+                </button>
+                <img id="topAvatar" class="user-avatar-small" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=36" alt="avatar" />
+                <button class="icon-btn" id="logoutBtn" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
+                <!-- Dropdown notificações -->
+                <div class="notif-dropdown" id="notifDropdown">
+                    <div id="notifList"></div>
+                </div>
+            </div>
+        </header>
 
-    <div class="notif-container" onclick="toggleNotificacoes()">
-      <i class="fas fa-bell" style="font-size:1.3rem;"></i>
-      <span class="notif-count" id="notifCount">0</span>
-      <div class="notif-dropdown" id="notifDropdown"></div>
-    </div>
-
-    <div id="authButtons">
-      <button onclick="showLogin()" class="btn btn-secondary" style="padding:6px 18px;">Entrar</button>
-      <button onclick="showRegister()" class="btn" style="padding:6px 18px;">Registrar</button>
-    </div>
-    <div id="userInfo" class="hidden flex">
-      <span id="userNameDisplay" style="font-weight:500; font-size:0.95rem;"></span>
-      <img id="userAvatarHeader" class="avatar-small" src="" alt="avatar" />
-      <button onclick="logout()" style="background:transparent; border:none; color:#ef4444; font-size:1.1rem; padding:4px;" title="Sair"><i class="fas fa-sign-out-alt"></i></button>
-    </div>
-  </div>
-</header>
-
-<!-- ===== MODAL LOGIN / REGISTRO ===== -->
-<div class="modal-overlay" id="loginModal">
-  <div class="card modal-card">
-    <h3 id="loginTitle">Login</h3>
-    <div id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Seu e-mail" />
-      <input type="password" id="loginSenha" placeholder="Senha" />
-      <div id="loginMsg" class="text-muted" style="font-size:0.9rem; min-height:24px;"></div>
-      <button onclick="login()" class="btn btn-block"><i class="fas fa-sign-in-alt"></i> Entrar</button>
-      <p style="margin-top:12px; text-align:center;">Não tem conta? <a href="#" onclick="showRegister(); return false;">Registrar</a></p>
-      <button onclick="fecharModal()" class="btn btn-secondary btn-block" style="margin-top:8px;">Fechar</button>
-    </div>
-    <div id="registerForm" style="display:none;">
-      <input type="text" id="regNome" placeholder="Nome completo" />
-      <input type="email" id="regEmail" placeholder="E-mail" />
-      <input type="password" id="regSenha" placeholder="Senha (mín 6)" />
-      <input type="password" id="regConfirm" placeholder="Confirmar senha" />
-      <div id="regMsg" class="text-muted" style="font-size:0.9rem; min-height:24px;"></div>
-      <button onclick="register()" class="btn btn-block"><i class="fas fa-user-plus"></i> Registrar</button>
-      <p style="margin-top:12px; text-align:center;">Já tem conta? <a href="#" onclick="showLogin(); return false;">Login</a></p>
-      <button onclick="fecharModal()" class="btn btn-secondary btn-block" style="margin-top:8px;">Fechar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ===== CONTEÚDO ===== -->
-<div class="container">
-
-  <!-- HERO -->
-  <section class="hero fade-up">
-    <h1><i class="fas fa-crown"></i> GRAAL ONLINE CLASSIC</h1>
-    <p>Servidor exclusivo · Acesso 24h · R$ 15,00</p>
-    <button onclick="scrollToSection('comprar')" class="btn" style="margin-top:20px; font-size:1.1rem; padding:14px 44px;">
-      <i class="fas fa-rocket"></i> Comprar Agora
-    </button>
-  </section>
-
-  <!-- PLANOS -->
-  <section id="planos" class="fade-up delay-1">
-    <h2 class="section-title"><i class="fas fa-tags"></i> Planos</h2>
-    <div class="card plano-card">
-      <div>
-        <h3>Acesso 24h</h3>
-        <p class="text-muted">Jogue por 24 horas completas</p>
-      </div>
-      <div>
-        <span class="preco">R$ 15,00</span>
-        <button onclick="scrollToSection('comprar')" class="btn btn-sm"><i class="fas fa-cart-plus"></i> Comprar</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMPRAR -->
-  <section id="comprar" class="fade-up delay-2">
-    <h2 class="section-title"><i class="fas fa-credit-card"></i> Comprar Acesso</h2>
-    <div class="card">
-      <form id="compraForm" onsubmit="enviarCompra(event)">
-        <input type="text" id="compraNome" placeholder="Seu nome" required />
-        <input type="email" id="compraEmail" placeholder="Seu e-mail" required />
-        <select id="compraPlano">
-          <option value="Acesso 24h - R$ 15,00">Acesso 24h - R$ 15,00</option>
-        </select>
-        <div class="file-upload">
-          <label>Comprovante PIX (imagem ou PDF)</label>
-          <input type="file" id="compraComprovante" accept="image/*,application/pdf" required style="padding:10px;" />
+        <!-- PÁGINAS -->
+        <!-- HOME -->
+        <div class="page active" id="page-home">
+            <div class="glass-card">
+                <div class="card-title"><i class="fas fa-rocket"></i> Bem-vindo ao Graal Online</div>
+                <p style="color:#c4b5d4; line-height:1.6;">Servidor clássico em fase beta. Adquira sua key para acessar o mundo e viver a experiência única.</p>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:16px;">
+                    <button class="btn-primary" id="goToCompras"><i class="fas fa-shopping-cart"></i> Comprar Key</button>
+                    <button class="btn-secondary" id="goToChatHome"><i class="fas fa-comment-dots"></i> Suporte</button>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="glass-card" style="text-align:center;">
+                    <i class="fas fa-users" style="font-size:2rem;color:#7c3aed;"></i>
+                    <h3>Comunidade</h3>
+                    <p class="text-muted">Jogadores ativos</p>
+                </div>
+                <div class="glass-card" style="text-align:center;">
+                    <i class="fas fa-shield-alt" style="font-size:2rem;color:#06b6d4;"></i>
+                    <h3>Segurança</h3>
+                    <p class="text-muted">Anti-cheat ativo</p>
+                </div>
+            </div>
         </div>
-        <div id="compraMsg" class="text-muted" style="min-height:24px;"></div>
-        <button type="submit" class="btn btn-block" id="compraBtn"><i class="fas fa-paper-plane"></i> Enviar Pedido</button>
-      </form>
-    </div>
-  </section>
 
-  <!-- PERFIL -->
-  <section id="perfil" class="fade-up">
-    <h2 class="section-title"><i class="fas fa-user-circle"></i> Meu Perfil</h2>
-    <div class="card" id="perfilCard">
-      <div class="perfil-grid">
-        <div style="text-align:center;">
-          <img id="perfilAvatar" class="perfil-avatar" src="" alt="avatar" />
-          <div style="margin-top:12px;">
-            <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)" />
-            <button onclick="document.getElementById('avatarUpload').click()" class="btn btn-secondary btn-sm"><i class="fas fa-camera"></i> Trocar Foto</button>
-          </div>
+        <!-- PERFIL -->
+        <div class="page" id="page-perfil">
+            <div class="glass-card profile-header">
+                <div class="profile-avatar-wrapper" id="avatarWrapper">
+                    <img id="profileAvatar" src="https://ui-avatars.com/api/?name=User&background=7c3aed&color=fff&size=120" alt="Avatar" />
+                    <div class="avatar-overlay" id="avatarOverlay">
+                        <i class="fas fa-camera"></i>
+                        <input type="file" id="avatarInput" accept="image/*" style="display:none;" />
+                    </div>
+                </div>
+                <div class="profile-name" id="profileName">Usuário</div>
+                <div class="profile-email" id="profileEmail">email@exemplo.com</div>
+                <div id="profileBadgeContainer"></div>
+                <div class="profile-info-grid">
+                    <div class="info-item"><div class="label">Membro desde</div><div class="value" id="profileSince">---</div></div>
+                    <div class="info-item"><div class="label">Keys ativas</div><div class="value" id="profileKeys">0</div></div>
+                    <div class="info-item"><div class="label">Compras</div><div class="value" id="profileCompras">0</div></div>
+                    <div class="info-item"><div class="label">Status</div><div class="value" style="color:#22c55e;">Ativo</div></div>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; width:100%; justify-content:center;">
+                    <button class="btn-secondary" id="editProfileBtn"><i class="fas fa-user-edit"></i> Editar Nome</button>
+                    <button class="btn-secondary" id="changePassBtn"><i class="fas fa-key"></i> Alterar Senha</button>
+                </div>
+            </div>
+
+            <!-- Editar nome -->
+            <div class="glass-card hidden" id="editNameCard">
+                <div class="card-title"><i class="fas fa-user-edit"></i> Editar Nome</div>
+                <div class="input-group"><label>Novo nome</label><input type="text" id="editNameInput" placeholder="Digite seu nome" /></div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-primary" id="saveNameBtn">Salvar</button>
+                    <button class="btn-secondary" id="cancelEditName">Cancelar</button>
+                </div>
+            </div>
+
+            <!-- Alterar senha -->
+            <div class="glass-card hidden" id="changePassCard">
+                <div class="card-title"><i class="fas fa-key"></i> Alterar Senha</div>
+                <div class="input-group"><label>Nova senha</label><input type="password" id="newPassInput" placeholder="Mínimo 6 caracteres" /></div>
+                <div class="input-group"><label>Confirmar senha</label><input type="password" id="confirmPassInput" placeholder="Confirme a nova senha" /></div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-primary" id="savePassBtn">Salvar</button>
+                    <button class="btn-secondary" id="cancelPass">Cancelar</button>
+                </div>
+            </div>
+
+            <!-- Keys do usuário -->
+            <div class="glass-card">
+                <div class="card-title"><i class="fas fa-key"></i> Minhas Keys</div>
+                <div id="userKeysList"><p class="text-muted">Nenhuma key ativa.</p></div>
+            </div>
         </div>
-        <div class="perfil-info">
-          <h3 id="perfilNome">---</h3>
-          <p class="text-muted"><i class="fas fa-envelope"></i> <span id="perfilEmail">---</span></p>
-          <p class="text-muted" style="font-size:0.85rem;"><i class="fas fa-calendar-alt"></i> Membro desde: <span id="perfilData">---</span></p>
-          <div id="perfilBadge" style="margin-top:4px;"></div>
-          <div class="perfil-actions">
-            <input type="text" id="editarNomeInput" placeholder="Novo nome" style="flex:1; min-width:140px;" />
-            <button onclick="atualizarNome()" class="btn btn-secondary btn-sm"><i class="fas fa-pen"></i> Editar Nome</button>
-            <button onclick="mostrarModalSenha()" class="btn btn-secondary btn-sm"><i class="fas fa-key"></i> Alterar Senha</button>
-          </div>
+
+        <!-- ADMIN -->
+        <div class="page" id="page-admin">
+            <div class="glass-card">
+                <div class="card-title"><i class="fas fa-user-shield"></i> Painel Administrativo</div>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:16px;">
+                    <span style="background:rgba(124,58,237,0.2);padding:4px 14px;border-radius:40px;font-size:0.8rem;">
+                        <i class="fas fa-clock"></i> Pendentes: <span id="pendingCount">0</span>
+                    </span>
+                    <div style="flex:1; min-width:160px;">
+                        <input type="text" id="adminSearch" placeholder="Filtrar por usuário ou e-mail..." style="width:100%;padding:8px 14px;border-radius:40px;border:1px solid rgba(124,58,237,0.2);background:rgba(255,255,255,0.05);color:#f1f5f9;" />
+                    </div>
+                    <button class="btn-secondary" id="refreshAdmin"><i class="fas fa-sync"></i></button>
+                </div>
+                <div class="admin-table-wrap">
+                    <table class="admin-table" id="adminTable">
+                        <thead><tr><th>Data</th><th>Usuário</th><th>E-mail</th><th>Plano</th><th>Status</th><th>Key</th><th>Ações</th></tr></thead>
+                        <tbody id="adminTableBody"><tr><td colspan="7" class="text-muted text-center">Carregando...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <!-- Modal senha (inline) -->
-      <div id="senhaModal" style="display:none; margin-top:16px; padding:16px; background:rgba(11,11,26,0.6); border-radius:16px; border:1px solid #2d2d5e;">
-        <h4>Alterar Senha</h4>
-        <input type="password" id="senhaAtual" placeholder="Senha atual" />
-        <input type="password" id="novaSenha" placeholder="Nova senha (mín 6)" />
-        <input type="password" id="confirmaNova" placeholder="Confirmar nova senha" />
-        <div id="senhaMsg" class="text-muted" style="min-height:20px;"></div>
-        <div class="flex" style="gap:10px;">
-          <button onclick="alterarSenha()" class="btn btn-sm"><i class="fas fa-save"></i> Salvar</button>
-          <button onclick="document.getElementById('senhaModal').style.display='none'" class="btn btn-secondary btn-sm">Cancelar</button>
+        <!-- COMPRAS -->
+        <div class="page" id="page-compras">
+            <div class="glass-card">
+                <div class="card-title"><i class="fas fa-shopping-cart"></i> Solicitar Key</div>
+                <form id="compraForm" novalidate>
+                    <div class="form-row">
+                        <div class="input-group"><label>Nome completo</label><input type="text" id="compraNome" placeholder="Seu nome" required /></div>
+                        <div class="input-group"><label>E-mail</label><input type="email" id="compraEmail" placeholder="Seu e-mail" required /></div>
+                    </div>
+                    <div class="input-group"><label>Plano</label>
+                        <select id="compraPlano"><option value="Basic">Basic - R$29,90</option><option value="Premium">Premium - R$59,90</option><option value="VIP">VIP - R$99,90</option></select>
+                    </div>
+                    <div class="input-group">
+                        <label>Comprovante de pagamento</label>
+                        <div class="file-upload-wrapper">
+                            <i class="fas fa-cloud-upload-alt" style="font-size:2rem;color:#7c3aed;"></i>
+                            <p style="color:#94a3b8;margin-top:4px;">Clique para enviar (imagem ou PDF)</p>
+                            <input type="file" id="compraComprovante" accept="image/*,application/pdf" required />
+                            <div class="file-name" id="fileChosen">Nenhum arquivo selecionado</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary w-full" id="submitCompraBtn"><i class="fas fa-paper-plane"></i> Enviar Pedido</button>
+                    <div id="compraFeedback" class="text-muted text-center mt-16"></div>
+                </form>
+            </div>
         </div>
-      </div>
 
-      <hr style="border-color:#2d2d5e; margin:20px 0;" />
-      <div class="perfil-keys">
-        <h4><i class="fas fa-key"></i> Minhas Keys</h4>
-        <div id="minhasKeys"><p class="text-muted">Nenhuma key ativa.</p></div>
-        <p class="text-muted" style="margin-top:6px;">Keys ativas: <span id="contadorKeys">0</span></p>
-      </div>
+        <!-- CHAT SUPORTE -->
+        <div class="page" id="page-chat">
+            <div class="glass-card" style="padding:16px;">
+                <div class="card-title" style="margin-bottom:6px;"><i class="fas fa-comment-dots"></i> Suporte <span style="font-size:0.7rem;font-weight:400;color:#94a3b8;">(chat privado)</span></div>
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="typing-indicator" id="typingIndicator"></div>
+                    <div class="chat-input-row">
+                        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
+                        <button id="chatSendBtn"><i class="fas fa-arrow-up"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RODAPÉ (NAVEGAÇÃO INFERIOR) -->
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-page="page-home"><i class="fas fa-home"></i><span>Início</span></button>
+            <button class="nav-item" data-page="page-perfil"><i class="fas fa-user"></i><span>Perfil</span></button>
+            <button class="nav-item" data-page="page-compras"><i class="fas fa-shopping-cart"></i><span>Comprar</span></button>
+            <button class="nav-item" data-page="page-chat"><i class="fas fa-comment"></i><span>Chat</span></button>
+            <button class="nav-item" id="adminNavBtn" data-page="page-admin" style="display:none;"><i class="fas fa-shield-alt"></i><span>Admin</span></button>
+        </nav>
     </div>
-  </section>
 
-  <!-- SUPORTE / CHAT -->
-  <section id="suporte" class="fade-up">
-    <h2 class="section-title"><i class="fas fa-headset" style="color:#06b6d4;"></i> Suporte</h2>
-    <div class="card">
-      <div id="chatStatus" class="text-muted">Faça login para usar o chat.</div>
-      <div class="chat-box" id="chatBox"></div>
-      <div class="chat-input-row">
-        <input type="text" id="chatInput" placeholder="Digite sua mensagem..." />
-        <button onclick="enviarMensagem()" class="btn"><i class="fas fa-paper-plane"></i></button>
-      </div>
-    </div>
-  </section>
+    <script>
+        // ============================================================
+        // FIREBASE CONFIG
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
+            authDomain: "chat-kzn.firebaseapp.com",
+            projectId: "chat-kzn",
+            storageBucket: "chat-kzn.firebasestorage.app",
+            messagingSenderId: "641963268535",
+            appId: "1:641963268535:web:b1f8b26f69840f527a7032",
+            databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        const rtdb = firebase.database();
 
-  <!-- PAINEL ADMIN (somente proprietário) -->
-  <section id="adminPanel" class="fade-up hidden">
-    <h2 class="section-title"><i class="fas fa-shield-alt" style="color:#f59e0b;"></i> Painel Administrador</h2>
-    <div class="card">
-      <div class="admin-stats" id="adminStats">
-        <div class="stat-card"><span class="num" id="totalCompras">0</span><div class="label">Total</div></div>
-        <div class="stat-card"><span class="num" id="pendentesCount">0</span><div class="label">Pendentes</div></div>
-        <div class="stat-card"><span class="num" id="aprovadosCount">0</span><div class="label">Aprovados</div></div>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
-        <input type="text" id="adminSearch" placeholder="Filtrar por usuário ou e-mail..." style="flex:1; min-width:180px;" oninput="filtrarAdmin()" />
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Data</th><th>Usuário</th><th>E-mail</th><th>Plano</th><th>Status</th><th>Key</th><th>Ações</th></tr></thead>
-          <tbody id="adminTableBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+        // ============================================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================================
+        const PROPR_EMAIL = 'gabriel6061yt@gmail.com';
+        let currentUser = null;
+        let currentUserDoc = null;
+        let unsubscribeCompras = null;
+        let unsubscribeNotifs = null;
+        let chatRoomRef = null;
+        let typingTimeout = null;
+        let isSending = false;
 
-</div>
+        // ============================================================
+        // DOM REFS
+        // ============================================================
+        const $ = (id) => document.getElementById(id);
+        const pages = document.querySelectorAll('.page');
+        const navItems = document.querySelectorAll('.nav-item');
+        const topAvatar = $('topAvatar');
+        const profileAvatar = $('profileAvatar');
+        const profileName = $('profileName');
+        const profileEmail = $('profileEmail');
+        const profileSince = $('profileSince');
+        const profileKeys = $('profileKeys');
+        const profileCompras = $('profileCompras');
+        const profileBadge = $('profileBadgeContainer');
+        const userKeysList = $('userKeysList');
+        const notifBtn = $('notifBtn');
+        const notifDropdown = $('notifDropdown');
+        const notifList = $('notifList');
+        const notifBadge = $('notifBadge');
+        const logoutBtn = $('logoutBtn');
+        const adminNavBtn = $('adminNavBtn');
+        const adminTableBody = $('adminTableBody');
+        const pendingCount = $('pendingCount');
+        const adminSearch = $('adminSearch');
+        const refreshAdminBtn = $('refreshAdmin');
+        const chatMessages = $('chatMessages');
+        const chatInput = $('chatInput');
+        const chatSendBtn = $('chatSendBtn');
+        const typingIndicator = $('typingIndicator');
+        const compraForm = $('compraForm');
+        const submitCompraBtn = $('submitCompraBtn');
+        const compraFeedback = $('compraFeedback');
+        const fileChosen = $('fileChosen');
+        const compraComprovante = $('compraComprovante');
+        const editProfileBtn = $('editProfileBtn');
+        const editNameCard = $('editNameCard');
+        const editNameInput = $('editNameInput');
+        const saveNameBtn = $('saveNameBtn');
+        const cancelEditName = $('cancelEditName');
+        const changePassBtn = $('changePassBtn');
+        const changePassCard = $('changePassCard');
+        const newPassInput = $('newPassInput');
+        const confirmPassInput = $('confirmPassInput');
+        const savePassBtn = $('savePassBtn');
+        const cancelPass = $('cancelPass');
+        const avatarInput = $('avatarInput');
+        const avatarOverlay = $('avatarOverlay');
 
-<footer class="footer">
-  <p>GRAAL ONLINE CLASSIC TEST BETA © 2026 · <span class="text-muted">Desenvolvido com ❤️</span></p>
-</footer>
-
-<!-- ===== FIREBASE SDK ===== -->
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
-<script>
-  // ===== CONFIG FIREBASE =====
-  const firebaseConfig = {
-    apiKey: "AIzaSyA-3mN_h8XQMis4vqfoPm2RkwOKJ-p7k2Q",
-    authDomain: "chat-kzn.firebaseapp.com",
-    projectId: "chat-kzn",
-    storageBucket: "chat-kzn.firebasestorage.app",
-    messagingSenderId: "641963268535",
-    appId: "1:641963268535:web:b1f8b26f69840f527a7032",
-    databaseURL: "https://chat-kzn-default-rtdb.firebaseio.com"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-  const rtdb = firebase.database();
-
-  // Persistência LOCAL
-  auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-  // ===== VARIÁVEIS =====
-  const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
-  let currentUser = null;
-  let formSubmitting = false;
-  let adminUnsub = null;
-  let notifUnsub = null;
-  let chatUnsub = null;
-  let adminData = []; // para filtro
-
-  // ===== UTIL =====
-  function gerarKey() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
-    return 'KZN-' + code;
-  }
-
-  function scrollToSection(id) {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  function fecharModal() {
-    document.getElementById('loginModal').classList.remove('open');
-  }
-
-  function mostrarModalSenha() {
-    const el = document.getElementById('senhaModal');
-    el.style.display = el.style.display === 'none' ? 'block' : 'none';
-  }
-
-  // ===== AUTENTICAÇÃO =====
-  function showLogin() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginTitle').innerText = 'Login';
-    document.getElementById('loginModal').classList.add('open');
-    document.getElementById('loginMsg').innerText = '';
-  }
-  function showRegister() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
-    document.getElementById('loginTitle').innerText = 'Registrar';
-    document.getElementById('loginModal').classList.add('open');
-    document.getElementById('regMsg').innerText = '';
-  }
-
-  async function login() {
-    const email = document.getElementById('loginEmail').value;
-    const senha = document.getElementById('loginSenha').value;
-    const msg = document.getElementById('loginMsg');
-    try {
-      await auth.signInWithEmailAndPassword(email, senha);
-      fecharModal();
-    } catch (e) {
-      msg.innerText = '❌ ' + e.message;
-    }
-  }
-
-  async function register() {
-    const nome = document.getElementById('regNome').value.trim();
-    const email = document.getElementById('regEmail').value;
-    const senha = document.getElementById('regSenha').value;
-    const confirm = document.getElementById('regConfirm').value;
-    const msg = document.getElementById('regMsg');
-    if (senha.length < 6) { msg.innerText = '❌ Senha deve ter no mínimo 6 caracteres.'; return; }
-    if (senha !== confirm) { msg.innerText = '❌ As senhas não coincidem.'; return; }
-    try {
-      const cred = await auth.createUserWithEmailAndPassword(email, senha);
-      await db.collection('users').doc(cred.user.uid).set({
-        nome: nome || 'Usuário',
-        email: email,
-        criado: new Date().toISOString(),
-        avatar: ''
-      });
-      fecharModal();
-    } catch (e) {
-      msg.innerText = '❌ ' + e.message;
-    }
-  }
-
-  function logout() {
-    auth.signOut();
-  }
-
-  // ===== GERENCIAR USUÁRIO =====
-  auth.onAuthStateChanged(async (user) => {
-    currentUser = user;
-    const authBtns = document.getElementById('authButtons');
-    const userInfo = document.getElementById('userInfo');
-    if (user) {
-      authBtns.classList.add('hidden');
-      userInfo.classList.remove('hidden');
-      // Carregar dados do perfil
-      const doc = await db.collection('users').doc(user.uid).get();
-      const data = doc.data() || { nome: user.displayName || 'Usuário', email: user.email, avatar: '' };
-      document.getElementById('userNameDisplay').innerText = data.nome || 'Usuário';
-      const avatar = data.avatar || '';
-      document.getElementById('userAvatarHeader').src = avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.nome || 'U') + '&background=7c3aed&color=fff&size=38';
-      // Perfil
-      document.getElementById('perfilNome').innerText = data.nome || '---';
-      document.getElementById('perfilEmail').innerText = user.email;
-      document.getElementById('perfilData').innerText = data.criado ? new Date(data.criado).toLocaleDateString('pt-BR') : '---';
-      document.getElementById('perfilAvatar').src = avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(data.nome || 'U') + '&background=7c3aed&color=fff&size=140';
-      // Badge proprietário
-      const badgeDiv = document.getElementById('perfilBadge');
-      if (user.email === PROPRIETARIO_EMAIL) {
-        badgeDiv.innerHTML = '<span class="badge-proprietario"><i class="fas fa-crown"></i> Proprietário</span>';
-        document.getElementById('adminPanel').classList.remove('hidden');
-        carregarAdmin();
-      } else {
-        badgeDiv.innerHTML = '';
-        document.getElementById('adminPanel').classList.add('hidden');
-        if (adminUnsub) { adminUnsub(); adminUnsub = null; }
-      }
-      carregarMinhasKeys(user.uid);
-      carregarNotificacoes(user.uid);
-      iniciarChat(user.uid);
-      // Notificações em tempo real
-      if (notifUnsub) notifUnsub();
-      notifUnsub = db.collection('notificacoes').where('uid', '==', user.uid).onSnapshot(() => {
-        carregarNotificacoes(user.uid);
-      });
-    } else {
-      authBtns.classList.remove('hidden');
-      userInfo.classList.add('hidden');
-      document.getElementById('adminPanel').classList.add('hidden');
-      if (adminUnsub) { adminUnsub(); adminUnsub = null; }
-      if (notifUnsub) { notifUnsub(); notifUnsub = null; }
-      if (chatUnsub) { chatUnsub(); chatUnsub = null; }
-      document.getElementById('chatBox').innerHTML = '<p class="text-muted">Faça login para usar o chat.</p>';
-      document.getElementById('minhasKeys').innerHTML = '<p class="text-muted">Nenhuma key ativa.</p>';
-      document.getElementById('contadorKeys').innerText = '0';
-      document.getElementById('chatStatus').innerText = 'Faça login para usar o chat.';
-    }
-  });
-
-  // ===== PERFIL: editar nome =====
-  async function atualizarNome() {
-    if (!currentUser) return;
-    const novo = document.getElementById('editarNomeInput').value.trim();
-    if (!novo) return;
-    await db.collection('users').doc(currentUser.uid).update({ nome: novo });
-    document.getElementById('editarNomeInput').value = '';
-    const doc = await db.collection('users').doc(currentUser.uid).get();
-    const data = doc.data();
-    document.getElementById('perfilNome').innerText = data.nome;
-    document.getElementById('userNameDisplay').innerText = data.nome;
-    // Atualizar avatar header se tiver
-  }
-
-  // ===== PERFIL: upload avatar =====
-  async function uploadAvatar(e) {
-    if (!currentUser) return;
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const base64 = ev.target.result;
-      await db.collection('users').doc(currentUser.uid).update({ avatar: base64 });
-      document.getElementById('perfilAvatar').src = base64;
-      document.getElementById('userAvatarHeader').src = base64;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // ===== PERFIL: alterar senha =====
-  async function alterarSenha() {
-    if (!currentUser) return;
-    const atual = document.getElementById('senhaAtual').value;
-    const nova = document.getElementById('novaSenha').value;
-    const confirma = document.getElementById('confirmaNova').value;
-    const msg = document.getElementById('senhaMsg');
-    if (nova.length < 6) { msg.innerText = '❌ Nova senha deve ter no mínimo 6 caracteres.'; return; }
-    if (nova !== confirma) { msg.innerText = '❌ As senhas não coincidem.'; return; }
-    try {
-      // Reautenticar
-      const cred = firebase.auth.EmailAuthProvider.credential(currentUser.email, atual);
-      await currentUser.reauthenticateWithCredential(cred);
-      await currentUser.updatePassword(nova);
-      msg.innerText = '✅ Senha alterada com sucesso!';
-      document.getElementById('senhaAtual').value = '';
-      document.getElementById('novaSenha').value = '';
-      document.getElementById('confirmaNova').value = '';
-      setTimeout(() => { document.getElementById('senhaModal').style.display = 'none'; }, 1500);
-    } catch (e) {
-      msg.innerText = '❌ ' + e.message;
-    }
-  }
-
-  // ===== MINHAS KEYS =====
-  async function carregarMinhasKeys(uid) {
-    const snap = await db.collection('keys').where('uid', '==', uid).get();
-    const container = document.getElementById('minhasKeys');
-    let html = '';
-    let ativas = 0;
-    snap.forEach(doc => {
-      const data = doc.data();
-      const expirada = new Date(data.dataExpiracao) < new Date();
-      const status = expirada ? 'Expirada' : 'Ativa';
-      if (!expirada) ativas++;
-      html += `<div class="key-item">
-        <span><strong>${data.key}</strong></span>
-        <span class="status-badge ${expirada ? 'status-cancelado' : 'status-aprovado'}">${status}</span>
-      </div>`;
-    });
-    container.innerHTML = html || '<p class="text-muted">Nenhuma key ativa.</p>';
-    document.getElementById('contadorKeys').innerText = ativas;
-  }
-
-  // ===== COMPRAS =====
-  async function enviarCompra(e) {
-    e.preventDefault();
-    if (formSubmitting) return;
-    if (!currentUser) { alert('Faça login para comprar.'); return; }
-    formSubmitting = true;
-    const btn = document.getElementById('compraBtn');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-    const nome = document.getElementById('compraNome').value;
-    const email = document.getElementById('compraEmail').value;
-    const plano = document.getElementById('compraPlano').value;
-    const file = document.getElementById('compraComprovante').files[0];
-    if (!file) { alert('Selecione um comprovante.'); formSubmitting=false; btn.disabled=false; btn.innerHTML=originalText; return; }
-    const reader = new FileReader();
-    reader.onload = async (ev) => {
-      const base64 = ev.target.result;
-      try {
-        await db.collection('compras').add({
-          uid: currentUser.uid,
-          nome, email, plano,
-          comprovante: base64,
-          status: 'pendente',
-          data: new Date().toISOString(),
-          key: '',
-          dataExpiracao: ''
-        });
-        document.getElementById('compraMsg').innerText = '✅ Compra enviada com sucesso! Aguarde aprovação.';
-        document.getElementById('compraForm').reset();
-        // Notificar proprietário
-        await db.collection('notificacoes').add({
-          uid: PROPRIETARIO_EMAIL,
-          mensagem: `Nova compra de ${nome} (${email}) - ${plano}`,
-          lida: false,
-          data: new Date().toISOString(),
-          tipo: 'compra'
-        });
-        // Enviar e-mail via FormSubmit
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'https://formsubmit.co/gabriel6061yt@gmail.com';
-        form.target = '_blank';
-        const campos = { nome, email, plano, comprovante: 'anexo enviado no sistema' };
-        for (let k in campos) {
-          const inp = document.createElement('input');
-          inp.type = 'hidden';
-          inp.name = k;
-          inp.value = campos[k];
-          form.appendChild(inp);
+        // ============================================================
+        // NAVEGAÇÃO
+        // ============================================================
+        function navigateTo(pageId) {
+            pages.forEach(p => p.classList.remove('active'));
+            const target = $(pageId);
+            if (target) target.classList.add('active');
+            navItems.forEach(item => {
+                item.classList.toggle('active', item.dataset.page === pageId);
+            });
+            // Fecha dropdown notif
+            notifDropdown.classList.remove('open');
         }
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-      } catch (err) {
-        document.getElementById('compraMsg').innerText = '❌ ' + err.message;
-      }
-      formSubmitting = false;
-      btn.disabled = false;
-      btn.innerHTML = originalText;
-    };
-    reader.readAsDataURL(file);
-  }
 
-  // ===== PAINEL ADMIN =====
-  function carregarAdmin() {
-    if (adminUnsub) adminUnsub();
-    adminUnsub = db.collection('compras').orderBy('data', 'desc').onSnapshot((snap) => {
-      adminData = [];
-      snap.forEach(doc => {
-        adminData.push({ id: doc.id, ...doc.data() });
-      });
-      renderAdminTable(adminData);
-      atualizarStats(adminData);
-    });
-  }
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                if (page) navigateTo(page);
+            });
+        });
 
-  function renderAdminTable(data) {
-    const tbody = document.getElementById('adminTableBody');
-    let html = '';
-    data.forEach(d => {
-      const status = d.status || 'pendente';
-      const statusClasse = status === 'pendente' ? 'status-pendente' : status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
-      const keyDisplay = d.key || '—';
-      html += `<tr>
-        <td>${d.data ? new Date(d.data).toLocaleDateString('pt-BR') : '—'}</td>
-        <td>${d.nome || '—'}</td>
-        <td>${d.email || '—'}</td>
-        <td>${d.plano || '—'}</td>
-        <td><span class="status-badge ${statusClasse}">${status}</span></td>
-        <td>${keyDisplay}</td>
-        <td class="admin-actions">
-          ${status === 'pendente' ? `<button onclick="aprovarCompra('${d.id}')" class="btn btn-success btn-sm"><i class="fas fa-check"></i></button>` : ''}
-          ${status === 'pendente' ? `<button onclick="cancelarCompra('${d.id}')" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></button>` : ''}
-          ${status === 'pendente' ? `<button onclick="gerarKeyParaCompra('${d.id}')" class="btn btn-warning btn-sm"><i class="fas fa-key"></i> Enviar Key</button>` : ''}
-        </td>
-      </tr>`;
-    });
-    tbody.innerHTML = html || '<tr><td colspan="7" class="text-muted">Nenhuma compra.</td></tr>';
-  }
+        // Botões home
+        $('goToCompras').addEventListener('click', () => navigateTo('page-compras'));
+        $('goToChatHome').addEventListener('click', () => navigateTo('page-chat'));
 
-  function atualizarStats(data) {
-    const total = data.length;
-    const pendentes = data.filter(d => d.status === 'pendente').length;
-    const aprovados = data.filter(d => d.status === 'aprovado').length;
-    document.getElementById('totalCompras').innerText = total;
-    document.getElementById('pendentesCount').innerText = pendentes;
-    document.getElementById('aprovadosCount').innerText = aprovados;
-  }
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(msg, duration = 3000) {
+            const old = document.querySelector('.toast');
+            if (old) old.remove();
+            const div = document.createElement('div');
+            div.className = 'toast';
+            div.textContent = msg;
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), duration);
+        }
 
-  function filtrarAdmin() {
-    const term = document.getElementById('adminSearch').value.toLowerCase();
-    if (!term) { renderAdminTable(adminData); return; }
-    const filtrado = adminData.filter(d =>
-      (d.nome && d.nome.toLowerCase().includes(term)) ||
-      (d.email && d.email.toLowerCase().includes(term))
-    );
-    renderAdminTable(filtrado);
-  }
+        // ============================================================
+        // AUTENTICAÇÃO
+        // ============================================================
+        auth.onAuthStateChanged(async user => {
+            if (user) {
+                currentUser = user;
+                await loadUserProfile(user);
+                setupRealtimeListeners(user);
+                // Mostra admin se for proprietário
+                if (user.email === PROPR_EMAIL) {
+                    adminNavBtn.style.display = 'flex';
+                    loadAdminCompras();
+                } else {
+                    adminNavBtn.style.display = 'none';
+                }
+                // Navega para home se estiver em login/register (não temos página de login, mas pode ficar)
+                navigateTo('page-home');
+                // Chat
+                setupChat(user);
+                // Notificações
+                loadNotificacoes(user.uid);
+                // Avatar
+                if (currentUserDoc && currentUserDoc.avatar) {
+                    topAvatar.src = currentUserDoc.avatar;
+                    profileAvatar.src = currentUserDoc.avatar;
+                } else {
+                    const fallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserDoc?.nome || user.displayName || 'User')}&background=7c3aed&color=fff&size=120`;
+                    topAvatar.src = fallback;
+                    profileAvatar.src = fallback;
+                }
+            } else {
+                // Não logado: mostra tela de login/registro embutida
+                currentUser = null;
+                currentUserDoc = null;
+                if (unsubscribeCompras) unsubscribeCompras();
+                if (unsubscribeNotifs) unsubscribeNotifs();
+                if (chatRoomRef) chatRoomRef.off();
+                // Limpa e mostra auth
+                showAuthScreen();
+            }
+        });
 
-  async function aprovarCompra(id) {
-    await db.collection('compras').doc(id).update({ status: 'aprovado' });
-  }
-  async function cancelarCompra(id) {
-    await db.collection('compras').doc(id).update({ status: 'cancelado' });
-  }
+        // ============================================================
+        // TELA DE LOGIN / REGISTRO (simples, embutida)
+        // ============================================================
+        function showAuthScreen() {
+            // Esconde todas as páginas e mostra um overlay de auth
+            pages.forEach(p => p.classList.remove('active'));
+            // Cria ou mostra auth container
+            let authContainer = document.getElementById('authContainer');
+            if (!authContainer) {
+                authContainer = document.createElement('div');
+                authContainer.id = 'authContainer';
+                authContainer.style.cssText =
+                    'position:fixed;inset:0;z-index:999;background:rgba(10,10,26,0.95);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;padding:20px;';
+                document.body.appendChild(authContainer);
+            } else {
+                authContainer.style.display = 'flex';
+            }
+            authContainer.innerHTML = `
+                <div class="auth-box">
+                    <div class="auth-title">Graal Online</div>
+                    <div class="auth-sub">Beta Classic</div>
+                    <div id="authFormContainer">
+                        <form id="loginForm">
+                            <div class="input-group"><label>E-mail</label><input type="email" id="loginEmail" placeholder="seu@email.com" required /></div>
+                            <div class="input-group"><label>Senha</label><input type="password" id="loginPass" placeholder="••••••••" required /></div>
+                            <button type="submit" class="btn-primary w-full">Entrar</button>
+                            <div class="auth-switch">Não tem conta? <a id="switchToRegister">Criar conta</a></div>
+                            <div id="authFeedback" class="text-muted text-center mt-16"></div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            // Login
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value.trim();
+                const pass = document.getElementById('loginPass').value;
+                const fb = document.getElementById('authFeedback');
+                fb.textContent = 'Entrando...';
+                try {
+                    await auth.signInWithEmailAndPassword(email, pass);
+                    fb.textContent = 'Sucesso!';
+                    authContainer.style.display = 'none';
+                } catch (err) {
+                    fb.textContent = 'Erro: ' + err.message;
+                }
+            });
+            document.getElementById('switchToRegister').addEventListener('click', () => {
+                const container = document.getElementById('authFormContainer');
+                container.innerHTML = `
+                    <form id="registerForm">
+                        <div class="input-group"><label>Nome</label><input type="text" id="regNome" placeholder="Seu nome" required /></div>
+                        <div class="input-group"><label>E-mail</label><input type="email" id="regEmail" placeholder="seu@email.com" required /></div>
+                        <div class="input-group"><label>Senha</label><input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required /></div>
+                        <button type="submit" class="btn-primary w-full">Criar conta</button>
+                        <div class="auth-switch">Já tem conta? <a id="switchToLogin">Entrar</a></div>
+                        <div id="authFeedback" class="text-muted text-center mt-16"></div>
+                    </form>
+                `;
+                document.getElementById('registerForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const nome = document.getElementById('regNome').value.trim();
+                    const email = document.getElementById('regEmail').value.trim();
+                    const pass = document.getElementById('regPass').value;
+                    const fb = document.getElementById('authFeedback');
+                    if (pass.length < 6) { fb.textContent = 'Senha deve ter no mínimo 6 caracteres.'; return; }
+                    fb.textContent = 'Criando conta...';
+                    try {
+                        const cred = await auth.createUserWithEmailAndPassword(email, pass);
+                        await db.collection('users').doc(cred.user.uid).set({
+                            nome: nome,
+                            email: email,
+                            criado: firebase.firestore.FieldValue.serverTimestamp(),
+                            avatar: null
+                        });
+                        fb.textContent = 'Conta criada!';
+                        authContainer.style.display = 'none';
+                    } catch (err) {
+                        fb.textContent = 'Erro: ' + err.message;
+                    }
+                });
+                document.getElementById('switchToLogin').addEventListener('click', showAuthScreen);
+            });
+        }
 
-  async function gerarKeyParaCompra(compraId) {
-    if (!currentUser || currentUser.email !== PROPRIETARIO_EMAIL) return;
-    const compraRef = db.collection('compras').doc(compraId);
-    const compraSnap = await compraRef.get();
-    const compra = compraSnap.data();
-    if (!compra) return;
-    if (compra.status !== 'pendente') { alert('Esta compra já foi processada.'); return; }
-    const key = gerarKey();
-    const agora = new Date();
-    const expiracao = new Date(agora.getTime() + 24 * 60 * 60 * 1000);
-    await db.collection('keys').add({
-      uid: compra.uid,
-      key: key,
-      dataCriacao: agora.toISOString(),
-      dataExpiracao: expiracao.toISOString(),
-      ativa: true,
-      compraId: compraId
-    });
-    await compraRef.update({ status: 'aprovado', key: key, dataExpiracao: expiracao.toISOString() });
-    // Notificar usuário
-    await db.collection('notificacoes').add({
-      uid: compra.uid,
-      mensagem: `Sua key foi gerada: ${key}`,
-      lida: false,
-      data: new Date().toISOString(),
-      tipo: 'key'
-    });
-    // Enviar e-mail para o usuário com a key
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://formsubmit.co/' + compra.email;
-    form.target = '_blank';
-    const campos = { key: key, mensagem: 'Sua key de acesso GRAAL ONLINE CLASSIC: ' + key };
-    for (let k in campos) {
-      const inp = document.createElement('input');
-      inp.type = 'hidden';
-      inp.name = k;
-      inp.value = campos[k];
-      form.appendChild(inp);
-    }
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-    alert('✅ Key gerada e enviada para o usuário!');
-  }
+        // ============================================================
+        // CARREGAR PERFIL DO USUÁRIO
+        // ============================================================
+        async function loadUserProfile(user) {
+            try {
+                const doc = await db.collection('users').doc(user.uid).get();
+                if (doc.exists) {
+                    currentUserDoc = doc.data();
+                    profileName.textContent = currentUserDoc.nome || 'Usuário';
+                    profileEmail.textContent = user.email;
+                    if (currentUserDoc.criado) {
+                        const d = currentUserDoc.criado.toDate ? currentUserDoc.criado.toDate() : new Date(currentUserDoc.criado);
+                        profileSince.textContent = d.toLocaleDateString('pt-BR');
+                    } else {
+                        profileSince.textContent = '---';
+                    }
+                    // Badge proprietário
+                    if (user.email === PROPR_EMAIL) {
+                        profileBadge.innerHTML = '<span class="profile-badge"><i class="fas fa-crown"></i> Proprietário</span>';
+                    } else {
+                        profileBadge.innerHTML = '';
+                    }
+                    // Contar keys ativas
+                    const keysSnap = await db.collection('keys')
+                        .where('uid', '==', user.uid)
+                        .where('ativa', '==', true)
+                        .get();
+                    profileKeys.textContent = keysSnap.size;
+                    // Contar compras
+                    const comprasSnap = await db.collection('compras')
+                        .where('uid', '==', user.uid)
+                        .get();
+                    profileCompras.textContent = comprasSnap.size;
+                    // Listar keys do usuário
+                    renderUserKeys(user.uid);
+                    // Avatar
+                    if (currentUserDoc.avatar) {
+                        topAvatar.src = currentUserDoc.avatar;
+                        profileAvatar.src = currentUserDoc.avatar;
+                    } else {
+                        const fallback =
+                            `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserDoc.nome || 'User')}&background=7c3aed&color=fff&size=120`;
+                        topAvatar.src = fallback;
+                        profileAvatar.src = fallback;
+                    }
+                } else {
+                    // Se não existe, criar
+                    await db.collection('users').doc(user.uid).set({
+                        nome: user.displayName || 'Usuário',
+                        email: user.email,
+                        criado: firebase.firestore.FieldValue.serverTimestamp(),
+                        avatar: null
+                    });
+                    currentUserDoc = { nome: user.displayName || 'Usuário', email: user.email };
+                    profileName.textContent = currentUserDoc.nome;
+                    profileEmail.textContent = user.email;
+                    profileSince.textContent = 'hoje';
+                    profileKeys.textContent = '0';
+                    profileCompras.textContent = '0';
+                }
+            } catch (e) {
+                console.error('loadUserProfile', e);
+                showToast('Erro ao carregar perfil.');
+            }
+        }
 
-  // ===== NOTIFICAÇÕES =====
-  let notificacoesCache = [];
-  async function carregarNotificacoes(uid) {
-    const snap = await db.collection('notificacoes').where('uid', '==', uid).orderBy('data', 'desc').limit(50).get();
-    const lista = [];
-    snap.forEach(doc => lista.push({ id: doc.id, ...doc.data() }));
-    notificacoesCache = lista;
-    const pendentes = lista.filter(n => !n.lida).length;
-    document.getElementById('notifCount').innerText = pendentes;
-    const dropdown = document.getElementById('notifDropdown');
-    if (lista.length === 0) {
-      dropdown.innerHTML = '<div class="notif-item text-muted">Sem notificações</div>';
-      return;
-    }
-    dropdown.innerHTML = lista.map(n => `
-      <div class="notif-item ${n.lida ? 'lida' : ''}">
-        <span class="notif-icon"><i class="fas ${n.tipo === 'key' ? 'fa-key' : 'fa-shopping-cart'}"></i></span>
-        <div class="notif-text">
-          ${n.mensagem}
-          <span class="notif-time">${new Date(n.data).toLocaleString('pt-BR')}</span>
-        </div>
-      </div>
-    `).join('');
-  }
+        // ============================================================
+        // RENDER KEYS DO USUÁRIO
+        // ============================================================
+        async function renderUserKeys(uid) {
+            try {
+                const snap = await db.collection('keys')
+                    .where('uid', '==', uid)
+                    .orderBy('dataCriacao', 'desc')
+                    .get();
+                if (snap.empty) {
+                    userKeysList.innerHTML = '<p class="text-muted">Nenhuma key encontrada.</p>';
+                    return;
+                }
+                let html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+                snap.forEach(doc => {
+                    const data = doc.data();
+                    const expirada = data.dataExpiracao && data.dataExpiracao.toDate ? data.dataExpiracao.toDate() < new Date() :
+                        false;
+                    const status = data.ativa && !expirada ? 'Ativa' : 'Expirada';
+                    const cor = status === 'Ativa' ? '#22c55e' : '#ef4444';
+                    html += `
+                        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);padding:10px 16px;border-radius:14px;border-left:3px solid ${cor};">
+                            <span><code style="background:rgba(255,255,255,0.05);padding:4px 10px;border-radius:8px;font-size:0.85rem;">${data.key}</code></span>
+                            <span style="font-size:0.8rem;color:${cor};">${status}</span>
+                            <span style="font-size:0.7rem;color:#94a3b8;">${data.dataExpiracao ? new Date(data.dataExpiracao.seconds*1000).toLocaleDateString('pt-BR') : '---'}</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                userKeysList.innerHTML = html;
+            } catch (e) {
+                console.error('renderUserKeys', e);
+            }
+        }
 
-  async function toggleNotificacoes() {
-    const dropdown = document.getElementById('notifDropdown');
-    dropdown.classList.toggle('open');
-    if (dropdown.classList.contains('open') && currentUser) {
-      const pendentes = notificacoesCache.filter(n => !n.lida);
-      for (let n of pendentes) {
-        await db.collection('notificacoes').doc(n.id).update({ lida: true });
-      }
-    }
-  }
+        // ============================================================
+        // EDIÇÃO DE PERFIL (nome, senha, avatar)
+        // ============================================================
+        editProfileBtn.addEventListener('click', () => {
+            editNameCard.classList.toggle('hidden');
+            if (!editNameCard.classList.contains('hidden')) {
+                editNameInput.value = currentUserDoc?.nome || '';
+            }
+        });
+        cancelEditName.addEventListener('click', () => editNameCard.classList.add('hidden'));
 
-  // ===== CHAT =====
-  function iniciarChat(uid) {
-    if (!uid) return;
-    // Sala ordenada para ser única
-    const ids = [uid, currentUser?.uid].sort();
-    const sala = ids.join('_');
-    const chatRef = rtdb.ref('chats/' + sala);
-    if (chatUnsub) chatUnsub();
-    chatUnsub = chatRef.limitToLast(50).on('value', (snap) => {
-      const msgs = [];
-      snap.forEach(child => msgs.push(child.val()));
-      const box = document.getElementById('chatBox');
-      if (msgs.length === 0) {
-        box.innerHTML = '<p class="text-muted">Nenhuma mensagem. Inicie o chat!</p>';
-        return;
-      }
-      box.innerHTML = msgs.sort((a, b) => a.timestamp - b.timestamp).map(m => `
-        <div class="chat-msg ${m.uid === PROPRIETARIO_EMAIL ? 'proprietario' : ''}">
-          <div class="chat-bubble">
-            <div class="chat-name">${m.nome || 'Usuário'}</div>
-            <div class="chat-text">${m.texto}</div>
-            <div class="chat-time">${new Date(m.timestamp).toLocaleString('pt-BR')}</div>
-          </div>
-        </div>
-      `).join('');
-      box.scrollTop = box.scrollHeight;
-    });
-    document.getElementById('chatStatus').innerText = '✅ Chat conectado';
-  }
+        saveNameBtn.addEventListener('click', async () => {
+            const novo = editNameInput.value.trim();
+            if (!novo) { showToast('Digite um nome válido.'); return; }
+            try {
+                await db.collection('users').doc(currentUser.uid).update({ nome: novo });
+                currentUserDoc.nome = novo;
+                profileName.textContent = novo;
+                editNameCard.classList.add('hidden');
+                showToast('Nome atualizado!');
+                // Atualiza avatar fallback se não tiver foto
+                if (!currentUserDoc.avatar) {
+                    const fallback =
+                        `https://ui-avatars.com/api/?name=${encodeURIComponent(novo)}&background=7c3aed&color=fff&size=120`;
+                    topAvatar.src = fallback;
+                    profileAvatar.src = fallback;
+                }
+            } catch (e) {
+                showToast('Erro ao atualizar nome.');
+            }
+        });
 
-  async function enviarMensagem() {
-    if (!currentUser) { alert('Faça login para enviar mensagem.'); return; }
-    const input = document.getElementById('chatInput');
-    const texto = input.value.trim();
-    if (!texto) return;
-    input.value = '';
-    const userDoc = await db.collection('users').doc(currentUser.uid).get();
-    const nome = userDoc.data()?.nome || 'Usuário';
-    const ids = [currentUser.uid, currentUser.uid].sort(); // sala com ele mesmo? Mas o chat é entre usuário e proprietário, precisamos do uid do proprietário.
-    // Correção: a sala deve ser uid_usuario + uid_proprietario (precisamos do uid do proprietário)
-    // Vamos buscar o uid do proprietário pelo email
-    let propUid = null;
-    const query = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
-    query.forEach(doc => propUid = doc.id);
-    if (!propUid) { alert('Proprietário não encontrado.'); return; }
-    const idsSala = [currentUser.uid, propUid].sort();
-    const sala = idsSala.join('_');
-    const chatRef = rtdb.ref('chats/' + sala);
-    chatRef.push({
-      uid: currentUser.uid,
-      nome: nome,
-      texto: texto,
-      timestamp: Date.now()
-    });
-  }
+        changePassBtn.addEventListener('click', () => {
+            changePassCard.classList.toggle('hidden');
+            if (!changePassCard.classList.contains('hidden')) {
+                newPassInput.value = '';
+                confirmPassInput.value = '';
+            }
+        });
+        cancelPass.addEventListener('click', () => changePassCard.classList.add('hidden'));
 
-  // Corrigir iniciarChat para usar a sala correta
-  // Sobrescrever a função iniciarChat
-  const originalIniciarChat = iniciarChat;
-  iniciarChat = async function(uid) {
-    if (!uid) return;
-    let propUid = null;
-    const query = await db.collection('users').where('email', '==', PROPRIETARIO_EMAIL).get();
-    query.forEach(doc => propUid = doc.id);
-    if (!propUid) { document.getElementById('chatStatus').innerText = '⚠️ Proprietário não encontrado.'; return; }
-    const ids = [uid, propUid].sort();
-    const sala = ids.join('_');
-    const chatRef = rtdb.ref('chats/' + sala);
-    if (chatUnsub) chatUnsub();
-    chatUnsub = chatRef.limitToLast(50).on('value', (snap) => {
-      const msgs = [];
-      snap.forEach(child => msgs.push(child.val()));
-      const box = document.getElementById('chatBox');
-      if (msgs.length === 0) {
-        box.innerHTML = '<p class="text-muted">Nenhuma mensagem. Inicie o chat!</p>';
-        return;
-      }
-      box.innerHTML = msgs.sort((a, b) => a.timestamp - b.timestamp).map(m => `
-        <div class="chat-msg ${m.uid === propUid ? 'proprietario' : ''}">
-          <div class="chat-bubble">
-            <div class="chat-name">${m.nome || 'Usuário'}</div>
-            <div class="chat-text">${m.texto}</div>
-            <div class="chat-time">${new Date(m.timestamp).toLocaleString('pt-BR')}</div>
-          </div>
-        </div>
-      `).join('');
-      box.scrollTop = box.scrollHeight;
-    });
-    document.getElementById('chatStatus').innerText = '✅ Chat conectado';
-  };
+        savePassBtn.addEventListener('click', async () => {
+            const nova = newPassInput.value;
+            const conf = confirmPassInput.value;
+            if (nova.length < 6) { showToast('Senha deve ter no mínimo 6 caracteres.'); return; }
+            if (nova !== conf) { showToast('As senhas não coincidem.'); return; }
+            try {
+                await currentUser.updatePassword(nova);
+                changePassCard.classList.add('hidden');
+                showToast('Senha alterada com sucesso!');
+            } catch (e) {
+                showToast('Erro: ' + e.message);
+            }
+        });
 
-  // ===== INÍCIO =====
-  console.log('🚀 GRAAL ONLINE CLASSIC TEST BETA carregado.');
-</script>
+        // Avatar upload
+        avatarOverlay.addEventListener('click', () => avatarInput.click());
+        avatarInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            try {
+                const ref = storage.ref(`avatars/${currentUser.uid}`);
+                await ref.put(file);
+                const url = await ref.getDownloadURL();
+                await db.collection('users').doc(currentUser.uid).update({ avatar: url });
+                currentUserDoc.avatar = url;
+                topAvatar.src = url;
+                profileAvatar.src = url;
+                showToast('Avatar atualizado!');
+            } catch (err) {
+                showToast('Erro no upload: ' + err.message);
+            }
+            avatarInput.value = '';
+        });
+
+        // ============================================================
+        // COMPRAS (formulário)
+        // ============================================================
+        compraComprovante.addEventListener('change', () => {
+            const file = compraComprovante.files[0];
+            fileChosen.textContent = file ? file.name : 'Nenhum arquivo selecionado';
+        });
+
+        compraForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (isSending) return;
+            const nome = document.getElementById('compraNome').value.trim();
+            const email = document.getElementById('compraEmail').value.trim();
+            const plano = document.getElementById('compraPlano').value;
+            const file = compraComprovante.files[0];
+            if (!nome || !email || !file) {
+                compraFeedback.textContent = 'Preencha todos os campos e anexe o comprovante.';
+                return;
+            }
+            isSending = true;
+            submitCompraBtn.disabled = true;
+            submitCompraBtn.innerHTML = '<span class="loading-spinner"></span> Enviando...';
+            compraFeedback.textContent = '';
+
+            try {
+                // Upload comprovante
+                const ref = storage.ref(`comprovantes/${Date.now()}_${file.name}`);
+                await ref.put(file);
+                const comprovanteUrl = await ref.getDownloadURL();
+
+                await db.collection('compras').add({
+                    uid: currentUser.uid,
+                    nome,
+                    email,
+                    plano,
+                    comprovante: comprovanteUrl,
+                    status: 'pendente',
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    key: null,
+                    dataExpiracao: null
+                });
+
+                compraFeedback.innerHTML = '<span style="color:#22c55e;">✅ Pedido enviado com sucesso! Aguarde a aprovação.</span>';
+                compraForm.reset();
+                fileChosen.textContent = 'Nenhum arquivo selecionado';
+                showToast('Pedido enviado!');
+            } catch (err) {
+                compraFeedback.textContent = 'Erro: ' + err.message;
+            } finally {
+                isSending = false;
+                submitCompraBtn.disabled = false;
+                submitCompraBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
+            }
+        });
+
+        // ============================================================
+        // ADMIN - CARREGAR COMPRAS
+        // ============================================================
+        function loadAdminCompras() {
+            if (unsubscribeCompras) unsubscribeCompras();
+            unsubscribeCompras = db.collection('compras')
+                .orderBy('data', 'desc')
+                .onSnapshot(snapshot => {
+                    renderAdminTable(snapshot);
+                }, err => {
+                    console.error('admin snapshot error', err);
+                });
+        }
+
+        function renderAdminTable(snapshot) {
+            const searchTerm = adminSearch.value.toLowerCase();
+            let html = '';
+            let pendentes = 0;
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const id = doc.id;
+                if (data.status === 'pendente') pendentes++;
+                const nome = data.nome || '';
+                const email = data.email || '';
+                if (searchTerm && !nome.toLowerCase().includes(searchTerm) && !email.toLowerCase().includes(searchTerm))
+                    return;
+                const statusClass = data.status === 'pendente' ? 'status-pendente' :
+                    data.status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
+                const dataStr = data.data?.toDate ? data.data.toDate().toLocaleDateString('pt-BR') : '---';
+                const keyDisplay = data.key ? `<code style="font-size:0.7rem;">${data.key}</code>` :
+                '<span class="text-muted">—</span>';
+                html += `
+                    <tr>
+                        <td>${dataStr}</td>
+                        <td>${nome}</td>
+                        <td>${email}</td>
+                        <td>${data.plano || '—'}</td>
+                        <td><span class="status-badge ${statusClass}">${data.status}</span></td>
+                        <td>${keyDisplay}</td>
+                        <td>
+                            ${data.status === 'pendente' ? `
+                                <button class="btn-sm btn-sm-aprovar" data-id="${id}" data-action="aprovar"><i class="fas fa-check"></i></button>
+                                <button class="btn-sm btn-sm-cancelar" data-id="${id}" data-action="cancelar"><i class="fas fa-times"></i></button>
+                            ` : ''}
+                            ${data.status === 'aprovado' && !data.key ? `
+                                <button class="btn-sm btn-sm-key" data-id="${id}" data-action="key"><i class="fas fa-key"></i></button>
+                            ` : ''}
+                            ${data.status === 'aprovado' && data.key ? `<span style="color:#22c55e;"><i class="fas fa-check-circle"></i></span>` : ''}
+                        </td>
+                    </tr>
+                `;
+            });
+            pendingCount.textContent = pendentes;
+            if (!html) {
+                html =
+                    `<tr><td colspan="7" class="text-muted text-center">${snapshot.empty ? 'Nenhuma compra encontrada.' : 'Nenhum resultado para o filtro.'}</td></tr>`;
+            }
+            adminTableBody.innerHTML = html;
+
+            // Eventos nos botões
+            document.querySelectorAll('.admin-table .btn-sm').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = btn.dataset.id;
+                    const action = btn.dataset.action;
+                    if (!id) return;
+                    if (action === 'aprovar') {
+                        if (!confirm('Aprovar esta compra?')) return;
+                        await db.collection('compras').doc(id).update({ status: 'aprovado' });
+                        showToast('Compra aprovada!');
+                    } else if (action === 'cancelar') {
+                        if (!confirm('Cancelar esta compra?')) return;
+                        await db.collection('compras').doc(id).update({ status: 'cancelado' });
+                        showToast('Compra cancelada.');
+                    } else if (action === 'key') {
+                        if (!confirm('Gerar e enviar key para este usuário?')) return;
+                        await gerarKey(id);
+                    }
+                });
+            });
+        }
+
+        // ============================================================
+        // GERAR KEY
+        // ============================================================
+        async function gerarKey(compraId) {
+            try {
+                const docRef = db.collection('compras').doc(compraId);
+                const doc = await docRef.get();
+                if (!doc.exists) return;
+                const data = doc.data();
+                if (data.key) { showToast('Este pedido já possui key.'); return; }
+                const key = 'KZN-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                const expiracao = new Date();
+                expiracao.setHours(expiracao.getHours() + 24);
+
+                await db.collection('keys').add({
+                    uid: data.uid,
+                    key: key,
+                    dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
+                    dataExpiracao: expiracao,
+                    ativa: true,
+                    compraId: compraId
+                });
+                await docRef.update({ key: key, dataExpiracao: expiracao, status: 'aprovado' });
+
+                // Notificar usuário
+                await db.collection('notificacoes').add({
+                    uid: data.uid,
+                    mensagem: `Sua key foi gerada: ${key}`,
+                    lida: false,
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    tipo: 'key'
+                });
+
+                showToast(`Key ${key} gerada e enviada!`);
+                // Enviar e-mail via FormSubmit (opcional)
+                // ...
+            } catch (e) {
+                showToast('Erro ao gerar key: ' + e.message);
+            }
+        }
+
+        // ============================================================
+        // NOTIFICAÇÕES
+        // ============================================================
+        function loadNotificacoes(uid) {
+            if (unsubscribeNotifs) unsubscribeNotifs();
+            unsubscribeNotifs = db.collection('notificacoes')
+                .where('uid', '==', uid)
+                .orderBy('data', 'desc')
+                .limit(30)
+                .onSnapshot(snap => {
+                    let count = 0;
+                    let html = '';
+                    snap.forEach(doc => {
+                        const n = doc.data();
+                        if (!n.lida) count++;
+                        const time = n.data?.toDate ? n.data.toDate().toLocaleString('pt-BR') : '';
+                        const lidaClass = n.lida ? 'lida' : '';
+                        html += `
+                            <div class="notif-item ${lidaClass}">
+                                <div class="notif-icon"><i class="fas fa-${n.tipo === 'key' ? 'key' : n.tipo === 'compra' ? 'shopping-cart' : 'bell'}"></i></div>
+                                <div class="notif-text">${n.mensagem} <span class="notif-time">${time}</span></div>
+                            </div>
+                        `;
+                    });
+                    if (!html) html = '<div class="notif-empty">Nenhuma notificação</div>';
+                    notifList.innerHTML = html;
+                    notifBadge.textContent = count;
+                    notifBadge.style.display = count > 0 ? 'flex' : 'none';
+                }, err => console.error('notif error', err));
+        }
+
+        notifBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notifDropdown.classList.toggle('open');
+            // Marcar todas como lidas
+            if (notifDropdown.classList.contains('open')) {
+                // Opcional: marcar lidas
+            }
+        });
+        document.addEventListener('click', () => notifDropdown.classList.remove('open'));
+
+        // ============================================================
+        // CHAT (Realtime Database)
+        // ============================================================
+        function setupChat(user) {
+            if (chatRoomRef) chatRoomRef.off();
+            const chatId = user.uid < PROPR_EMAIL ? user.uid + '_' + PROPR_EMAIL : PROPR_EMAIL + '_' + user.uid;
+            // Para simplificar, usamos o uid do usuário e o proprietário
+            // Na prática, seria um ID único por par
+            const roomId = [user.uid, 'proprietario'].sort().join('_');
+            chatRoomRef = rtdb.ref('chats/' + roomId);
+
+            // Carregar mensagens
+            chatRoomRef.limitToLast(50).on('value', (snap) => {
+                const msgs = snap.val();
+                chatMessages.innerHTML = '';
+                if (msgs) {
+                    const keys = Object.keys(msgs).sort((a, b) => (msgs[a].timestamp || 0) - (msgs[b].timestamp || 0));
+                    keys.forEach(k => {
+                        const m = msgs[k];
+                        const isMe = m.uid === user.uid;
+                        const div = document.createElement('div');
+                        div.className = `msg ${isMe ? 'me' : 'other'}`;
+                        div.innerHTML = `${m.text} <span class="time">${m.time || ''}</span>`;
+                        chatMessages.appendChild(div);
+                    });
+                }
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            });
+
+            // Typing
+            const typingRef = rtdb.ref('typing/' + roomId);
+            typingRef.on('value', (snap) => {
+                const val = snap.val();
+                if (val && val.uid !== user.uid) {
+                    typingIndicator.textContent = 'Alguém está digitando...';
+                } else {
+                    typingIndicator.textContent = '';
+                }
+            });
+        }
+
+        chatSendBtn.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendChatMessage();
+            // Typing
+            if (chatRoomRef && currentUser) {
+                const roomId = [currentUser.uid, 'proprietario'].sort().join('_');
+                const typingRef = rtdb.ref('typing/' + roomId);
+                typingRef.set({ uid: currentUser.uid, timestamp: Date.now() });
+                clearTimeout(typingTimeout);
+                typingTimeout = setTimeout(() => typingRef.remove(), 1500);
+            }
+        });
+
+        async function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (!text || !currentUser || !chatRoomRef) return;
+            chatInput.value = '';
+            try {
+                await chatRoomRef.push({
+                    uid: currentUser.uid,
+                    text: text,
+                    time: new Date().toLocaleTimeString('pt-BR'),
+                    timestamp: Date.now()
+                });
+                // Notificar proprietário se não for ele
+                if (currentUser.email !== PROPR_EMAIL) {
+                    await db.collection('notificacoes').add({
+                        uid: 'proprietario', // simplificado
+                        mensagem: `Nova mensagem de ${currentUserDoc?.nome || currentUser.email}`,
+                        lida: false,
+                        data: firebase.firestore.FieldValue.serverTimestamp(),
+                        tipo: 'chat'
+                    });
+                }
+            } catch (e) {
+                showToast('Erro ao enviar mensagem.');
+            }
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
+        logoutBtn.addEventListener('click', async () => {
+            if (confirm('Deseja sair?')) {
+                try {
+                    await auth.signOut();
+                    showToast('Deslogado.');
+                    // Recarrega auth screen
+                } catch (e) {
+                    showToast('Erro ao sair.');
+                }
+            }
+        });
+
+        // ============================================================
+        // ADMIN SEARCH
+        // ============================================================
+        adminSearch.addEventListener('input', () => {
+            // A tabela já é filtrada no snapshot, mas forçamos re-render
+            if (unsubscribeCompras) {
+                // Desinscreve e reinscreve para forçar
+                unsubscribeCompras();
+                loadAdminCompras();
+            }
+        });
+        refreshAdminBtn.addEventListener('click', () => {
+            if (unsubscribeCompras) {
+                unsubscribeCompras();
+                loadAdminCompras();
+                showToast('Atualizado!');
+            }
+        });
+
+        // ============================================================
+        // INICIAR
+        // ============================================================
+        console.log('Graal Online Classic Test Beta - carregado');
+    </script>
+
 </body>
 </html>
