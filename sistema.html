@@ -303,6 +303,15 @@
             white-space: nowrap;
             font-size: 0.7rem;
         }
+        .profile-btn .admin-badge-nav {
+            background: #fbbf24;
+            color: #0a0a1a;
+            font-size: 0.45rem;
+            font-weight: 800;
+            padding: 1px 6px;
+            border-radius: 10px;
+            margin-left: 2px;
+        }
 
         /* ===== WHATSAPP FIXO ===== */
         .btn-whatsapp-fixo {
@@ -654,6 +663,21 @@
         .btn-danger:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
+        }
+
+        /* ===== ADMIN BADGE NO PERFIL ===== */
+        .admin-badge-profile {
+            display: inline-block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0a0a1a;
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
         /* ===== INPUTS ===== */
@@ -1675,7 +1699,7 @@
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
                 <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
-                <li><a href="#admin"><i class="fas fa-user-shield"></i> Admin</a></li>
+                <li><a href="#admin" onclick="abrirAdmin()"><i class="fas fa-user-shield"></i> Admin</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
             </ul>
 
@@ -1684,7 +1708,7 @@
                 <li><a href="#mods"><i class="fas fa-cubes"></i> Mods</a></li>
                 <li><a href="#comprar"><i class="fas fa-shopping-cart"></i> Comprar</a></li>
                 <li><a href="#perfil"><i class="fas fa-user"></i> Perfil</a></li>
-                <li><a href="#admin"><i class="fas fa-user-shield"></i> Admin</a></li>
+                <li><a href="#admin" onclick="abrirAdmin()"><i class="fas fa-user-shield"></i> Admin</a></li>
                 <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
                 <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
@@ -1714,6 +1738,7 @@
                         <span class="avatar-letter" id="avatarText">G</span>
                     </span>
                     <span class="user-name" id="userDisplay">Entrar</span>
+                    <span class="admin-badge-nav" id="adminBadgeNav" style="display:none;">👑 ADMIN</span>
                 </button>
 
                 <div class="nav-toggle" id="mobileMenu">
@@ -1838,6 +1863,9 @@
                 <div class="profile-info">
                     <h3 id="profileName">Usuário</h3>
                     <p id="profileEmail">usuario@email.com</p>
+                    <div id="profileAdminBadge" style="display:none;">
+                        <span class="admin-badge-profile">👑 ADMIN</span>
+                    </div>
                     <a href="#" class="edit-link" onclick="editarPerfil(event)" style="color:var(--secondary-light);text-decoration:none;font-size:0.8rem;font-weight:600;transition:0.3s;">
                         <i class="fas fa-edit"></i> Editar perfil
                     </a>
@@ -2098,6 +2126,24 @@
             return email === PROPRIETARIO_EMAIL;
         }
 
+        // ====== FUNÇÃO PARA ABRIR ADMIN ======
+        function abrirAdmin() {
+            const adminSection = document.getElementById('admin');
+            if (adminSection.style.display === 'block' || adminSection.style.display === '') {
+                // Rola para a seção admin
+                document.getElementById('admin').scrollIntoView({ behavior: 'smooth' });
+                // Se não estiver visível, mostra
+                if (adminSection.style.display === 'none') {
+                    adminSection.style.display = 'block';
+                }
+            } else {
+                adminSection.style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('admin').scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
         // ====== CHAT ======
         function setupChat(user) {
             if (chatRoomRef) chatRoomRef.off();
@@ -2228,17 +2274,23 @@
                     // Keys do usuário
                     carregarKeysUsuario(usuario.email);
 
-                    // ⚠️ MOSTRA ADMIN SÓ PARA O PROPRIETÁRIO (CORRIGIDO!)
+                    // ⚠️ MOSTRA ADMIN E BADGE PARA O PROPRIETÁRIO
                     const isOwner = isProprietario(usuario.email);
                     const adminSection = document.getElementById('admin');
-                    
+                    const adminBadgeNav = document.getElementById('adminBadgeNav');
+                    const adminBadgeProfile = document.getElementById('profileAdminBadge');
+
                     if (isOwner) {
                         adminSection.style.display = 'block';
+                        adminBadgeNav.style.display = 'inline';
+                        adminBadgeProfile.style.display = 'block';
                         carregarComprasAdmin();
                         console.log('👑 Proprietário detectado! Admin liberado.');
                         adicionarNotificacao('👑 Bem-vindo, Proprietário! Painel Admin disponível.', 'sucesso');
                     } else {
                         adminSection.style.display = 'none';
+                        adminBadgeNav.style.display = 'none';
+                        adminBadgeProfile.style.display = 'none';
                         console.log('👤 Usuário comum. Admin oculto.');
                     }
 
@@ -2267,6 +2319,8 @@
             document.getElementById('editNome').value = '';
             document.getElementById('editEmail').value = '';
             document.getElementById('admin').style.display = 'none';
+            document.getElementById('adminBadgeNav').style.display = 'none';
+            document.getElementById('profileAdminBadge').style.display = 'none';
         }
 
         window.uploadAvatar = function(event) {
