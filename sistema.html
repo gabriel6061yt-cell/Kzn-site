@@ -10,6 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
 
     <style>
         /* ===== CSS COMPLETO ===== */
@@ -2018,8 +2019,10 @@
         };
 
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
         const db = firebase.database();
         const firestore = firebase.firestore();
+        const storage = firebase.storage();
 
         // ====== CONSTANTES ======
         const PROPRIETARIO_EMAIL = 'gabriel6061yt@gmail.com';
@@ -2034,6 +2037,23 @@
         let chatRoomRef = null;
         let unsubscribeCompras = null;
         let enviando = false;
+
+        // ====== FUNÇÃO PARA OBTER UID REAL ======
+        function getCurrentUID() {
+            const user = auth.currentUser;
+            if (!user) return null;
+            return user.uid;
+        }
+
+        // ====== FUNÇÃO PARA OBTER USUÁRIO AUTENTICADO ======
+        function getCurrentUser() {
+            return auth.currentUser;
+        }
+
+        // ====== FUNÇÃO PARA VERIFICAR LOGIN ======
+        function isLoggedIn() {
+            return auth.currentUser !== null;
+        }
 
         // ====== CARREGAR USUÁRIOS ======
         function carregarUsuarios() {
@@ -2118,7 +2138,8 @@
                 return;
             }
 
-            if (!usuarioLogado) {
+            const user = auth.currentUser;
+            if (!user) {
                 alert('⚠️ Você precisa estar logado para enviar mensagens!');
                 return;
             }
@@ -2128,26 +2149,30 @@
                 return;
             }
 
-            const user = usuarioLogado;
-            chatRoomRef.push({
-                uid: user.uid || user.email,
-                nome: user.nome,
-                email: user.email,
-                avatar: user.avatar || '',
-                text: text,
-                time: new Date().toLocaleTimeString('pt-BR'),
-                timestamp: Date.now()
-            });
+            try {
+                chatRoomRef.push({
+                    uid: user.uid,
+                    nome: usuarioLogado ? usuarioLogado.nome : user.displayName || user.email,
+                    email: user.email,
+                    avatar: usuarioLogado ? usuarioLogado.avatar || '' : '',
+                    text: text,
+                    time: new Date().toLocaleTimeString('pt-BR'),
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                });
 
-            input.value = '';
+                input.value = '';
 
-            // Remove typing
-            const roomId = [user.uid || user.email, 'proprietario'].sort().join('_');
-            db.ref('typing/' + roomId).remove();
+                // Remove typing
+                const roomId = [user.uid, 'proprietario'].sort().join('_');
+                db.ref('typing/' + roomId).remove();
 
-            // Notificar proprietário se não for ele
-            if (!isProprietario(user.email)) {
-                adicionarNotificacao(`💬 Nova mensagem de ${user.nome}`, 'info');
+                // Notificar proprietário se não for ele
+                if (!isProprietario(user.email)) {
+                    adicionarNotificacao(`💬 Nova mensagem de ${usuarioLogado ? usuarioLogado.nome : user.displayName || user.email}`, 'info');
+                }
+            } catch (error) {
+                console.error("❌ Erro ao enviar mensagem:", error);
+                alert("❌ Não foi possível enviar a mensagem.");
             }
         };
 
@@ -2201,6 +2226,10 @@
             statusEl.innerHTML = '<span style="color:var(--secondary-light);">⏳ Enviando key...</span>';
 
             try {
+                // Buscar usuário pelo email para obter UID
+                let uid = null;
+                let nome = 'Usuário';
+
                 // Verificar se o usuário existe no sistema
                 const userQuery = await firestore.collection('compras')
                     .where('email', '==', email)
@@ -2208,13 +2237,25 @@
                     .limit(1)
                     .get();
 
-                let uid = null;
-                let nome = 'Usuário';
-
                 if (!userQuery.empty) {
                     const userData = userQuery.docs[0].data();
                     uid = userData.uid || userData.email;
                     nome = userData.nome || 'Usuário';
+                }
+
+                // Se não encontrou nas compras, buscar no Firebase Auth
+                if (!uid) {
+                    try {
+                        const userRecord = await firestore.collection('usuarios').where('email', '==', email).limit(1).get();
+                        if (!userRecord.empty) {
+                            const userData = userRecord.docs[0].data();
+                            uid = userData.uid;
+                            nome = userData.nome || 'Usuário';
+                        }
+                    } catch (e) {
+                        console.log('Usuário não encontrado no Firestore, usando email como uid');
+                        uid = email;
+                    }
                 }
 
                 // Salvar key no Firestore
@@ -2222,7 +2263,7 @@
                 expiracao.setHours(expiracao.getHours() + 24);
 
                 await firestore.collection('keys').add({
-                    uid: uid || email,
+                    uid: uid,
                     email: email,
                     nome: nome,
                     key: key,
@@ -2235,7 +2276,7 @@
 
                 // NOTIFICAR USUÁRIO
                 await firestore.collection('notificacoes').add({
-                    uid: uid || email,
+                    uid: uid,
                     mensagem: `🔑 Sua key foi gerada: ${key}`,
                     lida: false,
                     data: firebase.firestore.FieldValue.serverTimestamp(),
@@ -2251,9 +2292,155 @@
                 carregarComprasAdmin();
 
             } catch (error) {
-                console.error('Erro ao enviar key manual:', error);
+                console.error('❌ Erro ao enviar key manual:', error);
                 statusEl.innerHTML = `<span style="color:var(--danger);">❌ Erro: ${error.message}</span>`;
             }
+        };
+
+        // ====== FAZER LOGIN COM FIREBASE AUTH ======
+        window.fazerLogin = function() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const senha = document.getElementById('loginSenha').value.trim();
+            const status = document.getElementById('loginStatus');
+
+            if (!email || !senha) {
+                status.className = 'form-status error';
+                status.textContent = '📝 Preencha todos os campos.';
+                return;
+            }
+
+            status.className = 'form-status loading';
+            status.textContent = '⏳ Autenticando...';
+
+            auth.signInWithEmailAndPassword(email, senha)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log('🔥 Usuário autenticado:', user.uid);
+                    console.log('👤 Usuário autenticado:', user.email);
+
+                    // Buscar dados adicionais do Firestore
+                    return firestore.collection('usuarios').doc(user.uid).get()
+                        .then((doc) => {
+                            const userData = doc.exists ? doc.data() : { nome: user.displayName || email.split('@')[0] };
+
+                            usuarioLogado = {
+                                uid: user.uid,
+                                nome: userData.nome || user.displayName || email.split('@')[0],
+                                email: user.email,
+                                avatar: userData.avatar || null
+                            };
+
+                            localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
+
+                            // Salvar no localStorage para compatibilidade
+                            const usuarios = JSON.parse(localStorage.getItem('graal_usuarios') || '[]');
+                            const idx = usuarios.findIndex(u => u.email === user.email);
+                            if (idx === -1) {
+                                usuarios.push({
+                                    nome: usuarioLogado.nome,
+                                    email: user.email,
+                                    senha: senha,
+                                    uid: user.uid
+                                });
+                            } else {
+                                usuarios[idx].uid = user.uid;
+                                usuarios[idx].nome = usuarioLogado.nome;
+                            }
+                            localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
+
+                            setLoggedIn();
+                            status.className = 'form-status success';
+                            status.textContent = '✅ Login realizado! Bem-vindo ' + usuarioLogado.nome;
+                        });
+                })
+                .catch((error) => {
+                    console.error('❌ Erro no login:', error);
+                    status.className = 'form-status error';
+                    status.textContent = '❌ Erro ao fazer login: ' + (error.message || 'Tente novamente.');
+                });
+        };
+
+        // ====== FAZER REGISTRO COM FIREBASE AUTH ======
+        window.fazerRegistro = function() {
+            const nome = document.getElementById('registroNome').value.trim();
+            const email = document.getElementById('registroEmail').value.trim();
+            const senha = document.getElementById('registroSenha').value.trim();
+            const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
+            const status = document.getElementById('registroStatus');
+
+            if (!nome || !email || !senha || !confirmar) {
+                status.className = 'form-status error';
+                status.textContent = '📝 Preencha todos os campos.';
+                return;
+            }
+
+            if (senha.length < 6) {
+                status.className = 'form-status error';
+                status.textContent = '🔒 A senha deve ter no mínimo 6 caracteres.';
+                return;
+            }
+
+            if (senha !== confirmar) {
+                status.className = 'form-status error';
+                status.textContent = '🔒 As senhas não coincidem.';
+                return;
+            }
+
+            status.className = 'form-status loading';
+            status.textContent = '⏳ Criando conta...';
+
+            auth.createUserWithEmailAndPassword(email, senha)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log('🔥 Usuário registrado:', user.uid);
+                    console.log('👤 Usuário registrado:', user.email);
+
+                    // Salvar dados adicionais no Firestore
+                    return firestore.collection('usuarios').doc(user.uid).set({
+                        nome: nome,
+                        email: email,
+                        avatar: null,
+                        dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
+                    }).then(() => {
+                        // Atualizar perfil do Firebase Auth
+                        return user.updateProfile({
+                            displayName: nome
+                        });
+                    }).then(() => {
+                        // Salvar no localStorage
+                        usuarioLogado = {
+                            uid: user.uid,
+                            nome: nome,
+                            email: user.email,
+                            avatar: null
+                        };
+
+                        localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
+
+                        const usuarios = JSON.parse(localStorage.getItem('graal_usuarios') || '[]');
+                        usuarios.push({
+                            nome: nome,
+                            email: email,
+                            senha: senha,
+                            uid: user.uid
+                        });
+                        localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
+
+                        setLoggedIn();
+                        status.className = 'form-status success';
+                        status.textContent = '✅ Conta criada! Bem-vindo ' + nome;
+
+                        document.getElementById('registroNome').value = '';
+                        document.getElementById('registroEmail').value = '';
+                        document.getElementById('registroSenha').value = '';
+                        document.getElementById('registroConfirmarSenha').value = '';
+                    });
+                })
+                .catch((error) => {
+                    console.error('❌ Erro no registro:', error);
+                    status.className = 'form-status error';
+                    status.textContent = '❌ Erro ao criar conta: ' + (error.message || 'Tente novamente.');
+                });
         };
 
         // ====== ENVIAR PEDIDO (FORMULÁRIO) ======
@@ -2261,7 +2448,8 @@
             event.preventDefault();
 
             // VERIFICA SE O USUÁRIO ESTÁ LOGADO
-            if (!usuarioLogado) {
+            const user = auth.currentUser;
+            if (!user) {
                 document.getElementById('loginAviso').style.display = 'block';
                 document.getElementById('formStatus').className = 'form-status error';
                 document.getElementById('formStatus').textContent = '⚠️ Você precisa estar logado para enviar um pedido!';
@@ -2302,36 +2490,45 @@
             status.textContent = '⏳ Enviando seu pedido...';
 
             try {
-                // Ler o arquivo como base64
-                let comprovanteBase64 = '';
+                console.log('🟢 Usuário:', user.uid);
+                console.log('🟢 Enviando compra...');
+
+                // Upload do comprovante para o Firebase Storage
+                let comprovanteUrl = '';
+                let comprovanteNome = file.name;
+
                 try {
-                    comprovanteBase64 = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result);
-                        reader.onerror = reject;
-                        reader.readAsDataURL(file);
-                    });
-                } catch (fileError) {
-                    console.warn('Erro ao ler arquivo:', fileError);
-                    comprovanteBase64 = 'Arquivo não pôde ser lido';
+                    const storageRef = storage.ref();
+                    const fileRef = storageRef.child(`comprovantes/${user.uid}/${Date.now()}_${file.name}`);
+                    const uploadTask = await fileRef.put(file);
+                    comprovanteUrl = await uploadTask.ref.getDownloadURL();
+                    console.log('✅ Comprovante enviado para Storage:', comprovanteUrl);
+                } catch (storageError) {
+                    console.error('❌ Erro no upload do comprovante:', storageError);
+                    // Se o Storage falhar, salvar sem comprovante
+                    comprovanteUrl = 'Falha no upload do comprovante';
                 }
 
                 // SALVAR NO FIRESTORE
-                const docRef = await firestore.collection('compras').add({
+                const compraData = {
+                    uid: user.uid,
                     nome: nome,
                     email: email,
                     whatsapp: whatsapp,
                     plano: plano,
                     mensagem: mensagem || '',
-                    comprovante: comprovanteBase64 || 'Comprovante enviado por e-mail',
+                    comprovanteUrl: comprovanteUrl,
+                    comprovanteNome: comprovanteNome,
                     status: 'pendente',
                     data: firebase.firestore.FieldValue.serverTimestamp(),
                     key: null,
-                    dataExpiracao: null,
-                    uid: usuarioLogado.uid || usuarioLogado.email
-                });
+                    dataExpiracao: null
+                };
 
-                console.log('✅ Pedido salvo no Firestore! ID:', docRef.id);
+                console.log('🟢 Dados da compra:', compraData);
+
+                const docRef = await firestore.collection('compras').add(compraData);
+                console.log('🟢 Compra criada:', docRef.id);
 
                 // NOTIFICAR PROPRIETÁRIO
                 await firestore.collection('notificacoes').add({
@@ -2344,7 +2541,7 @@
 
                 // NOTIFICAR USUÁRIO
                 await firestore.collection('notificacoes').add({
-                    uid: usuarioLogado.uid || usuarioLogado.email,
+                    uid: user.uid,
                     mensagem: `📦 Pedido #${docRef.id} recebido! Aguarde a aprovação.`,
                     lida: false,
                     data: firebase.firestore.FieldValue.serverTimestamp(),
@@ -2362,6 +2559,9 @@
                 document.getElementById('compraMensagem').value = '';
                 document.getElementById('compraComprovante').value = '';
 
+                // Ocultar aviso de login
+                document.getElementById('loginAviso').style.display = 'none';
+
                 // Recarregar admin se for proprietário
                 if (usuarioLogado && isProprietario(usuarioLogado.email)) {
                     setTimeout(() => {
@@ -2370,7 +2570,7 @@
                 }
 
             } catch (error) {
-                console.error('Erro ao enviar pedido:', error);
+                console.error('❌ Erro ao enviar pedido:', error);
                 status.className = 'form-status error';
                 status.textContent = '❌ Erro ao enviar: ' + (error.message || 'Tente novamente.');
             }
@@ -2505,6 +2705,13 @@
                         localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
                     }
 
+                    // Salvar no Firestore também
+                    if (usuario.uid) {
+                        firestore.collection('usuarios').doc(usuario.uid).update({
+                            avatar: imagem
+                        }).catch(err => console.log('Erro ao salvar avatar no Firestore:', err));
+                    }
+
                     carregarPerfil();
                     alert('📷 Foto de perfil atualizada com sucesso!');
                 }
@@ -2554,6 +2761,13 @@
                 if (idx !== -1) {
                     usuarios[idx].nome = nome;
                     localStorage.setItem('graal_usuarios', JSON.stringify(usuarios));
+                }
+
+                // Salvar no Firestore
+                if (usuario.uid) {
+                    firestore.collection('usuarios').doc(usuario.uid).update({
+                        nome: nome
+                    }).catch(err => console.log('Erro ao salvar nome no Firestore:', err));
                 }
 
                 document.getElementById('userDisplay').textContent = nome;
@@ -2664,13 +2878,26 @@
 
             if (unsubscribeCompras) unsubscribeCompras();
 
-            unsubscribeCompras = firestore.collection('compras')
-                .orderBy('data', 'desc')
-                .onSnapshot(snapshot => {
-                    renderizarComprasAdmin(snapshot);
-                }, err => {
-                    console.error('Erro ao carregar compras:', err);
-                });
+            try {
+                unsubscribeCompras = firestore.collection('compras')
+                    .orderBy('data', 'desc')
+                    .onSnapshot(snapshot => {
+                        renderizarComprasAdmin(snapshot);
+                    }, err => {
+                        console.error('❌ Erro ao carregar compras:', err);
+                        if (err.code === 'permission-denied') {
+                            console.error('🔒 Firestore Rules precisam permitir a operação.');
+                        } else if (err.code === 'failed-precondition') {
+                            console.error('⚠️ Pode ser necessário criar o índice do Firestore.');
+                        }
+                        document.getElementById('adminTableBody').innerHTML =
+                            `<tr><td colspan="7" class="text-muted text-center">❌ Erro ao carregar: ${err.message}</td></tr>`;
+                    });
+            } catch (error) {
+                console.error('❌ Erro ao configurar listener:', error);
+                document.getElementById('adminTableBody').innerHTML =
+                    `<tr><td colspan="7" class="text-muted text-center">❌ Erro ao configurar: ${error.message}</td></tr>`;
+            }
         }
 
         function renderizarComprasAdmin(snapshot) {
@@ -2686,7 +2913,7 @@
                 const nome = data.nome || '';
                 const email = data.email || '';
                 if (searchTerm && !nome.toLowerCase().includes(searchTerm) && !email.toLowerCase().includes(
-                    searchTerm)) return;
+                        searchTerm)) return;
 
                 const statusClass = data.status === 'pendente' ? 'status-pendente' :
                     data.status === 'aprovado' ? 'status-aprovado' : 'status-cancelado';
@@ -2794,7 +3021,7 @@
                 .catch(err => alert('❌ Erro ao gerar key: ' + err.message));
         };
 
-        // ====== LOGIN / REGISTRO ======
+        // ====== SET LOGGED IN ======
         function setLoggedIn() {
             document.getElementById('welcomeOverlay').classList.add('hidden');
             document.getElementById('chatToggleBtn').style.display = 'flex';
@@ -2804,93 +3031,47 @@
             carregarPerfil();
 
             if (usuarioLogado) {
-                setupChat(usuarioLogado);
-                carregarNotificacoesUsuario(usuarioLogado.uid || usuarioLogado.email);
-                const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
-                    '_')));
-                userRef.set({
-                    nome: usuarioLogado.nome,
-                    email: usuarioLogado.email,
-                    avatar: usuarioLogado.avatar || '',
-                    online: true,
-                    ultimo: Date.now()
-                });
-                window.addEventListener('beforeunload', () => userRef.remove());
+                const user = auth.currentUser;
+                if (user) {
+                    setupChat(user);
+                    carregarNotificacoesUsuario(user.uid);
+                    const userRef = db.ref('usuarios_online/' + user.uid);
+                    userRef.set({
+                        nome: usuarioLogado.nome,
+                        email: user.email,
+                        avatar: usuarioLogado.avatar || '',
+                        online: true,
+                        ultimo: Date.now()
+                    });
+                    window.addEventListener('beforeunload', () => userRef.remove());
+                }
             }
         }
 
-        window.fazerLogin = function() {
-            const email = document.getElementById('loginEmail').value.trim();
-            const senha = document.getElementById('loginSenha').value.trim();
-            const status = document.getElementById('loginStatus');
+        // ====== LOGOUT ======
+        window.logout = function() {
+            if (!confirm('Tem certeza que deseja sair?')) return;
 
-            if (!email || !senha) {
-                status.className = 'form-status error';
-                status.textContent = '📝 Preencha todos os campos.';
-                return;
+            const user = auth.currentUser;
+            if (user) {
+                const userRef = db.ref('usuarios_online/' + user.uid);
+                userRef.remove();
+                if (chatRoomRef) chatRoomRef.off();
             }
 
-            const usuario = usuariosCadastrados.find(u => u.email === email && u.senha === senha);
-            if (!usuario) {
-                status.className = 'form-status error';
-                status.textContent = '❌ E-mail ou senha incorretos.';
-                return;
-            }
-
-            usuarioLogado = { nome: usuario.nome, email: usuario.email, avatar: usuario.avatar || null };
-            localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
-            setLoggedIn();
-            status.className = 'form-status success';
-            status.textContent = '✅ Login realizado! Bem-vindo ' + usuario.nome;
-        };
-
-        window.fazerRegistro = function() {
-            const nome = document.getElementById('registroNome').value.trim();
-            const email = document.getElementById('registroEmail').value.trim();
-            const senha = document.getElementById('registroSenha').value.trim();
-            const confirmar = document.getElementById('registroConfirmarSenha').value.trim();
-            const status = document.getElementById('registroStatus');
-
-            if (!nome || !email || !senha || !confirmar) {
-                status.className = 'form-status error';
-                status.textContent = '📝 Preencha todos os campos.';
-                return;
-            }
-
-            if (senha.length < 6) {
-                status.className = 'form-status error';
-                status.textContent = '🔒 A senha deve ter no mínimo 6 caracteres.';
-                return;
-            }
-
-            if (senha !== confirmar) {
-                status.className = 'form-status error';
-                status.textContent = '🔒 As senhas não coincidem.';
-                return;
-            }
-
-            if (usuariosCadastrados.find(u => u.email === email)) {
-                status.className = 'form-status error';
-                status.textContent = '📧 Este e-mail já está cadastrado.';
-                return;
-            }
-
-            usuariosCadastrados.push({ nome, email, senha });
-            salvarUsuarios();
-
-            status.className = 'form-status success';
-            status.textContent = '✅ Conta criada! Faça login.';
-
-            document.getElementById('registroNome').value = '';
-            document.getElementById('registroEmail').value = '';
-            document.getElementById('registroSenha').value = '';
-            document.getElementById('registroConfirmarSenha').value = '';
-
-            setTimeout(() => {
-                trocarLoginTab('login');
-                document.getElementById('loginEmail').value = email;
-                status.style.display = 'none';
-            }, 1500);
+            auth.signOut().then(() => {
+                localStorage.removeItem('graal_usuario_logado');
+                usuarioLogado = null;
+                document.getElementById('welcomeOverlay').classList.remove('hidden');
+                document.getElementById('chatToggleBtn').style.display = 'none';
+                document.getElementById('chatWindow').classList.remove('open');
+                chatAberto = false;
+                resetarPerfilPadrao();
+                alert('👋 Você saiu da sua conta.');
+            }).catch((error) => {
+                console.error('❌ Erro ao sair:', error);
+                alert('❌ Erro ao sair: ' + error.message);
+            });
         };
 
         window.trocarLoginTab = function(tab) {
@@ -2910,24 +3091,6 @@
                 registroForm.style.display = 'block';
                 loginForm.style.display = 'none';
             }
-        };
-
-        window.logout = function() {
-            if (!confirm('Tem certeza que deseja sair?')) return;
-            if (usuarioLogado) {
-                const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
-                    '_')));
-                userRef.remove();
-                if (chatRoomRef) chatRoomRef.off();
-            }
-            localStorage.removeItem('graal_usuario_logado');
-            usuarioLogado = null;
-            document.getElementById('welcomeOverlay').classList.remove('hidden');
-            document.getElementById('chatToggleBtn').style.display = 'none';
-            document.getElementById('chatWindow').classList.remove('open');
-            chatAberto = false;
-            resetarPerfilPadrao();
-            alert('👋 Você saiu da sua conta.');
         };
 
         // ====== NOTIFICAÇÕES ======
@@ -3005,6 +3168,8 @@
 
         // ====== INICIALIZAÇÃO ======
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔥 Firebase inicializado');
+
             const mobileToggle = document.getElementById('mobileMenu');
             const navMenuMobile = document.getElementById('navMenuMobile');
 
@@ -3031,18 +3196,19 @@
             const chatInput = document.getElementById('chatInput');
             if (chatInput) {
                 chatInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
                         window.enviarMensagem();
                         return;
                     }
 
-                    if (usuarioLogado && e.key !== 'Enter') {
-                        const roomId = [usuarioLogado.uid || usuarioLogado.email, 'proprietario'].sort().join('_');
+                    if (auth.currentUser && e.key !== 'Enter') {
+                        const user = auth.currentUser;
+                        const roomId = [user.uid, 'proprietario'].sort().join('_');
                         const typingRef = db.ref('typing/' + roomId);
                         typingRef.set({
-                            uid: usuarioLogado.uid || usuarioLogado.email,
-                            nome: usuarioLogado.nome,
+                            uid: user.uid,
+                            nome: usuarioLogado ? usuarioLogado.nome : user.displayName || user.email,
                             timestamp: Date.now()
                         });
                         clearTimeout(typingTimeout);
@@ -3064,16 +3230,49 @@
             carregarUsuarios();
             carregarNotificacoes();
 
-            const usuario = localStorage.getItem('graal_usuario_logado');
-            if (usuario) {
-                usuarioLogado = JSON.parse(usuario);
-                setLoggedIn();
-            } else {
-                document.getElementById('welcomeOverlay').classList.remove('hidden');
-                document.getElementById('chatWindow').classList.remove('open');
-                document.getElementById('chatToggleBtn').style.display = 'none';
-                document.getElementById('loginAviso').style.display = 'block';
-            }
+            // Verificar estado de autenticação
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    console.log('👤 Usuário autenticado:', user.uid);
+                    console.log('🆔 UID:', user.uid);
+
+                    // Buscar dados do Firestore
+                    firestore.collection('usuarios').doc(user.uid).get()
+                        .then((doc) => {
+                            const userData = doc.exists ? doc.data() : { nome: user.displayName || user.email.split('@')[0] };
+                            usuarioLogado = {
+                                uid: user.uid,
+                                nome: userData.nome || user.displayName || user.email.split('@')[0],
+                                email: user.email,
+                                avatar: userData.avatar || null
+                            };
+                            localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
+                            setLoggedIn();
+                        })
+                        .catch(() => {
+                            // Fallback
+                            usuarioLogado = {
+                                uid: user.uid,
+                                nome: user.displayName || user.email.split('@')[0],
+                                email: user.email,
+                                avatar: null
+                            };
+                            localStorage.setItem('graal_usuario_logado', JSON.stringify(usuarioLogado));
+                            setLoggedIn();
+                        });
+                } else {
+                    const usuario = localStorage.getItem('graal_usuario_logado');
+                    if (usuario) {
+                        usuarioLogado = JSON.parse(usuario);
+                        setLoggedIn();
+                    } else {
+                        document.getElementById('welcomeOverlay').classList.remove('hidden');
+                        document.getElementById('chatWindow').classList.remove('open');
+                        document.getElementById('chatToggleBtn').style.display = 'none';
+                        document.getElementById('loginAviso').style.display = 'block';
+                    }
+                }
+            });
 
             if (notificacoes.length === 0) {
                 adicionarNotificacao('🎮 Bem-vindo ao Graal Online - Mod Menu Beta!', 'info');
