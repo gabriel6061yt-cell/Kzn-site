@@ -12,7 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS COMPLETO (MANTIDO) ===== */
+        /* ===== CSS COMPLETO ===== */
         * {
             margin: 0;
             padding: 0;
@@ -59,6 +59,7 @@
             border-radius: 10px;
         }
 
+        /* ===== TEMA CLARO ===== */
         body.tema-claro {
             --bg: #f1f5f9;
             --bg-card: #ffffff;
@@ -88,6 +89,7 @@
             border-left-color: var(--secondary);
         }
 
+        /* ===== NAVBAR ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -310,6 +312,7 @@
             margin-left: 2px;
         }
 
+        /* ===== WHATSAPP FIXO ===== */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 90px;
@@ -345,6 +348,7 @@
             }
         }
 
+        /* ===== CHAT TOGGLE ===== */
         .chat-toggle-btn {
             position: fixed;
             bottom: 160px;
@@ -389,6 +393,7 @@
             display: flex;
         }
 
+        /* ===== CHAT WINDOW ===== */
         .chat-window {
             position: fixed;
             bottom: 230px;
@@ -580,6 +585,7 @@
             display: block !important;
         }
 
+        /* ===== GLASS CARD ===== */
         .glass-card {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -608,6 +614,7 @@
             color: var(--primary);
         }
 
+        /* ===== BOTÕES ===== */
         .btn {
             padding: 0.7rem 1.5rem;
             border-radius: 12px;
@@ -665,6 +672,7 @@
             box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
         }
 
+        /* ===== ADMIN BADGE NO PERFIL ===== */
         .admin-badge-profile {
             display: inline-block;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
@@ -679,6 +687,7 @@
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
+        /* ===== INPUTS ===== */
         .input-group {
             margin-bottom: 1rem;
         }
@@ -714,6 +723,7 @@
             min-height: 70px;
         }
 
+        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -784,6 +794,7 @@
             margin-bottom: 3rem;
         }
 
+        /* ===== SECTION ===== */
         .section {
             padding: 6rem 2rem;
             max-width: var(--container-max);
@@ -813,6 +824,7 @@
             margin-top: 0.5rem;
         }
 
+        /* ===== PLANS GRID ===== */
         .plans-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -898,6 +910,7 @@
             font-size: 0.7rem;
         }
 
+        /* ===== FORM ===== */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -957,6 +970,7 @@
             color: var(--secondary-light);
         }
 
+        /* ===== PERFIL ===== */
         .profile-section {
             max-width: 600px;
             margin: 0 auto;
@@ -1048,6 +1062,7 @@
             display: none;
         }
 
+        /* ===== ADMIN TABLE ===== */
         .admin-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -1116,6 +1131,7 @@
             color: #fff;
         }
 
+        /* ===== NOTIFICAÇÕES DROPDOWN ===== */
         .dropdown-container {
             position: relative;
         }
@@ -1216,99 +1232,7 @@
             opacity: 0.3;
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-        .modal-overlay.open {
-            display: flex;
-        }
-        .modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            max-width: 420px;
-            width: 100%;
-            animation: fadeIn 0.25s ease;
-            box-shadow: var(--shadow);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .modal-content h3 {
-            margin-bottom: 0.5rem;
-            color: var(--text);
-            font-size: 1.1rem;
-        }
-        .modal-content p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .modal-actions button {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg);
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.85rem;
-            min-width: 80px;
-        }
-        .modal-actions button:hover {
-            border-color: var(--primary);
-            background: rgba(124, 58, 237, 0.1);
-        }
-        .modal-actions .btn-danger {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
-        .modal-actions .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.15);
-        }
-        .modal-actions .btn-success {
-            border-color: var(--success);
-            color: var(--success);
-        }
-        .modal-actions .btn-success:hover {
-            background: rgba(34, 197, 94, 0.15);
-        }
-        .close-modal {
-            margin-top: 0.8rem;
-            padding: 6px;
-            width: 100%;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--bg);
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.8rem;
-            text-align: center;
-        }
-        .close-modal:hover {
-            border-color: var(--text);
-            color: var(--text);
-        }
-
+        /* ===== WELCOME / LOGIN ===== */
         .welcome-overlay {
             position: fixed;
             top: 0;
@@ -1448,6 +1372,7 @@
             margin-top: 0.8rem;
         }
 
+        /* ===== FOOTER ===== */
         .footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
@@ -1512,6 +1437,7 @@
             font-size: 0.7rem;
         }
 
+        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 1024px) {
             .hero {
                 flex-direction: column;
@@ -1791,6 +1717,15 @@
         </div>
         <div class="form-container">
             <form id="formCompra" onsubmit="return enviarPedido(event)">
+                <!-- AVISO PARA USUÁRIOS NÃO LOGADOS -->
+                <div id="loginAviso" style="background:rgba(239,68,68,0.15);border:1px solid var(--danger);border-radius:10px;padding:1rem;margin-bottom:1rem;text-align:center;display:none;">
+                    <i class="fas fa-exclamation-triangle" style="color:var(--danger);font-size:1.2rem;"></i>
+                    <p style="color:var(--text);margin-top:0.3rem;">⚠️ Você precisa estar <strong style="color:var(--primary);">logado</strong> para enviar um pedido.</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('welcomeOverlay').classList.remove('hidden')" style="margin-top:0.5rem;padding:0.4rem 1rem;font-size:0.8rem;">
+                        <i class="fas fa-sign-in-alt"></i> Fazer Login
+                    </button>
+                </div>
+
                 <div class="input-group">
                     <label><i class="fas fa-user"></i> Nome Completo <span style="color:var(--danger);">*</span></label>
                     <input type="text" id="compraNome" placeholder="Digite seu nome completo..." required>
@@ -1928,7 +1863,7 @@
                 <button class="btn btn-secondary" onclick="carregarComprasAdmin()"><i class="fas fa-sync"></i> Atualizar</button>
             </div>
 
-            <!-- ===== ÁREA PARA CRIAR KEY MANUALMENTE ===== -->
+            <!-- ÁREA PARA CRIAR KEY MANUALMENTE -->
             <div style="background:rgba(124,58,237,0.1);border:1px solid var(--primary);border-radius:12px;padding:1rem;margin-bottom:1rem;">
                 <h4 style="color:var(--secondary-light);margin-bottom:0.5rem;"><i class="fas fa-key"></i> Criar Key Manual</h4>
                 <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
@@ -2114,33 +2049,9 @@
             localStorage.setItem('graal_usuarios', JSON.stringify(usuariosCadastrados));
         }
 
-        // ====== SOM DE NOTIFICAÇÃO ======
-        function playNotificationSound() {
-            try {
-                const audio = new Audio(
-                'https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3');
-                audio.volume = 0.5;
-                audio.play().catch(() => {});
-            } catch (e) {}
-        }
-
         // ====== PERMISSÕES ======
         function isProprietario(email) {
             return email === PROPRIETARIO_EMAIL;
-        }
-
-        // ====== FUNÇÃO PARA ABRIR ADMIN ======
-        function abrirAdmin() {
-            if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
-                alert('⛔ Acesso negado! Apenas o proprietário pode acessar o painel administrativo.');
-                return;
-            }
-            const adminSection = document.getElementById('admin');
-            adminSection.style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('admin').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-            carregarComprasAdmin();
         }
 
         // ====== CHAT ======
@@ -2198,10 +2109,24 @@
             });
         }
 
+        // ====== FUNÇÃO PARA ENVIAR MENSAGEM DO CHAT ======
         window.enviarMensagem = function() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
-            if (!text || !usuarioLogado || !chatRoomRef) return;
+
+            if (!text) {
+                return;
+            }
+
+            if (!usuarioLogado) {
+                alert('⚠️ Você precisa estar logado para enviar mensagens!');
+                return;
+            }
+
+            if (!chatRoomRef) {
+                alert('⚠️ Chat não disponível. Tente novamente.');
+                return;
+            }
 
             const user = usuarioLogado;
             chatRoomRef.push({
@@ -2215,14 +2140,18 @@
             });
 
             input.value = '';
+
+            // Remove typing
             const roomId = [user.uid || user.email, 'proprietario'].sort().join('_');
             db.ref('typing/' + roomId).remove();
 
+            // Notificar proprietário se não for ele
             if (!isProprietario(user.email)) {
                 adicionarNotificacao(`💬 Nova mensagem de ${user.nome}`, 'info');
             }
         };
 
+        // ====== TOGGLE CHAT ======
         window.toggleChat = function() {
             const chat = document.getElementById('chatWindow');
             chat.classList.toggle('open');
@@ -2235,6 +2164,20 @@
                 container.scrollTop = container.scrollHeight;
             }
         };
+
+        // ====== ABRIR ADMIN ======
+        function abrirAdmin() {
+            if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
+                alert('⛔ Acesso negado! Apenas o proprietário pode acessar o painel administrativo.');
+                return;
+            }
+            const adminSection = document.getElementById('admin');
+            adminSection.style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('admin').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+            carregarComprasAdmin();
+        }
 
         // ====== CRIAR KEY MANUAL ======
         window.criarKeyManual = async function() {
@@ -2299,28 +2242,6 @@
                     tipo: 'key'
                 });
 
-                // Enviar e-mail
-                try {
-                    const formData = new FormData();
-                    formData.append('_captcha', 'false');
-                    formData.append('_template', 'table');
-                    formData.append('_subject', '🔑 SUA KEY DO MOD MENU BETA!');
-                    formData.append('Nome', nome);
-                    formData.append('E-mail', email);
-                    formData.append('Key', key);
-                    formData.append('Mensagem', `Sua key do Mod Menu Beta é: ${key}\nValidade: 24 horas\n\nAproveite!`);
-
-                    await fetch('https://formsubmit.co/gabriel6061yt@gmail.com', {
-                        method: 'POST',
-                        body: formData
-                    });
-                } catch (emailError) {
-                    console.warn('Erro ao enviar e-mail:', emailError);
-                }
-
-                // Adicionar notificação local
-                adicionarNotificacao(`🔑 Key ${key} enviada para ${email}`, 'sucesso');
-
                 statusEl.innerHTML = `<span style="color:var(--success);">✅ Key ${key} enviada com sucesso para ${email}! O usuário foi notificado.</span>`;
 
                 keyInput.value = '';
@@ -2338,6 +2259,14 @@
         // ====== ENVIAR PEDIDO (FORMULÁRIO) ======
         window.enviarPedido = async function(event) {
             event.preventDefault();
+
+            // VERIFICA SE O USUÁRIO ESTÁ LOGADO
+            if (!usuarioLogado) {
+                document.getElementById('loginAviso').style.display = 'block';
+                document.getElementById('formStatus').className = 'form-status error';
+                document.getElementById('formStatus').textContent = '⚠️ Você precisa estar logado para enviar um pedido!';
+                return false;
+            }
 
             if (enviando) {
                 alert('⏳ Aguarde o envio do pedido anterior.');
@@ -2373,6 +2302,7 @@
             status.textContent = '⏳ Enviando seu pedido...';
 
             try {
+                // Ler o arquivo como base64
                 let comprovanteBase64 = '';
                 try {
                     comprovanteBase64 = await new Promise((resolve, reject) => {
@@ -2398,37 +2328,33 @@
                     data: firebase.firestore.FieldValue.serverTimestamp(),
                     key: null,
                     dataExpiracao: null,
-                    uid: usuarioLogado ? usuarioLogado.uid || usuarioLogado.email : 'anonimo'
+                    uid: usuarioLogado.uid || usuarioLogado.email
                 });
 
                 console.log('✅ Pedido salvo no Firestore! ID:', docRef.id);
 
-                // ENVIAR E-MAIL
-                try {
-                    const formData = new FormData();
-                    formData.append('_captcha', 'false');
-                    formData.append('_template', 'table');
-                    formData.append('_subject', '📦 NOVA COMPRA - MOD MENU BETA!');
-                    formData.append('Nome', nome);
-                    formData.append('E-mail', email);
-                    formData.append('WhatsApp', whatsapp);
-                    formData.append('Plano', plano);
-                    formData.append('Mensagem', mensagem || '');
-                    formData.append('Comprovante', comprovanteBase64 || 'Arquivo anexado no Firestore');
+                // NOTIFICAR PROPRIETÁRIO
+                await firestore.collection('notificacoes').add({
+                    uid: 'proprietario',
+                    mensagem: `📦 Nova compra de ${nome} (${email}) - ID: ${docRef.id}`,
+                    lida: false,
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    tipo: 'compra'
+                });
 
-                    await fetch('https://formsubmit.co/gabriel6061yt@gmail.com', {
-                        method: 'POST',
-                        body: formData
-                    });
-                } catch (emailError) {
-                    console.warn('Erro ao enviar e-mail:', emailError);
-                }
+                // NOTIFICAR USUÁRIO
+                await firestore.collection('notificacoes').add({
+                    uid: usuarioLogado.uid || usuarioLogado.email,
+                    mensagem: `📦 Pedido #${docRef.id} recebido! Aguarde a aprovação.`,
+                    lida: false,
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    tipo: 'compra'
+                });
 
                 status.className = 'form-status success';
                 status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
 
-                adicionarNotificacao(`📦 Nova compra de ${nome} (${email})`, 'compra');
-
+                // Limpar formulário
                 document.getElementById('compraNome').value = '';
                 document.getElementById('compraEmail').value = '';
                 document.getElementById('compraWhatsapp').value = '';
@@ -2436,6 +2362,7 @@
                 document.getElementById('compraMensagem').value = '';
                 document.getElementById('compraComprovante').value = '';
 
+                // Recarregar admin se for proprietário
                 if (usuarioLogado && isProprietario(usuarioLogado.email)) {
                     setTimeout(() => {
                         carregarComprasAdmin();
@@ -2469,6 +2396,7 @@
                     document.getElementById('editEmail').value = usuario.email || '';
                     document.getElementById('editEmail').disabled = true;
 
+                    // Avatar
                     if (usuario.avatar && usuario.avatar.startsWith('data:image')) {
                         document.getElementById('avatarProfileImage').src = usuario.avatar;
                         document.getElementById('avatarProfileImage').style.display = 'block';
@@ -2488,6 +2416,7 @@
 
                     carregarKeysUsuario(usuario.email);
 
+                    // Admin
                     const isOwner = isProprietario(usuario.email);
                     const adminSection = document.getElementById('admin');
                     const adminBadgeNav = document.getElementById('adminBadgeNav');
@@ -2512,6 +2441,9 @@
                         navAdminMobile.style.display = 'none';
                         console.log('👤 Usuário comum. Admin oculto.');
                     }
+
+                    // Ocultar aviso de login se estiver logado
+                    document.getElementById('loginAviso').style.display = 'none';
 
                     return true;
                 } catch (e) {
@@ -2542,6 +2474,7 @@
             document.getElementById('profileAdminBadge').style.display = 'none';
             document.getElementById('navAdminDesktop').style.display = 'none';
             document.getElementById('navAdminMobile').style.display = 'none';
+            document.getElementById('loginAviso').style.display = 'block';
         }
 
         window.uploadAvatar = function(event) {
@@ -3024,7 +2957,6 @@
             salvarNotificacoes();
             atualizarBadgeNotificacoes();
             renderizarNotificacoes();
-            playNotificationSound();
         }
 
         window.toggleNotificacoes = function() {
@@ -3095,10 +3027,12 @@
                 });
             });
 
-            const input = document.getElementById('chatInput');
-            if (input) {
-                input.addEventListener('keydown', function(e) {
+            // ====== CHAT - ENTER PARA ENVIAR ======
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
+                        e.preventDefault();
                         window.enviarMensagem();
                         return;
                     }
@@ -3119,6 +3053,7 @@
                 });
             }
 
+            // Admin search
             document.getElementById('adminSearch').addEventListener('input', function() {
                 if (unsubscribeCompras) {
                     unsubscribeCompras();
@@ -3137,6 +3072,7 @@
                 document.getElementById('welcomeOverlay').classList.remove('hidden');
                 document.getElementById('chatWindow').classList.remove('open');
                 document.getElementById('chatToggleBtn').style.display = 'none';
+                document.getElementById('loginAviso').style.display = 'block';
             }
 
             if (notificacoes.length === 0) {
