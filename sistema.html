@@ -12,7 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS COMPLETO ===== */
+        /* ===== CSS COMPLETO (MANTIDO) ===== */
         * {
             margin: 0;
             padding: 0;
@@ -59,7 +59,6 @@
             border-radius: 10px;
         }
 
-        /* ===== TEMA CLARO ===== */
         body.tema-claro {
             --bg: #f1f5f9;
             --bg-card: #ffffff;
@@ -89,7 +88,6 @@
             border-left-color: var(--secondary);
         }
 
-        /* ===== NAVBAR ===== */
         .navbar {
             position: fixed;
             top: 0;
@@ -312,7 +310,6 @@
             margin-left: 2px;
         }
 
-        /* ===== WHATSAPP FIXO ===== */
         .btn-whatsapp-fixo {
             position: fixed;
             bottom: 90px;
@@ -348,7 +345,6 @@
             }
         }
 
-        /* ===== CHAT TOGGLE ===== */
         .chat-toggle-btn {
             position: fixed;
             bottom: 160px;
@@ -393,7 +389,6 @@
             display: flex;
         }
 
-        /* ===== CHAT WINDOW ===== */
         .chat-window {
             position: fixed;
             bottom: 230px;
@@ -585,7 +580,6 @@
             display: block !important;
         }
 
-        /* ===== GLASS CARD ===== */
         .glass-card {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -614,7 +608,6 @@
             color: var(--primary);
         }
 
-        /* ===== BOTÕES ===== */
         .btn {
             padding: 0.7rem 1.5rem;
             border-radius: 12px;
@@ -663,8 +656,15 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
         }
+        .btn-warning {
+            background: var(--warning);
+            color: #0a0a1a;
+        }
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.4);
+        }
 
-        /* ===== ADMIN BADGE NO PERFIL ===== */
         .admin-badge-profile {
             display: inline-block;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
@@ -679,7 +679,6 @@
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
 
-        /* ===== INPUTS ===== */
         .input-group {
             margin-bottom: 1rem;
         }
@@ -715,7 +714,6 @@
             min-height: 70px;
         }
 
-        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -786,7 +784,6 @@
             margin-bottom: 3rem;
         }
 
-        /* ===== SECTION ===== */
         .section {
             padding: 6rem 2rem;
             max-width: var(--container-max);
@@ -816,7 +813,6 @@
             margin-top: 0.5rem;
         }
 
-        /* ===== PLANS GRID ===== */
         .plans-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -902,7 +898,6 @@
             font-size: 0.7rem;
         }
 
-        /* ===== FORM ===== */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -962,7 +957,6 @@
             color: var(--secondary-light);
         }
 
-        /* ===== PERFIL ===== */
         .profile-section {
             max-width: 600px;
             margin: 0 auto;
@@ -1054,7 +1048,6 @@
             display: none;
         }
 
-        /* ===== ADMIN TABLE ===== */
         .admin-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -1123,7 +1116,6 @@
             color: #fff;
         }
 
-        /* ===== NOTIFICAÇÕES DROPDOWN ===== */
         .dropdown-container {
             position: relative;
         }
@@ -1224,7 +1216,6 @@
             opacity: 0.3;
         }
 
-        /* ===== MODAL ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1318,7 +1309,6 @@
             color: var(--text);
         }
 
-        /* ===== WELCOME / LOGIN ===== */
         .welcome-overlay {
             position: fixed;
             top: 0;
@@ -1458,7 +1448,6 @@
             margin-top: 0.8rem;
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             background: var(--bg);
             border-top: 1px solid var(--border);
@@ -1523,7 +1512,6 @@
             font-size: 0.7rem;
         }
 
-        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 1024px) {
             .hero {
                 flex-direction: column;
@@ -1923,7 +1911,7 @@
         </div>
     </section>
 
-    <!-- ===== ADMIN (SÓ PARA O PROPRIETÁRIO) ===== -->
+    <!-- ===== ADMIN ===== -->
     <section id="admin" class="section" style="display:none;">
         <div class="section-header">
             <h2><i class="fas fa-user-shield"></i> Painel Administrativo</h2>
@@ -1939,6 +1927,18 @@
                 </div>
                 <button class="btn btn-secondary" onclick="carregarComprasAdmin()"><i class="fas fa-sync"></i> Atualizar</button>
             </div>
+
+            <!-- ===== ÁREA PARA CRIAR KEY MANUALMENTE ===== -->
+            <div style="background:rgba(124,58,237,0.1);border:1px solid var(--primary);border-radius:12px;padding:1rem;margin-bottom:1rem;">
+                <h4 style="color:var(--secondary-light);margin-bottom:0.5rem;"><i class="fas fa-key"></i> Criar Key Manual</h4>
+                <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+                    <input type="text" id="manualKeyInput" placeholder="Digite a key (ex: GRAAL-ABCD1234)" style="flex:1;min-width:200px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);" />
+                    <input type="email" id="manualKeyEmail" placeholder="E-mail do usuário" style="flex:1;min-width:200px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);" />
+                    <button class="btn btn-warning" onclick="criarKeyManual()"><i class="fas fa-paper-plane"></i> Enviar Key</button>
+                </div>
+                <div id="manualKeyStatus" style="margin-top:8px;font-size:0.85rem;"></div>
+            </div>
+
             <div class="admin-table-wrap">
                 <table class="admin-table" id="adminTable">
                     <thead>
@@ -2117,7 +2117,8 @@
         // ====== SOM DE NOTIFICAÇÃO ======
         function playNotificationSound() {
             try {
-                const audio = new Audio('https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3');
+                const audio = new Audio(
+                'https://github.com/gabriel6061yt-cell/Projeto-audio-api/raw/refs/heads/main/universfield-new-notification-012-363675.mp3');
                 audio.volume = 0.5;
                 audio.play().catch(() => {});
             } catch (e) {}
@@ -2235,11 +2236,109 @@
             }
         };
 
-        // ====== ENVIAR PEDIDO (FORMULÁRIO) - VERSÃO SIMPLIFICADA ======
+        // ====== CRIAR KEY MANUAL ======
+        window.criarKeyManual = async function() {
+            const keyInput = document.getElementById('manualKeyInput');
+            const emailInput = document.getElementById('manualKeyEmail');
+            const statusEl = document.getElementById('manualKeyStatus');
+
+            const key = keyInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!key || !email) {
+                statusEl.innerHTML = '<span style="color:var(--danger);">❌ Preencha a key e o e-mail do usuário.</span>';
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                statusEl.innerHTML = '<span style="color:var(--danger);">❌ Digite um e-mail válido.</span>';
+                return;
+            }
+
+            statusEl.innerHTML = '<span style="color:var(--secondary-light);">⏳ Enviando key...</span>';
+
+            try {
+                // Verificar se o usuário existe no sistema
+                const userQuery = await firestore.collection('compras')
+                    .where('email', '==', email)
+                    .orderBy('data', 'desc')
+                    .limit(1)
+                    .get();
+
+                let uid = null;
+                let nome = 'Usuário';
+
+                if (!userQuery.empty) {
+                    const userData = userQuery.docs[0].data();
+                    uid = userData.uid || userData.email;
+                    nome = userData.nome || 'Usuário';
+                }
+
+                // Salvar key no Firestore
+                const expiracao = new Date();
+                expiracao.setHours(expiracao.getHours() + 24);
+
+                await firestore.collection('keys').add({
+                    uid: uid || email,
+                    email: email,
+                    nome: nome,
+                    key: key,
+                    dataCriacao: firebase.firestore.FieldValue.serverTimestamp(),
+                    dataExpiracao: expiracao,
+                    ativa: true,
+                    compraId: null,
+                    manual: true
+                });
+
+                // NOTIFICAR USUÁRIO
+                await firestore.collection('notificacoes').add({
+                    uid: uid || email,
+                    mensagem: `🔑 Sua key foi gerada: ${key}`,
+                    lida: false,
+                    data: firebase.firestore.FieldValue.serverTimestamp(),
+                    tipo: 'key'
+                });
+
+                // Enviar e-mail
+                try {
+                    const formData = new FormData();
+                    formData.append('_captcha', 'false');
+                    formData.append('_template', 'table');
+                    formData.append('_subject', '🔑 SUA KEY DO MOD MENU BETA!');
+                    formData.append('Nome', nome);
+                    formData.append('E-mail', email);
+                    formData.append('Key', key);
+                    formData.append('Mensagem', `Sua key do Mod Menu Beta é: ${key}\nValidade: 24 horas\n\nAproveite!`);
+
+                    await fetch('https://formsubmit.co/gabriel6061yt@gmail.com', {
+                        method: 'POST',
+                        body: formData
+                    });
+                } catch (emailError) {
+                    console.warn('Erro ao enviar e-mail:', emailError);
+                }
+
+                // Adicionar notificação local
+                adicionarNotificacao(`🔑 Key ${key} enviada para ${email}`, 'sucesso');
+
+                statusEl.innerHTML = `<span style="color:var(--success);">✅ Key ${key} enviada com sucesso para ${email}! O usuário foi notificado.</span>`;
+
+                keyInput.value = '';
+                emailInput.value = '';
+
+                // Recarregar admin
+                carregarComprasAdmin();
+
+            } catch (error) {
+                console.error('Erro ao enviar key manual:', error);
+                statusEl.innerHTML = `<span style="color:var(--danger);">❌ Erro: ${error.message}</span>`;
+            }
+        };
+
+        // ====== ENVIAR PEDIDO (FORMULÁRIO) ======
         window.enviarPedido = async function(event) {
             event.preventDefault();
 
-            // Evita envio duplicado
             if (enviando) {
                 alert('⏳ Aguarde o envio do pedido anterior.');
                 return false;
@@ -2255,7 +2354,6 @@
             const status = document.getElementById('formStatus');
             const btn = document.getElementById('formSubmitBtn');
 
-            // VALIDAÇÃO
             if (!nome || !email || !whatsapp || !plano || !file) {
                 status.className = 'form-status error';
                 status.textContent = '📝 Preencha todos os campos e anexe o comprovante.';
@@ -2268,7 +2366,6 @@
                 return false;
             }
 
-            // DESABILITA O BOTÃO
             enviando = true;
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
@@ -2276,7 +2373,6 @@
             status.textContent = '⏳ Enviando seu pedido...';
 
             try {
-                // Converter o arquivo para base64
                 let comprovanteBase64 = '';
                 try {
                     comprovanteBase64 = await new Promise((resolve, reject) => {
@@ -2290,8 +2386,8 @@
                     comprovanteBase64 = 'Arquivo não pôde ser lido';
                 }
 
-                // 1. SALVAR NO FIRESTORE
-                await firestore.collection('compras').add({
+                // SALVAR NO FIRESTORE
+                const docRef = await firestore.collection('compras').add({
                     nome: nome,
                     email: email,
                     whatsapp: whatsapp,
@@ -2305,7 +2401,9 @@
                     uid: usuarioLogado ? usuarioLogado.uid || usuarioLogado.email : 'anonimo'
                 });
 
-                // 2. ENVIAR E-MAIL VIA FORMSUBMIT
+                console.log('✅ Pedido salvo no Firestore! ID:', docRef.id);
+
+                // ENVIAR E-MAIL
                 try {
                     const formData = new FormData();
                     formData.append('_captcha', 'false');
@@ -2323,17 +2421,14 @@
                         body: formData
                     });
                 } catch (emailError) {
-                    console.warn('Erro ao enviar e-mail (opcional):', emailError);
+                    console.warn('Erro ao enviar e-mail:', emailError);
                 }
 
-                // SUCESSO!
                 status.className = 'form-status success';
                 status.textContent = '✅ Pedido enviado com sucesso! Você receberá sua key em breve.';
 
-                // NOTIFICAR PROPRIETÁRIO
                 adicionarNotificacao(`📦 Nova compra de ${nome} (${email})`, 'compra');
 
-                // RESETAR FORMULÁRIO
                 document.getElementById('compraNome').value = '';
                 document.getElementById('compraEmail').value = '';
                 document.getElementById('compraWhatsapp').value = '';
@@ -2341,7 +2436,6 @@
                 document.getElementById('compraMensagem').value = '';
                 document.getElementById('compraComprovante').value = '';
 
-                // RECARREGAR ADMIN SE FOR PROPRIETÁRIO
                 if (usuarioLogado && isProprietario(usuarioLogado.email)) {
                     setTimeout(() => {
                         carregarComprasAdmin();
@@ -2349,12 +2443,11 @@
                 }
 
             } catch (error) {
-                console.error('Erro completo:', error);
+                console.error('Erro ao enviar pedido:', error);
                 status.className = 'form-status error';
-                status.textContent = '❌ Erro ao enviar pedido: ' + (error.message || 'Tente novamente ou entre em contato pelo WhatsApp.');
+                status.textContent = '❌ Erro ao enviar: ' + (error.message || 'Tente novamente.');
             }
 
-            // REATIVA O BOTÃO
             enviando = false;
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar Pedido';
@@ -2598,6 +2691,37 @@
                 });
         }
 
+        // ====== NOTIFICAÇÕES DO USUÁRIO ======
+        function carregarNotificacoesUsuario(uid) {
+            if (!uid) return;
+
+            firestore.collection('notificacoes')
+                .where('uid', '==', uid)
+                .orderBy('data', 'desc')
+                .limit(30)
+                .onSnapshot(snap => {
+                    let count = 0;
+                    let html = '';
+                    snap.forEach(doc => {
+                        const n = doc.data();
+                        if (!n.lida) count++;
+                        const time = n.data?.toDate ? n.data.toDate().toLocaleString('pt-BR') : '';
+                        const lidaClass = n.lida ? 'lida' : '';
+                        const icon = n.tipo === 'key' ? '🔑' : n.tipo === 'compra' ? '📦' : 'ℹ️';
+                        html += `
+                            <div class="dropdown-item ${lidaClass}">
+                                <span class="item-text">${icon} ${n.mensagem}</span>
+                                <span class="item-time">${time}</span>
+                            </div>
+                        `;
+                    });
+                    if (!html) html = '<div class="empty-state"><i class="fas fa-bell-slash"></i>Nenhuma notificação</div>';
+                    document.getElementById('notifList').innerHTML = html;
+                    document.getElementById('notifBadge').textContent = count;
+                    document.getElementById('notifBadge').style.display = count > 0 ? 'flex' : 'none';
+                }, err => console.error('notif error', err));
+        }
+
         // ====== COMPRAS ADMIN ======
         function carregarComprasAdmin() {
             if (!usuarioLogado || !isProprietario(usuarioLogado.email)) {
@@ -2672,7 +2796,7 @@
             if (!confirm('✅ Aprovar esta compra?')) return;
             firestore.collection('compras').doc(id).update({ status: 'aprovado' })
                 .then(() => {
-                    alert('✅ Compra aprovada! Agora clique em "Enviar Key" para gerar a key.');
+                    alert('✅ Compra aprovada! Clique em "Enviar Key" para gerar.');
                     adicionarNotificacao('✅ Compra aprovada!', 'sucesso');
                 })
                 .catch(err => alert('❌ Erro: ' + err.message));
@@ -2720,11 +2844,18 @@
                             status: 'aprovado'
                         });
                     }).then(() => {
+                        // NOTIFICAR USUÁRIO
+                        return firestore.collection('notificacoes').add({
+                            uid: data.uid || data.email,
+                            mensagem: `🔑 Sua key foi gerada: ${key}`,
+                            lida: false,
+                            data: firebase.firestore.FieldValue.serverTimestamp(),
+                            tipo: 'key'
+                        });
+                    }).then(() => {
                         alert(`🔑 Key ${key} gerada e enviada com sucesso!`);
                         adicionarNotificacao(`🔑 Key gerada: ${key}`, 'sucesso');
-                        if (data.email) {
-                            adicionarNotificacao(`🔑 Key enviada para ${data.nome} (${data.email})`, 'info');
-                        }
+                        carregarComprasAdmin();
                     });
                 })
                 .catch(err => alert('❌ Erro ao gerar key: ' + err.message));
@@ -2741,8 +2872,9 @@
 
             if (usuarioLogado) {
                 setupChat(usuarioLogado);
+                carregarNotificacoesUsuario(usuarioLogado.uid || usuarioLogado.email);
                 const userRef = db.ref('usuarios_online/' + (usuarioLogado.uid || usuarioLogado.email.replace(/[.#$\/\[\]]/g,
-                '_')));
+                    '_')));
                 userRef.set({
                     nome: usuarioLogado.nome,
                     email: usuarioLogado.email,
